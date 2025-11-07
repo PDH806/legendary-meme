@@ -1,0 +1,64 @@
+@charset "utf-8"; 
+/* copyright(c) WEBsiting.co.kr */
+
+/* 게시판 목록 */
+#bo_list {position:relative}
+#bo_list:after {display:block; visibility:hidden; clear:both; content:""}
+
+.fileDownList{width:100%;}
+.fileDownLis:after{content:'';display:block; clear:both;}
+.fileDownList > ul{border-top:2px solid #ddd; margin-bottom:20px; }
+.fileDownList > ul > li{width:100%; position:relative; padding:30px; border-bottom:1px solid #ddd; }
+.fileDownList > ul > li:after{content:'';display:block; clear:both;}
+.fileDownList > ul > li:hover{background:#fafafa; }
+.fileDownList > ul > li .td_chk{position:absolute; right:0px; top:0px; }
+.fileDownList > ul > li .bo_cate_link{display:inline-block; margin-bottom:8px; }
+.fileDownList > ul > li .bo_tit{display:block; vertical-align:middle; }
+.fileDownList > ul > li .bo_tit strong{font-size:20px; vertical-align:middle; letter-spacing:-0.03em; color:#000; padding-bottom:4px; font-weight:700;}
+.fileDownList > ul > li a:hover.bo_tit strong{border-bottom:1px solid #999; }
+.fileDownList > ul > li.bo_notice .bo_tit .notice_icon{text-align:center; vertical-align:middle; color:#fff; font-size:14px; height:25px; }
+.fileDownList > ul > li .bo_tit u{text-decoration:none; }
+.fileDownList > ul > li .bo_tit em{display:block; padding-top:10px; font-style:normal; font-weight:normal; font-size:12px; line-height:1.4em; color:#999; }
+.fileDownList > ul > li > u{display:block; color:#ddd; font-size:11px; margin-top:10px; }
+.fileDownList > ul > li > u > span{display:inline-block; padding-right:10px; color:#999; }
+.fileDownList > ul > li > u > span:first-child{padding-left:0px; }
+.fileDownList > ul > li > u > span:before{content:" / "; color:#ddd; }
+.fileDownList > ul > li > u > span:first-child:before{content:""; }
+.fileDownList > ul > li > u > span > i{margin-left:8px; }
+
+.fileDownList > ul > li .list_img{display:block; float:right; margin:0 0 0 15px; width:20%; max-width:90px; overflow:hidden; border-radius:50%;}
+.fileDownList > ul > li .list_img img{display:block; -webkit-transition-duration: 0.2s; -webkit-transition-timing-function: ease; transition-duration: 0.2s; transition-timing-function: ease; }
+.fileDownList > ul > li:hover .list_img img{transform: scale(1.1);}
+
+.fileDownList > ul > li a .youtube_img{display:block; width:100%; max-width:100%; min-width:100%; position:relative; height:auto; overflow:hidden; background:#333; }
+.fileDownList > ul > li a .youtube_img sup{display:block; position:absolute; left:0px; top:0px; right:0px; bottom:0px; width:100%; overflow:hidden; background-repeat:no-repeat; background-size:auto 200%;; background-position:center center; -webkit-transition-duration: 0.2s; -webkit-transition-timing-function: ease; transition-duration: 0.2s; transition-timing-function: ease; }
+.fileDownList > ul > li a .youtube_img sub,
+.fileDownList > ul > li a .youtube_img sub img{display:block; height:auto; width:100%; max-width:100%; min-width:100%; filter:Alpha(opacity=0); opacity:0; -moz-opacity:0; }
+.fileDownList > ul > li:hover a .youtube_img sup{transform: scale(1.1);}
+
+.bo_notice{background:#fcf9f3 !important; }
+
+.noDataArea{margin-bottom:20px; }
+.fa-youtube-play{font-size:22px !important; vertical-align:middle; }
+
+.fileDownList_downBtn {padding-top:15px;}
+.fileDownList_downBtn a{ display:inline-block; margin:10px 10px 0 0; border:3px solid #ddd;}
+.fileDownList_downBtn a b,
+.fileDownList_downBtn a span{ display:inline-block; vertical-align:middle;}
+.fileDownList_downBtn a b{height:22px; line-height:22px; max-width:280px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.fileDownList_downBtn a i{color:RGBA(0,0,0,0.2); font-size:26px; vertical-align:middle; margin-left:8px;}
+
+.fileDownList_downBtn a:hover{border:3px solid #000 !important; background:#000;color:RGBA(255,255,255,0.5);}
+.fileDownList_downBtn a:hover i{color:#fff;}
+
+@media all and (max-width: 700px)
+{
+	.fileDownList > ul > li{padding:20px; }
+	.fileDownList > ul > li .bo_tit strong{font-size:16px; }
+	.fileDownList > ul > li .bo_tit em{font-size:11px; line-height:1.2em; }
+}
+
+
+
+
+ 

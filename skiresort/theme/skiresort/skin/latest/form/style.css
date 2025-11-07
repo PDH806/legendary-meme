@@ -1,0 +1,32 @@
+@charset "utf-8"; 
+/* copyright(c) WEBsiting.co.kr */
+/* 새글 스킨 (latest) */
+
+.formLat {position:relative; margin-bottom:20px; overflow:hidden; text-align:center; padding:20px; }
+.formLat .formLatTit {display:block; }
+.formLat .formLatTit a{color:#333; display:inline-block; position:relative; margin:0 auto 10px; padding:20px; font-size:20px; text-align:center; }
+.formLat .formLatTit a u{display:block; width:50px; height:1px; background:#ddd; position:absolute; left:50%; bottom:0px; margin-left:-25px; -webkit-transition-duration: 0.2s; -webkit-transition-timing-function: ease; transition-duration: 0.2s; transition-timing-function: ease; }
+div:hover.formLat .formLatTit a u{width:100px;  margin-left:-50px;  }
+.formLat ul{padding:0px; margin:0; text-align:left; list-style:none; min-height:100px;}
+.formLat li {list-style:none; margin:0px; padding:0px;  }
+
+.formLat  .empty_li{ min-height:204px;  text-align:center; padding:0; }
+.formLat  .empty_li:before{background:none; padding:0}
+.formLat  .empty_li > p{padding-top:40px;color:#999;  min-height:204px; font-size:13px; -webkit-transition-duration: 0.4s; -webkit-transition-timing-function: ease; transition-duration: 0.4s; transition-timing-function: ease;}
+.formLat  .empty_li > p strong{display:block; padding-bottom:15px; color:#000;font-size:22px; letter-spacing:0.05em;}
+.formLat  .empty_li > p span{display:block; padding-bottom:3px; color:#666; letter-spacing:0.05em;}
+.formLat  .empty_li:hover p{background:#efefef; }
+
+.formLat .lt_more {clear:both;  font-size:12px; font-weight:bold; display:inline-block; padding:10px 30px; color:RGBA(255,255,255,0.7); border-radius:50px; text-align:center; margin:20px auto 0; background:#333; border:2px solid #fff; -webkit-transition-duration: 0.2s; -webkit-transition-timing-function: ease; transition-duration: 0.2s; transition-timing-function: ease; }
+.formLat .lt_more:hover{color:#fff; border:2px solid RGBA(0,0,0,0.1);}
+.formLat .lt_more > i{display:inline-block; padding-left:10px; font-size:14px;}
+
+@media all and (max-width:650px)
+{
+	.formLat ul{min-height:auto;}
+	.formLat {padding:5px; }
+	.formLat .formLatTit a{padding:15px; font-size:16px; }
+	.formLat li a {font-size:12px; height:30px; line-height:30px; }
+	.formLat .lt_more{font-size:11px; letter-spacing:-0.05em; padding:10px 15px; }
+
+}

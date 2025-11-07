@@ -1,0 +1,283 @@
+<?php
+$sub_menu = '590800';
+include_once('./_common.php');
+
+add_stylesheet('<link rel="stylesheet" href="' . G5_URL . '/adm/css/sbak_css.css">', 0);
+
+
+auth_check_menu($auth, $sub_menu, 'r');
+
+$g5['title'] = '자동면제자 관리';
+include_once('./admin.head.php');
+
+
+
+
+$colspan = 7;
+$listall = '<a href="' . $_SERVER['SCRIPT_NAME'] . '">처음</a>'; //페이지 처음으로 (초기화용도)
+$sql_search = '';
+
+
+$sql_common = " from SBAK_EXEMPTION_LIST ";
+
+$sql_search = " where (1) ";
+
+
+if ($stx) {
+    $sql_search .= " and ( ";
+    switch ($sfl) {
+
+
+        case 'K_NAME':
+            $sql_search .= " ({$sfl} like '%{$stx}') ";
+            break;       
+        case 'SPORTS':
+            $sql_search .= " ({$sfl} like '%{$stx}') ";
+            break;                       
+        default:
+            $sql_search .= " ({$sfl} like '{$stx}%') ";
+            break;
+    }
+    $sql_search .= " ) ";
+}
+
+
+
+$sql = " select count(*) as cnt
+            {$sql_common}
+            {$sql_search} ";
+$row = sql_fetch($sql);
+$total_count = $row['cnt'];
+
+$rows = $config['cf_page_rows'];
+$total_page = ceil($total_count / $rows); // 전체 페이지 계산
+if ($page < 1)
+    $page = 1; // 페이지가 없으면 첫 페이지 (1 페이지)
+$from_record = ($page - 1) * $rows; // 시작 열을 구함
+
+$sql = " select *
+            {$sql_common}
+            {$sql_search}
+            order by UID desc
+            limit {$from_record}, {$rows} ";
+$result = sql_query($sql);
+
+
+
+
+// 스키티칭2 면제자
+$sql = " select count(*) as cnt {$sql_common} {$sql_search} and SPORTS = 'B02' ";
+$row = sql_fetch($sql);
+$T2_count = $row['cnt'];
+
+// 보드티칭2 면제자
+$sql = " select count(*) as cnt {$sql_common} {$sql_search} and SPORTS = 'B05' ";
+$row = sql_fetch($sql);
+$SBT2_count = $row['cnt'];
+
+// 스키구조요원 면제자
+$sql = " select count(*) as cnt {$sql_common} {$sql_search} and SPORTS = 'B07' ";
+$row = sql_fetch($sql);
+$PTL_count = $row['cnt'];
+
+
+$listall = '<a href="' . $_SERVER['SCRIPT_NAME'] . '" class="ov_listall">전체목록</a>';
+
+$sql_order = isset($sql_order)?$sql_order:'';
+$sql = " select * {$sql_common} {$sql_search} {$sql_order} limit {$from_record}, {$rows} ";
+$result = sql_query($sql);
+?>
+
+
+<div class="local_sch local_sch01">
+    <form name="fvisit" method="get" onsubmit="return fvisit_submit(this);">
+
+                <div class="local_ov01 local_ov">
+            <?php echo $listall ?>
+            <span class="btn_ov01"><span class="ov_txt">총 면제자</span><span class="ov_num">
+                    <?php echo number_format($total_count) ?>명
+                </span></span>
+            <span class="btn_ov01"> <span class="ov_txt">스키티칭2 </span><span class="ov_num">
+                    <?php echo number_format($T2_count) ?>명
+                </span></span>
+            <span class="btn_ov01"> <span class="ov_txt">보드티칭2 </span><span class="ov_num">
+                    <?php echo number_format($SBT2_count) ?>명
+                </span></span>
+            <span class="btn_ov01"> <span class="ov_txt">스키구조요원 </span><span class="ov_num">
+                    <?php echo number_format($PTL_count) ?>명
+                </span></span>
+                <span class="btn_ov01"> <span class="ov_txt">엑셀다운</span><span class="ov_num">
+                <a href="sbak_exemption_list_xls.php?exemption=Y"> <i class="fa fa-file-excel-o"></i> </a>
+               
+                </span></span>  
+
+
+        </div>
+
+
+        <label for="sch_sort" class="sound_only">검색분류</label>
+        <select name="sfl" id="sch_sort" class="search_sort">
+            <option value="K_NAME" <?php echo get_selected($sfl, 'K_NAME'); ?>>성명</option>
+            <option value="SPORTS" <?php echo get_selected($sfl, 'SPORTS'); ?>>구분(종목)</option>
+        </select>
+        <label for="sch_word" class="sound_only">검색어</label>
+        <input type="text" name="stx" size="20" value="<?php echo stripslashes($stx); ?>" id="sch_word"
+            class="frm_input">
+        <input type="submit" value="검색" class="btn_submit">
+    </form>
+</div>
+
+
+<form name="ksia_license_list" id="ksia_license_list" action="./sbak_exemption_update.php"
+    onsubmit="return ksia_license_list_submit(this);" method="post">
+    <input type="hidden" name="sst" value="<?php echo $sst ?>">
+    <input type="hidden" name="sod" value="<?php echo $sod ?>">
+    <input type="hidden" name="sfl" value="<?php echo $sfl ?>">
+    <input type="hidden" name="stx" value="<?php echo $stx ?>">
+    <input type="hidden" name="page" value="<?php echo $page ?>">
+    <input type="hidden" name="token" value="">
+    <input type="hidden" name="exempt" value="Y">
+
+    <div class="local_desc01 local_desc">
+
+        <p>스키티칭2 : B02 , 보드티칭2 : B05 , 스키구조요원 : B07 로 검색</p>
+
+    </div>
+
+    <div class="tbl_wrap tbl_head01">
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">
+                        <label for="chkall" class="sound_only">그룹 전체</label>
+                        <input type="checkbox" name="chkall" value="1" id="chkall" onclick="check_all(this.form)">
+                    </th>
+                    <th scope="col" width="5%">UID</th>
+                    <th scope="col">성명</th>
+                    <th scope="col">생년월일</th>
+                    <th scope="col">구분</th>
+                    <th scope="col">필기면제</th>
+                    <th scope="col">실기면제</th>
+                    <th scope="col" width="5%">등록일</th>
+                    <th scope="col" width="5%">수정일</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+
+
+                for ($i = 0; $row = sql_fetch_array($result); $i++) {
+
+                  
+                    $bg = 'bg' . ($i % 2);
+                    ?>
+
+                    <tr class="<?php echo $bg; ?>">
+                        <td class="td_chk">
+                            <input type="checkbox" name="chk[]" value="<?php echo $i ?>" id="chk_<?php echo $i ?>">
+                            <input type="hidden" name="UID[<?php echo $i ?>]" value="<?php echo $row['UID'] ?>">
+                        </td>
+                        <td>
+                            <?php echo $row['UID']; ?>
+                          
+                        </td>
+
+                        <td>
+                            <input type="text" name="K_NAME[<?php echo $i ?>]" value="<?php echo $row['K_NAME']; ?>" readonly class='tbl_input' size="8" required>
+                        </td>
+                        <td>
+                            <input type="date" name="K_BIRTH[<?php echo $i ?>]" value="<?php echo $row['K_BIRTH']; ?>" readonly class='ksia_input' required>
+                        </td>
+                        <td>
+                            <?php
+                            if ($row['SPORTS'] == 'B02') {
+                            $sports = '스키티칭2';
+                            }elseif ($row['SPORTS'] == 'B05') {
+                            $sports = '보드티칭2';
+                            }elseif ($row['SPORTS'] == 'B07') {
+                            $sports = '스키구조요원';
+                            }
+                            ?>
+                            <input type="text" name='SPORTS[<?php echo $i ?>]' value="<?php echo $sports; ?>" readonly class='tbl_input' size="8">                                                      
+                        </td>
+                        <td>
+                            <input type="checkbox" name='EXEMPT_1[<?php echo $i ?>]' value="Y" class='tbl_input' size="8" <?php if ($row['EXEMPT_1'] == 'Y')
+                                       echo "checked"; ?>>
+                        </td>
+                        <td>
+                            <input type="checkbox" name='EXEMPT_2[<?php echo $i ?>]' value="Y" class='tbl_input' size="8" <?php if ($row['EXEMPT_2'] == 'Y')
+                                       echo "checked"; ?>>
+                        </td>
+                        <td>
+                            <?php echo $row['INSERT_DATE']; ?>
+                        </td>
+                        <td>
+                            <?php echo $row['UPDATE_DATE']; ?>
+                        </td>
+
+                    </tr>
+                <?php } ?>
+                <?php if ($i == 0)
+                    echo '<tr><td colspan="' . $colspan . '" class="empty_table">자료가 없습니다.</td></tr>'; ?>
+            </tbody>
+        </table>
+    </div>
+
+
+    <div class="btn_fixed_top">
+        <input type="submit" name="act_button" value="선택수정" onclick="document.pressed=this.value" class="btn btn_02">
+    </div>
+
+
+</form>
+
+<a href="./sbak_exemption_add.php?exempt=Y" class="btn btn_03">면제자 추가하기</a> <br>
+성명, 생년월일, 구분  필드 필수입력 
+<br>
+
+<?php
+$domain = isset($domain) ? $domain : '';
+$pagelist = get_paging($config['cf_write_pages'], $page, $total_page, $_SERVER['SCRIPT_NAME'] . '?' . $qstr . '&amp;domain=' . $domain . '&amp;page=');
+if ($pagelist) {
+    echo $pagelist;
+}
+?>
+
+<script>
+    $(function () {
+        $("#sch_sort").change(function () { // select #sch_sort의 옵션이 바뀔때
+            if ($(this).val() == "vi_date") { // 해당 value 값이 vi_date이면
+                $("#sch_word").datepicker({ changeMonth: true, changeYear: true, dateFormat: "yy-mm-dd", showButtonPanel: true, yearRange: "c-99:c+99", maxDate: "+0d" }); // datepicker 실행
+            } else { // 아니라면
+                $("#sch_word").datepicker("destroy"); // datepicker 미실행
+            }
+        });
+
+        if ($("#sch_sort option:selected").val() == "vi_date") { // select #sch_sort 의 옵션중 selected 된것의 값이 vi_date라면
+            $("#sch_word").datepicker({ changeMonth: true, changeYear: true, dateFormat: "yy-mm-dd", showButtonPanel: true, yearRange: "c-99:c+99", maxDate: "+0d" }); // datepicker 실행
+        }
+    });
+
+    function fvisit_submit(f) {
+        return true;
+    }
+</script>
+
+
+<script>
+    function ksia_license_list_submit(f) {
+        if (!is_checked("chk[]")) {
+            alert(document.pressed + " 하실 항목을 하나 이상 선택하세요.");
+            return false;
+        }
+
+        return true;
+    }
+</script>
+
+
+
+
+<?php
+include_once('./admin.tail.php');

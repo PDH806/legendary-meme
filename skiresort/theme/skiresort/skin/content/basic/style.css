@@ -1,0 +1,10 @@
+@charset "utf-8"; 
+
+/* 내용관리 */
+#ctt {margin:0; padding:0px; }
+.ctt_admin {text-align:right}
+#ctt header h1,
+#ctt header h2 {position:absolute; font-size:0; line-height:0; overflow:hidden}
+#ctt_con {padding:0; line-height:1.6em}
+#ctt_con img{max-width:100%; height:auto}
+.ctt_img {text-align:center}

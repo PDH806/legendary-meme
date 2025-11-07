@@ -1,0 +1,28 @@
+@charset "utf-8";
+/* www.websiting.kr */
+
+/* 방문자 집계 */
+#visitAdm h2{font-family:'Malgun Gothic', '맑은고딕'; font-size:14px;}
+#visitAdm{ overflow:hidden;}
+#visitAdm table{margin:0px; width:100%; border:1px dashed rgba(0,0,0,0.2); }
+#visitAdm table td{padding:15px; text-align:center; width:25%; font-weight:bold; font-size:14px;color:#fff;border:0px;background:#f0f3fa;}
+#visitAdm table td i{filter:Alpha(opacity=50); opacity:0.5; -moz-opacity:0.5;font-size:60px; position:relative; z-index:2;}
+
+
+#visitAdm table tbody td div{position:relative; overflow:hidden; padding:30px 10px; border-radius:10px;background:#23bba9;}
+#visitAdm table tbody td div p{display:inline-block; text-align:left; padding-left:20px; position:relative; z-index:2;}
+#visitAdm table tbody td div p b{display:block;font-size:30px; padding-top:5px;}
+#visitAdm table tbody td:nth-child(1) div{background:#51b6dc;}
+#visitAdm table tbody td:nth-child(2) div{background:#23bba9;}
+#visitAdm table tbody td:nth-child(3) div{background:#6d66c8;}
+#visitAdm table tbody td:nth-child(4) div{background:#18529c;}
+/*
+#visitAdm table tbody td:nth-child(1) div:after{content:'';display:block ; position:absolute; z-index:1; left:0px; top:0px; right:0px; bottom:0px; }
+#visitAdm table tbody td:nth-child(2) div:after{content:'';display:block ; position:absolute; z-index:1; left:0px; top:0px; right:0px; bottom:0px; background:RGBA(0,0,0,0.1);}
+#visitAdm table tbody td:nth-child(3) div:after{content:'';display:block ; position:absolute; z-index:1; left:0px; top:0px; right:0px; bottom:0px; background:RGBA(0,0,0,0.2);}
+#visitAdm table tbody td:nth-child(4) div:after{content:'';display:block ; position:absolute; z-index:1; left:0px; top:0px; right:0px; bottom:0px; background:RGBA(0,0,0,0.3);}
+*/
+#visitAdm table tbody td div:hover{filter:Alpha(opacity=90); opacity:0.9; -moz-opacity:0.9;}
+
+.btn_list00 {padding:15px; border:1px dashed rgba(0,0,0,0.2);background:#f0f3fa;}
+.btn_list00 a{font-weight:bold; font-size:13px; padding:10px 15px; height:auto !important; line-height:auto !important; border-radius:5px;}

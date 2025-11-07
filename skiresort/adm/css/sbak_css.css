@@ -1,0 +1,197 @@
+a,
+a:visited {
+  text-decoration: none;
+  color: #00AE68;
+}
+
+.clear {
+  clear: both;
+}
+
+.pageTitle {
+  font-size: 2em;
+  font-weight: 700;
+  text-transform: uppercase;
+  line-height: 1em;
+  color: #00AE68;
+}
+
+.pageSubTitle {
+  margin-bottom: 0.5em;
+  font-size: 1.15em;
+  font-weight: 400;
+  line-height: 1em;
+  color: #00AE68;
+}
+
+.articleTitle {
+  font-size: 1.15em;
+  font-weight: 700;
+  line-height: 1em;
+  color: #222;
+}
+
+.wrapper {
+  width: 600px;
+  margin: 20px auto;
+}
+
+.container {
+  padding-top: 1em;
+  margin-top: 1em;
+  border-top:
+    solid 1px #CCC;
+}
+
+a.button {
+  display: block;
+  position: relative;
+  float: left;
+
+  padding: 0;
+  margin: 10px 20px 10px 0;
+  font-weight: 600;
+  text-align: center;
+  line-height: 20px;
+  color: #FFF;
+  border-radius: 10px;
+  transition: all 0.2s;
+}
+
+.btnBlueGreen {
+  background: #00AE68;
+}
+
+.btnLightBlue {
+  background: #5DC8CD;
+}
+
+.btnOrange {
+  background: #FFAA40;
+}
+
+.btnPurple {
+  background: #A74982;
+}
+
+/* FADE */
+.btnFade.btnBlueGreen:hover {
+  background: #21825B;
+}
+
+.btnFade.btnLightBlue:hover {
+  background: #01939A;
+}
+
+.btnFade.btnOrange:hover {
+  background: #FF8E00;
+}
+
+.btnFade.btnPurple:hover {
+  background: #6D184B;
+}
+
+/* RADIUS */
+
+.btnRadius {
+
+  background: #0a0a23;
+  border: none;
+
+
+}
+
+.ksia_input {
+  height: 27px;
+  line-height: 25px;
+  border: 1px solid #d5d5d5;
+  width: 100%;
+  text-align: center
+}
+
+.ksia_input_deleted {
+  height: 27px;
+  line-height: 25px;
+  border: 1px solid #d5d5d5;
+  width: 100%;
+  text-align: center;
+  color: red;
+  background-color: #efefef;
+}
+
+
+
+.box_ksia_blue {
+  display: inline-block;
+  height: 28px;
+  line-height: 28px;
+  padding: 0 5px;
+  font-size: 12px;
+  font-weight: bold;
+  background: #653dc0;
+  color: #fff;
+  border-radius: 5px;
+  text-align: center
+}
+
+.box_ksia_orange {
+  display: inline-block;
+  height: 28px;
+  line-height: 28px;
+  padding: 0 5px;
+  font-size: 12px;
+  font-weight: bold;
+  background: #817f07;
+  color: #fff;
+  border-radius: 5px;
+  text-align: center
+}
+
+.box_ksia_darkblue {
+  display: inline-block;
+  height: 28px;
+  line-height: 28px;
+  padding: 0 5px;
+  font-size: 12px;
+  font-weight: bold;
+  background: #140633;
+  color: #fff;
+  border-radius: 5px;
+  text-align: center
+}
+
+
+.L1 {
+  color: white;
+  padding: 40px;
+  top: 60px;
+  right: 20px;
+  width: 200;
+  z-index: 4;
+  position: absolute;
+  padding: 30
+}
+
+.box_sbak_label {
+  background-color: #e7f1ff;
+  /* 연한 파란 배경 */
+  color: #0056b3;
+  /* 진한 파란 글씨 */
+  padding: 3px 8px;
+  border-radius: 4px;
+  font-size: 13px;
+  font-weight: 500;
+  display: inline-block;
+}
+
+.box_sbak_red_label {
+  background-color: #ffe7e7;
+  /* 연한 붉은 배경 */
+  color: #b30000;
+  /* 진한 빨강 글씨 */
+  padding: 3px 8px;
+  border-radius: 4px;
+  font-size: 13px;
+  font-weight: 500;
+  display: inline-block;
+}
