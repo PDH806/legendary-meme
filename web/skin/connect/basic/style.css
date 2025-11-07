@@ -1,0 +1,20 @@
+@charset "utf-8";
+
+#current_connect ul{margin:0px;padding:0;list-style:none;zoom:1}
+#current_connect ul:after{display:block;visibility:hidden;clear:both;content:""}
+#current_connect li{position:relative;min-height:1px;float:left;margin-left:-1px;margin-top:-1px;}
+#current_connect li{width:25%}
+#current_connect li.box_clear{clear:both}
+#current_connect li .inner{position:relative;text-align:center}
+#current_connect .crt_name {margin:0 5px;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+#current_connect .crt_name img{display:none;}
+#current_connect .crt_lct{display:block;text-align:center;padding:5px;line-height:1.4em;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+#current_connect .crt_lct a{color:#666}
+#current_connect li .inner .crt_num{display:block;width:80px;height:80px;border:3px solid #fff; line-height:80px;border-radius:50%;background:#999;color:#fff;margin:20px auto 10px;font-weight:bold;font-size:18px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+#current_connect li:hover .inner .crt_num{border:3px dashed #fff;}
+#current_connect li.empty_li{width:100%;padding:200px 0 ;border:0;color:#666;text-align:center;}
+
+@media all and (max-width:650px)
+{
+	#current_connect li{width:50%}
+}

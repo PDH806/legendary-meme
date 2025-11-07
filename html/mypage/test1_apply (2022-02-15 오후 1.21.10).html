@@ -1,0 +1,492 @@
+<?
+  include "../db_config.html";
+  if (!$Login_User_ID){echo " <script language='javascript'>alert('로그인이 필요한 서비스 입니다.');top.document.location.href = '../member_login.html'</script>";}
+
+  extract($_REQUEST);
+  $Date = date('Ymd');
+  $Test_No = $No;
+
+  if ($type == 'T1'){$Test_Name = '스키 티칭1'; $Test_Table = '7G_T1_Schedules'; $Apply_Table = '7G_T1_Apply'; $Product_Name = '스키 지도요원 티칭1'; }
+  if ($type == 'SBT1'){$Test_Name = '스노보드 티칭1'; $Test_Table = '7G_SBT1_Schedules'; $Apply_Table = '7G_SBT1_Apply'; $Product_Name = '스노보드 지도요원 티칭1'; }
+
+  // 신청테이블에 이번 신청내용이 등록되어 있는지 체크
+  if ($type == 'T1' or $type == 'SBT1')
+  {$dup_query	= "SELECT * FROM 7G_Master_Apply where Test_id = '$type' and TEST_NO = '$No' and MEMBER_ID = '$Login_User_ID' and TRAN_STATUS >= 1";}
+	   else
+  {$dup_query	= "SELECT * FROM 7G_Master_Apply where Test_id = '$type' and TEST_NO = '$No' and MEMBER_ID = '$Login_User_ID' and PAYMENT_STATUS = 2";}
+	$dup_result	= mysql_query($dup_query,$connect);
+	$dup_check	= mysql_fetch_array($dup_result);
+	$dup_total_record = mysql_num_rows($dup_result);
+
+  if ($dup_total_record > 0){echo " <script language='javascript'>alert('이미 검정신청이 완료된 건입니다.');top.document.location.href = 'admin_master_schedule_list.html'</script>";}
+
+  // 시험정보 불러오기
+	$query1		= "SELECT * FROM 7G_Master_Schedules where Test_id = '$type' and TEST_NO = '$No'";
+	$result1	= mysql_query($query1,$connect);
+	$row1		= mysql_fetch_array($result1);
+
+  // 회원정보 추출
+	$query		= "SELECT * FROM 7G_Skiresort_Member where MEMBER_ID = '$Login_User_ID'";
+	$result		= mysql_query($query, $connect);
+	$member		= mysql_fetch_array($result);
+
+   if (!$member[BIRTH] or $member[BIRTH] == NULL)
+        {echo "	<script language='javascript'>
+          alert('회원정보에 생년월일이 누락되어 있어 티칭1 검정신청이 불가능합니다.);
+          top.document.location.href = 'index.html'
+        </script>";
+    }
+
+	$BIRTH2 = str_replace('-','',$member[BIRTH]);
+
+    if ($BIRTH2 >= 20041231)
+    {echo "	<script language='javascript'>
+      alert('현재 18세 미만은 티칭1 검정신청이 불가능합니다.');
+      top.document.location.href = 'index.html'
+    </script>";
+    }
+
+    if (!$member[GENDER])
+    {echo "	<script language='javascript'>
+      alert('회원정보에 성별정보가 누락되어 있어 티칭1 검정신청이 불가능합니다.');
+      top.document.location.href = 'index.html'
+    </script>";
+    }
+
+  // 시험장소코드를 실제장소로 환원
+  if ($row1[Skiresort] == 1){$Skiresort2 = '용평리조트';}
+	if ($row1[Skiresort] == 2){$Skiresort2 = '양지파인리조트';}
+	if ($row1[Skiresort] == 4){$Skiresort2 = '무주덕유산리조트';}
+	if ($row1[Skiresort] == 5){$Skiresort2 = '비발디파크';}
+	if ($row1[Skiresort] == 6){$Skiresort2 = '휘닉스평창';}
+	if ($row1[Skiresort] == 7){$Skiresort2 = '월리힐리파크';}
+	if ($row1[Skiresort] == 8){$Skiresort2 = '지산포레스트리조트';}
+	if ($row1[Skiresort] == 9){$Skiresort2 = '엘리시안강촌';}
+	if ($row1[Skiresort] == 10){$Skiresort2 = '오크밸리';}
+	if ($row1[Skiresort] == 11){$Skiresort2 = '하이원리조트';}
+	if ($row1[Skiresort] == 12){$Skiresort2 = '곤지암리조트';}
+	if ($row1[Skiresort] == 13){$Skiresort2 = '알펜시아';}
+	if ($row1[Skiresort] == 14){$Skiresort2 = '베어스타운';}
+	if ($row1[Skiresort] == 15){$Skiresort2 = '에덴벨리리조트';}
+	if ($row1[Skiresort] == 16){$Skiresort2 = '오투리조트';}
+	
+  // 성별코드를 실제설별로 환원
+	if ($member[GENDER] == 1){$selected1_1 = 'selected';}
+	if ($member[GENDER] == 2){$selected1_2 = 'selected';}
+
+
+  // 시험응시료에 컴마 + 원 표시
+  $row1[Testfee] = number_format($row1[Testfee])."원";
+
+  // 시험일시 + 시험시간 조립
+	$test_date = $row1[Test_Date]." ($row1[Time])";
+
+  // 시험코드 생성
+  $Test_NO = "2022-".$type."-".$row1[Skiresort]."-".$row1[TEST_NO];
+
+  // 지금 신청하는 시험을 이미 신청했는지 체크하는 코드
+	if ($dup_check[Apply_date] == ''){$dup_check[Apply_date] = $today;}
+	
+	// 참가정원 100명 이상일때 백신접종여부 체크
+	
+	$Participate = $row1[Participate];
+	
+
+?>
+
+<!DOCTYPE html>
+
+<html lang="ko">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>시험신청1</title>
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="./images/favicon.png">
+	<link href="./vendor/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet">
+    <link href="./css/style.css" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&family=Roboto:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
+    <style>.form-control{border-radius: $radius; background: $white; border: 1px solid $border; font-size:13pt; color: #f54242; height: 60px; @include respond('laptop') { height: 41px; } &:hover,&:focus,&.active{ box-shadow: none; background: $white; color: $dark; } }</style>
+
+    <script>
+
+    	var doubleSubmitFlag = false;
+    	
+    	function doubleSubmitCheck(){
+        if(doubleSubmitFlag){
+            return doubleSubmitFlag;
+        	}else{
+            doubleSubmitFlag = true;
+            return false;
+        	}
+    	}
+
+      	function go_back(){top.document.location.href = '$return_page'}
+
+        function send_db2(){
+        
+       
+          var Test_No = document.getElementById("Test_No").value;
+    	  var Test_id = document.getElementById("Test_id").value;
+          var Skiresort = document.getElementById("Skiresort").value;
+          var Participate = document.getElementById("Participate").value;
+          var BIRTH = document.getElementById("BIRTH").value;
+		  var GENDER2 = document.getElementById("GENDER2").value;
+          var VACCINE  = document.getElementById("VACCINE").value;
+          var photo1 = document.getElementById("photo1").value;
+          var photo2 = document.getElementById("photo2").value;
+
+          var reg_email = /^([0-9a-zA-Z_\.-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$/;
+      	  var eMail = document.getElementById("BuyerEmail").value;
+
+		  if (GENDER2 == '0'){alert('성별을 입력해 주세요 !!!');return;}
+		  if (BIRTH == ''){alert('생년월일을 등록해 주세요 !!!');return}
+  		  if (VACCINE == ''){alert('백신접종여부를 입력해 주세요 !!!');return;}
+
+      	  if (!eMail){alert('이메일 주소를 입력해 주세요 !!!'); return; }
+      	  if(!reg_email.test(eMail)) { alert('이메일 주소가 유효하지 않습니다. !!!'); return; }
+      	  
+          if(Participate >= 100 && (VACCINE == '0' || VACCINE == '')){ alert('백신접종자만 참가가능한 검정스케쥴입니다!!!'); return; }
+ 	        	  
+          if(photo1 == 'None' && !photo2){ alert('증명사진(필수)을 등록해 주세요 !!!'); return; }
+
+   	      if(doubleSubmitCheck()) return;
+
+          	myform = document.mobileweb;
+       		myform.action = "test1_regist.html";
+       		myform.target = "_self";
+       		myform.submit();
+        }
+
+    </script>
+
+</head>
+
+<body>
+
+    <!--*******************
+        Preloader start
+    ********************-->
+    <div id="preloader">
+        <div class="sk-three-bounce">
+            <div class="sk-child sk-bounce1"></div>
+            <div class="sk-child sk-bounce2"></div>
+            <div class="sk-child sk-bounce3"></div>
+        </div>
+    </div>
+    <!--*******************
+        Preloader end
+    ********************-->
+
+
+    <!--**********************************
+        Main wrapper start
+    ***********************************-->
+    <div id="main-wrapper">
+
+        <!--**********************************
+            Nav header start
+        ***********************************-->
+        <div class="nav-header">
+            <a href="../index.html" class="brand-logo">
+                <img src="../images/sb_logo.png" width = 90%>
+            </a>
+
+            <div class="nav-control">
+                <div class="hamburger">
+                    <span class="line"></span><span class="line"></span><span class="line"></span>
+                </div>
+            </div>
+        </div>
+        <!--**********************************
+            Nav header end
+        ***********************************-->
+
+		<?
+		// 챗팅박스 + 헤드네비 불러오기
+		include '_chat_box.html';
+		include '_head_bar.html';
+
+		// 좌측 네비게이션
+    include '_my_menu.html';
+    ?>
+
+
+        <!--**********************************
+            Content body start
+        ***********************************-->
+        <div class="content-body">
+            <!-- container starts -->
+            <div class="container-fluid">
+                <!-- row -->
+
+<?
+              echo "
+                <div class='container' style = 'padding:0px;'>
+              			<div class='row'>
+                			<div class='col-lg-12 text-center'>
+                  				<p class = 'font32'>한국스키장경영협회 $Test_Name 검정신청</p>
+                			</div>
+              			</div>
+              		</div>
+        			<br><br>
+
+              <div class='container'>
+
+            		<form name='mobileweb' method='POST' enctype='multipart/form-data'>
+                		<input type='text' name='GoodsCnt' value='1' hidden>
+                		<input name='Test_No' type='text' value='$Test_No' hidden>
+                		<input name='type' type='text' value='$type' hidden>
+
+                    <table style = 'height:35px;border-bottom:1px solid #888888;' width = 100% >
+                  	<tr><td class = 'font16' align = center style = 'background-color:#000000;color:#FFFFFF;width:180px;font-weight:700;'>검정신청자 정보</td><td></td></tr></table><br><br>
+
+
+                    <div class='form-group' >
+              						<div class='input-group'>
+                							<div class='input-group-prepend'>
+              								        <button class='btn btn-info border-dark' type='button' style = 'width:130px;'>성명</button>
+                							</div>
+              								        <input class='form-control'  type='text' name='BuyerName' value = '$member[MEMBER_NAME]' style = 'height:60px;' readonly>
+              								        <input class='form-control'  type='text' id = 'Test_No'   name='Test_No'    value = '$Test_No' hidden>
+                                      <input class='form-control'  type='text' id = 'Test_id'   name='Test_id'    value = '$type' hidden>
+                                      <input class='form-control'  type='text' id = 'Skiresort' name='Skiresort'  value = '$row1[Skiresort]' hidden>
+                                      <input class='form-control'  type='text' id = 'Participate' name='Participate'  value = '$row1[Participate]' hidden>
+              						</div>
+                    </div>
+
+                    <div class='form-group'>
+              						<div class='input-group'>
+                							<div class='input-group-prepend'>
+              								        <button class='btn btn-info border-dark' type='button' style = 'width:130px;'>핸드폰</button>
+                							</div>
+              								        <input class='form-control'  type='text' name='BuyerTel' value = '$member[PHONE]' style = 'height:60px;' readonly>
+              						</div>
+                    </div>
+                    
+                    <div class='form-group'>
+              						<div class='input-group'>
+                							<div class='input-group-prepend'>
+              								        <button class='btn btn-info border-dark' type='button' style = 'width:130px;'>생년월일</button>
+                							</div>
+              								        <input class='form-control'  type='date' id = 'BIRTH' name='BIRTH' value = '$member[BIRTH]' style = 'height:60px;'>
+              						</div>
+                    </div>
+                    
+                    
+
+                    <div class='form-group' >
+              						<div class='input-group'>
+                							<div class='input-group-prepend'>
+              								<button class='btn btn-info border-dark' type='button' style = 'width:130px;'>이메일</button>
+                							</div>
+              								<input class='form-control'  type='text' id = 'BuyerEmail' name='BuyerEmail' value = '$member[EMAIL]' style = 'height:50px;'>
+              						</div>
+                    </div>
+                    
+                    <div class='form-group' >
+              						<div class='input-group'>
+                							<div class='input-group-prepend'>
+              								<button class='btn btn-info border-dark' type='button' style = 'width:130px;'>성별</button>
+                							</div>
+                      						<select class='form-control' id = 'GENDER2' name = 'GENDER2' $style_info>
+                        					<option value = '0'>성별</option>
+        									<option value = '0'>-----------------------------------</option>
+                        					<option value = '1' $selected1_1>남성</option>
+                        					<option value = '2' $selected1_2>여성</option>
+                      </select>
+              		</div>
+                    </div>                 
+
+
+                    <div class='form-group' >
+              						<div class='input-group'>
+                							<div class='input-group-prepend'>
+              								<button class='btn btn-info border-dark' type='button' style = 'width:130px;'>백신접종</button>
+                							</div>
+                     	 <select class='form-control' id = 'VACCINE' name = 'VACCINE' $style_info>
+                       		 	<option value = ''>코로나19 백신접종여부</option>
+                        		<option value = ''>---------------------</option>
+                        		<option value = '0'>미접종자</option>
+                        		<option value = '1'>1차접종완료</option>
+                        		<option value = '2'>2차접종완료</option>
+                        		<option value = '3'>3차접종완료</option>
+                        		<option value = '9'>완치자</option>
+                      	</select>
+                </div>		
+            </div>
+
+
+                    <div class='form-group'>
+              						<div class='input-group'>
+                							<div class='input-group-prepend'>
+              								<button class='btn btn-info border-dark' type='button' style = 'width:130px;'>신청일자</button>
+                							</div>
+              								<input class='form-control'  type='text' name='Apply_date' value = '$dup_check[Apply_date]' style = 'height:50px;' readonly>
+              						</div>
+                    </div>
+                    <br><br>
+
+                    <table style = 'height:35px;border-bottom:1px solid #888888;' width = 100% >
+              		  <tr><td class = 'font16' align = center style = 'background-color:#000000;color:#FFFFFF;width:130px;font-weight:700;'>회원사진</td><td></td></tr></table><br><br>";
+
+				if ($member[PHOTO3]){$img_url = "../data/$row[PHOTO3]"; $photo = 'YES';}
+				if (!$member[PHOTO3]){$img_url = "../data/no_image.jpg"; $photo = 'YES';}
+				if ($member[image]){$img_url = "../view3.html?id=$row[MEMBER_ID]"; $photo = 'YES';}
+
+				$member_imgs_jpg = "../member_imgs/$member[MEMBER_ID]".".jpg";
+				$member_imgs_jpeg = "../member_imgs/$member[MEMBER_ID]".".jpeg";
+				$member_imgs_png = "../member_imgs/$member[MEMBER_ID]".".png";
+				$member_imgs_gif = "../member_imgs/$member[MEMBER_ID]".".gif";
+
+				if ($member[PHOTO3]){$img_url = "../data/".$member[PHOTO3];}else{$img_url='../data/no_image.jpg'; $photo = '';}
+
+				if (is_file($member_imgs_jpg)){$img_url ="$member_imgs_jpg"; $photo = 'YES';}
+				if (is_file($member_imgs_jpeg)){$img_url ="$member_imgs_jpeg"; $photo = 'YES';}
+				if (is_file($member_imgs_png)){$img_url ="$member_imgs_png"; $photo = 'YES';}
+				if (is_file($member_imgs_gif)){$img_url ="$member_imgs_gif"; $photo = 'YES';}
+
+
+      				echo "<img src = '$img_url' width = 200px><br><br>
+      				<input type ='text' id = 'photo' name = 'photo' value = '$photo' hidden>
+
+      				 <div class='form-group' style='padding-left:10px'>
+      						<div class='input-group'>
+        							<div class='input-group-prepend'>
+      								<button class='btn btn-info' type='button' style = 'width:120px;'>사진등록</button>
+        							</div>
+      								<input class='form-control' type='file' id = 'photo2' name='image' placeholder='이미지를 선택해 주세요 (6M Byte 이하)'>
+                      <input class='form-control'  type='text' id = 'photo1' name='photo1' value = '$photo' hidden>
+      						</div>
+                </div>
+
+      				  <br><br><br>
+                <table style = 'height:35px;border-bottom:1px solid #888888;' width = 100% >
+              	<tr><td class = 'font16' align = center style = 'background-color:#000000;color:#FFFFFF;width:480px;font-weight:700;'>시험정보 (자세한 사항은 스키장 홈페이지를 참조해 주세요)</td><td></td></tr></table><br><br>
+
+
+                <div class='form-group'>
+                <div class='input-group'>
+                  <div class='input-group-prepend'>
+                  <button class='btn btn-primary border-dark' type='button' style = 'width:130px;'>응시분야</button>
+                  </div>
+                  <input class='form-control'  type='text' name='goodsName' value = '$Product_Name' style = 'height:50px;' readonly>
+                </div>
+                </div>
+
+                <div class='form-group'>
+                    <div class='input-group'>
+                        <div class='input-group-prepend'>
+                            <button class='btn btn-primary border-dark' type='button' style = 'width:130px;'>시험장소</button>
+                        </div>
+                            <input class='form-control'  type='text'  name='Skiresort2' value = '$Skiresort2' style = 'height:50px;' readonly>
+                    </div>
+                </div>
+
+                <div class='form-group'>
+                    <div class='input-group'>
+                        <div class='input-group-prepend'>
+                            <button class='btn btn-primary border-dark' type='button' style = 'width:130px;'>시험코드</button>
+                        </div>
+                            <input class='form-control'  type='text'  name='Skiresort3' value = '$Test_NO' style = 'height:50px;' readonly>
+                    </div>
+                </div>
+
+                <div class='form-group'>
+                    <div class='input-group'>
+                        <div class='input-group-prepend'>
+                            <button class='btn btn-primary border-dark' type='button' style = 'width:130px;'>시험일시</button>
+                        </div>
+                            <input class='form-control'  type='text'  name='Test_Date' value = '$test_date' style = 'height:50px;' readonly>
+                    </div>
+                </div>
+
+                <br><br><br>
+                <table style = 'height:35px;border-bottom:1px solid #888888;' width = 100% >
+                <tr><td class = 'font16' align = center style = 'background-color:#000000;color:#FFFFFF;width:130px;font-weight:700;'>응시료 결제</td><td></td></tr></table><br><br>
+
+
+                <div class='form-group' >
+                <div class='input-group'>
+                    <div class='input-group-prepend'>
+                        <button class='btn btn-success border-dark' type='button' style = 'width:130px;'>결제방법</button>
+                    </div>
+                    <input class='form-control' type='text' name='Payment_Method' value = '검정당일 현장납부' style = 'height:50px;' readonly>
+                </div>
+                </div>
+
+                    <div class='form-group' >
+      							<div class='input-group'>
+        								<div class='input-group-prepend'>
+      									      <button class='btn btn-success border-dark' type='button' style = 'width:130px;'>응시료</button>
+        								</div>
+                        <input class='form-control' type='text' name='PRICE' value = '$row1[Testfee]' style = 'height:60px;' readonly>
+      							</div>
+                    </div>
+      			</div>
+          </form>
+                ";
+?>
+
+
+<div class='container text-right' style = 'padding:10px;'>
+&nbsp;<button class='btn-blue' style = 'height:50px;width:100px;' onclick='go_back()';>이전 페이지</button>&nbsp;
+
+
+<?
+
+  if ($type == 'T1' or $type == 'SBT1')
+  {
+    if($dup_total_record == 0)
+      {echo"&nbsp;<button class='btn-black' style = 'height:50px;width:120px;' onclick='send_db2()';>신청하기</button>";}
+  elseif ($dup_total_record > 0)
+    {echo"&nbsp;<button class='btn-black' style = 'height:50px;width:100px;' >응시완료</button>";}
+  }
+
+?>
+
+</div>
+<br><br><br>
+
+                <!-- Row ends -->
+            </div>
+            <!-- container ends -->
+        </div>
+        <!--**********************************
+                Content body end
+            ***********************************-->
+
+
+        <!--**********************************
+            Footer start
+        ***********************************-->
+        <div class="footer">
+            <div class="copyright">
+                <p>© Designed &amp; Developed by <a href="https://7gate.kr/" target="_blank">podong28.com</a> 2019</p>
+            </div>
+        </div>
+        <!--**********************************
+            Footer end
+        ***********************************-->
+
+
+    </div>
+    <!--**********************************
+        Main wrapper end
+    ***********************************-->
+
+    <!--**********************************
+        Scripts
+    ***********************************-->
+    <!-- Required vendors -->
+    <script src="./vendor/global/global.min.js"></script>
+	<script src="./vendor/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
+    <script src="./js/custom.min.js"></script>
+	<script src="./js/deznav-init.js"></script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,131 @@
+<?
+// 서브페이지 헤더 & 서브 메뉴 제너레이터
+$No = rand(1,3);
+
+if (substr($current_page,0,14) == 'skis.html?tab='){$current_page = substr($current_page,0,15);}
+if (substr($current_page,0,22) == 'admin_member.html?tab='){$current_page = substr($current_page,0,23);}
+
+// 서브페이지 메뉴 정보 불러오기
+$sub_page_query1	= "SELECT * FROM 7G_SUB_PAGE where Link_URL = '$current_page'";
+$sub_page_result1	= mysql_query($sub_page_query1,$connect);
+$sub_page1			= mysql_fetch_array($sub_page_result1);
+$page_no			= $sub_page1[Page_No];
+
+$sub_page_query		= "SELECT * FROM 7G_SUB_PAGE where Page_No = '$page_no' order by Link_No ASC";
+$sub_page_result	= mysql_query($sub_page_query,$connect);
+$sub_page			= mysql_fetch_array($sub_page_result);
+$total_record		= mysql_num_rows($sub_page_result);
+$sub_width2			= (100 / $total_record).'%';
+
+$current_page2		= $sub_page[Page_Name];
+if ($sub_page1[Page_Name]){$current_page2= $sub_page1[Page_Name];}
+if ($sub_page1[HEIGHT] == ''){$sub_page1[HEIGHT] = 45;}
+
+if (substr($current_page,0,28) == '/saasfee/activity.html?act=3'){$current_page2 = 'Activity Edit Mode';}
+if (substr($current_page,0,28) == '/saasfee/activity.html?act=1'){$current_page2 = 'Activity 이미지 등록';}
+if (substr($current_page,0,27) == '/saasfee/gallery.html?act=3'){$current_page2 = 'Gallery Edit Mode';}
+if (substr($current_page,0,27) == '/saasfee/gallery.html?act=1'){$current_page2 = 'Gallery 이미지 등록';}
+if (substr($current_page,0,25) == '/saasfee/place.html?act=3'){$current_page2 = 'Place Edit Mode';}
+if (substr($current_page,0,25) == '/saasfee/place.html?act=1'){$current_page2 = 'Place 이미지 등록';}
+
+$head_style1 = "font-size:40px;padding:15px;font-weight:700;opacity:0.7;text-shadow:3px 3px 6px #000;";
+$head_style2 = "font-size:28px;padding:15px;font-weight:700;opacity:0.7;text-shadow:3px 3px 6px #000;";
+
+if ($sub_page1[image_no] != '0'){$No = $sub_page1[image_no];}
+
+?>
+
+<style>
+.sub_head_menu .sub_top_menu li { width: <? echo $sub_width2; ?>;}
+.sub_head_menu .sub_top_bg {background-size:cover;background-position:center; background-image: url('gallery_view2.html?id=<? echo $No; ?>');}
+#sub_header .sub_top_bg{width: 100%; height: <? echo $sub_page1[HEIGHT].'vh'; ?>; position: relative; background-repeat: no-repeat; background-position: top center; background-size: cover; text-align: center;}
+</style>
+
+******************<br>
+******************<br>
+******************<br>
+******************<br>
+******************<br>
+******************<br>
+******************<br>
+******************<br>
+******************<br>
+******************<br>
+******************<br>
+******************<br>
+******************<br>
+******************<br>
+******************<br>
+******************<br>
+******************<br>
+******************<br>
+******************<br>
+******************<br>
+******************<br>
+******************<br>
+******************<br>
+
+
+<?
+
+
+
+	$select_style = "background-color: #94b9ff; border-color:#FFFFFF; border-width: 3px; font-weight:500; font-size:16pt; padding-left:10px; height:50px; color: Black; opacity: 0.7;";
+	echo "
+	<div id='sub_header' class='sub_head_menu'>
+                <div class='sub_top_bg'>
+                   <div class='d-flex h-100 align-items-center justify-content-center'>
+
+                       <h1 class = 'd-none d-sm-block' style = '$head_style1'>$current_page2</h1>
+                       <h1 class = 'd-block d-sm-none' style = '$head_style2'>$current_page2</h1>
+                       
+                       
+                    </div>";
+                    
+                    // PC 화면 메뉴구성
+                    if ($total_record >= 2){
+                    echo "
+                    <div class='sub_top_menu d-none d-lg-block'>
+                        <ul class='sub_header_clear'>";
+          
+					while($sub_page){
+					if ($current_page == $sub_page[Link_URL]){$display_on = "class='on'";}else{$display_on = "";} 
+					if ($id){$link_page = $sub_page[Link_URL]."&id=".$id;}else{$link_page = $sub_page[Link_URL];}
+					if ($sub_page[Link_Name] == 'ALL' or $sub_page[Link_Name] == '전체' ){$link_page = $sub_page[Link_URL];}
+
+					echo "<li $display_on><a href='$link_page'>$sub_page[Link_Name]</a></li>";
+					$sub_page=mysql_fetch_array($sub_page_result);
+					}
+          
+          			echo "</ul></div>";
+          			}
+          
+					// 모바일 화면 메뉴규성
+                    if ($total_record >= 2){
+    
+					$sub_page_query2	= "SELECT * FROM 7G_SUB_PAGE where Page_No = '$page_no' order by Link_No ASC";
+					$sub_page_result2	= mysql_query($sub_page_query2,$connect);
+					$sub_page2			= mysql_fetch_array($sub_page_result2);
+					$total_record2		= mysql_num_rows($sub_page_result2);
+					
+					
+					echo "<div class ='sub_top_menu d-lg-none' style = 'padding-left:30px;padding-Right:30px;padding-bottom:30px;'>
+ 					<select class='form-control' id='selectbox' name='' onchange='javascript:location.href = this.value;' style = '$select_style'>";
+					
+					while($sub_page2){
+					if ($current_page == $sub_page2[Link_URL]){$display_on = "selected = 'selected'";}else{$display_on = "";} 
+					echo "<option value = $sub_page2[Link_URL] $display_on >$sub_page2[Link_Name]</option>";
+					$sub_page2=mysql_fetch_array($sub_page_result2);
+					}	
+					
+					echo "</select></div>";
+					
+					}
+
+    echo "</div></div>";
+    
+   
+?>
+ 				     
+
+

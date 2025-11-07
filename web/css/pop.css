@@ -1,0 +1,9 @@
+@charset "utf-8"; 
+/* copyright(c) WEBsiting.co.kr */
+html,body{width:100%; height:100%; background:#fff; overflow:auto; }
+.term_area{width:100%; position:relative; }
+.term_area header{position:fixed; left:0px; right:0px; top:0px; height:40px; background:#242424; color:#fff; }
+.term_area header h1{font-size:16px; padding:0 10px; height:40px; line-height:40px; }
+.term_area section{position:fixed; left:0px; top:40px; right:0px; bottom:30px; overflow:auto; }
+.term_area section p{padding:20px; white-space:pre-line; font-size:12px; color:#666; }
+.term_area footer{position:fixed; left:0px; right:0px; bottom:0px; height:30px; line-height:30px; background:#ddd; color:#999; font-family:verdana; font-size:11px; text-align:center; }

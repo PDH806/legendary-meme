@@ -1,0 +1,136 @@
+<?
+    include "include/head_common.html";
+?>
+
+<body>
+    <div id="scroll_top">
+        <button type="button"><img src="images/scr_top.jpg"></button>
+    </div>
+
+    <div id="wrap">
+        <? 
+                include"include/sb_header.html" 
+            ?>
+        <!-- ㅡㅡㅡㅡㅡㅡㅡㅡ/SB_HEADERㅡㅡㅡㅡㅡㅡㅡㅡ -->
+        <div id="sbcenter" class="teach">
+            <div class="sb_top_bg">
+                <div class="inner_wrap">
+                    <h2>스키 지도 요원</h2>
+                </div>
+                <div class="sb_top_menu">
+                    <ul class="sbclear">
+                        <li><a href="teach_ski.html">스키 지도 요원 소개</a></li>
+                        <li><a href="teach_test.html">시험 정보 및 자료</a></li>
+                        <li><a href="teach_data.html">원서 접수 및 조회</a></li>
+                        <li class="on"><a href="teach_check.html">자격 확인</a></li>
+                        <li><a href="teach_demon.html">데몬스트레이터</a></li>
+                        <li><a href="teach_champion.html">기술 선수권 대회</a></li>
+                    </ul>
+                </div>
+                <!--/sb_top_menu-->
+            </div>
+            <!--/sb_top_bg-->
+            <div class="sbcenter teach_data patrol_check">
+                <div class="sb_content">
+                    <div class="sb_top_text sbclear">
+                        <a href="teach_data.html" class="sb_prev"><img src="images/sb_prev_btn_on.png" alt="이전"></a>
+                        <h3>자격 확인</h3>
+                        <a href="teach_demon.html" class="sb_next"><img src="images/sb_next_btn_on.png" alt="다음"></a>
+                    </div>
+                    <!--/sb_top_text-->
+                    <div class="tab_wrap mb_ski_list">
+                        <!-- <div class="tab_img">
+                                    <img src="images/teach_test.jpg" alt="스키 구조 요원 자격확인">
+                                </div> -->
+                        <div class="tab_menu_top">
+                            <ul class="sbclear">
+                                <li class="on"><a href="teach_check.html">Teaching 1</a></li>
+                                <li><a href="teach_check_2.html">Teaching 2</a></li>
+                                <li><a href="teach_check_3.html">Teaching 3</a></li>
+                            </ul>
+                        </div>
+                        <div class="tab_menu_area inner_menu">
+                            <ul class="tab_menu tab_click sbclear">
+                                <li class="on"><a href="#tab1">스키지도요원 자격확인</a></li>
+                            </ul>
+                        </div>
+                        <!--/tab_menu_area-->
+                        <div class="tab_list_area tab_click_list">
+                            <div id="tab1">
+                                <div class="patrol_list ptr_table">
+                                    <div class="content_box">
+                                        <div class="tit_box"><span class="sb_tit">자격 사항 조회</span></div>
+                                        <div class="txt_box">
+                                            <h4 class="sb_bold">스키지도요원(티칭1) 자격시험 합격자 중 최초 자격증 발급자</h4>
+                                            <table>
+                                                <colgroup>
+                                                    <col class="ptr_1">
+                                                    <col class="ptr_2">
+                                                </colgroup>
+                                                <caption>스키지도요원 자격확인</caption>
+                                                <tbody>
+                                                    <tr>
+                                                        <th>발급조건</th>
+                                                        <td>스키지도요원(티칭1) 자격시험 합격자 중 최초 자격증 발급자</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>발급비</th>
+                                                        <td>무료(최초 자격증 발급자에 한함)</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                            <ul>
+                                                <li class="ptr sb_bold">스키지도요원(티칭1) 합격자 자격증 발급 신청 방법</li>
+                                                <li>
+                                                    <ul class="ptr_pd">
+                                                        <li>1. 티칭1 합격자에 한해, 정보 입력 버튼 클릭 후 자격증에 필요한 개인정보를 입력 후 저장</li>
+                                                        <li>2. 자격증 발급 신청 및 확인서 출력(정보수정)은 정보 입력이 완료된 이후, 자격증 발급 버튼 클릭 후 신청</li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                            <ul class="ptr_ul">
+                                                <li class="ptr sb_bold">유의사항</li>
+                                                <li>
+                                                    <ul class="li_btn_in ptr_pd">
+                                                        <li>합격자가 아닌 경우, 정보 입력이 불가능 합니다.(합격자인데, 정보입력이 안되실 경우 문의전화 주시기 바랍니다.)</li>
+                                                        <li>자격증 발급 신청 이후에는 정보 수정이 불가능 합니다.</li>
+                                                        <li>자격증 발급 신청은 최초 1회만 무료이며, 이후 재발급 신청은 추가 비용이 발생됩니다.</li>
+														<li><b style="font-weight:bold">확인서 출력 및 자격증 재발급</b>은 자격사항 조회 후에 출력 및 발급 요청을 할 수 있습니다.</li>
+                                                    </ul>
+                                                </li>
+                                            </ul>
+                                            <div class="click_btn">
+                                                <ul>
+                                                    <li class="btn_ok"><a href="javascript:f1.action='teach_chk_info.html';f1.submit();">정보 입력</a></li>
+													<!-- <li class="btn_ck"><a href="javascript:f1.action='teach_my_issue.html';f1.submit();">자격증 발급</a></li> -->
+                                                </ul>
+                                                <form name='f1' method='post'>
+                                                 <input type='hidden' name='key' value='500031,500046' />
+                                                 <input type='hidden' name='seq' value='GD4470,GD4495' />
+                                                </form>
+                                            </div>
+                                        </div>
+                                        <!--txt_box-->
+                                    </div>
+                                    <!--/content_box-->
+                                </div>
+                                <!--/partrol_list-->
+                            </div>
+                        </div>
+                        <!--/tab_list_area-->
+                    </div>
+                    <!--/tab_wrap-->
+                </div>
+                <!--/sb_content-->
+            </div>
+            <!-- //sbcenter -->
+            <?
+          include "include/sb_quick.html";
+?>
+        </div>
+        <!-- //sbcenter -->
+
+        <!-- ㅡㅡㅡㅡㅡㅡㅡㅡFOOTERㅡㅡㅡㅡㅡㅡㅡㅡ -->
+        <?
+    include "include/footer.html";
+?>

@@ -1,0 +1,141 @@
+<html lang="ko">
+<?
+    include "include/head_common.html";
+?>
+
+    <body>
+        <div id="scroll_top">
+            <button type="button"><img src="images/scr_top.jpg"></button>
+        </div>
+
+        <div id="wrap">
+            <? 
+                include"include/sb_header.html" 
+            ?>
+            <!-- ㅡㅡㅡㅡㅡㅡㅡㅡ/SB_HEADERㅡㅡㅡㅡㅡㅡㅡㅡ -->
+            <div id="sbcenter" class="patrol">
+                <div class="sb_top_bg">
+                    <div class="inner_wrap">
+                       <h2>스키 구조 요원</h2>
+                    </div>
+                    <div class="sb_top_menu">
+                        <ul class="sbclear">
+                            <li><a href="patrol_ski.html">스키 구조 요원 소개</a></li>
+                            <li><a href="patrol_test.html">시험 정보 및 자료 </a></li>
+                            <li><a href="patrol_data.html">원서 접수 및 조회</a></li>
+                            <li class="on"><a href="patrol_check.html">자격 확인</a></li>
+                        </ul>
+                    </div>
+                    <!--/sb_top_menu-->
+                </div>
+                <!--/sb_top_bg-->
+                <div class="sbcenter patrol_check">
+                    <div class="sb_content">
+                        <div class="sb_top_text sbclear">
+                            <a href="patrol_data.html" class="sb_prev"><img src="images/sb_prev_btn_on.png" alt="이전"></a>
+                            <h3>스키 구조 요원 자격확인</h3>
+                            <a href="#self" class="sb_next"><img src="images/sb_next_btn_off.png" alt="다음"></a>
+                        </div>
+                        <!--/sb_top_text-->
+                        <div class="tab_wrap mb_ski_list">
+                                <div class="tab_img">
+                                    <img src="images/patrol_check.jpg" alt="스키 구조 요원 자격확인">
+                                </div>
+                                <div class="tab_menu_area">
+                                    <ul class="tab_menu tab_click sbclear">
+                                        <li class="on"><a href="#tab1">1기 ~ 18기 자격 확인</a></li>
+                                        <li><a href="#tab2">19기 ~ 자격 확인</a></li>
+                                    </ul>
+                                </div><!--/tab_menu_area-->
+                                <div class="tab_list_area tab_click_list">
+                                    <div id="tab1">
+                                         <div class="patrol_list">
+                                            <div class="content_box">
+                                               <div class="tit_box"><span class="sb_tit">자격 사항 조회</span></div>
+                                               <div class="txt_box ft">
+                                                   <ul class="txt_b">
+                                                       <li>자격사항조회는 회원가입한 자에 한하여 조회가 가능합니다.</li>
+                                                       <li>취득자에 한해 본서비스로 취득확인서 출력 및 자격증 발급신청을 하실수 있습니다.</li>
+                                                       <li>취득확인서는 자격사항 인증후 언제든지 출력이 가능합니다.</li>
+                                                       <li>자격증발급신청은 자격사항 인증후 신청이 가능합니다.
+                                                           <ul class="chk_inner">
+                                                               <li>자격증 7,000원</li>
+                                                               <li>ID카드 14,000원,</li>
+                                                               <li>자격증+ID카드 17,000&nbsp;<br>(택배비포함)</li>
+                                                               <li class="color_1">계좌번호 : KB 484237-01-006623 (한국스키장경영협회)</li>
+                                                               <li>스키구조요원 합격 확인서 요청시 당 협회에서 직접 무료 발급해드립니다.</li>
+                                                           </ul>
+                                                       </li>
+                                                       <li>발급신청하신 자격증은 발급비용입금 확인후 입력한 주소로 발송됩니다.</li>
+                                                       <li>제1기(한국스키장경영협회 시행) 스키구조요원 확인서는 별도로 스키장협회에 문의 바랍니다.</li>
+                                                   </ul>
+                                                   <ul class="li_btn_b">
+                                                       <!-- <li>이름과 생년월일로 스키구조요원 자격확인을 하실 수 있습니다.</li> -->
+													   <!-- <li>아래 입력란에 이름과 생년월일 6자리를 입력 후 자격사항조회 버튼을 클릭해주십시오.</li> -->
+													   <li>정보 입력을 통해 스키구조요원 자격확인을 하실 수 있습니다.</li>
+													   <li>아래 자격사항조회 버튼을 클릭해주십시오.</li>
+                                                   </ul>
+                                                   <!--<div class="check_form">
+                                                        <form id="check_form" method="post" action="#">
+                                                           <ul class="sbclear">
+                                                               <li><p>성명</p><input type="text" maxlength="20"></li>
+                                                               <li><p>생년월일</p><input type="text"  maxlength="6" placeholder="생년월일 6자리"></li>
+                                                           </ul>
+                                                       </form> 
+                                                   </div>-->
+                                                   <div class="click_btn">
+                                                       <ul>
+                                                           <li class="btn_ok"><a href="patrol_chk_info.html">자격 사항 조회</a></li>
+                                                       </ul>
+                                                   </div>
+                                               </div><!--txt_box-->
+                                            </div><!--/content_box-->
+                                        </div><!--/partrol_list-->
+                                    </div>
+                                    <div id="tab2">
+                                        <div class="patrol_list">
+                                            <div class="content_box">
+                                               <div class="tit_box"><span class="sb_tit">자격 사항 조회</span></div>
+                                               <div class="txt_box ft">
+                                                   <div>
+                                                       <ul>
+                                                           <li class="sb_bold">스키 구조 요원 자격 확인 및 재발급(19기 부터~)</li>
+                                                           <li>최초 자격증은 모두 발급완료 되었으며, 해당 페이지에서는 확인증 출력 및 자격증 재발급이 가능합니다. 자격증 재발급 신청은 추가 비용이 발생 됩니다.</li>
+                                                           <li class="color_1">&#40;19기 이전 합격자는 1기~18기 자격 확인 페이지에서 조회 및 발급 신청이 가능합니다.&#41;</li>
+                                                       </ul>
+                                                       <ul class="chk_price">
+                                                           <li class="sb_bold ptr">자격증 재발급 비용 안내</li>
+                                                           <li>
+                                                               <ul class="chk_inner">
+                                                                   <li>자격증(A4) : 7,000원</li>
+                                                                   <li>ID카드 : 14,000원,</li>
+                                                                   <li>자격증 + ID카드 : 17,000</li>
+                                                               </ul>
+                                                           </li>
+                                                       </ul>
+                                                   </div>
+                                                   <div class="click_btn">
+                                                       <ul class="btn_print">
+                                                           <li class="btn_ok ok_chk"><a href="#self" onclick="window.open('patrol_output.html','','width=1240px, height= 700px, left=0px, top=0px')">확인증 출력 및 자격증 재발급</a></li>
+                                                       </ul>
+                                                   </div>
+                                               </div><!--txt_box-->
+                                            </div><!--/content_box-->
+                                        </div><!--/partrol_list-->
+                                    </div>                                                
+                                </div><!--/tab_list_area-->
+                        </div><!--/tab_wrap-->
+                    </div>
+                    <!--/sb_content-->
+               </div>
+                <!-- //sbcenter -->
+<?
+          include "include/sb_quick.html";
+?>
+            </div>
+            <!-- //sbcenter -->
+
+            <!-- ㅡㅡㅡㅡㅡㅡㅡㅡFOOTERㅡㅡㅡㅡㅡㅡㅡㅡ -->
+            <?
+    include "include/footer.html";
+?>

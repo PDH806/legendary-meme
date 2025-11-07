@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html>
+<?php
+  //--+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+
+  // 	코딩정보
+  //--+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+
+  //
+  //	+ 개발자 : @friday1968
+  //  + 이메일 : podong28@naver.com
+  //
+  //	+ 개발사 : (주)세븐게이트코리아
+  //  + 연락처 : 010-2889-1483
+  //
+  //  + 화면내용 : 회원정보 등록화면 (패스워드 암호)
+  //--+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+
+?>
+
+<body>
+
+  <?php
+    include 'db_config.html';
+    
+   	$Login_User_ID	= $_COOKIE['Login_ID'];
+	$rank 			= $_COOKIE['rank'];
+
+    $the_category 	= $_GET["category"];
+    $the_page 		= $_GET["category"];
+    $docu_no 		= $_GET['no'];
+    $today   = date("Y-M-D");
+
+    if($the_category){$query = "where category = $the_category";}
+    if(!$the_category){
+    	$query = "";
+		$the_category = 0;
+	}	 
+	if($the_category == 0){$category_name = "커뮤니티";}
+	if($the_category == 1){$category_name = "공지사항";}
+    if($the_category == 3){$category_name = "Q&A";}
+    if($the_category == 4){$category_name = "자유게시판";}
+
+    $query5        = "select * from $bbs_category order by category ASC" ;
+    $result5       = mysql_query($query5, $connect);
+    $category_list = mysql_fetch_array($result5);
+
+  ?>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+  <link rel="shortcut icon" href="Myicon.png" type="image/x-icon">
+
+  <!-- include jquery -->
+  <script src="http:////cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.js"></script>
+
+  <!-- include libs stylesheets -->
+  <link rel="stylesheet" href="http:////maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.css" />
+  <script src="http:////cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.js"></script>
+  <script src="http:////maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.js"></script>
+  <script src='https://use.fontawesome.com/releases/v5.2.0/js/all.js'></script>
+  <script src='https://kit.fontawesome.com/678c3e80a7.js' crossorigin='anonymous'></script>
+
+  <!-- include summernote -->
+  <link rel="stylesheet" href="summernote/dist/summernote-bs4.css">
+  <script type="text/javascript" src="summernote/dist/summernote-bs4.js"></script>
+
+  <script type="text/javascript">
+
+    $(function() {
+      $('.summernote').summernote({
+        height: 200,
+        lang: 'ko-KR',
+        callbacks: {
+          onImageUpload: function(files, editor, welEditable) {
+            console.log('image upload:', files);
+            sendFile(files[0], editor, welEditable);
+          },
+        }
+      });
+
+      function sendFile(file, editor, welEditable) {
+        data = new FormData();
+        data.append("file", file);
+        $.ajax({
+          url: "upload.php", // image 저장 소스
+          data: data,
+          cache: false,
+          contentType: false,
+          processData: false,
+          type: 'POST',
+          success: function(data) {
+            var image = $('<img>').attr('src', '' + data);
+            $('.summernote').summernote("insertNode", image[0]);
+          },
+          error: function(jqXHR, textStatus, errorThrown) {
+            console.log(textStatus + " " + errorThrown);
+          }
+        });
+      }
+
+      $('form').on('submit', function(e) {
+        e.preventDefault();
+      });
+    });
+
+  </script>
+
+
+
+<?php
+//--+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+
+// 	글 내용에서 이미지 정보 추출
+//--+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+
+
+
+
+//  echo $matches[0]; // img 태그 전체
+//  echo $matches[1]; // img 태그 중 src 값
+?>
+
+
+<!-- Custom styles for AUGMENT-SKI -->
+  <? include 'link-files.html'; ?>
+<!-- end of Link -->
+
+  <title><? echo $site_title; ?></title>
+
+  <style type="text/css">
+  a.ski_tab {color:#404040;text-decoration:none;background-color:transparent;}
+  a.ski_title {color:#404040;text-decoration:none;background-color:transparent;font-size:1.2rem;font-weight:600}
+  span.ski_title {color:#404040;text-decoration:none;background-color:transparent;font-size:1.2rem;font-weight:600}
+  span.ski_sub_title {color:#606060;text-decoration:none;background-color:transparent;font-size:0.8rem}
+  span.contents_title {color:#404040;text-decoration:none;background-color:transparent;font-size:1.7rem;font-weight:600}
+  span.contents_sub_title {color:#404040;text-decoration:none;background-color:transparent;font-size:1.2rem;font-weight:600}
+  body { min-height:540px; }
+  body[orient="portrait"] { min-height:540px; }
+  body[orient="landscape"] { min-height:400px; }
+  img.card-img-top {width: 100%;height: 100px;object-fit: cover;}
+  img {max-width:100%;height:auto}
+  pre {padding:0px; overflow:auto; white-space:pre-wrap;}
+  p {color:#606060;font-size:15px;font-weight:400;}
+  </style>
+
+
+
+
+</head>
+
+<body>
+
+<!-- Navigation for AUGMENT-SKI -->
+  <? include 'main-nav.html'; ?>
+<!-- end of Navigation -->
+
+<!-- Navigation for 서브타이틀 -->
+
+		<!-- Page Heading 영역 시작 -->
+			<div class='countainer-fluid' style='background-color:#0c56a4;'>
+				<div class='container' style='padding-left:10px;'>
+					<br><br>
+					<span class = 'middle_nav' style='color:#ffffff; font-size:1.5rem'>Home</span>
+					<span class = 'middle_nav' style='color:#ffffff; font-size:.8rem'> / <? echo $category_name; ?></span>
+				</div>
+			</div>		
+
+  <div class="container">
+  				<div class = "container d-none d-sm-block" style="background-image: url('/img/hansoll-sub-banner-2.jpg');height:22.5vmin;" >
+  				<br>
+            	<span class = 'middle_nav' style='padding:10px; color:#2044b0; font-size:1.3rem; font-weight:700'>한솔섬유배 아름다운스키 Interski Festival</span><br>
+            	<span class = 'middle_nav' style='padding:10px; color:#2044b0; font-size:2.5rem; font-weight:700'><? echo $category_name; ?></span>
+				</div>
+
+  				<div class = "container d-block d-sm-none" style="background-image: url('/img/hansoll-sub-banner-2.jpg');height:30vmin;" >
+  				<br>
+            	<span class = 'middle_nav' style='padding:10px; color:#2044b0; font-size:1rem; font-weight:700'>한솔섬유배 아름다운스키 Interski Festival</span><br>
+            	<span class = 'middle_nav' style='padding:10px; color:#2044b0; font-size:2rem; font-weight:700'><? echo $category_name; ?></span>
+				</div>
+				<br>
+
+<?
+echo "
+        <div class='container' style = 'padding:2px'>";
+
+          $query			= "SELECT * FROM $bbs_name where docu_no = '$docu_no'";
+          $result			= mysql_query($query, $connect);
+          $bbs				= mysql_fetch_array($result);
+
+		  if($bbs[authority] == 1 and (($bbs[member_id] == $Login_User_ID) or $rank == 9)){echo "authority is on";}
+
+          $query			= "SELECT * FROM bbs_comments where docu_no = '$docu_no'";
+          $result2			= mysql_query($query, $connect);
+          $comments			= mysql_fetch_array($result2);
+          $comments_count 	= mysql_num_rows($result2);
+          
+          $connect 			= mysqli_connect("dbserver", $username, "ll170505", $dbname);
+
+          if (!$connect) {
+              die("Connection failed: " . mysqli_connect_error());
+          }
+
+          $sql = "update $bbs_name set count =  count + 1 where docu_no = '$docu_no'";
+
+          if (mysqli_query($connect, $sql)) {}
+          else {
+              echo "Error: " . $sql . "<br>" . mysqli_error($connect);
+          }
+
+          $bbs[count] = $bbs[count] + 1;
+
+          if($bbs[member_id]){$member_id = '&nbsp;&nbsp;작성자 : @'.$bbs[member_id].'&nbsp;&nbsp;|&nbsp;&nbsp;';}
+          if(($today - $bbs[docu_date]) < 2){$new = "<badge class='badge-danger'>n</badge>";}
+          if($bbs[update_date] <> '0000-00-00')
+          	{
+            	$updated = "|&nbsp;&nbsp;수정일 : ".$bbs[update_date];
+            }
+
+//			if($updated and ($today - $bbs[update_date]) < 2){$updated = $updated."&nbsp;&nbsp;<badge class='badge-warning'>&nbsp;updated&nbsp;</badge>&nbsp;&nbsp;";}
+            
+            while ($category_list){
+                   if ($category_list[category] == $bbs[category]){$category_name = $category_list[category_name];}
+                	  $category_list = mysql_fetch_array($result5);
+            }
+
+                          echo "
+    <br>                      
+    <div class='container' style = 'padding:1px;'>
+        <div class='col-12 col-lg-12 d-none d-lg-block text-center'>
+          <span style = 'font-family: NanumSquareWeb;font-size:2rem;font-weight:800; line-height: 1.1;'>$bbs[title]</span><br>
+          <span style = 'font-size:1.5rem;font-weight:700;line-height:.8;color:$text_color;'>$bbs[sub_title]</span>
+        </div>
+        
+        <div class='col-12 col-lg-12 d-lg-none text-center'>
+          <span style = 'font-family: NanumSquareWeb;font-size:1.6rem;font-weight:800; line-height: 1.1;'>$bbs[title]</span><br>
+          <span style = 'font-size:1.2rem;font-weight:700;line-height:1;color:$text_color;'>$bbs[sub_title]</span>
+        </div>
+    </div>";                              
+                          echo "
+    						<div class='container text-center' style = 'padding:2px;'>
+							<i class='fas fa-user-edit'></i>&nbsp;$bbs[member_id]
+							</div>
+							<br><br>
+							
+	<table style = 'height:15px;border-bottom:1px solid #888888;' width = 100%><tr>
+	<td width = 150px align = center style = 'background-color:#000000;color:#FFFFFF;'>
+	내용</td><td align = right><span style='color:#737373'><i class='fas fa-pencil-alt'></i>&nbsp;&nbsp;$bbs[docu_date]&nbsp;<i class='fas fa-eye'></i>&nbsp;$bbs[count]&nbsp;&nbsp;<i class='fas fa-comment-dots'></i>&nbsp;&nbsp;$comments_count&nbsp;&nbsp;</span></td></tr></table>
+
+
+                          
+                          <pre>$bbs[contents]</pre>
+                              
+                          <div class='d-block d-md-flex border-bottom pb-3 text-uppercase'></div>
+						  <br><div class = 'text-right'>";
+						  
+						  
+						  if(($bbs[member_id] == $Login_User_ID) or $rank == 9)
+						  	{echo "
+			   			      <a class='btn btn-success text-uppercase' href = 'bbs_edit.html?no=$bbs[docu_no]'>글 수정</a></div>";
+                            }
+                            
+                          echo "
+                          
+	<table style = 'height:15px;border-bottom:1px solid #888888;' width = 100%><tr>
+	<td width = 150px align = center style = 'background-color:#000000;color:#FFFFFF;'>
+	댓글입력</td><td></td></tr></table>
+    							<form id='contactForm' method='post' action='comments_write.php' novalidate='novalidate'>
+   									<input class='form-control' type='text' name='docu_no' value='$bbs[docu_no]' hidden >
+									<textarea class='summernote' name='contents'></textarea><br>
+									<input class='btn btn-success text-uppercase' type='button' value='댓글등록' onclick='submit();'>
+									<br>
+								</form>
+								<br><br>";
+                         
+            // 댓글이 있으면 표시함             
+                          
+			if($comments) 
+			
+			{	
+			
+					$sql= "SELECT * FROM bbs_comments where docu_no = '$docu_no' and depth > 1 order by comment_no ASC" ;
+					$link 		= mysqli_connect("dbserver", "skiresort", "ll170505", "skiresort");
+					$result6	=	mysqli_query($link,$sql);
+					$numrow6 	= 	mysqli_num_rows($result6);     
+    		
+    				for($i=0; $i<$numrow6; $i++)
+    					{                
+        					$re_comments[$i]=mysqli_fetch_array($result6);
+        					
+    					}        		
+            
+            	while ($comments) // 댓글 갯수만큼 루프 실행
+            	{
+
+            			for($i=0; $i<$comments_count; $i++) // Depth = 1 인 경우만 출력함.
+            			
+            			{
+            
+            					if ($comments[depth] == '1') // Depth = 1 인 경우만 출력함.
+            					{
+                    					echo "
+                    							<table border = 0 width = 100% style='background-color:#ebddd3;padding:20px;'>
+                    								<tr>
+                    									<td>댓글번호 : $comments[comment_no] / $comments[member_id] / $comments[regdate] / $comments[ipaddress] </td>
+                    								</tr>
+                    								<tr>
+                    									<td><pre>$comments[contents]</pre></td>
+                    								</tr>
+                    								<tr>
+                    									<td>
+                    						";
+                    	
+                    					$comments_count2 = $comments_count - 1;
+                    				
+            							for($j=2; $j<10; $j++)  // Depth > 2 인 경우 출력
+            							{
+            				
+            								for($k=0; $k<$comments_count2; $k++) // Loop K
+            								{
+													$re_comments_depth 		= $re_comments[$k][depth];
+													$re_comments_docu_no 	= $re_comments[$k][docu_no];
+													$re_comments_no 		= $re_comments[$k][comment_no];
+													$re_comments_original 	= $re_comments[$k][comment_no2];
+													$re_comments_id 		= $re_comments[$k][member_id];
+													$re_comments_date 		= $re_comments[$k][regdate];
+													$re_comments_ip 		= $re_comments[$k][ipaddress];
+													$re_comments_contents 	= $re_comments[$k][contents];
+
+												if ($re_comments_original == $comments[comment_no] and  $re_comments_depth == $j)
+            										{
+            											echo
+            											"
+                   				 							<table border = 0 width = 100% style='background-color:#b1b8a9;padding:20px;'>
+                    											<tr>
+                    												<td>댓글번호 : $re_comments_no / $re_comments_id / $re_comments_date / $re_comments_ip / 관련문서번호 : $re_comments_docu_no / 부모 댓글번호 : $re_comments_original</td>
+                    											</tr>
+																<tr>			
+                    												<td><pre>$re_comments_contents</pre></td>
+                    											</tr>
+                    										</table>
+                    										<br>
+                    									";
+                    										
+                    										
+                    										
+                    									} // Depth 가 맞으면 출력
+                    									
+                    							}  // Loop K loop
+                    	
+                    					}   // Loop J loop
+                    	
+                    	echo "
+                    	</td>
+                    	</tr>
+						<tr>
+						<td>";
+						
+						$toggle1 = "#comment_toggle_".$comments[comment_no];
+						$toggle2 = "comment_toggle_".$comments[comment_no];
+						$depth 	 = $comments[depth] + 1;
+
+						echo "
+ 						<a data-toggle='collapse' href=$toggle1 
+ 						class='text-dark' style='text-decoration:none;' aria-expanded='false' aria-controls='$toggle2' >
+						댓글달기</a>
+
+						<div class='collapse col-sx-12' id='$toggle2'><br>
+   							 <form id='contactForm' method='post' action='comments_write2.php' novalidate='novalidate'>
+								<input class='form-control' type='text' name='docu_no' value='$comments[docu_no]' hidden >
+   								<input class='form-control' type='text' name='comments_no2' value='$comments[comment_no]' hidden>
+								<input class='form-control' type='text' name='depth' value='$depth' hidden >
+
+								<textarea class='summernote' name='contents'></textarea>
+									<input class='btn btn-success text-uppercase' type='button' value='댓글등록' onclick='submit();'>
+								<br>
+							</form>
+						</div>
+						</td></tr>
+                    </table><br>"; 
+                    
+                					} // if ($comments[depth] == '1') Depth = 1 인 경우만 출력함.
+                    
+                			$comments = mysql_fetch_array($result2);
+                
+                			} // For $i 루프
+                			
+           			 } // while 루프
+
+			} // 댓글이 있으면 표시함. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+?>
+</div>
+
+<!-- footer for AUGMENT-SKI -->
+<? include 'footer3.html'; ?>
+<!-- end of footer -->
+
+</body>
+
+</html>

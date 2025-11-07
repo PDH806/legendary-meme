@@ -1,0 +1,310 @@
+<?
+    header('Content-Type: text/html; charset=utf-8');
+    $READY_API_URL = "pc/_2_ready.php"	;
+
+
+      date_default_timezone_set('Asia/Seoul');
+      extract($_REQUEST);
+    
+      //기본 멤버정보 
+      $query	= "SELECT * FROM $member_table where MEMBER_ID = '$MEMBER_ID'";
+      $result	= mysqli_query($link, $query);
+      $row	    = mysqli_fetch_array($result);
+
+      $query  = "SELECT * FROM $member_table where MEMBER_ID = '$MEMBER_ID'";
+      $result = mysqli_query($link, $query);
+      $member = mysqli_fetch_array($result);
+      
+      $this_year = 2022;
+      $today = date("Ymd");
+  
+      $style_header     = 'width:150px;font-size:13pt';
+      $style_header2 	= 'width:150px;font-size:12pt';
+  
+      $style_primary_readonly = "style = 'background-color: #e8e8e8; border: solid 1px #ff8080;'";
+      $style_primary 		  = "style = 'background-color: #F7F8FB; border: solid 1px #ff8080;'";
+      $style_info 			  = "style = 'background-color: #F7F8FB; border: solid 1px #582CDE;'";
+      $style_info_readonly    = "style = 'background-color: #e8e8e8; border: solid 1px #582CDE;'";
+      $style_warning 	      = "style = 'background-color: #ffbb00; border: solid 1px #8f6900;'";
+      $style_warning_readonly = "style = 'background-color: #e8e8e8; border: solid 1px #582CDE;'";
+
+      $class_light_info 	= "class='btn light btn-primary border-primary'";
+      $class_light_warning 	= "class='btn light btn-warning border-warning'";
+      $class_light_primary 	= "class='btn light btn-danger border-dnager'";
+  
+      $main_title = 'Mypage | 대한스키지도자연맹';
+
+      $query	= "SELECT * FROM $member_table where MEMBER_ID = '$MEMBER_ID'";
+      $result	= mysqli_query($link, $query);
+      $row	    = mysqli_fetch_array($result);
+
+      if ($dup_check[Apply_date] == ''){$dup_check[Apply_date] = $today;}
+
+      $mbrRefNo = $member['NO'].'-'.$today;
+	
+      // SPC PG의 결제가 (또는 결제창이 클로즈) 완료 또는 실패했을때 처리하는 스크립트 (매우 중요)
+      echo "<script>function mainpay_close_event(){top.document.location.href = '../mypage/payment_result.html?REF_NO=$mbrRefNo';}</script>";
+  
+
+?>
+
+<!DOCTYPE html>
+<html lang="ko" dir="ltr">
+
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>Blank</title>
+
+        <!-- Prevent the demo from appearing in search engines -->
+        <meta name="robots" content="noindex">
+
+        <!-- Perfect Scrollbar -->
+        <link type="text/css" href="assets/vendor/perfect-scrollbar.css" rel="stylesheet">
+
+        <!-- App CSS -->
+        <link type="text/css" href="assets/css/app.css" rel="stylesheet">
+        <link type="text/css" href="assets/css/app.rtl.css" rel="stylesheet">
+
+        <!-- Material Design Icons -->
+        <link type="text/css" href="assets/css/vendor-material-icons.css" rel="stylesheet">
+        <link type="text/css" href="assets/css/vendor-material-icons.rtl.css" rel="stylesheet">
+
+        <!-- Font Awesome FREE Icons -->
+        <link type="text/css" href="assets/css/vendor-fontawesome-free.css" rel="stylesheet">
+        <link type="text/css" href="assets/css/vendor-fontawesome-free.rtl.css" rel="stylesheet">
+        <style>.form-control{border-radius: $radius; background: $white; border: 1px solid $border; font-size:13pt; color: #f54242; height: 60px; @include respond('laptop') { height: 41px; } &:hover,&:focus,&.active{ box-shadow: none; background: $white; color: $dark; } }</style>
+        <style> .card-img-top { width: 100%; height: 300px; object-fit: cover; } </style>
+
+        <script src="https://api-std.mainpay.co.kr/js/mainpay.pc-1.1.js"></script>
+    
+        <script type='text/javascript'> 
+        var READY_API_URL = "<?=$READY_API_URL?>";
+        
+        function payment() {		
+            var teacher_name = document.getElementById("teacher_name").value;
+            var teacher_phone = document.getElementById("teacher_phone").value;
+            var teacher_pw = document.getElementById("teacher_pw").value;
+            
+            if (!teacher_name){alert('강사 성명을 입력해 주세요 !!!'); return; }
+            if (!teacher_phone){alert('강사 핸드폰 번호를 입력해 주세요 !!!'); return; }
+            if (!teacher_pw){alert('강사용 접속비번을 입력해 주세요 !!!'); return; }
+        
+            var request = Mainpay.ready(READY_API_URL); 
+            request.done(function(response) {
+                if (response.resultCode == '200') {
+                    /* 결제창 호출 */
+                    Mainpay.open(response.data.nextPcUrl); //*주의* PC와 Mobile은 URL이 상이합니다.
+                    return false;
+                }
+                alert("ERROR : "+JSON.stringify(response));			 				
+            });		
+        }
+        </script>
+
+    </head>
+
+    <body class="layout-default">
+
+    <? include '_header.html';
+
+    $mypage = "그레이드 관리"; 
+    $mymenu = "그레이드 검정 등록";
+
+    echo "
+    <div class='container-fluid'>
+        <div class='page__heading'>
+            <nav aria-label='breadcrumb'>
+                <ol class='breadcrumb mb-0'>
+                    <li class='breadcrumb-item'><a href='#'><i class='material-icons icon-20pt'>home</i></a></li>
+                    <li class='breadcrumb-item'>myPage</li>
+                    <li class='breadcrumb-item active'
+                        aria-current='page'>$mypage</li>
+                </ol>
+            </nav>
+            <h1 class='m-0'>$mymenu</h1>
+        </div>
+    </div>";
+
+    echo "
+     
+     <div class='card card-form'>
+      <div class='row no-gutters'>
+          <div class='col-lg-4 card-body'>
+              <p class='headings-color' style = 'font-size:14pt;font-weight:800;'>회원정보</p>
+              <img src='$img_url' width = 100%>
+
+          </div>
+
+          <div class='col-lg-8 card-form__body card-body'>
+
+              <div class='row'>
+                  <div class='col'>
+                      <div class='form-group'>
+                          <label for='fname'>신청자 </label>
+                          <input type='text' class='form-control' id = 'MEMBER_NAME' value = '$row[MEMBER_NAME]' $style_info readonly>
+                      </div>
+                  </div>
+                  <div class='col'>
+                      <div class='form-group'>
+                          <label for='lname'>회원ID</label>
+                          <input type='text' class='form-control' name = 'MEMBER_ID' value = '$row[MEMBER_ID]' $style_info readonly>
+                      </div>
+                  </div>
+              </div>
+
+              <div class='row'>
+                  <div class='col'>
+                        <div class='form-group'>
+                            <label for='fname'>생년월일</label>
+                            <input type='text' class='form-control' value = '$row[BIRTH]' $style_info readonly>
+                        </div>
+                    </div>
+                    <div class='col'>
+                        <div class='form-group'>
+                            <label for='lname'>전화번호</label>
+                            <input type='text' class='form-control' value = '$row[PHONE]' $style_info readonly>
+                        </div>
+                    </div>
+              </div>
+                
+          </div>
+      </div>
+  </div>
+  <form id='MAINPAY_FORM'>
+    <input type='text' name='GoodsCnt' value='1' hidden>
+    <input type='text' id = 'MEMBER_NO' name = 'MEMBER_NO' value = '$row[MEMBER_NO]' hidden>
+    <input type='text' id = 'MEMBER_ID' name = 'MEMBER_ID' value = '$row[MEMBER_ID]' hidden>
+    <input type='text' id = 'BuyerTel' name = 'BuyerTel' value = '$row[PHONE]' hidden>
+
+    <br><br><br>
+              <table style = 'height:35px;border-bottom:1px solid #888888;' width = 100% >
+              <tr><td class = 'font16' align = center style = 'background-color:#000000;color:#FFFFFF;width:130px;font-weight:700;'>검정 내용</td><td></td></tr></table><br><br>
+
+              <div class='form-group' >
+                <div class='input-group'>
+                    <div class='input-group-prepend'>
+                        <button $class_light_info type='button' style = 'width:130px;'>검정장소</button>
+                    </div>
+                      <select class='form-control' id = 'Skiresort' name = 'Skiresort' $style_info>
+                        <option value = ''>검정장소</option>
+                        <option value = ''>-----------------------------------</option>
+                        <option value = '1'>용평리조트</option>
+                        <option value = '4'>무주리조트</option>
+                        <option value = '5'>비발디파크</option>
+                        <option value = '6'>피닉스평창</option>
+                        <option value = '7'>월리힐리파크</option>
+                        <option value = '8'>지산포레스트리조트</option>
+                        <option value = '9'>엘리시안강촌2</option>
+                        <option value = '10'>오크밸리</option>
+                        <option value = '11'>하이원리조트</option>
+                        <option value = '12'>곤지암리조트</option>
+                        <option value = '13'>알펜시아</option>
+                        <option value = '14'>베어스타운</option>
+                        <option value = '15'>에덴벨리리조트</option>
+                        <option value = '16'>오투리조트</option>
+                      </select>
+                </div>			
+            </div>
+
+            <div class='form-group'>
+              <div class='input-group'>
+                  <div class='input-group-prepend'>
+                      <button $class_light_info type='button' style = 'width:130px;'>검정 일자</button>
+                  </div>
+                  <input id = 'Test_Date' type='date' class='form-control' value='' $style_info>
+              </div>											
+            </div>
+                
+            <div class='form-group'>
+                <div class='input-group'>
+                    <div class='input-group-prepend'>
+                        <button $class_light_info type='button' style = 'width:130px;'>심사비</button>
+                    </div>
+                    <input id = 'Amt' name = 'Amt' class='form-control' value='25000' $style_info>
+                </div>											
+              </div>
+              
+            <div class='form-group'>
+                <div class='input-group'>
+                    <div class='input-group-prepend'>
+                    <button $class_light_info type='button' style = 'width:130px;'>강사이름</button>
+                    </div>
+                    <input class='form-control'  type='text'  id ='teacher_name' name='teacher_name' placeholder= '강사이름을 공백없이 입력해 주세요' $style_info>
+                </div>											
+              </div>
+
+            <div class='form-group'>
+                  <div class='input-group'>
+                      <div class='input-group-prepend'>
+                      <button $class_light_info type='button' style = 'width:130px;'>강사 핸드폰</button>
+                      </div>
+                      <input class='form-control'  type='text'  id ='teacher_phone' name='teacher_phone' placeholder= '숫자로만 입력' $style_info>
+                  </div>											
+                </div>
+                
+                <div class='form-group'>
+                    <div class='input-group'>
+                        <div class='input-group-prepend'>
+                        <button $class_light_info type='button' style = 'width:130px;'>접속비번</button>
+                        </div>
+                        <input class='form-control'  type='text'  id ='teacher_pw' name='teacher_pw' placeholder= '숫자로만 4자리 입력' $style_info>
+                        <input id = 'Payment_Method' name = 'paymethod' value = 'CARD' hidden>
+                        <input id = 'goodsCode' name = 'goodsCode' value = 'GRADE_1' hidden>
+                        <input id = 'goodsName' name = 'goodsName' value = '유소년연맹그레이드심사비' hidden>
+
+
+                    </div>											
+                  </div>
+
+                <div class = 'text-right'><input $class_light_primary  type='button' value='접수신청' onclick='payment()'></div>    
+      </form>
+      ";
+
+
+     ?>
+     
+     <? include '_left_menu.html';
+        include '_footer.html';
+     ?>
+
+    <!--**********************************
+        Scripts
+    ***********************************-->
+    <!-- Required vendors -->
+    <script src="./vendor/global/global.min.js"></script>
+	  <script src="./vendor/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
+    <script src="./js/custom.min.js"></script>
+	  <script src="./js/deznav-init.js"></script>
+
+	<!-- Datatable -->
+    <script src="./vendor/datatables/js/jquery.dataTables.min.js"></script>
+
+
+
+  <script type="text/javascript">
+      $(function(){
+          $("#alert-success").hide();
+          $("#alert-danger").hide();
+          $("input").keyup(function(){
+              var pwd1=$("#pwd1").val();
+              var pwd2=$("#pwd2").val();
+              if(pwd1 != "" || pwd2 != ""){
+                  if(pwd1 == pwd2 && pwd1.length > 7 && pwd1.length < 21 ){
+                      $("#alert-success").show();
+                      $("#alert-danger").hide();
+                      $("#alert-danger2").hide();
+                  }else{
+                      $("#alert-success").hide();
+                      $("#alert-danger").show();
+                      $("#alert-danger2").show();
+                  }
+              }
+          });
+      });
+  </script>​
+
+  </body>
+
+</html>

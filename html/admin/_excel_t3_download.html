@@ -1,0 +1,129 @@
+<?
+	// 응시자 명단을 엑셀로 추출 (검정번호를 입력하면 해당 검정번호의 응시자를 엑셀로 출력함.)
+
+	include "./PHPExcel-1.8/Classes/PHPExcel.php";
+
+	$Test_No = $_GET['No'];
+
+	$servername	= "dbserver"; $username = "skiresort"; $password = "ll170505"; $dbname = "skiresort";
+	$connect = mysql_connect($servername, $username, $password); $link = mysqli_connect($servername, $username, $password, $dbname); mysql_select_db($dbname,$connect);
+
+	// $query	= "SELECT * FROM 7G_Master_Apply where Test_No = '$Test_No' ORDER BY Apply_No" ;
+ 	$query= "select * from 7G_Master_Apply LEFT OUTER JOIN 7G_Skiresort_Member on 7G_Master_Apply.MEMBER_ID = 7G_Skiresort_Member.MEMBER_ID where 7G_Master_Apply.Test_ID = 'T3' and 7G_Master_Apply.PAYMENT_STATUS = 2 ORDER BY 7G_Master_Apply.MEMBER_NAME";
+	$result	= mysqli_query($link, $query);
+	$row 	= mysqli_fetch_array($result);
+
+	$objPHPExcel = new PHPExcel();
+	$today 		= date("Y-m-d");
+	$file_name  = "티칭3_응시자명단";
+	
+	// 셀머지
+	$objPHPExcel -> getActiveSheet(0) -> mergeCells('A1:E1');
+	$objPHPExcel -> setActiveSheetIndex(0) -> setCellValue(B1, "T3 검정시험 응시자 명단 ($today)");
+
+	$objPHPExcel -> setActiveSheetIndex(0)
+		-> setCellValue(B2, "접수번호")
+		-> setCellValue(C2, "회원관리번호")
+		-> setCellValue(D2, "회원ID")
+		-> setCellValue(E2, "회원성명")
+		-> setCellValue(F2, "성별")
+		-> setCellValue(G2, "전화번호")
+		-> setCellValue(H2, "접수일")
+		-> setCellValue(I2, "거래상황")
+		-> setCellValue(J2, "결제상황")
+		-> setCellValue(K2, "결제방법")
+		-> setCellValue(L2, "결제금액")
+		-> setCellValue(M2, "라이센스")
+		-> setCellValue(N2, "인증토큰")
+		-> setCellValue(O2, "결제카드")
+		-> setCellValue(P2, "백신접종")
+		-> setCellValue(Q2, "실기면제")
+		-> setCellValue(R2, "생년월일")
+		-> setCellValue(S2, "취소일시");
+
+
+	$count = 3;	
+	while($row) {
+		$objPHPExcel -> setActiveSheetIndex(0)
+			-> setCellValue("B".$count, "$row[Apply_No]")
+			-> setCellValue("C".$count, "$row[MEMBER_NO]")
+			-> setCellValue("D".$count, "$row[MEMBER_ID]")
+			-> setCellValue("E".$count, "$row[MEMBER_NAME]")
+			-> setCellValue("F".$count, "$row[GENDER2]")
+			-> setCellValue("G".$count, "$row[MEMBER_PHONE]")
+			-> setCellValue("H".$count, "$row[Apply_date]")
+			-> setCellValue("I".$count, "$row[TRAN_STATUS]")
+			-> setCellValue("J".$count, "$row[PAYMENT_STATUS]")
+			-> setCellValue("K".$count, "$row[PAYMENT_METHOD]")
+			-> setCellValue("L".$count, "$row[AMOUNT]")
+			-> setCellValue("M".$count, "$row[License_No]")
+			-> setCellValue("N".$count, "$row[AuthToken]")
+			-> setCellValue("O".$count, "$row[issueCardName]")
+			-> setCellValue("P".$count, "$row[VACCINE]")
+			-> setCellValue("Q".$count, "$row[PASS]")
+			-> setCellValue("R".$count, "$row[BIRTH]")
+			-> setCellValue("S".$count, "$row[CANCLE_DATE]");
+
+
+		$count++;
+		$row 	= mysqli_fetch_array($result);
+	}
+
+
+	// 가로 넓이 조정
+		$objPHPExcel -> getActiveSheet() -> getColumnDimension("A") -> setWidth(15);
+		$objPHPExcel -> getActiveSheet() -> getColumnDimension("B") -> setWidth(12);
+		$objPHPExcel -> getActiveSheet() -> getColumnDimension("C") -> setWidth(15);
+		$objPHPExcel -> getActiveSheet() -> getColumnDimension("D") -> setWidth(20);
+		$objPHPExcel -> getActiveSheet() -> getColumnDimension("E") -> setWidth(20);
+		$objPHPExcel -> getActiveSheet() -> getColumnDimension("F") -> setWidth(20);
+
+	// 가로 가운데 정렬
+		$objPHPExcel -> getActiveSheet() -> getStyle("A1:F".$count) -> getAlignment() -> setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+		
+	// 글자 크기 지정 (범위)
+		$objPHPExcel -> getActiveSheet() -> getStyle("A3:F".$count) -> getFont(굴림) -> setSize(12);
+		$objPHPExcel -> setActiveSheetIndex(0) -> getStyle('A1') -> getFont(굴림) -> setSize(24);
+
+	// 전체 테두리 지정
+		$objPHPExcel -> getActiveSheet() -> getStyle("A2:F".$count) -> getBorders() -> getAllBorders() -> setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+		$objPHPExcel -> getActiveSheet() -> getStyle("A2:F".$count) -> getBorders() -> getHorizontal() -> setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+
+
+	// 타이틀 부분
+		$objPHPExcel -> getActiveSheet() -> getStyle("A1:E1") -> getFont() -> setBold(true);
+		$objPHPExcel -> getActiveSheet() -> getStyle("A1:E1") -> getFill() -> setFillType(PHPExcel_Style_Fill::FILL_SOLID) -> getStartColor() -> setRGB("ffffff");
+	// $objPHPExcel -> getActiveSheet() -> getRowDimension(1) -> setRowHeight(23);
+
+	// 헤더부분 색상지정 ---> HEX 값 지정
+		$objPHPExcel -> getActiveSheet() -> getStyle("A2:F2") -> getFill() -> setFillType(PHPExcel_Style_Fill::FILL_SOLID) -> getStartColor() -> setRGB("91edff");
+
+
+	// 내용부분 색상지정 --> White
+		$objPHPExcel -> getActiveSheet() -> getStyle("A3:F".$count) -> getFill() -> setFillType(PHPExcel_Style_Fill::FILL_SOLID) -> getStartColor() -> setRGB("ffffff");
+
+	//A1부터 F1까지의 셀의 세로 정렬 - 가운데 정렬
+		$objPHPExcel -> getActiveSheet() -> getStyle("A1:F".$count) -> getAlignment () -> setVertical (PHPExcel_Style_Alignment::VERTICAL_CENTER);
+
+
+	//셀 얇은 윤곽선
+	// $objPHPExcel-> getActiveSheet()-> getStyle("A2:E".$count) -> getBorders() -> getAllBorders() -> setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+
+
+	// 시트 네임
+		$objPHPExcel -> getActiveSheet() -> setTitle("T3 응시자명단");
+
+	// 첫번째 시트(Sheet)로 열리게 설정
+		$objPHPExcel -> setActiveSheetIndex(0);
+
+	// 파일의 저장형식이 utf-8일 경우 한글파일 이름은 깨지므로 euc-kr로 변환해준다.
+		$filename = iconv("UTF-8", "EUC-KR", "$file_name");
+
+	// 브라우저로 엑셀파일을 리다이렉션
+		header("Content-Type:application/vnd.ms-excel");
+		header("Content-Disposition: attachment;filename=".$filename.".xls");
+		header("Cache-Control:max-age=0");
+
+		$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, "Excel5");
+		$objWriter -> save("php://output");
+?>

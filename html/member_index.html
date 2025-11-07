@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<?
+	$category 	= $_GET["category"];
+	$main_title = "회원정보관리 | 스키장경영자협회";
+	include 'db_config.html';
+
+    if (!$Login_User_ID) {
+        echo " <script language='javascript'>top.document.location.href = 'member_login.html'</script>";
+    }
+
+?>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+	<link rel="shortcut icon" href="Myicon.png" type="image/x-icon">
+    
+    <title>
+    	<?
+    	echo "$main_title";    	
+    	?>    
+    </title>
+    
+		<!-- Custom styles for Hansoll-ski -->
+			<? include 'link-files.html'; ?>
+		<!-- end of Link -->
+		
+		
+		
+<style>
+html { height: 100%; }
+body { min-height: 100%;}
+</style>		
+		
+</head>
+
+<body>
+
+		<!-- Navigation for Hansoll-ski -->
+			<? include 'main_nav2.html'; ?>
+		<!-- end of Navigation -->
+
+		<?  /* 로그인이 안되어 있으면 로그인 화면으로 이동 */
+		
+			$query= "SELECT * FROM $member_table where MEMBER_ID = '$Login_User_ID'";
+			$result=mysql_query($query,$connect );
+			$row=mysql_fetch_array($result);
+		?>
+
+
+<? while ($row)
+
+	{
+	
+		if($row[m_type] == '1') {$movie_selected1 = "selected";}
+		if($row[m_type] == '2') {$movie_selected2 = "selected";}
+		
+		if($row[slide_type] == '0') {$slide_selected0 = "selected";}
+		if($row[slide_type] == '1') {$slide_selected1 = "selected";}
+		if($row[slide_type] == '2') {$slide_selected2 = "selected";}
+		if($row[slide_type] == '3') {$slide_selected3 = "selected";}
+		if($row[slide_type] == '4') {$slide_selected4 = "selected";}
+		
+		if($row[map_source] == '1') {$map_selected1 = "selected";}
+		if($row[map_source] == '2') {$map_selected2 = "selected";}
+		if($row[map_source] == '3') {$map_selected3 = "selected";}
+		
+		if($row[ksia_level] == '1') {$ksia_level_selected1 = "selected";}
+		if($row[ksia_level] == '2') {$ksia_level_selected2 = "selected";}
+		if($row[ksia_level] == '3') {$ksia_level_selected3 = "selected";}
+
+		if($row[ksia_teaching] == '1') {$ksia_teacing_selected1 = "selected";}
+		if($row[ksia_teaching] == '2') {$ksia_teacing_selected2 = "selected";}
+		if($row[ksia_teaching] == '3') {$ksia_teacing_selected3 = "selected";}
+
+		if($row[smak_level] == '1') {$smak_level_selected1 = "selected";}
+		if($row[smak_level] == '2') {$smak_level_selected2 = "selected";}
+		if($row[smak_level] == '3') {$smak_level_selected3 = "selected";}
+
+		if($row[smak_teaching] == '1') {$smak_teacing_selected1 = "selected";}
+		if($row[smak_teaching] == '2') {$smak_teacing_selected2 = "selected";}
+		if($row[smak_teaching] == '3') {$smak_teacing_selected3 = "selected";}
+
+
+		if($row[ksia_master1] == '1') 		{$ksia_master1_cheched 			= "checked='cheched'";}
+		if($row[ksia_demonstrator1] == '1') {$ksia_demonstrator1_cheched 	= "checked='cheched'";}
+		if($row[smak_demonstrator1] == '1') {$smak_demonstrator1_cheched 	= "checked='cheched'";}
+
+		if($row[ksia_master2] 		== '1') {$ksia_master2_cheched 			= "checked='cheched'";}
+		if($row[ksia_demonstrator2] == '1') {$ksia_demonstrator2_cheched 	= "checked='cheched'";}
+		if($row[smak_demonstrator2] == '1') {$smak_demonstrator2_cheched 	= "checked='cheched'";}
+
+		if($row[team_korea1] 		== '1') {$team_korea1_cheched 			= "checked='cheched'";}
+		if($row[team_korea2] 		== '1') {$team_korea2_cheched 			= "checked='cheched'";}
+		if($row[team_korea3] 		== '1') {$team_korea3_cheched 			= "checked='cheched'";}
+		if($row[team_korea4] 		== '1') {$team_korea4_cheched 			= "checked='cheched'";}
+		if($row[team_korea5] 		== '1') {$team_korea5_cheched 			= "checked='cheched'";}
+
+echo "
+	<br><br><br>
+		<div class='container'>
+			<div class='col-lg-12 ml-auto'>
+
+	<!-- Page Heading 영역 시작 -->
+		
+			<div class='d-block d-md-flex'>
+				<blockquote>
+         	 		<h3 class='no-shrink font-weight-medium align-self-left m-b-0'>$row[MEMBER_NAME] 님 $main_title</h3>
+         		 	<p>
+         		 	<a href = $row[site_url]>$row[site_url]</a>
+         		 	</p>
+         		 </blockquote>
+        	</div>
+        	
+	<!-- Page Heading 영역 끝 -->";
+		
+
+	//-- Category declare Start ----------------------------------------------------------------------
+
+		if (!$category){$category= '1';}
+		if ($category == '1')	{$category_active1 = 'active';	$category_selected1 = 'selected';} 
+		if ($category == '2')	{$category_active2 = 'active';	$category_selected2 = 'selected';} 
+		if ($category == '3')	{$category_active3 = 'active';	$category_selected3 = 'selected';} 
+		if ($category == '4')	{$category_active4 = 'active';	$category_selected4 = 'selected';} 
+		if ($category == '5')	{$category_active5 = 'active';	$category_selected5 = 'selected';} 
+		if ($category == '6')	{$category_active6 = 'active';	$category_selected6 = 'selected';} 
+		if ($category == '7')	{$category_active7 = 'active';	$category_selected7 = 'selected';} 
+		if ($category == '8')	{$category_active8 = 'active';	$category_selected8 = 'selected';} 
+		if ($category == '9')	{$category_active9 = 'active';	$category_selected9 = 'selected';} 
+		if ($category == '10')	{$category_active10 = 'active';	$category_selected10 = 'selected';} 
+		if ($category == '11')	{$category_active11 = 'active';	$category_selected11 = 'selected';} 
+		if ($category == '12')	{$category_active12 = 'active';	$category_selected12 = 'selected';}
+
+	//-- Category declare end ----------------------------------------------------------------------
+		
+	echo "	
+		
+	<!-- Category Select Start-->
+		
+	<!-- 960px 이상일때 (PC)-->
+		
+		<div class = 'container text-center d-none d-lg-block' style = 'padding-left:0px;padding-right:0px;'>
+			<ul class='nav nav-tabs'>
+			  	<li class='nav-item'><a class='nav-link product_tap $category_active1'  href='member_index.html'>일반</a></li>
+			  	<li class='nav-item'><a class='nav-link product_tap $category_active2'  href='member_index2.html?category=2'>소개</a></li>
+			  	<li class='nav-item'><a class='nav-link $category_active3'  href='member_index2.html?category=3'>경력</a></li>
+			  	<li class='nav-item'><a class='nav-link $category_active4'  href='member_index2.html?category=4'>학력</a></li>
+  			  	<li class='nav-item'><a class='nav-link $category_active5'  href='member_index2.html?category=5'>수상내역</a></li>
+  			  	<li class='nav-item'><a class='nav-link $category_active6'  href='member_index.html?category=6'>스키/티칭레벨</a></li>
+  			  	<li class='nav-item'><a class='nav-link $category_active7'  href='member_index7.html?category=7'>보유장비</a></li>
+  			  	<li class='nav-item'><a class='nav-link $category_active8'  href='member_index8.html?category=8'>강습관리</a></li>
+			  	<li class='nav-item'><a class='nav-link $category_active9'  href='member_index.html?category=9'>나의예약</a></li>
+			</ul>
+		</div>
+
+		<!-- 960px 이하일떄 (태블릿&스마트폰) -->
+		
+		<div class ='container-fluid text-right d-lg-none' style = 'padding-left:0px;padding-Right:0px;'>
+ 			<select class='form-control' id='selectbox' name='' onchange='javascript:location.href = this.value;'>
+    			<option value='member_index.html' $category_selected1>일반</option>
+				<option value='member_index2.html?category=2' $category_selected2>소개</option>
+				<option value='member_index2.html?category=3' $category_selected3>경력</option>
+				<option value='member_index2.html?category=4' $category_selected4>학력</option>
+				<option value='member_index2.html?category=5' $category_selected5>수상내역</option>
+				<option value='member_index.html?category=6'  $category_selected6>스키/티칭레벨</option>
+				<option value='member_index7.html?category=7' $category_selected7>보유장비</option>
+				<option value='member_index8.html?category=8' $category_selected8>강습관리</option>
+				<option value='member_index.html?category=9'  $category_selected9>나의예약</option>		
+			</select>
+		<div class='d-block d-md-flex border-bottom pb-3 text-uppercase' style = 'height:2px;'></div>
+		</div>
+		<br>
+	<!-- Category Select End-->
+	
+	";
+
+
+
+	/**** 관리자화면 카테고리 #1 (관리자 & 회사정보 등록)	 ****/
+
+	if ($category == 0 or $category == 1)
+		{
+	    
+		echo "<br><br>
+		<form action='member_update.php' method='POST' enctype='multipart/form-data'>
+				<input class='form-control' type='text' name='coach_id' value = '$row[coach_id]' hidden>
+				<input class='form-control' type='text' name='category' value = '$category' hidden>
+
+	            <div class='form-group'>
+            		<table border = 0, width = 100%>
+            			<tr>
+            				<td width = 120>
+								성명
+							</td>
+							<td align = right>
+								<input class='form-control'  type='text' name='coach_name' value = '$row[MEMBER_NAME]' placeholder='회원 성명'>
+							</td>
+						</tr>
+					</table>
+                </div>
+
+	            <div class='form-group'>
+            		<table border = 0, width = 100%>
+            			<tr>
+            				<td width = 120>
+								핸드폰
+							</td>
+							<td align = right>
+								<input class='form-control'  type='text' name='coach_phone' value = '$row[PHONE]' placeholder='핸드폰'>
+							</td>
+						</tr>
+					</table>
+                </div>
+                
+
+	            <div class='form-group'>
+            		<table border = 0, width = 100%>
+            			<tr>
+            				<td width = 120>
+								이메일
+							</td>
+							<td align = right>
+								<input class='form-control'  type='text' name='coach_email' value = '$row[EMAIL]' placeholder='이메일'>
+							</td>
+						</tr>
+					</table>
+                </div>
+                
+	            <div class='form-group'>
+            		<table border = 0, width = 100%>
+            			<tr>
+            				<td width = 120>
+								회원등급 ( $Member_Rank )
+							</td>
+							<td align = right>
+								<input class='form-control'  type='text' name='coach_email' value = '$row[RANK]' readonly>
+							</td>
+						</tr>
+					</table>
+                </div>
+                
+                
+                
+				<div class='d-block d-md-flex border-bottom pb-3 text-uppercase'></div><br>
+
+                <div class='form-group'>
+            		<table border = 0, width = 100%>
+            			<tr>
+            				<td width = 120>
+								프로필 사진							
+							</td>
+							<td>
+							
+								<table width = 100%>
+									<tr>
+										<td width = 100%>";
+										
+											if ($row[image])
+												{ echo "<img class='rounded' src='view3.html?id=$row[coach_id]' width = 100px>";}
+	echo "
+										</td>
+									</tr>
+									<tr>
+										<td>
+		            						<input type='checkbox' name='delete_image' value='1'>&nbsp;<small>기존 프로필 사진 삭제</small><br>
+											<input class='form-control' type='file' name='image'>
+										</td>
+									</tr>
+								</table>
+							
+							</td>
+						</tr>
+					</table>
+                </div>
+                
+                <div class='form-group text-right'>
+					&nbsp;<input type = 'submit' class='btn btn-primary text-uppercase' type='button' value='설정완료' onclick='submit()';>
+                </div>
+			</form>                
+                ";
+		} 
+		
+		
+	/**** 관리자화면 카테고리 #3 (메인페이지 영역 #1) ****/
+	
+	if ($category == 6)
+		{
+
+		echo "<br><br>
+		<form action='member_update.php' method='POST' enctype='multipart/form-data'>
+				<input class='form-control' type='text' name='coach_id' value = '$row[coach_id]' hidden>
+				<input class='form-control' type='text' name='category' value = '$category' hidden>
+
+				<input type='checkbox' name='ksia_demonstrator1' value='1' $ksia_demonstrator1_cheched >&nbsp;현)KSIA 데몬스트레이터<br>
+				<input type='checkbox' name='smak_demonstrator1' value='1' $smak_demonstrator1_cheched >&nbsp;현)SMAK 데몬스트레이터<br>
+
+				<div class='d-block d-md-flex border-bottom pb-3 text-uppercase'></div><br>
+
+				<input type='checkbox' name='ksia_demonstrator2' value='1' $ksia_demonstrator2_cheched >&nbsp;전)KSIA 데몬스트레이터<br>
+				<input type='checkbox' name='smak_demonstrator2' value='1' $smak_demonstrator2_cheched >&nbsp;전)SMAK 데몬스트레이터<br>
+
+				<div class='d-block d-md-flex border-bottom pb-3 text-uppercase'></div><br>
+
+				<input type='checkbox' name='team_korea1' value='1' $team_korea1_cheched >&nbsp;전)알파인스키 국가대표<br>
+				<input type='checkbox' name='team_korea2' value='1' $team_korea2_cheched >&nbsp;전)알파인스키 국가대표 상비군<br>
+				<input type='checkbox' name='team_korea3' value='1' $team_korea3_cheched >&nbsp;전)알파인스키 청소년 국가대표<br>
+				<input type='checkbox' name='team_korea4' value='1' $team_korea4_cheched >&nbsp;전)알파인스키 꿈나무 국가대표<br>
+				<input type='checkbox' name='team_korea5' value='1' $team_korea5_cheched >&nbsp;전)알파인스키 선수<br>
+				
+				<div class='d-block d-md-flex border-bottom pb-3 text-uppercase'></div><br>
+				
+				<div class='form-group'>
+            		<table border = 0, width = 100%>
+            			<tr>
+            				<td>
+								<select class='form-control' name='ksia_level'>
+									<option value = '0'>KSIA 스키레벨</option>
+									<option value = '0'>--------------</option>
+									<option value = '3' $ksia_level_selected3 >KSIA Lv.3</option>
+									<option value = '2' $ksia_level_selected2 >KSIA Lv.2</option>
+									<option value = '1' $ksia_level_selected1 >KSIA Lv.1</option>
+
+								</select>
+							</td>
+						</tr>
+					</table>
+                </div>
+
+				<div class='form-group'>
+            		<table border = 0, width = 100%>
+            			<tr>
+            				<td>
+								<select class='form-control' name='ksia_teaching'>
+									<option value = '0'>KSIA 검정심사위원</option>
+									<option value = '0'>--------------</option>
+									<option value = '3' $ksia_teacing_selected3 >KSIA 레벨1 검정심사위원</option>
+									<option value = '2' $ksia_teacing_selected2 >KSIA 레벨2 검정심사위원</option>
+									<option value = '1' $ksia_teacing_selected1 >KSIA 레벨3 검정심사위원</option>
+
+								</select>
+							</td>
+						</tr>
+					</table>
+                </div>
+
+
+
+				<div class='form-group'>
+            		<table border = 0, width = 100%>
+            			<tr>
+            				<td>
+								<select class='form-control' name='smak_teaching'>
+									<option value = '0'>SMAK 장협 티칭레벨</option>
+									<option value = '0'>--------------------</option>
+									<option value = '3' $smak_teacing_selected3>SMAK 티칭3</option>
+									<option value = '2' $smak_teacing_selected2>SMAK 티칭2</option>
+									<option value = '1' $smak_teacing_selected1>SMAK 티칭1</option>
+								</select>
+							</td>
+						</tr>
+					</table>
+                </div>
+
+				<div class='d-block d-md-flex border-bottom pb-3 text-uppercase'></div><br>
+
+                <div class='form-group text-right'>
+					&nbsp;<input type = 'submit' class='btn btn-primary text-uppercase' type='button' value='설정완료' onclick='submit()';>
+                </div>
+			</form>";                
+		}
+		
+				
+	$row=mysql_fetch_array($result);
+ 	
+
+}
+?>
+
+	</div>
+</div>
+
+ 
+	<!-- footer for Hansoll-ski -->
+		<? include '../footer4.html'; ?>
+	<!-- end of footer -->
+	
+</body>
+
+</html>

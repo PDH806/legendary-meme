@@ -1,0 +1,44 @@
+<?
+	include 'db_config.html';
+	
+	if (!$Login_User_ID and $rank <> 9){echo "<script language='javascript'>top.document.location.href = 'member_login.html?MEMBER_ID=$User_ID_Search&Case=9'</script>";}
+
+	$No       = $_GET['No'];
+	$category = $_GET['category'];
+
+	if (!$link) {die("Connection failed: " . mysqli_connect_error());}
+
+	$sql = 'DELETE FROM 7G_'.$category.'_Schedules WHERE No = '.$No;
+
+	if ($category == 'T1'){$return_page = 'admin_t1_schedule_list.html';}
+	if ($category == 'T2'){$return_page = 'admin_t2_schedule_list.html';}
+	if ($category == 'T3'){$return_page = 'admin_t3_schedule_list.html';}
+	if ($category == 'SBT1'){$return_page = 'admin_sbt1_schedule_list.html';}
+	if ($category == 'SBT2'){$return_page = 'admin_sbt2_schedule_list.html';}
+	if ($category == 'SBT3'){$return_page = 'admin_sbt3_schedule_list.html';}
+	if ($category == 'Patrol'){$return_page = 'admin_patrol_schedule_list.html';}
+
+
+	$query9 = "SELECT * FROM 7G_".$category."_Apply WHERE Test_No = '{$No}'";
+	$result9=mysql_query($query9,$connect);
+	$row9=mysql_fetch_array($result9);
+	$total_record9 = mysql_num_rows($result9);
+	
+	if ($total_record9 >= 1){
+	echo "<script language='javascript'>
+	alert('선택하신 검정일정에 응시자가 존재하여 삭제가 불가능합니다.');
+	top.document.location.href = '$return_page'</script>";		
+	
+	}
+	else
+	{
+
+	if (mysqli_query($link, $sql)) {echo "<script language='javascript'>
+	alert('선택하신 검정일정이 삭제되었습니다.');
+	top.document.location.href = '$return_page'</script>";} else {echo "Error: " . $sql . "<br>" . mysqli_error($link);}
+
+	}
+
+	mysqli_close($link);
+
+?>

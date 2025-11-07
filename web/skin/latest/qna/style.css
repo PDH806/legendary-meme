@@ -1,0 +1,46 @@
+@charset "utf-8"; 
+/* copyright(c) WEBsiting.co.kr */
+/* 새글 스킨 (latest) */
+
+.qnaLat {position:relative; margin-bottom:20px; overflow:hidden; text-align:center; padding:20px; }
+.qnaLat .qnaLatTit {display:block; }
+.qnaLat .qnaLatTit a{color:#333; display:inline-block; position:relative; margin:0 auto 10px; padding:20px; font-size:20px; text-align:center; }
+.qnaLat .qnaLatTit a u{display:block; width:50px; height:1px; background:#ddd; position:absolute; left:50%; bottom:0px; margin-left:-25px; -webkit-transition-duration: 0.2s; -webkit-transition-timing-function: ease; transition-duration: 0.2s; transition-timing-function: ease; }
+div:hover.qnaLat .qnaLatTit a u{width:100px;  margin-left:-50px;  }
+
+.qnaLat ul{padding:0px; margin:0; text-align:left; list-style:none; min-height:204px;}
+.qnaLat li {list-style:none; margin:0px; padding:0px; border-bottom:1px dotted #ddd; }
+.qnaLat li a {display:block; font-size:13px; color:#666; height:40px; line-height:40px; position:relative; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; padding-right:50px; }
+.qnaLat li a:hover{color:#000; background:#f6f6f6; }
+
+.qnaLat li a span{font-size:11px; }
+.qnaLat li .fa-heart{color:#ff0000; }
+.qnaLat li .fa-lock{display: inline-block; font-size:11px; line-height: 14px; width: 16px; color: #999; background: #efefef; text-align: center; border-radius: 2px; font-size: 12px; border:1px solid #ddd}
+.qnaLat li .new_icon{display:inline-block; font-size:11px; width: 16px; line-height:16px; color:#fff; background:#ff6600; text-align:center; border-radius: 50%; }
+.qnaLat li .hot_icon{display:inline-block; font-size:11px; width: 16px; line-height:16px ; color:#fff; background:#e52955; text-align:center; border-radius: 50%; }
+.qnaLat li .fa-caret-right{color:#bbb}
+.qnaLat .lt_date{position:absolute; top:50%; right:5px; color:#999; height:20px; line-height:20px; margin-top:-10px; font-size:10px; font-family:verdana; }
+
+.qnaLat  .empty_li{line-height:204px; min-height:204px; color:#999; text-align:center; padding:0; }
+.qnaLat  .empty_li:before{background:none; padding:0}
+.qnaLat .lt_cmt{display:inline-block; background:#333; color:#fff; font-size:11px; height:16px; line-height:16px; padding:0 5px; border-radius:3px; }
+
+.qnaLat .lt_more {clear:both; font-size:12px; font-weight:bold; display:inline-block; padding:10px 30px; color:RGBA(255,255,255,0.7); border-radius:50px; text-align:center; margin:20px auto 0; background:#333; border:2px solid #fff; -webkit-transition-duration: 0.2s; -webkit-transition-timing-function: ease; transition-duration: 0.2s; transition-timing-function: ease; }
+.qnaLat .lt_more:hover{color:#fff; border:2px solid RGBA(0,0,0,0.1); }
+.qnaLat .lt_more > i{display:inline-block; padding-left:10px; font-size:14px;}
+
+.qnaIco{display:inline-block; font-size:11px; margin-right:5px; border-radius:3px; background:#999; width:70px; height:20px; line-height:20px; color:#fff; text-align:center; }
+.qnaIco1{background:#990000}
+.qnaIco2{background:#999999}
+.qnaIco3{background:#cccccc}
+.qnaIco i{display:inline-block !important; }
+
+@media all and (max-width:650px)
+{
+	.qnaLat {padding:5px; }
+	.qnaLat ul{min-height:auto;}
+	.qnaLat .basicLatTit a{padding:15px; font-size:16px; }
+	.qnaLat li a {font-size:12px; }
+	.qnaLat .lt_more{font-size:11px; letter-spacing:-0.05em; padding:10px 15px; }
+
+}

@@ -1,0 +1,21 @@
+@charset "utf-8";
+/* copyright(c) WEBsiting.co.kr */
+
+/* 최근게시물 스킨 (new) */
+#new_sch {margin-bottom:15px;text-align:center;padding: 20px;border: 1px solid #e8e8e8;background: #fbfbfb;}
+#new_sch legend {position:absolute;margin:0;padding:0;font-size:0;line-height:0;text-indent:-9999em;overflow:hidden}
+#new_sch p {padding:5px 0 0;font-size:0.95em;text-align:center;letter-spacing:-0.1em}
+#new_sch .frm_input{border-color:#646982;border-radius:0;width:40%;border:1px solid #ddd; border-radius:5px;}
+#new_sch select{border:1px solid #ddd;height:40px;padding:0 0 0 5px;width:20%; border-radius:5px;}
+#new_sch .btn_submit{padding: 0 20px;height: 40px;font-size: 1.083em;font-weight: bold; border-radius:0 5px 5px 0; margin-left:-50px;margin-top:1px;}
+#fnewlist .new_tit{font-weight:bold}
+#fnewlist .profile_img img{border-radius:50%}
+#fnewlist .td_date{font-style:italic}
+#fnewlist .td_name{text-align:center;}
+#fnewlist .td_name img{display:none;}
+#fnewlist .mvSetSubject a{display:inline-block;padding:3px;}
+@media all and (max-width:600px)
+{
+	#new_sch select{width:40%;margin-bottom:5px;}
+	#new_sch .frm_input{width:85%;}
+}

@@ -1,0 +1,61 @@
+@charset "utf-8"; 
+/* copyright(c) WEBsiting.co.kr */
+/* 갤러리 새글 스킨 (latest) */
+
+.galleryBoxLat {position:relative; margin-bottom:20px; overflow:hidden; text-align:center; padding:20px; }
+.galleryBoxLat .galleryLatTit {display:block; }
+.galleryBoxLat .galleryLatTit a{color:#333; display:inline-block; position:relative; margin:0 auto 10px; padding:20px; font-size:20px; text-align:center; }
+.galleryBoxLat .galleryLatTit a u{display:block; width:50px; height:1px; background:#ddd; position:absolute; left:50%; bottom:0px; margin-left:-25px; -webkit-transition-duration: 0.2s; -webkit-transition-timing-function: ease; transition-duration: 0.2s; transition-timing-function: ease; }
+div:hover.galleryBoxLat .galleryLatTit a u{width:100px;  margin-left:-50px;  }
+
+.galleryBoxLat ul{overflow:hidden;  margin:20px 0; padding:0; min-height:204px;}
+.WCMSScontBoardBoxOutside .galleryBoxLat ul{ min-height:auto !important;}
+.galleryBoxLat ul li{width:33.33333%; float:left; overflow:hidden; }
+.galleryBoxLat ul li a{display:block; position:relative; }
+.galleryBoxLat ul li a em{display:block; font-style:normal; position:absolute; left:5px; top:5px; }
+.galleryBoxLat ul li a > b{display:block; text-align:center; height:30px; line-height:30px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; text-align:center; color:#fff; position:absolute; left:10px; right:10px; top:150%; margin-top:-15px; -webkit-transition-duration: 0.2s; -webkit-transition-timing-function: ease; transition-duration: 0.2s; transition-timing-function: ease; }
+.galleryBoxLat ul li a:hover > b{top:50%; -webkit-transition-duration: 0.2s; -webkit-transition-timing-function: ease; transition-duration: 0.2s; transition-timing-function: ease; }
+
+.galleryBoxLat ul li a .bo_cate_link{display:block; text-align:center; height:30px; line-height:30px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; text-align:center; width:100%; position:absolute; left:0px; bottom:150%; -webkit-transition-duration: 0.2s; -webkit-transition-timing-function: ease; transition-duration: 0.2s; transition-timing-function: ease; }
+.galleryBoxLat ul li a:hover .bo_cate_link{bottom:52%; -webkit-transition-duration: 0.2s; -webkit-transition-timing-function: ease; transition-duration: 0.2s; transition-timing-function: ease; }
+
+
+
+.galleryBoxLat ul li a > i u{display:block; text-decoration:none; font-style:normal; position:absolute; left:0; top:50%; width:100%; margin-top:-10px; height:20px; line-height:20px; font-size:30px; color:#b8b8b8; }
+.galleryBoxLat ul li a > i{display:block; position:relative; overflow:hidden; background:#333; }
+.galleryBoxLat ul li a > i img{display:block; width:100%; height:auto; -webkit-transition-duration: 0.2s; -webkit-transition-timing-function: ease; transition-duration: 0.2s; transition-timing-function: ease; }
+.galleryBoxLat ul li a:hover > i .youtube_img,
+.galleryBoxLat ul li a:hover > i img{filter:Alpha(opacity=50); opacity:0.5; -moz-opacity:0.5; transform: scale(1.1); -webkit-transition-duration: 0.2s; -webkit-transition-timing-function: ease; transition-duration: 0.2s; transition-timing-function: ease; }
+
+
+.galleryBoxLat ul li a > i em{display:block; position:absolute; left:0px; top:0px; right:0px; bottom:0px; width:100%; overflow:hidden; background-color:#333; }
+.galleryBoxLat ul li a > i .youtube_img{display:block; width:100%; height:100%; background-repeat:no-repeat; background-size:cover; background-position:center center; -webkit-transition-duration: 0.2s; -webkit-transition-timing-function: ease; transition-duration: 0.2s; transition-timing-function: ease; -webkit-transition-timing-function: ease; transition-duration: 0.2s; transition-timing-function: ease; }
+.galleryBoxLat ul li a:hover > i .youtube_img{transform: scale(1.1); -webkit-transition-timing-function: ease; transition-duration: 0.2s; transition-timing-function: ease; }
+
+
+.galleryBoxLat li a span{font-size:11px; }
+.galleryBoxLat li .fa-heart{color:#ff0000; }
+.galleryBoxLat li .fa-lock{display: inline-block; font-size:11px; line-height: 14px; width: 16px; color: #999; background: #efefef; text-align: center; border-radius: 2px; font-size: 12px; border:1px solid #ddd}
+.galleryBoxLat li .new_icon{display:inline-block; font-size:11px; width: 16px; line-height:16px; color:#fff; background:#ff6600; text-align:center; border-radius: 50%; }
+.galleryBoxLat li .hot_icon{display:inline-block; font-size:11px; width: 16px; line-height:16px ; color:#fff; background:#e52955; text-align:center; border-radius: 50%; }
+
+.galleryBoxLat .lt_more {clear:both; font-size:12px; font-weight:bold; display:inline-block; padding:10px 30px; color:RGBA(255,255,255,0.7); border-radius:50px; text-align:center; margin:20px auto 0; background:#333; border:2px solid #fff; -webkit-transition-duration: 0.2s; -webkit-transition-timing-function: ease; transition-duration: 0.2s; transition-timing-function: ease; }
+.galleryBoxLat .lt_more:hover{color:#fff; border:2px solid RGBA(0,0,0,0.1); }
+.galleryBoxLat .lt_more > i{display:inline-block; padding-left:10px; font-size:14px;}
+
+.galleryBoxLat .fa-youtube-play{font-size:18px; vertical-align:middle; }
+
+.galleryBoxLat .empty_li {width:100% !important; line-height:204px; min-height:204px; color:#999; text-align:center; padding:0;}
+
+@media all and (max-width:650px)
+{
+	.galleryBoxLat {padding:5px; }
+	.galleryBoxLat .galleryLatTit a{padding:15px; font-size:16px; }
+
+	.galleryBoxLat .lt_more{font-size:11px; letter-spacing:-0.05em; padding:10px 15px; }
+
+	.galleryBoxLat ul{min-height:auto;}
+	.galleryBoxLat ul li{width:50%; }
+
+
+}

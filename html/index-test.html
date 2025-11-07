@@ -1,0 +1,963 @@
+
+<!--[if lte IE 8]>
+<script src="/js/html5.js"></script>
+<![endif]-->
+<script>
+// 
+var g5_url       = "";
+var g5_bbs_url   = "/bbs";
+var g5_is_member = "";
+var g5_is_admin  = "";
+var g5_is_mobile = "";
+var g5_bo_table  = "";
+var g5_sca       = "";
+var g5_editor    = "";
+var g5_cookie_domain = "";
+</script>
+<script src="js/jquery-1.8.3.min.js"></script>
+<script src="js/jquery.menu.js?ver=171222"></script>
+<script src="js/common.js?ver=171222"></script>
+<!-- <script src="/js/wrest.js?ver=171222"></script> -->
+<script src="http://skiresort.ivyro.net/skiresort/ski/js/placeholders.min.js"></script>
+<link rel="stylesheet" href="http://skiresort.ivyro.net/skiresort/ski/js/font-awesome/css/font-awesome.min.css">
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv="Content-Script-Type" content="text/javascript" />
+	<meta http-equiv="Content-Style-Type" content="text/css" />
+	<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<meta property="og:image" content="ski/images/meta_img.jpg" />
+	<meta property="og:description" content=""/>
+	<title>...</title>
+    <link rel="shortcut icon" type="image/x-icon" href="ski/images/favicon.ico">
+    <link rel="stylesheet" type="text/css" href="ski/css/normalize.css">
+	<link rel="stylesheet" type="text/css" href="ski/css/common.css" />	
+ 	<link rel="stylesheet" type="text/css" href="ski/css/main.css" /> 	
+	<link rel="stylesheet" type="text/css" href="ski/css/jquery.fullpage.css" />
+	<link rel="stylesheet" type="text/css" href="ski/css/table.css" />
+	<link rel="stylesheet" type="text/css" href="ski/css/sub.css" media='screen,print'/>	
+	<link rel="stylesheet" type="text/css" href="ski/css/media.css" />
+
+	<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+	<script src="https://code.jquery.com/ui/1.11.2/jquery-ui.min.js"></script>
+	<script type="text/javascript" src="ski/js/scrolloverflow.js" charset="utf-8"></script>
+	<script type="text/javascript" src="ski/js/jquery.fullpage.js" charset="utf-8"></script>
+	<script type="text/javascript" src="ski/js/slick.js" charset="utf-8"></script>
+	<script type="text/javascript" src="ski/js/common.js" charset="utf-8"></script>
+	<script type="text/javascript" src="ski/js/html5shiv.js" charset="utf-8"></script>
+	<script type="text/javascript" src="ski/js/flexslider.js"  charset="utf-8"></script>
+
+    <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>  <!-- ���������ȣ API -->
+    <!--<script src="https://ssl.daumcdn.net/dmaps/map_js_init/postcode.v2.js"></script> ���������ȣ API -->
+	<!--[if lt IE 9]>
+		<script type="text/javascript" src="js/html5shiv.js"></script>
+	<![endif]-->
+</head>
+<body>
+        <div class="ofl_spt">
+            <script language="javascript">
+                $(document).ready(function() {
+                    //메인화면 PC/모바일 분기시 화면 스크롤
+                    isOnePageScroll();
+                });
+
+            </script>
+        </div>
+        <!--//ofl_spt -->
+
+        <div id="wrap">
+            <header id="header">
+                <div class="header_wrap">
+                    <h1><a href="#"><img src="ski/images/logo.png" alt=""><br><span>스키장 사업의 건전한 발전과 회원사의<br>권익증진을 위한 사업</span></a></h1>
+                <ul id="gnb_menu">
+    <li class="gnb_top_menu">
+        <ul class="sbclear">
+            <li><a href="bbs/board.php?bo_table=notice">공지사항</a></li>
+            <li><a href="ski/cp_contact.html">오시는 길</a></li>
+        </ul>
+    </li>
+    <li>
+        <a class="top_nav" href="ski/cp_ceo.html">협회 소개</a>
+        <div class="gnb_menu_sub">
+            <ul class="gnb_menu_none">
+                <li>
+                    <a href="ski/cp_ceo.html">회장인사말</a>
+                </li>
+                <li>
+                    <a href="ski/cp_about.html">협회소개</a>
+                </li>
+                <li>
+                    <a href="ski/cp_work.html">협회 주요업무</a>
+                </li>
+                <li>
+                    <a href="ski/cp_join.html">협회 가입 안내</a>
+                </li>
+                <li>
+                    <a href="ski/cp_contact.html">오시는 길</a>
+                </li>
+            </ul>
+        </div>
+    </li>
+    <li>
+        <a class="top_nav" href="ski/mb_ceo.html">회원사 소개</a>
+        <div class="gnb_menu_sub">
+            <ul class="gnb_menu_none">
+                <li>
+                    <a href="ski/mb_ceo.html">회원사 대표자</a>
+                </li>
+                <li>
+                    <a href="ski/mb_about.html">지역별 스키장 현황</a>
+                </li>
+                <li>
+                    <a href="ski/mb_ski_list_1.html">회원사 소개</a>
+                </li>
+            </ul>
+        </div>
+    </li>
+    <li>
+        <a class="top_nav" href="ski/patrol_ski.html">스키구조요원</a>
+        <div class="gnb_menu_sub">
+            <ul class="gnb_menu_none">
+                <li>
+                    <a href="ski/patrol_ski.html">스키 구조 요원 소개</a>
+                </li>
+                <li>
+                    <a href="ski/patrol_test.html">시험정보 및 자료</a>
+                </li>
+                <li>
+                    <a href="ski/patrol_data.html">원서 접수 및 조회</a>
+                </li>
+                <li>
+                    <a href="ski/patrol_check.html">자격확인</a>
+                </li>
+            </ul>
+        </div>
+    </li>
+    <li>
+        <a class="top_nav" href="ski/teach_ski.html">스키지도요원</a>
+        <div class="gnb_menu_sub">
+            <ul class="gnb_menu_none">
+                <li>
+                    <a href="ski/teach_ski.html">스키 지도 요원 소개</a>
+                </li>
+                <li>
+                    <a href="ski/teach_test.html">시험정보 및 자료</a>
+                </li>
+                <li>
+                    <a href="ski/teach_data.html">원서 접수 및 조회</a>
+                </li>
+				<li>
+                    <a href="ski/teach_check.html">자격 확인</a>
+                </li>
+				<li>
+                    <a href="ski/teach_demon.html">데몬스트레이터</a>
+                </li>
+                <li>
+                    <a href="ski/teach_champion.html">기술 선수권 대회</a>
+                </li>
+            </ul>
+        </div>
+    </li>
+    <li>
+        <a class="top_nav" href="ski/snow_ski.html">스노보드 지도요원</a>
+        <div class="gnb_menu_sub">
+            <ul class="gnb_menu_none">
+				<li>
+                   <a href="ski/snow_ski.html">스노보드지도요원 소개</a>
+                </li>
+                <li>
+                   <a href="ski/snow_test.html">시험정보 및 자료</a>
+                </li>
+                <li>
+                   <a href="ski/snow_data.html">원서 접수 및 조회</a>
+                </li>
+				<li>
+                   <a href="ski/snow_check.html">자격 확인</a>
+                </li>
+            </ul>
+        </div>
+    </li>
+    <li>
+     
+    <a class="top_nav" href="bbs/board.php?bo_table=notice">커뮤니티</a>
+        <div class="gnb_menu_sub">
+            <ul class="gnb_menu_none">
+                <li>
+                    <a href="bbs/board.php?bo_table=notice">공지사항</a>
+                </li>
+                <li>
+                    <a href="ski/sb_safe.html">안전수칙</a>
+                </li>
+                <!-- <li>
+                    <a href="ski/sb_data.html">자료실</a>
+                </li> -->
+                <li>
+                    <a href="bbs/board.php?bo_table=gallery">갤러리</a>
+                </li>
+            </ul>
+        </div>
+    </li>
+</ul>
+	<!-- //gnb_menu -->
+	<div class="right_menu">
+		<ul class="clearfix">
+			<li class="menu_switch">
+				<a href="#none" id="toggle_menu">전체메뉴 펼치기/닫기</a>
+			</li>
+		</ul>
+	</div>
+	<!-- //right_menu -->
+<!--전체메뉴 레이어-->
+    <div class="all_menu">
+        <div class="all_menu_wrap">
+            <div class="all_menu_left">
+                <img src="ski/images/all_menu_img.jpg" alt="한국스키장경영협회">
+            </div>
+            <div class="all_menu_right">
+                <ul>
+                    <li class="one_depth">
+                        <ul class="two_depth">
+                            <li>
+                                <a href="ski/cp_ceo.html">회장인사말</a>
+                            </li>
+                            <li>
+                                <a href="ski/cp_about.html">협회소개</a>
+                            </li>
+                            <li>
+                                <a href="ski/cp_work.html">협회 주요업무</a>
+                            </li>
+                            <li>
+                                <a href="ski/cp_join.html">협회 가입 안내</a>
+                            </li>
+                            <li>
+                                <a href="ski/cp_contact.html">오시는길</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="one_depth">
+                        <ul class="two_depth">
+                            <li>
+                                <a href="ski/mb_ceo.html">회원사 대표자</a>
+                            </li>
+                            <li>
+                                <a href="ski/mb_about.html">지역별 스키장 현황</a>
+                            </li>
+                            <li>
+                                <a href="ski/mb_ski_list_1.html">회원사 소개</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="one_depth">
+                        <ul class="two_depth">
+                            <li>
+                                <a href="ski/patrol_ski.html">스키구조요원 소개</a>
+                            </li>
+                            <li>
+                                <a href="ski/patrol_test.html">시험정보 및 자료</a>
+                            </li>
+                            <li>
+                                <a href="ski/patrol_data.html">원서 접수 및 조회</a>
+                            </li>
+                            <li>
+                                <a href="ski/patrol_check.html">자격 확인</a>
+                            </li>
+
+                        </ul>
+                    </li>
+                    <li class="one_depth">
+                        <ul class="two_depth">
+                            <li>
+                                <a href="ski/teach_ski.html">스키지도요원 소개</a>
+                            </li>
+                            <li>
+                                <a href="ski/teach_test.html">시험정보 및 자료</a>
+                            </li>
+                            <li>
+                                <a href="ski/teach_data.html">원서 접수 및 조회</a>
+                            </li>
+							<li>
+                                <a href="ski/teach_check.html">자격 확인</a>
+                            </li>
+							<li>
+                                <a href="ski/teach_demon.html">데몬스트레이터</a>
+                            </li>
+                            <li>
+                                <a href="ski/teach_champion.html">기술 선수권 대회</a>
+                            </li>
+                        </ul>
+                    </li>
+					<li class="one_depth">
+                        <ul class="two_depth">
+                            <li>
+                                <a href="ski/snow_ski.html">스노보드지도요원 소개</a>
+                            </li>
+                            <li>
+                                <a href="ski/snow_test.html">시험정보 및 자료</a>
+                            </li>
+                            <li>
+                                <a href="ski/snow_data.html">원서 접수 및 조회</a>
+                            </li>
+							<li>
+                                <a href="ski/snow_check.html">자격 확인</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="one_depth">
+                        <ul class="two_depth">
+                            <li>
+                                <!-- <a href="ski/sb_notice.html">공지사항</a> -->
+                                <a href="bbs/board.php?bo_table=notice">공지사항</a>
+                            </li>
+                            <li>
+                                <a href="ski/sb_safe.html">안전수칙</a>
+                            </li>
+                            <!-- <li>
+                                <a href="ski/sb_data.html">자료실</a>
+                            </li> -->
+                            <li>
+                                <!-- <a href="ski/sb_gallery.html">갤러리</a> -->
+                                <a href='bbs/board.php?bo_table=gallery'>갤러리</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <!-- //all_menu_right -->
+        </div>
+        <!-- //all_menu_wrap -->
+    </div>
+    <!--//all_menu -->
+   
+                </div>
+                <!-- //header_wrap -->
+            </header>
+            <!-- //header -->
+            <!-- ㅡㅡㅡㅡㅡㅡㅡㅡ/HEADERㅡㅡㅡㅡㅡㅡㅡㅡ -->
+            <div id="content">
+                <script type="text/javascript" src="ski/js/zoom.js"></script>
+
+                <div id="content">
+
+                    <div class="slide">
+                        <div class="slide_01 pc">
+                            <img src="ski/images/visual_bg01.jpg" alt="한국스키장경영협회" />
+                            <img src="ski/images/img_mobile_01.jpg" alt="한국스키장경영협회" /><!--visual_bg01 / img_mobile_01 -->
+                        </div>
+                        <div class="slide_02">
+                            <img src="ski/images/visual_bg02.jpg" alt="한국스키장경영협회" />
+                            <img src="ski/images/img_mobile_02.jpg" alt="한국스키장경영협회" />
+                            <!--visual_bg02 / img_mobile_02 -->
+                        </div>
+                        <div class="slide_03">
+                            <img src="ski/images/visual_bg03.jpg" alt="한국스키장경영협회" />
+                            <img src="ski/images/img_mobile_03.jpg" alt="한국스키장경영협회" />
+                            <!--visual_bg03 / img_mobile_03 -->
+                        </div>
+                        <div class="slide_04">
+                            <img src="ski/images/visual_bg04.jpg" alt="한국스키장경영협회" />
+                            <img src="ski/images/img_mobile_04.jpg" alt="한국스키장경영협회" />
+                            <!--visual_bg04 / img_mobile_04 -->
+                        </div>
+                        <div class="slide_05">
+                            <img src="ski/images/visual_bg05.jpg" alt="한국스키장경영협회" />
+                            <img src="ski/images/img_mobile_05.jpg" alt="한국스키장경영협회" />
+                            <!--visual_bg05 / img_mobile_05 -->
+                        </div>
+                        <div class="slide_06">
+                            <img src="ski/images/visual_bg06.jpg" alt="한국스키장경영협회" />
+                            <img src="ski/images/img_mobile_06.jpg" alt="한국스키장경영협회" />
+                            <!--visual_bg06 / img_mobile_06 -->
+                        </div>
+                        <div class="slide_07">
+                            <img src="ski/images/visual_bg07.jpg" alt="한국스키장경영협회" />
+                            <img src="ski/images/img_mobile_07.jpg" alt="한국스키장경영협회" />
+                            <!--visual_bg07 / img_mobile_07 -->
+                        </div>
+                    </div>
+                    <!-- //slide -->
+                    
+                    <script>
+                        $(function() {
+                            $('.slide').slick({
+                                fade: true,
+                                slidesToShow: 1,
+                                slidesToScroll: 1,
+                                autoplay: true,
+                                autoplaySpeed: 3000,
+                                speed: 1000,
+                                cssEase: 'ease-out',
+                                swipe: false,
+                                dots: false,
+                                arrows: false,
+                                pauseOnHover: false,
+                            });
+                            
+                        });
+                    </script>
+                    
+                    <!--메인-->
+                    <div class="visual section fp-auto-height" id="visual">
+                        <div class="visual_wrap">
+                            <div class="visual_title_box">
+                                <!-- <div class="visual_img">
+                                    <p>
+                                        <img src="ski/images/visual_title_logo.png" alt="한국스키장경영협회">
+                                    </p>
+                                </div>
+                                <p class="visual_title01">스키장 사업의 건전한 발전과</p>
+                                <p class="visual_title02">회원사의 권익증진을 위한 사업</p> -->
+                            </div>
+
+                            <div class="major">
+                                <a href="ski/cp_about.html">
+                                    <div class="major_cont" id="major_left">
+                                        <span class="major_line"></span>
+                                        <h3>협회소개</h3>
+                                        <ul>
+                                            <li>협회소개</li>
+                                            <li>협회 조직도</li>
+                                            <li>협회 오시는 길</li>
+                                        </ul>
+                                        <span class="major_more"></span>
+                                    </div>
+                                </a>
+
+                                <a href="ski/patrol_ski.html">
+                                    <div class="major_cont" id="major_center">
+                                        <span class="major_line"></span>
+                                        <h3>스키구조요원</h3>
+                                        <ul>
+                                            <li>스키구조요원 소개</li>
+                                            <li>시험정보 및 자료</li>
+                                            <li>원서 접수 및 조회</li>
+                                        </ul>
+                                        <span class="major_more"></span>
+                                    </div>
+                                </a>
+
+                                <a href="ski/teach_ski.html">
+                                    <div class="major_cont" id="major_right">
+                                        <span class="major_line"></span>
+                                        <h3>스키지도요원</h3>
+                                        <ul>
+                                            <li>스키지도요원 소개</li>
+                                            <li>시험정보 및 자료</li>
+                                            <li>원서 접수 및 조회</li>
+                                        </ul>
+                                        <span class="major_more"></span>
+                                    </div>
+                                </a>
+                            </div>
+                            <!-- //major -->
+                        </div>
+                        <!-- //visual_wrap -->
+                    </div>
+                    <!--//visual -->
+
+                    <div class="news section" id="news">
+                        <div class="news_wrap">
+                            <h3><img src="ski/images/news_logo.png" alt="SBAK"> 정보</h3>
+                            <div class="news_list">
+                                <div class="news_box1">
+                                    <ul class="sbclear">
+                                        <li class="news_a1"><a href="ski/cp_about.html"><img src="ski/images/news_bg_1.jpg" alt="한국스키장경영협회"></a></li>
+                                        <li class="news_a2"><a href="ski/cp_ceo.html"><img src="ski/images/news_bg_2.jpg" alt="건강하고 밝은 스키 문화, 새로운 시대, 변화와 혁신을 주도. 신달순 회장"></a></li>
+                                    </ul>
+                                </div>
+                                <div class="news_box2">
+                                    <ul class="sbclear">
+                                        <li class="news_a3"><a href="ski/mb_ski_list_1.html"><img src="ski/images/news_bg_6.jpg" alt="회원사 소개"></a></li>
+                                        <!-- <li class="news_a4"><a href="ski/report_all.html"><img src="ski/images/news_bg_4.jpg" alt="보도자료"></a></li> -->
+                                        <li class="news_a5"><a href="/bbs/board.php?bo_table=notice"><img src="ski/images/news_bg_7.jpg" alt="커뮤니티"></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- //news_wrap -->
+                    </div>
+                    <!-- //news -->
+
+                    <div class="info section" id="info">
+                        <div class="info_wrap">
+                            <div class="info_left info_area">
+                                <img src="ski/images/info_1.jpg" alt="협회소개">
+                                <div class="info_manage">
+                                    <div class="info_title">
+                                        <p class="manage_title">협회소개</p>
+                                        <p class="manage_text">스키장사업의 건전한 발전과<br>회원사의 권익증진</p>
+                                    </div>
+                                    <!-- //info_title -->
+                                    <ul>
+                                        <li>
+                                            <a href="ski/cp_about.html">협회소개</a>
+                                        </li>
+                                        <li>
+                                            <a href="ski/cp_about_hty.html">협회연혁</a>
+                                        </li>
+                                        <li>
+                                            <a href="ski/mb_ceo.html">회원사 대표자</a>
+                                        </li>
+                                        <li>
+                                            <a href="ski/cp_work.html">주요업무내용</a>
+                                        </li>
+                                        <li>
+                                            <a href="ski/cp_join.html">가입안내</a>
+                                        </li>
+                                        <li>
+                                            <a href="ski/cp_contact.html">오시는 길</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <!-- //info_manage -->
+                            </div>
+                            <!-- //info_left -->
+
+                            <div class="info_area info_lt_w">
+                                <a href="ski/mb_about.html">
+                                    <div id="info_lt" class="info_text">
+                                        <p class="info_r_title">스키장 현황</p>
+                                        <p class="info_r_text">지역별 스키장 현황</p>
+                                    </div>
+                                </a>
+                                <div class="info_images">
+                                    <img src="ski/images/info_4.jpg" alt="스키장 현황">
+                                </div>
+                            </div>
+                            <!-- //info_area -->
+
+                            <div class="info_right">
+                                <div class="info_area">
+                                    <a href="ski/sb_safe.html">
+                                        <div id="info_rt" class="info_text">
+                                            <p class="info_r_title">안전 수칙</p>
+                                            <p class="info_r_text">스키장 안전 표지판 안내</p>
+                                        </div>
+                                    </a>
+                                    <div class="info_images">
+                                        <img src="ski/images/info_2.jpg" alt="안전수칙">
+                                    </div>
+                                </div>
+                                <!-- //info_area -->
+
+                                <div class="info_area">
+                                    <div class="info_images">
+                                        <img src="ski/images/info_3.jpg" alt="공지사항">
+                                    </div>
+                                     <a href="bbs/board.php?bo_table=notice">
+                                        <div id="info_rc" class="info_text">
+                                            <p class="info_r_title">공지사항</p>
+                                            <p class="info_r_text">한국 스키장 경영협회&nbsp;<br>새 소식</p>
+                                        </div>
+                                    </a>
+                                </div>
+                                <!-- //info_area -->
+
+                                <div class="info_area">
+                                    <a href="bbs/board.php?bo_table=gallery">
+                                        <div id="info_rb" class="info_text">
+                                            <p class="info_r_title">갤러리</p>
+                                            <p class="info_r_text">한국 스키장 경영협회&nbsp;<br>갤러리</p>
+                                        </div>
+                                    </a>
+                                    <div class="info_images">
+                                        <img src="ski/images/info_5.jpg" alt="갤러리">
+                                    </div>
+                                </div>
+                                <!-- //info_area -->
+                            </div>
+                            <!-- //info_right -->
+                        </div>
+                        <!-- //info_wrap -->
+                    </div>
+                    <!-- //info -->
+
+                    <div class="main_bottom section">
+                        <div class="sponsor" id="sponsor">
+                        <div class="sponsor_wrap">
+							<h3>회원사</h3>
+                            <div class="sponsor1">
+                                <ul class="sbclear">
+                                    <li>
+                                        <a href="http://www.yongpyong.co.kr/" title="용평리조트 바로가기" target="_blank">
+                                            <img src="ski/images/ft_link_1.jpg" alt="용평리조트">
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="http://www.pineresort.com/" title="양지파인리조트 바로가기" target="_blank">
+                                            <img src="ski/images/ft_link_2.jpg" alt="양지파인리조트">
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="https://starhill.co.kr/" title="스타힐리조트 바로가기" target="_blank">
+                                            <img src="ski/images/ft_link_3.jpg" alt="스타힐리조트">
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="http://www.mdysresort.com/" title="무주덕유산리조트 바로가기" target="_blank">
+                                            <img src="ski/images/ft_link_4.jpg" alt="무주덕유산리조트">
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="http://www.daemyungresort.com/vp/" title="대명비발디파크 바로가기" target="_blank">
+                                            <img src="ski/images/ft_link_5.jpg" alt="대명비발디파크">
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="http://phoenixhnr.co.kr/pyeongchang/index" title="휘닉스평창 바로가기" target="_blank">
+                                            <img src="ski/images/ft_link_6.jpg" alt="휘닉스평창">
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="https://www.wellihillipark.com/sub3/" title="웰리힐리파크 바로가기" target="_blank">
+                                            <img src="ski/images/ft_link_7.jpg" alt="웰리힐리파크">
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="http://www.jisanresort.co.kr/" title="지산리조트 바로가기" target="_blank">
+                                            <img src="ski/images/ft_link_8.jpg" alt="지산리조트">
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="http://www.elysian.co.kr/main.asp" title="엘리시안강촌 바로가기" target="_blank">
+                                            <img src="ski/images/ft_link_9.jpg" alt="엘리시안강촌">
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="http://www.oakvalley.co.kr/oak_new/index.asp" title="한솔오크밸리 바로가기" target="_blank">
+                                            <img src="ski/images/ft_link_27.jpg" alt="한솔오크밸리" class="resize_1">
+											<!-- **************************** 이미지 사이즈 수정 요망 ********************************* -->
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="http://www.high1.com/Hhome/main.high1" title="하이원리조트 바로가기" target="_blank">
+                                            <img src="ski/images/ft_link_28.jpg" alt="하이원리조트"  class="resize_2">
+											<!-- **************************** 이미지 사이즈 수정 요망 ********************************* -->
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="https://www.konjiamresort.co.kr/main.dev" title="곤지암리조트 바로가기" target="_blank">
+                                            <img src="ski/images/ft_link_12.jpg" alt="곤지암리조트">
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="http://www.alpensiaresort.com" title="알펜시아 바로가기" target="_blank">
+                                            <img src="ski/images/ft_link_13.jpg" alt="알펜시아">
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="https://bearstown.com/main/main.asp" title="베어스타운 바로가기" target="_blank">
+                                            <img src="ski/images/ft_link_14.jpg" alt="베어스타운">
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="http://www.edenvalley.co.kr/" title="에덴밸리리조트 바로가기" target="_blank">
+                                            <img src="ski/images/ft_link_15.jpg" alt="에덴밸리리조트">
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="http://www.o2resort.com/main.xhtml" title="오투리조트 바로가기" target="_blank">
+                                            <img src="ski/images/ot_resort.png" alt="오투리조트">
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="sponsor2 sbclear">
+                                <h3>관련기관</h3>
+                                <ul class="sbclear">
+                                    <li>
+                                        <a href="http://www.mcst.go.kr/main.jsp" title="문화체육관광부 바로가기" target="_blank">
+                                            <img src="ski/images/ft_link_19.jpg" alt="문화체육관광부">
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="http://www.provin.gangwon.kr/gw/portal" title="강원도청 바로가기" target="_blank">
+                                            <img src="ski/images/ft_link_20.jpg" alt="강원도청">
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="https://www.gg.go.kr/" title="경기도청 바로가기" target="_blank">
+                                            <img src="ski/images/ft_link_21.jpg" alt="경기도청">
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="http://www.jeonbuk.go.kr/index.jeonbuk" title="전라북도청 바로가기" target="_blank">
+                                            <img src="ski/images/ft_link_22.jpg" alt="전라북도청">
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="http://www.gyeongnam.go.kr/index.gyeong" title="경상남도청 바로가기" target="_blank">
+                                            <img src="ski/images/ft_link_23.jpg" alt="경상남도청">
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="http://www.visitkorea.or.kr/intro.html" title="한국관광공사 바로가기" target="_blank">
+                                            <img src="ski/images/ft_link_24.jpg" alt="한국관광공사">
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="https://www.kspo.or.kr/kspo/main/main.do" title="국민체육진흥공단 바로가기" target="_blank">
+                                            <img src="ski/images/ft_link_25.jpg" alt="국민체육진흥공단">
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="http://www.sportsafety.or.kr/kssf/html/intro.jsp" title="스포츠안전재단 바로가기" target="_blank">
+                                            <img src="ski/images/ft_link_26.jpg" alt="스포츠안전재단">
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="sponsor3 sbclear">
+                                <h3>후원사</h3>
+                                <ul class="sbclear">
+                                    <!-- 
+                                    <li>
+										<a href="http://www.spyder.co.kr/" title="스파이더 바로가기" target="_blank">
+                                            <img src="ski/images/ft_link_18.jpg" alt="스파이더">
+                                        </a>
+                                    </li>
+                                     -->
+                                    <li>
+										<a href="http://www.skitzo.co.kr/main.asp" title="스킷조 바로가기" target="_blank">
+                                            <img src="ski/images/ft_link_16.jpg" alt="스킷조">
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="http://smithkorea.co.kr/" title="스미스 바로가기" target="_blank">
+                                            <img src="ski/images/ft_link_17.jpg" alt="스미스">
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- //sponsor -->
+
+                        <!-- ㅡㅡㅡㅡㅡㅡㅡㅡFOOTERㅡㅡㅡㅡㅡㅡㅡㅡ -->
+                        <!--footer-->
+	<!-- 롤링 배너 로고 수정 완료 -->
+						<div class="footer">
+							<footer class="sb_footer">
+								<div id="footer_banner">
+									<div class="footer_banner">
+										<div class="inwrap">
+											<a href="#self" class="btn_arrow prev">
+												<img src="ski/images/ft_prev_btn.png" alt="이전">
+											</a>
+											<ul>
+												<li>
+													<a href="http://www.yongpyong.co.kr/" title="용평리조트 바로가기" target="_blank">
+														<img src="ski/images/ft_link_1.jpg" alt="용평리조트">
+													</a>
+												</li>
+												<li>
+													<a href="http://www.pineresort.com/" title="양지파인리조트 바로가기" target="_blank">
+														<img src="ski/images/ft_link_2.jpg" alt="양지파인리조트">
+													</a>
+												</li>
+												<li>
+													<a href="https://starhill.co.kr/" title="스타힐리조트 바로가기" target="_blank">
+														<img src="ski/images/ft_link_3.jpg" alt="스타힐리조트">
+													</a>
+												</li>
+												<li>
+													<a href="http://www.mdysresort.com/" title="무주덕유산리조트 바로가기" target="_blank">
+														<img src="ski/images/ft_link_4.jpg" alt="무주덕유산리조트">
+													</a>
+												</li>
+												<li>
+													<a href="http://www.daemyungresort.com/vp/" title="대명비발디파크 바로가기" target="_blank">
+														<img src="ski/images/ft_link_5.jpg" alt="대명비발디파크">
+													</a>
+												</li>
+												<li>
+													<a href="http://phoenixhnr.co.kr/pyeongchang/index" title="휘닉스평창 바로가기" target="_blank">
+														<img src="ski/images/ft_link_6.jpg" alt="휘닉스평창">
+													</a>
+												</li>
+												<li>
+													<a href="https://www.wellihillipark.com/sub3/" title="웰리힐리파크 바로가기" target="_blank">
+														<img src="ski/images/ft_link_7.jpg" alt="웰리힐리파크">
+													</a>
+												</li>
+												<li>
+													<a href="http://www.jisanresort.co.kr/" title="지산리조트 바로가기" target="_blank">
+														<img src="ski/images/ft_link_8.jpg" alt="지산리조트">
+													</a>
+												</li>
+												<li>
+													<a href="http://www.elysian.co.kr/main.asp" title="엘리시안강촌 바로가기" target="_blank">
+														<img src="ski/images/ft_link_9.jpg" alt="엘리시안강촌">
+													</a>
+												</li>
+												<li>
+													<a href="http://www.oakvalley.co.kr/oak_new/index.asp" title="한솔오크밸리 바로가기" target="_blank">
+														<img src="ski/images/ft_link_27.jpg" alt="한솔오크밸리">
+													</a>
+												</li>
+												<li>
+													<a href="http://www.high1.com/Hhome/main.high1" title="하이원리조트 바로가기" target="_blank">
+														<img src="ski/images/ft_link_28.jpg" alt="하이원리조트">
+													</a>
+												</li>
+												<li>
+													<a href="https://www.konjiamresort.co.kr/main.dev" title="곤지암리조트 바로가기" target="_blank">
+														<img src="ski/images/ft_link_12.jpg" alt="곤지암리조트">
+													</a>
+												</li>
+												<li>
+													<a href="http://www.alpensiaresort.com" title="알펜시아 바로가기" target="_blank">
+														<img src="ski/images/ft_link_13.jpg" alt="알펜시아">
+													</a>
+												</li>
+												<li>
+													<a href="https://bearstown.com/main/main.asp" title="베어스타운 바로가기" target="_blank">
+														<img src="ski/images/ft_link_14.jpg" alt="베어스타운">
+													</a>
+												</li>
+												<li>
+													<a href="http://www.edenvalley.co.kr/" title="에덴밸리리조트 바로가기" target="_blank">
+														<img src="ski/images/ft_link_15.jpg" alt="에덴밸리리조트">
+													</a>
+												</li>
+												<li>
+                                                  <a href="http://www.o2resort.com" title="오투리조트 바로가기" target="_blank">
+                                                    <img src="ski/images/ot_resort.png" alt="오투리조트">
+                                                  </a>
+                                                </li>
+												<li>
+													<a href="http://www.skitzo.co.kr/main.asp" title="스킷조 바로가기" target="_blank">
+														<img src="ski/images/ft_link_16.jpg" alt="스킷조">
+													</a>
+												</li>
+												<li>
+													<a href="http://smithkorea.co.kr/" title="스미스 바로가기" target="_blank">
+														<img src="ski/images/ft_link_17.jpg" alt="스미스">
+													</a>
+												</li>
+												
+												<!-- 배너 순서 변경 -->
+                                                <!-- <li>
+                                                  <a href="http://www.o2resort.com" title="오투리조트 바로가기" target="_blank">
+                                                    <img src="ski/images/ot_resort.png" alt="오투리조트">
+                                                  </a>
+                                                </li> -->
+												<!-- 
+												<li>
+													<a href="http://www.spyder.co.kr/" title="스파이더 바로가기" target="_blank">
+														<img src="ski/images/ft_link_18.jpg" alt="스파이더">
+													</a>
+												</li>
+												 -->
+											</ul>
+											<a href="#self" class="btn_arrow next">
+												<img src="ski/images/ft_next_btn.png" alt="다음">
+											</a>
+										</div>
+										<!-- //inwrap -->
+									</div>
+									<!-- //footer_banner -->
+								</div>
+								<!-- //footer_banner -->
+
+								<script>
+									$(function () {
+										$('.footer_banner ul').slick({
+											variableWidth: true,
+											infinite: true,
+											slidesToShow: 5,
+											slidesToScroll: 1,
+											autoplay: true,
+											autoplaySpeed: 2000,
+											swipe: false,
+											arrows: true,
+											nextArrow: $(".footer_banner .btn_arrow.next"),
+											prevArrow: $(".footer_banner .btn_arrow.prev")
+										});
+									});
+								</script>
+
+								<div class="footer_wrap">
+									<div class="inwrap">
+										<div class="ft_info">
+											<div class="ft_link">
+											   <ul>
+													<li style="display:block">(사)한국스키장경영협회 대표자 : 신달순</li>
+													<li>서울 송파구 오금로 58 아이스페이스 1201호</li>
+													<li>대표전화 <a href="tel:02-3473-1275">02-3473-1275</a></li>
+													<li>문의&nbsp;&nbsp;<a href="mailto:ski@skiresort.or.kr">ski@skiresort.or.kr</a></li>
+													<li>Copyright &copy; 2018 SBAK All rights reserved.</li>
+												</ul>
+											</div>
+										</div>
+										<!-- //ft_info -->
+										<a href="https://www.facebook.com/한국스키장경영협회-164191583649277/" class="f-logo" title="한국스키장경영협회 페이스북" target="_blank"><img src="ski/images/f-logo.png" alt="한국스키장경영협회 페이스북"></a>
+									</div>
+									<!-- //inwrap -->
+								</div>
+								<!-- //footer_wrap -->
+							</footer>
+							<!-- //sb_footer -->
+						</div>
+						<!--//footer-->
+
+                    <!-- //main_bottom -->
+                </div>
+                <!-- //content -->
+            </div>
+            <!-- //content -->
+        </div>
+        <!-- //wrap -->
+    </body>
+
+</html>
+
+
+
+<!-- ie6,7에서 사이드뷰가 게시판 목록에서 아래 사이드뷰에 가려지는 현상 수정 -->
+<!--[if lte IE 7]>
+<script>
+$(function() {
+    var $sv_use = $(".sv_use");
+    var count = $sv_use.length;
+
+    $sv_use.each(function() {
+        $(this).css("z-index", count);
+        $(this).css("position", "relative");
+        count = count - 1;
+    });
+});
+</script>
+<![endif]-->
+
+
+<!-- 팝업레이어 시작 { -->
+<div id="hd_pop">
+    <h2>팝업레이어 알림</h2>
+
+<span class="sound_only">팝업레이어 알림이 없습니다.</span></div>
+<style>
+ span.sound_only{display:none}
+</style>
+<script>
+$(function() {
+    $(".hd_pops_reject").click(function() {
+        var id = $(this).attr('class').split(' ');
+        var ck_name = id[1];
+        var exp_time = parseInt(id[2]);
+        $("#"+id[1]).css("display", "none");
+        set_cookie(ck_name, 1, exp_time, g5_cookie_domain);
+        return false;
+    });
+    $('.hd_pops_close').click(function() {
+        var idb = $(this).attr('class').split(' ');
+        $('#'+idb[1]).css('display','none');
+        return false;
+    });
+    $("#hd").css("z-index", 1000);
+});
+</script>
+<!-- } 팝업레이어 끝 -->       
+                        

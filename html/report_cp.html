@@ -1,0 +1,163 @@
+<!-- <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> -->
+<!DOCTYPE html>
+<!-- <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ko" lang="ko"> -->
+<html lang="ko">
+<?
+    include "include/head_common.html";
+?>
+
+    <body>
+        <div id="scroll_top">
+            <button type="button"><img src="images/scr_top.jpg"></button>
+        </div>
+
+        <div id="wrap">
+            <? 
+                include"include/sb_header.html" 
+            ?>
+            <!-- ㅡㅡㅡㅡㅡㅡㅡㅡ/SB_HEADERㅡㅡㅡㅡㅡㅡㅡㅡ -->
+            <div id="sbcenter" class="report">
+                <div class="sb_top_bg">
+                    <div class="inner_wrap">
+                       <h2>보도자료</h2>
+                    </div>
+                    <div class="sb_top_menu">
+                        <ul class="sbclear">
+                            <li><a href="report_all.html">전체보기</a></li>
+                            <li class="on"><a href="report_cp.html">협회 보도 자료</a></li>
+                            <li><a href="report_mb.html">회원사 보도 자료</a></li>
+                        </ul>
+                    </div>
+                    <!--/sb_top_menu-->
+                </div>
+                <!--/sb_top_bg-->
+                <div class="sbcenter report_cp">
+                        <div class="sb_content">
+                        <div class="sb_top_text sbclear">
+                            <a href="report_all.html" class="sb_prev"><img src="images/sb_prev_btn_on.png" alt="이전"></a>
+                            <h3>협회 보도 자료</h3>
+                            <a href="report_mb.html" class="sb_next"><img src="images/sb_next_btn_on.png" alt="다음"></a>
+                            <p>한국 스키장 경영협회의 새 소식을 확인하실 수 있습니다.</p>
+                        </div>
+                        <!--/sb_top_text-->
+                        <div class="tab_wrap">
+                            <form method="post" name="" action="">
+                                <div class="search_box">
+                                    <form method="post" name="search" action="">
+                                        <ul class="sbclear">
+                                            <li class="select_box">
+                                                <select>
+                                                    <option>전체</option>
+                                                </select>
+                                            </li>
+                                            <li class="search_txt">
+                                                <input type="search" placeholder="검색어를 입력하세요.">
+                                            </li>
+                                            <li class="search_btn">
+                                                <button type="submit" name="search">검색</button>
+                                            </li>
+                                        </ul>
+                                    </form>
+                                </div><!--/search_box-->
+                            </form>
+                            <div class="all_table">
+                                <table>
+                                    <colgroup>
+                                        <col class="all_col_1">
+                                        <col class="all_col_2">
+                                        <col class="all_col_3">
+                                    </colgroup>
+                                    <caption>보도자료 전체보기</caption>
+                                    <thead>
+                                        <tr>
+                                            <th>번호</th>
+                                            <th>제목</th>
+                                            <th>등록일</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>49</td>
+                                            <td><a href="report_cp_on.html">제21기 스키구조요원 자격시험 합격명단</a></td>
+                                            <td>2018-03-06</td>
+                                        </tr>
+                                        <tr>
+                                            <td>48</td>
+                                            <td><a href="report_cp_on.html">2018년 제3회 스키지도요원(티칭3) 자격시험 합격자 명단</a></td>
+                                            <td>2018-02-26</td>
+                                        </tr>
+                                        <tr>
+                                            <td>47</td>
+                                            <td><a href="report_cp_on.html">제3회 한국스키장경영협회 스파이더배 기술선수권대회 최종결과</a></td>
+                                            <td>2018-02-25</td>
+                                        </tr> 
+                                        <tr>
+                                            <td>46</td>
+                                            <td><a href="report_cp_on.html">제6기 스키지도요원 티칭2 검정 결과</a></td>
+                                            <td>2018-02-13</td>
+                                        </tr> 
+                                        <tr>
+                                            <td>45</td>
+                                            <td><a href="report_cp_on.html">제21기 스키구조요원 검정 계획</a></td>
+                                            <td>2018-01-23</td>
+                                        </tr> 
+                                        <tr>
+                                            <td>44</td>
+                                            <td><a href="report_cp_on.html">제3기 스노보드지도요원 티칭1 검정 계획</a></td>
+                                            <td>2018-03-06</td>
+                                        </tr> 
+                                        <tr>
+                                            <td>43</td>
+                                            <td><a href="report_cp_on.html">제2기 데몬선발전 계획</a></td>
+                                            <td>2018-01-22</td>
+                                        </tr> 
+                                        <tr>
+                                            <td>42</td>
+                                            <td><a href="report_cp_on.html">제3기 스키지도요원 티칭3 검정 계획</a></td>
+                                            <td>2018-01-22</td>
+                                        </tr> 
+                                        <tr>
+                                            <td>41</td>
+                                            <td><a href="report_cp_on.html">제3회 스파이더배 기술선수권 대회 계획</a></td>
+                                            <td>2018-01-18</td>
+                                        </tr> 
+                                        <tr>
+                                            <td>40</td>
+                                            <td><a href="report_cp_on.html">제6기 스키지도요원 티칭2 검정 계획</a></td>
+                                            <td>2018-01-17</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <div class="prev_next_box">
+                                    <ul>
+                                        <li class="prev"><a href="#self"><img src="images/prev_icon.gif" alt="이전"></a></li>
+                                        <li class="on"><a href="#">1</a></li>
+                                        <li><a href="#self">2</a></li>
+                                        <li><a href="#self">3</a></li>
+                                        <li><a href="#self">4</a></li>
+                                        <li><a href="#self">5</a></li>
+                                        <li class="next"><a href="#self"><img src="images/next_icon.gif" alt="다음"></a></li>
+                                    </ul>
+                                </div><!--/prev_next_box-->
+                            </div><!--/all_table-->
+                        </div><!--/tab_wrap-->
+                    </div>
+                    <!--/sb_content-->
+               </div>
+                <!-- //sbcenter -->
+<?
+          include "include/sb_quick.html";
+?>
+            </div>
+            <!-- //sbcenter -->
+
+            <!-- ㅡㅡㅡㅡㅡㅡㅡㅡFOOTERㅡㅡㅡㅡㅡㅡㅡㅡ -->
+            <?
+    include "include/footer.html";
+?>
+
+        </div>
+        <!-- //wrap -->
+    </body>
+
+</html>

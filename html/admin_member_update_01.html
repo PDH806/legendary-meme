@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<?
+	$category 	= $_GET["category"];
+	$Player_search = $_POST["Player"];
+	if($Year_search){$License_year_sql = "and a.LICENSE_YEAR = '$Year_search'";}
+	
+	$page = ($_GET['page'])?$_GET['page']:1;
+	$list = 100; // 페이자당 목록수
+	$show = 10; // 하단 페이지네이션 갯수
+
+    $db_start = ($page - 1) * $list;
+	$db_end = $db_start + $list;
+
+	
+
+	$main_title = '한국 스키장 경영협회';
+	$link 	= 	mysqli_connect("dbserver","skiresort","ll170505","skiresort");
+	include 'db_config.html';	
+	
+?>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+	<link rel="shortcut icon" href="Myicon.png" type="image/x-icon">
+    
+    <title>
+    	<?
+    	echo "$main_title / $page";    	
+    	?>    
+    </title>
+    
+		<!-- Custom styles for AUGMENT-SKI -->
+			<? include 'link-files.html'; ?>
+		<!-- end of Link -->
+		
+</head>
+
+
+
+<body>
+
+		<!-- Navigation for AUGMENT-SKI -->
+			<? include 'main-nav.html'; ?>
+		<!-- end of Navigation -->
+
+<br><br><br><br>
+
+
+
+<script>
+function removeCheck() {
+
+ if (confirm("정말 삭제하시겠습니까??") == true){    //확인
+
+     document.removefrm.submit();
+
+ }else{   //취소
+
+     return false;
+
+ }
+
+}
+
+</script>
+
+
+
+<?
+
+	if ($rank <> 9)
+		{
+			echo " <script language='javascript'>
+					top.document.location.href = 'member_login.html?MEMBER_ID=$User_ID_Search&Case=9'
+					</script>";
+		}
+
+
+?>
+ 
+ 
+	<div class="newsletter8 py-5">
+		<div class="container">
+			<div class="col-lg-12 ml-auto">
+
+
+			<!-- Head -->
+        		<div class="d-block d-md-flex text-uppercase">
+          			<h3 class="no-shrink font-weight-medium align-self-center m-b-0">한국스키장경영협회 온라인 회원 업데이트 <? echo ": 총 $total_record 명 / 현재 $page 페이지"; ?> </h3>
+        		</div>
+        		<br>
+
+		<!-- Tap Menu -->
+
+			<ul class="nav nav-tabs">
+			
+<?
+
+echo "
+			<form method='post' action='admin_member_update_01.html?category=$category'>
+				<a href = admin_member.html?category=$category><button type='button' class='btn-outline-info'>전체</button></a>
+				&nbsp;<input type='text' value = '$Player_search' name='Player' placeholder='자격증 Code'>
+				&nbsp;<input type='text' value = '$Year_search' name='Year' placeholder='검색하실 자격취득 연도'>
+				<input type='Submit' value='검색' >
+			</form>
+			<br>
+";
+
+
+ 
+ 
+if($Player_search){
+
+			$connect=mysql_connect("dbserver","skiresort","ll170505");
+
+			mysql_select_db( "skiresort",$connect);
+
+ 			$query1= "select * from 7G_T_Reserve_New a left join 7G_T_Reserve_INFO_NEW b on a.rs_seq=b.rs_seq and a.idkey=b.idkey and a.gd_seq=b.gd_seq where a.MEMBER_TYPE = '$Player_search' order by a.RS_BUYER_NAME ASC " ;
+ 			$result1=mysql_query($query1,$connect );
+
+ 			$query= "select * from 7G_T_Reserve_New a left join 7G_T_Reserve_INFO_NEW b on a.rs_seq=b.rs_seq and a.idkey=b.idkey and a.gd_seq=b.gd_seq where a.MEMBER_TYPE  = '$Player_search' order by a.RS_BUYER_NAME ASC " ;
+ 			$result=mysql_query($query,$connect );
+ 			$row=mysql_fetch_array($result);
+			$total_record = mysql_num_rows($result1);
+
+	echo "<table>";
+
+for($i=0; $i<$total_record; $i++)
+  	{
+ 	
+ 	if ($row[ADD_NAME_KOR] == ''){$row[ADD_NAME_KOR] = $row[RS_BUYER_NAME];}
+	if ($row[ADD_TEL] == ''){$row[ADD_TEL] = $row[RS_BUYER_TEL];}
+    $j = $i + 1;
+ 	
+ 	
+     echo "
+
+    	 <tr>
+			<td align = center>
+              $j    
+			</td>
+			
+			<td align = left>
+               $row[ADD_NAME_KOR]&nbsp;($row[ADD_NAME_ENG])<br>
+				$row[LICENSE_NUM]
+			</td>
+
+			<td align = left>
+               $row[ADD_TEL]     
+			</td>
+
+			<td align = center>
+               $row[ADD_BIRTH]
+			</td>
+			
+			<td align = left>
+               $row[ADD_ZIPCODE]<br>
+               $row[ADD_ADDR1] $row[ADD_ADDR2]<br>
+            </td>
+            <td>
+				<a class='badge badge-primary' href=admin_member_edit.html?No=$row[NO]><font color = white>정보확인</font></a>&nbsp;
+ 			</td>
+
+			<td>";
+
+
+		$sql_update = "UPDATE 7G_T_Reserve_New SET RS_BUYERS_NAME_ENG = '$row[ADD_NAME_ENG]' WHERE NO = '$row[NO]'";
+
+ 
+
+    if (mysqli_query($link, $sql_update)) {
+
+        echo "레코드 수정 성공!";
+
+    } else {
+
+        echo "레코드 수정 실패! : ".mysqli_error($connection);
+
+    }
+    
+    	echo "</td></tr>";
+
+ 	$row=mysql_fetch_array($result);
+   }
+ 
+   echo( "</table>");
+   
+}
+
+  
+ ?>
+ 
+ <br> 
+ 
+ 
+ 
+       </div>
+  </div>
+</div>
+ 
+     <!-- footer for AUGMENT-SKI -->
+	<? include 'footer.html'; ?>
+	<!-- end of footer -->
+	
+</body>
+
+</html>

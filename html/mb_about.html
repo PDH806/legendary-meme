@@ -1,0 +1,296 @@
+<?
+    include "include/head_common.html";
+?>
+
+    <body>
+        <div id="scroll_top">
+            <button type="button"><img src="images/scr_top.jpg"></button>
+        </div>
+
+        <div id="wrap">
+            <? 
+                include"include/sb_header.html" 
+            ?>
+            <!-- ㅡㅡㅡㅡㅡㅡㅡㅡ/SB_HEADERㅡㅡㅡㅡㅡㅡㅡㅡ -->
+            <div id="sbcenter" class="mb">
+                <div class="sb_top_bg">
+                    <div class="inner_wrap">
+                       <h2>회원사 소개</h2>
+                    </div>
+                    <div class="sb_top_menu">
+                        <ul class="sbclear">
+                            <li><a href="mb_ceo.html">회원사 대표자 소개</a></li>
+                            <li class="on"><a href="mb_about.html">지역별 스키장 현황</a></li>
+                            <li><a href="mb_ski_list_1.html">회원사 소개</a></li>
+                        </ul>
+                    </div>
+                    <!--/sb_top_menu-->
+                </div>
+                <!--/sb_top_bg-->
+                <div class="sbcenter mb_about">
+                    <div class="sb_content">
+                        <div class="sb_top_text sbclear">
+                            <a href="mb_ceo.html" class="sb_prev"><img src="images/sb_prev_btn_on.png" alt="이전"></a>
+                            <h3>지역별 스키장 현황</h3>
+                            <a href="mb_ski_list_1.html" class="sb_next"><img src="images/sb_next_btn_on.png" alt="다음"></a>
+                        </div>
+                        <!--/sb_top_text-->
+						<style>
+						 /* 190826  .mb_about .mb_table table td{font-size:15px} */
+						</style>
+                        <div class="tab_wrap">
+                                <div class="tab_list_area">
+                                        <div class="tab_img">
+                                            <img src="images/mb_about.jpg" alt="협회소개">
+                                        </div>
+                                        <div class="cp_box">
+                                            <h4>총괄<span>Generalization</span></h4>
+                                            <div class="mb_table">
+                                                <table>
+                                                    <caption>회원사 총괄</caption>
+                                                    <thead>
+                                                        <tr>
+                                                            <th>구분</th>
+                                                            <th>경기</th>
+                                                            <th>강원</th>
+                                                            <th>충북</th>
+                                                            <th>전북</th>
+                                                            <th>경남</th>
+                                                            <th>계</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>등록</td>
+                                                            <td>5</td>
+                                                            <td>10</td>
+                                                            <td>1</td>
+                                                            <td>1</td>
+                                                            <td>1</td>
+                                                            <td>18</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div><!--/mb_table-->
+                                        </div>                                     
+                                        <div class="cp_box">
+                                            <h4>회원사<span>Member Company</span></h4>
+                                            <div class="mb_table mb_all">
+                                                <table>
+                                                    <caption>회원사 전체</caption>
+                                                    <thead>
+                                                        <tr>
+                                                            <th>스키장명(법인명)</th>
+                                                            <th>대표이사</th>
+                                                            <th>스키장위치</th>
+                                                            <th>슬로프(면)</th>
+                                                            <th>리프트(기)</th>
+                                                            <th>슬로프면적(㎡)</th>
+                                                            <th>최초등록년월일</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td><a href="http://www.yongpyong.co.kr/" target="_blank">용평리조트<br>㈜에이치제이매그놀리아<br>용평 호텔앤리조트</a></td>
+                                                            <td>신달순</td>
+                                                            <td>강원 - 평창,&nbsp;대관령</td>
+                                                            <td>28</td>
+                                                            <td>14<br>(곤도라 1기 포함)</td>
+                                                            <td>1,136,233</td>
+                                                            <td>75.12.21</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><a href="http://www.pineresort.com/" target="_blank">양지파인리조트<br>(주)파인리조트</a></td>
+                                                            <td>임태주</td>
+                                                            <td>경기 - 용인,&nbsp;처인</td>
+                                                            <td>8</td>
+                                                            <td>6</td>
+                                                            <td>178,652</td>
+                                                            <td>82.12.07</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><a href="https://starhill.co.kr/" target="_blank">스타힐리조트<br>선진종합(주) </a></td>
+                                                            <td>박창서</td>
+                                                            <td>경기 - 남양주,&nbsp;화도</td>
+                                                            <td>4</td>
+                                                            <td>5</td>
+                                                            <td>102,026</td>
+                                                            <td>82.12.20</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><a href="http://www.mdysresort.com/index.asp" target="_blank">무주덕유산리조트<br>(주)무주덕유산리조트 </a></td>
+                                                            <td>이종혁</td>
+                                                            <td>전북 - 무주,&nbsp;설천</td>
+                                                            <td>34</td>
+                                                            <td>14<br>(곤도라 1기 포함)</td>
+                                                            <td>1,291,015</td>
+                                                            <td>90.12.20</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><a href="http://www.daemyungresort.com/vp/" target="_blank">비발디파크<br>(주)대명티피앤이</a></td>
+                                                            <td>최주영</td>
+                                                            <td>강원 - 홍천,&nbsp;서면</td>
+                                                            <td>10</td>
+                                                            <td>11<br>(곤도라 2기 포함)</td>
+                                                            <td>429,596</td>
+                                                            <td>93.12.24</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><a href="http://phoenixhnr.co.kr/pyeongchang/index" target="_blank">휘닉스 스노우파크<br>휘닉스중앙(주)</a></td>
+                                                            <td>인채권</td>
+                                                            <td>강원 - 평창,&nbsp;봉평</td>
+                                                            <td>18</td>
+                                                            <td>9<br>(곤도라 1기 포함)</td>
+                                                            <td>770,026</td>
+                                                            <td>95.12.15</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><a href="https://www.wellihillipark.com/sub3/" target="_blank">웰리힐리파크<br>신안종합리조트(주)</a></td>
+                                                            <td>민영민</td>
+                                                            <td>강원 - 횡성,&nbsp;둔내</td>
+                                                            <td>18</td>
+                                                            <td>8<br>(곤도라 1기 포함)</td>
+                                                            <td>536,576</td>
+                                                            <td>95.12.15</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><a href="https://www.jisanresort.co.kr/index.asp" target="_blank">지산포레스트리조트<br>지산리조트(주)</a></td>
+                                                            <td>고호림</td>
+                                                            <td>경기 - 이천,&nbsp;마장</td>
+                                                            <td>7</td>
+                                                            <td>5</td>
+                                                            <td>298,400</td>
+                                                            <td>96.12.23</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><a href="http://www.elysian.co.kr/main.asp" target="_blank">엘리시안 강촌<br>(주)지씨에스</a></td>
+                                                            <td>임충희</td>
+                                                            <td>강원 - 춘천,&nbsp;남산</td>
+                                                            <td>10</td>
+                                                            <td>6</td>
+                                                            <td>176,654</td>
+                                                            <td>02.12.07</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><a href="http://www.oakvalley.co.kr/oak_new/index.asp" target="_blank">오크밸리<br>에이치디씨리조트(주)</a></td>
+                                                            <td>조영환</td>
+                                                            <td>강원 - 원주,&nbsp;지정</td>
+                                                            <td>7</td>
+                                                            <td>3</td>
+                                                            <td>281,168</td>
+                                                            <td>06.11.27</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><a href="http://www.high1.co.kr/Hhome/main.high1" target="_blank">하이원리조트<br>(주)강원랜드</a></td>
+                                                            <td>문태곤</td>
+                                                            <td>강원 - 정선,&nbsp;고한 </td>
+                                                            <td>18</td>
+                                                            <td>9<br>(곤도라 3기 포함)</td>
+                                                            <td>880,838</td>
+                                                            <td>06.12.07</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><a href="https://www.konjiamresort.co.kr/main.dev" target="_blank">곤지암리조트<br>(주)에스앤아이<br>코퍼레이션</a></td>
+                                                            <td>이동열</td>
+                                                            <td>경기 - 광주,&nbsp;도척</td>
+                                                            <td>9</td>
+                                                            <td>5</td>
+                                                            <td>367,687</td>
+                                                            <td>08.12.17</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><a href="http://www.alpensiaresort.com" target="_blank">알펜시아<br>(주)알펜시아</a></td>
+                                                            <td>심세일</td>
+                                                            <td>강원 - 평창,&nbsp;대관령</td>
+                                                            <td>6</td>
+                                                            <td>3</td>
+                                                            <td>177,648</td>
+                                                            <td>09.11.24</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><a href="https://bearstown.com/main/main.asp" target="_blank">베어스타운<br>(주)예지실업</a></td>
+                                                            <td>김광인</td>
+                                                            <td>경기 - 포천,&nbsp;내촌</td>
+                                                            <td>7</td>
+                                                            <td>8</td>
+                                                            <td>245,920</td>
+                                                            <td>85.12.19</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><a href="http://www.edenvalley.co.kr/" target="_blank">에덴벨리리조트<br>(주)신세계개발</a></td>
+                                                            <td>문성필</td>
+                                                            <td>경남 - 양산,&nbsp;원동</td>
+                                                            <td>7</td>
+                                                            <td>3</td>
+                                                            <td>226,420</td>
+                                                            <td>06.11.27</td>
+                                                        </tr>  
+                                                       <tr>
+                                                            <td><a href="http://www.o2resort.com/main.xhtml" target="_blank">오투리조트<br>(주)오투리조트</a></td>
+                                                            <td>김영윤</td>
+                                                            <td>강원 - 태백,&nbsp;서학</td>
+                                                            <td>19</td>
+                                                            <td>6<br>(곤돌라 1기 포함)</td>
+                                                            <td>611,473</td>
+                                                            <td>08.12.11</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div><!--/mb_table-->
+                                        </div> 
+                                    <div class="cp_box">
+                                            <h4>비회원사<span>Non-Member Company</span></h4>
+                                            <div class="mb_table mb_all">
+                                                <table>
+                                                    <caption>회원사 전체</caption>
+                                                    <thead>
+                                                        <tr>
+                                                            <th>스키장명(법인명)</th>
+                                                            <th>대표이사</th>
+                                                            <th>스키장위치</th>
+                                                            <th>슬로프(면)</th>
+                                                            <th>리프트(기)</th>
+                                                            <th>슬로프면적(㎡)</th>
+                                                            <th>최초등록년월일</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td><a href="#self">이글벨리리조트<br>(주)수안보 이글벨리</a></td>
+                                                            <td>-</td>
+                                                            <td>충북 - 충주,&nbsp;수안보</td>
+                                                            <td>9</td>
+                                                            <td>4</td>
+                                                            <td>201,452</td>
+                                                            <td>90.12.29</td>
+                                                        </tr>
+                                                       
+                                                        <tr>
+                                                            <td><a href="#self">알프스리조트<br>(주)우민</a></td>
+                                                            <td>-</td>
+                                                            <td>강원 - 고성,&nbsp;간성</td>
+                                                            <td>6</td>
+                                                            <td>5</td>
+                                                            <td>470,710</td>
+                                                            <td>84.12.22</td>
+                                                        </tr>    
+                                                    </tbody>
+                                                </table>
+                                            </div><!--/mb_table-->
+                                        </div>                                          
+                                </div><!--/tab_list_area-->
+                        </div><!--/tab_wrap-->
+                    </div>
+                    <!--/sb_content-->
+               </div>
+                <!-- //sbcenter -->
+<?
+          include "include/sb_quick.html";
+?>
+            </div>
+            <!-- //sbcenter -->
+
+            <!-- ㅡㅡㅡㅡㅡㅡㅡㅡFOOTERㅡㅡㅡㅡㅡㅡㅡㅡ -->
+            <?
+    include "include/footer.html";
+?>

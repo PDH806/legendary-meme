@@ -1,0 +1,645 @@
+<?
+//--+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+
+// 	코딩정보
+//--+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+
+//
+//	+ 개발자 : friday1968
+//  + 이메일 : developer@7gate.kr
+//
+//	+ 개발사 : (주)세븐게이트코리아
+//  + 연락처 : 010-2889-1483
+//
+//  + 화면내용 : 웹사이트 상단메뉴 (Top-Menu) 제너레이터
+//
+//--+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+
+
+
+
+//------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+// 	Site-config 불러오기, 메뉴바 제너레이트를 구동하기 위한 Site-Config 데이타 불러오기
+//------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+	$Login_User_ID 		= $_COOKIE['Login_ID'];
+	$rank 				= $_COOKIE['Member_Rank'];
+	$rank_list ='(일반)';
+
+	if ($rank == 9){$rank_list ='(관리자)';}
+	elseif ($rank == 8){$rank_list ='(부관리자)';}
+	$path = "../ski/";
+
+
+
+//------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+// 	메뉴바#1   BASIC-Style & 관리자 화면에서 커스텀 가능
+//------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+
+	$query= "SELECT * FROM site_config where site = '$site'" ;
+	$result=mysql_query($query,$connect );
+	$row4=mysql_fetch_array($result);
+
+	while ($row4)
+
+	{
+		if($row4[t_m_design] == 1)
+
+		{
+
+		echo "
+		<br><br>
+		<nav class='navbar navbar-expand-lg navbar-light fixed-top navbar--7gate' style = 'background-color : $row4[t_m_bgcolor];'>
+			<div class = 'container' style='height:$row4[t_m_height]'>";
+
+
+		if ($row4[company_logo])
+			{
+				echo "
+          		<!-- Company LOGO -->
+				<a class='navbar-brand' href='index.html'>
+					<!--<img src='view.html?id=3&img=logo' width='120'>-->
+					<img src='images/logo.png' width='120'>
+				</a>
+				<!-- End of LOGO -->
+				";
+			}
+
+		else
+
+			{
+				echo "
+          		<!-- Company Name -->
+				<a class='navbar-brand' href='index.html'>
+					$row4[company_name]
+				</a>
+				<!-- End of Company Name -->
+				";
+			}
+
+
+	echo "
+  				<button class='navbar-toggler' type = 'button' data-toggle='collapse' data-target='#menu' aria-controls='#menu' aria-expanded='false' aria-label='Toggle navigation'>
+					<span class='sr-only'>Toggle navigation</span>
+						<span>
+							<i class='fas fa-bars'></i>
+						</span>
+  				</button>
+
+  					<div class='collapse navbar-collapse' id='menu'>
+   						 <ul class='navbar-nav ml-auto'>";
+
+
+		if ($row4[t_m1_name1])
+			{
+           		echo "
+						<li class='nav-item dropdown'>
+        					<a class='nav-link dropdown-toggle phone_link' href='$row4[t_m1_link]' id='navbarDropdown' role='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false' style = 'color:$row4[t_m_font_color];'>$row4[t_m1_head]</a>
+        						<div class='dropdown-menu' aria-labelledby='navbarDropdown'>
+					";
+
+									if($row4[t_m1_name1]){ echo "<a class='dropdown-item' href=$path$row4[t_m1_link1]>$row4[t_m1_name1]</a>";}
+									if($row4[t_m1_name2]){ echo "<a class='dropdown-item' href=$path$row4[t_m1_link2]>$row4[t_m1_name2]</a>";}
+									if($row4[t_m1_name3]){ echo "<a class='dropdown-item' href=$path$row4[t_m1_link3]>$row4[t_m1_name3]</a>";}
+									if($row4[t_m1_name4]){ echo "<a class='dropdown-item' href=$path$row4[t_m1_link4]>$row4[t_m1_name4]</a>";}
+									if($row4[t_m1_name5]){ echo "<a class='dropdown-item' href=$path$row4[t_m1_link5]>$row4[t_m1_name5]</a>";}
+									if($row4[t_m1_name6]){ echo "<a class='dropdown-item' href=$path$row4[t_m1_link6]>$row4[t_m1_name6]</a>";}
+									if($row4[t_m1_name7]){ echo "<a class='dropdown-item' href=$path$row4[t_m1_link7]>$row4[t_m1_name7]</a>";}
+									if($row4[t_m1_name8]){ echo "<a class='dropdown-item' href=$path$row4[t_m1_link8]>$row4[t_m1_name8]</a>";}
+									if($row4[t_m1_name9]){ echo "<a class='dropdown-item' href=$path$row4[t_m1_link9]>$row4[t_m1_name9]</a>";}
+									if($row4[t_m1_name10]){ echo "<a class='dropdown-item' href=$path$row4[t_m1_link10]>$row4[t_m1_name10]</a>";}
+
+
+				echo "
+					        	</div>
+      					</li>";
+			}
+
+
+
+		if (!$row4[t_m2_name1])
+			{
+           		echo "
+						<li class='nav-item' role='presentation'>
+							<a class='nav-link phone_link' href='$row4[t_m2_link]'>$row4[t_m2_head]</a>
+						</li>
+					";
+			}
+
+		else
+
+			{
+           		echo "
+						<li class='nav-item dropdown'>
+        					<a class='nav-link dropdown-toggle phone_link' href='$row4[t_m2_link]' id='navbarDropdown' role='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false' style = 'color:$row4[t_m_font_color];'>$row4[t_m2_head]</a>
+        						<div class='dropdown-menu' aria-labelledby='navbarDropdown'>
+					";
+
+									if($row4[t_m2_name1]){ echo "<a class='dropdown-item' href='$row4[t_m2_link1]'>$row4[t_m2_name1]</a>";}
+									if($row4[t_m2_name2]){ echo "<a class='dropdown-item' href='$row4[t_m2_link2]'>$row4[t_m2_name2]</a>";}
+									if($row4[t_m2_name3]){ echo "<a class='dropdown-item' href='$row4[t_m2_link3]'>$row4[t_m2_name3]</a>";}
+									if($row4[t_m2_name4]){ echo "<a class='dropdown-item' href='$row4[t_m2_link4]'>$row4[t_m2_name4]</a>";}
+									if($row4[t_m2_name5]){ echo "<a class='dropdown-item' href='$row4[t_m2_link5]'>$row4[t_m2_name5]</a>";}
+									if($row4[t_m2_name6]){ echo "<a class='dropdown-item' href='$row4[t_m2_link6]'>$row4[t_m2_name6]</a>";}
+								     if($row4[t_m2_name7]){ echo "<a class='dropdown-item' href='$row4[t_m2_link7]'>$row4[t_m2_name7]</a>";}
+									if($row4[t_m2_name8]){ echo "<a class='dropdown-item' href='$row4[t_m2_link8]'>$row4[t_m2_name8]</a>";}
+									if($row4[t_m2_name9]){ echo "<a class='dropdown-item' href='$row4[t_m2_link9]'>$row4[t_m2_name9]</a>";}
+									if($row4[t_m2_name10]){ echo "<a class='dropdown-item' href='$row4[t_m2_link10]'>$row4[t_m2_name10]</a>";}
+				echo "
+					        	</div>
+      					</li>";
+			}
+
+
+
+
+
+		if (!$row4[t_m3_name1])
+			{
+           		echo "
+						<li class='nav-item' role='presentation'>
+							<a class='nav-link' href='$row4[t_m3_link]'>$row4[t_m3_head]</a>
+						</li>
+					";
+			}
+
+		else
+
+			{
+           		echo "
+						<li class='nav-item dropdown'>
+        					<a class='nav-link dropdown-toggle phone_link' href='$row4[t_m3_link]' id='navbarDropdown' role='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false' style = 'color:$row4[t_m_font_color];'>$row4[t_m3_head]</a>
+        						<div class='dropdown-menu' aria-labelledby='navbarDropdown'>
+					";
+
+									if($row4[t_m3_name1]){ echo "<a class='dropdown-item' href='$row4[t_m3_link1]'>$row4[t_m3_name1]</a>";}
+									if($row4[t_m3_name2]){ echo "<a class='dropdown-item' href='$row4[t_m3_link2]'>$row4[t_m3_name2]</a>";}
+									if($row4[t_m3_name3]){ echo "<a class='dropdown-item' href='$row4[t_m3_link3]'>$row4[t_m3_name3]</a>";}
+									if($row4[t_m3_name4]){ echo "<a class='dropdown-item' href='$row4[t_m3_link4]'>$row4[t_m3_name4]</a>";}
+									if($row4[t_m3_name5]){ echo "<a class='dropdown-item' href='$row4[t_m3_link5]'>$row4[t_m3_name5]</a>";}
+									if($row4[t_m3_name6]){ echo "<a class='dropdown-item' href='$row4[t_m3_link6]'>$row4[t_m3_name6]</a>";}
+									if($row4[t_m3_name7]){ echo "<a class='dropdown-item' href='$row4[t_m3_link7]'>$row4[t_m3_name7]</a>";}
+									if($row4[t_m3_name8]){ echo "<a class='dropdown-item' href='$row4[t_m3_link8]'>$row4[t_m3_name8]</a>";}
+									if($row4[t_m3_name9]){ echo "<a class='dropdown-item' href='$row4[t_m3_link9]'>$row4[t_m3_name9]</a>";}
+									if($row4[t_m3_name10]){ echo "<a class='dropdown-item' href='$row4[t_m3_link10]'>$row4[t_m3_name10]</a>";}
+				echo "
+					        	</div>
+      					</li>";
+			}
+
+
+
+
+		if (!$row4[t_m4_name1])
+			{
+           		echo "
+						<li class='nav-item' role='presentation phone_link'>
+							<a class='nav-link' href='$row4[t_m4_link]'>$row4[t_m4_head]</a>
+						</li>
+					";
+			}
+
+		else
+
+			{
+           		echo "
+						<li class='nav-item dropdown'>
+        					<a class='nav-link dropdown-toggle phone_link' href='$row4[t_m4_link]' id='navbarDropdown' role='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false' style = 'color:$row4[t_m_font_color];'>$row4[t_m4_head]</a>
+        						<div class='dropdown-menu' aria-labelledby='navbarDropdown'>
+					";
+
+									if($row4[t_m4_name1]){ echo "<a class='dropdown-item' href='$row4[t_m4_link1]'>$row4[t_m4_name1]</a>";}
+									if($row4[t_m4_name2]){ echo "<a class='dropdown-item' href='$row4[t_m4_link2]'>$row4[t_m4_name2]</a>";}
+									if($row4[t_m4_name3]){ echo "<a class='dropdown-item' href='$row4[t_m4_link3]'>$row4[t_m4_name3]</a>";}
+									if($row4[t_m4_name4]){ echo "<a class='dropdown-item' href='$row4[t_m4_link4]'>$row4[t_m4_name4]</a>";}
+									if($row4[t_m4_name5]){ echo "<a class='dropdown-item' href='$row4[t_m4_link5]'>$row4[t_m4_name5]</a>";}
+									if($row4[t_m4_name6]){ echo "<a class='dropdown-item' href='$row4[t_m4_link6]'>$row4[t_m4_name6]</a>";}
+									if($row4[t_m4_name7]){ echo "<a class='dropdown-item' href='$row4[t_m4_link7]'>$row4[t_m4_name7]</a>";}
+									if($row4[t_m4_name8]){ echo "<a class='dropdown-item' href='$row4[t_m4_link8]'>$row4[t_m4_name8]</a>";}
+									if($row4[t_m4_name9]){ echo "<a class='dropdown-item' href='$row4[t_m4_link9]'>$row4[t_m4_name9]</a>";}
+									if($row4[t_m4_name10]){ echo "<a class='dropdown-item' href='$row4[t_m4_link10]'>$row4[t_m4_name10]</a>";}
+
+				echo "
+					        	</div>
+      					</li>";
+			}
+
+
+		if (!$row4[t_m5_name1])
+			{
+           		echo "
+						<li class='nav-item' role='presentation'>
+							<a class='nav-link phone_link' href='$row4[t_m5_link]'>$row4[t_m5_head]</a>
+						</li>
+					";
+			}
+
+		else
+
+			{
+           		echo "
+						<li class='nav-item dropdown'>
+        					<a class='nav-link dropdown-toggle phone_link phone_link' href='$row4[t_m5_link]' id='navbarDropdown' role='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false' style = 'color:$row4[t_m_font_color];'>$row4[t_m5_head]</a>
+        						<div class='dropdown-menu' aria-labelledby='navbarDropdown'>
+					";
+
+									if($row4[t_m5_name1]){ echo "<a class='dropdown-item' href='$row4[t_m5_link1]'>$row4[t_m5_name1]</a>";}
+									if($row4[t_m5_name2]){ echo "<a class='dropdown-item' href='$row4[t_m5_link2]'>$row4[t_m5_name2]</a>";}
+									if($row4[t_m5_name3]){ echo "<a class='dropdown-item' href='$row4[t_m5_link3]'>$row4[t_m5_name3]</a>";}
+									if($row4[t_m5_name4]){ echo "<a class='dropdown-item' href='$row4[t_m5_link4]'>$row4[t_m5_name4]</a>";}
+									if($row4[t_m5_name5]){ echo "<a class='dropdown-item' href='$row4[t_m5_link5]'>$row4[t_m5_name5]</a>";}
+									if($row4[t_m5_name6]){ echo "<a class='dropdown-item' href='$row4[t_m5_link6]'>$row4[t_m5_name6]</a>";}
+									if($row4[t_m5_name7]){ echo "<a class='dropdown-item' href='$row4[t_m5_link7]'>$row4[t_m5_name7]</a>";}
+									if($row4[t_m5_name8]){ echo "<a class='dropdown-item' href='$row4[t_m5_link8]'>$row4[t_m5_name8]</a>";}
+									if($row4[t_m5_name9]){ echo "<a class='dropdown-item' href='$row4[t_m5_link9]'>$row4[t_m5_name9]</a>";}
+									if($row4[t_m5_name10]){ echo "<a class='dropdown-item' href='$row4[t_m5_link10]'>$row4[t_m5_name10]</a>";}
+				echo "
+					        	</div>
+      					</li>";
+			}
+
+
+		if (!$row4[t_m6_name1])
+			{
+           		echo "
+						<li class='nav-item' role='presentation'>
+							<a class='nav-link phone_link' href='$row4[t_m6_link]'>$row4[t_m6_head]</a>
+						</li>
+					";
+			}
+
+		else
+
+			{
+           		echo "
+						<li class='nav-item dropdown'>
+        					<a class='nav-link dropdown-toggle phone_link phone_link' href='$row4[t_m6_link]' id='navbarDropdown' role='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false' style = 'color:$row4[t_m_font_color];'>$row4[t_m6_head]</a>
+        						<div class='dropdown-menu' aria-labelledby='navbarDropdown'>
+					";
+
+									if($row4[t_m6_name1]){ echo "<a class='dropdown-item' href='$row4[t_m6_link1]'>$row4[t_m6_name1]</a>";}
+									if($row4[t_m6_name2]){ echo "<a class='dropdown-item' href='$row4[t_m6_link2]'>$row4[t_m6_name2]</a>";}
+									if($row4[t_m6_name3]){ echo "<a class='dropdown-item' href='$row4[t_m6_link3]'>$row4[t_m6_name3]</a>";}
+									if($row4[t_m6_name4]){ echo "<a class='dropdown-item' href='$row4[t_m6_link4]'>$row4[t_m6_name4]</a>";}
+									if($row4[t_m6_name5]){ echo "<a class='dropdown-item' href='$row4[t_m6_link5]'>$row4[t_m6_name5]</a>";}
+									if($row4[t_m6_name6]){ echo "<a class='dropdown-item' href='$row4[t_m6_link6]'>$row4[t_m6_name6]</a>";}
+									if($row4[t_m6_name7]){ echo "<a class='dropdown-item' href='$row4[t_m6_link7]'>$row4[t_m6_name7]</a>";}
+									if($row4[t_m6_name8]){ echo "<a class='dropdown-item' href='$row4[t_m6_link8]'>$row4[t_m6_name8]</a>";}
+									if($row4[t_m6_name9]){ echo "<a class='dropdown-item' href='$row4[t_m6_link9]'>$row4[t_m6_name9]</a>";}
+									if($row4[t_m6_name10]){ echo "<a class='dropdown-item' href='$row4[t_m6_link10]'>$row4[t_m6_name10]</a>";}
+				echo "
+					        	</div>
+      					</li>";
+			}
+
+		if (!$row4[t_m7_name1])
+			{
+           		echo " 
+						<li class='nav-item' role='presentation'>
+							<a class='nav-link phone_link' href='$row4[t_m7_link]'>$row4[t_m7_head]</a>
+						</li>
+					
+					";
+			}
+
+		else
+
+			{
+           		echo "
+						<li class='nav-item dropdown'>
+        					<a class='nav-link dropdown-toggle phone_link phone_link' href='$row4[t_m7_link]' id='navbarDropdown' role='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false' style = 'color:$row4[t_m_font_color];'>$row4[t_m7_head]</a>
+        						<div class='dropdown-menu' aria-labelledby='navbarDropdown'>
+					";
+
+									if($row4[t_m7_name1]){ echo "<a class='dropdown-item' href='$row4[t_m7_link1]'>$row4[t_m7_name1]</a>";}
+									if($row4[t_m7_name2]){ echo "<a class='dropdown-item' href='$row4[t_m7_link2]'>$row4[t_m7_name2]</a>";}
+									if($row4[t_m7_name3]){ echo "<a class='dropdown-item' href='$row4[t_m7_link3]'>$row4[t_m7_name3]</a>";}
+									if($row4[t_m7_name4]){ echo "<a class='dropdown-item' href='$row4[t_m7_link4]'>$row4[t_m7_name4]</a>";}
+									if($row4[t_m7_name5]){ echo "<a class='dropdown-item' href='$row4[t_m7_link5]'>$row4[t_m7_name5]</a>";}
+									if($row4[t_m7_name6]){ echo "<a class='dropdown-item' href='$row4[t_m7_link6]'>$row4[t_m7_name6]</a>";}
+									if($row4[t_m7_name7]){ echo "<a class='dropdown-item' href='$row4[t_m7_link7]'>$row4[t_m7_name7]</a>";}
+									if($row4[t_m7_name8]){ echo "<a class='dropdown-item' href='$row4[t_m7_link8]'>$row4[t_m7_name8]</a>";}
+									if($row4[t_m7_name9]){ echo "<a class='dropdown-item' href='$row4[t_m7_link9]'>$row4[t_m7_name9]</a>";}
+									if($row4[t_m7_name10]){ echo "<a class='dropdown-item' href='$row4[t_m7_link10]'>$row4[t_m7_name10]</a>";}
+				echo "
+					        	</div>
+      					</li>";
+			}
+
+
+		if ($Login_User_ID and $rank == 0 )
+		{
+    		echo "<li class='nav-item dropdown'>
+        			<a class='nav-link dropdown-toggle phone_link' href='#' id='navbarDropdown' role='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false' style = 'color:$row4[t_m_font_color];'>
+          			<i class='icon-user icon-white'></i><i class='icon-home icon-white'></i>$Login_User_ID $rank_list 님 접속
+        			</a>
+
+        		<div class='dropdown-menu' aria-labelledby='navbarDropdown'>
+          			<a class='dropdown-item' href='mypage/'>회원정보</a>
+          			<a class='dropdown-item' href='mypage/admin_master_apply_list.html'>21/22 응시현황</a>
+          			<a class='dropdown-item' href='mypage/admin_master_apply_list.html'>예약내역(전체)</a>
+          			<a class='dropdown-item' href='logout.html'>로그아웃</a>
+        		</div>
+
+      			</li>";
+		}
+
+		elseif ($Login_User_ID and $rank == 9)
+		{
+		$admin_menu_query	= "SELECT * FROM 7G_ADMIN_MENU where SITE = '$site' order by MENU_ID ASC" ;
+		$admin_menu_result	= mysql_query($admin_menu_query,$connect);
+		$admin_menu			= mysql_fetch_array($admin_menu_result);
+
+   		echo "<li class='nav-item dropdown'>
+        			<a class='nav-link dropdown-toggle phone_link' href='#' id='navbarDropdown' role='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false' style = 'color:$row4[t_m_font_color];'>
+          			$Login_User_ID $rank_list 님 접속
+        			</a>
+        		<div class='dropdown-menu' aria-labelledby='navbarDropdown'>";
+        		
+  		while ($admin_menu){
+  		if($admin_menu[MENU_NAME] != 'LINE' and $admin_menu[ONOFF] == 0){echo "<a class='nav-link' href='$admin_menu[MENU_LINK]' style = 'color:$admin_menu[COLOR];font-weight:$admin_menu[WEIGHT];'>$admin_menu[MENU_NAME]</a>";}		
+  		if($admin_menu[MENU_NAME] == 'LINE' and $admin_menu[ONOFF] == 0){echo $line_gray;}		
+		$admin_menu = mysql_fetch_array($admin_menu_result);
+		}          			
+
+		echo "	
+        		</div>
+      		</li>";
+		}
+
+
+		if (!$Login_User_ID)
+
+		{
+            echo "<li class='nav-item' role='presentation'><a class='nav-link phone_link' href='member_login.html' style = 'color:$row4[t_m_font_color];'>로그인/회원가입</a></li>";
+		}
+
+			echo "</ul></div></div></nav>";
+
+		}
+
+		$row4=mysql_fetch_array($result);
+	}
+
+//------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+
+
+
+
+
+//------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+// 	메뉴바#2   Apple Style
+//------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+while ($row4)
+
+	{
+		if($row4[t_m_design] == 2)
+
+			{
+				echo "<nav class='navbar navbar-dark navbar-expand-sm fixed-top bg-dark navbar--apple'>
+        				<div class='container'>";
+
+				if (!$row4[company_logo])
+					{
+						echo "<!-- Company LOGO -->
+									<a class='navbar-brand' href='index.html'><img src='view.html?id=3&img=logo' width='120'></a>
+							  <!-- End of LOGO -->";
+					}
+				else
+					{
+						echo "<!-- Company Name -->
+									<a class='navbar-brand' href='index.html'>$row4[company_name]</a>
+							  <!-- End of Company Name -->";
+			        }
+
+				echo "  <!-- Menu Toggle Icon -->
+							<button class='navbar-toggler' type='button' data-toggle='collapse' data-target='#menu' aria-controls='#menu' aria-expanded='false' aria-label='Toggle navigation'>
+								<span class='sr-only'>Toggle navigation</span>
+								<span class='navbar-toggler-icon'>
+   				 					<i class='fas fa-bars'></i>
+								</span>
+							</button>
+						<!-- End of LOGO -->";
+
+				echo "
+        				<div class='collapse navbar-collapse' id='menu'>
+                			<ul class='nav navbar-nav flex-grow-1 justify-content-between'>
+								<span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+					";
+
+// 첫번째 메뉴열
+
+				if (!$row4[t_m1_name1])
+					{
+           				echo "<li class='nav-item' role='presentation'>
+									<a class='nav-link' href='$row4[t_m1_link]'>$row4[t_m1_head]</a>
+							  </li>";
+					}
+				else
+					{
+           				echo "<li class='nav-item dropdown'>
+        							<a class='nav-link dropdown-toggle' href='$row4[t_m1_link]' id='navbarDropdown' role='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>$row4[t_m1_head]</a>
+        								<div class='dropdown-menu' aria-labelledby='navbarDropdown'>";
+
+											if($row4[t_m1_name1]){ echo "<a class='dropdown-item' href='$row4[t_m1_link1]'>$row4[t_m1_name1]</a>";}
+											if($row4[t_m1_name2]){ echo "<a class='dropdown-item' href='$row4[t_m1_link2]'>$row4[t_m1_name2]</a>";}
+											if($row4[t_m1_name3]){ echo "<a class='dropdown-item' href='$row4[t_m1_link3]'>$row4[t_m1_name3]</a>";}
+											if($row4[t_m1_name4]){ echo "<a class='dropdown-item' href='$row4[t_m1_link4]'>$row4[t_m1_name4]</a>";}
+											if($row4[t_m1_name5]){ echo "<a class='dropdown-item' href='$row4[t_m1_link5]'>$row4[t_m1_name5]</a>";}
+
+						echo "
+					        			</div>
+      						</li>";
+					}
+
+
+
+		if (!$row4[t_m2_name1])
+			{
+           		echo "
+						<li class='nav-item' role='presentation'>
+							<a class='nav-link' href='$row4[t_m2_link]'>$row4[t_m2_head]</a>
+						</li>
+					";
+			}
+
+		else
+
+			{
+           		echo "
+						<li class='nav-item dropdown'>
+        					<a class='nav-link dropdown-toggle' href='$row4[t_m2_link]' id='navbarDropdown' role='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>$row4[t_m2_head]</a>
+        						<div class='dropdown-menu' aria-labelledby='navbarDropdown'>
+					";
+
+									if($row4[t_m2_name1]){ echo "<a class='dropdown-item' href='$row4[t_m2_link1]'>$row4[t_m2_name1]</a>";}
+									if($row4[t_m2_name2]){ echo "<a class='dropdown-item' href='$row4[t_m2_link2]'>$row4[t_m2_name2]</a>";}
+									if($row4[t_m2_name3]){ echo "<a class='dropdown-item' href='$row4[t_m2_link3]'>$row4[t_m2_name3]</a>";}
+									if($row4[t_m2_name4]){ echo "<a class='dropdown-item' href='$row4[t_m2_link4]'>$row4[t_m2_name4]</a>";}
+									if($row4[t_m2_name5]){ echo "<a class='dropdown-item' href='$row4[t_m2_link5]'>$row4[t_m2_name5]</a>";}
+
+				echo "
+					        	</div>
+      					</li>";
+			}
+
+
+
+
+
+		if (!$row4[t_m3_name1])
+			{
+           		echo "
+						<li class='nav-item' role='presentation'>
+							<a class='nav-link' href='$row4[t_m3_link]'>$row4[t_m3_head]</a>
+						</li>
+					";
+			}
+
+		else
+
+			{
+           		echo "
+						<li class='nav-item dropdown'>
+        					<a class='nav-link dropdown-toggle' href='$row4[t_m3_link]' id='navbarDropdown' style = 'color:red;' role='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>$row4[t_m3_head]</a>
+        						<div class='dropdown-menu' aria-labelledby='navbarDropdown'>
+					";
+
+									if($row4[t_m3_name1]){ echo "<a class='dropdown-item' href='$row4[t_m3_link1]'>$row4[t_m3_name1]</a>";}
+									if($row4[t_m3_name2]){ echo "<a class='dropdown-item' href='$row4[t_m3_link2]'>$row4[t_m3_name2]</a>";}
+									if($row4[t_m3_name3]){ echo "<a class='dropdown-item' href='$row4[t_m3_link3]'>$row4[t_m3_name3]</a>";}
+									if($row4[t_m3_name4]){ echo "<a class='dropdown-item' href='$row4[t_m3_link4]'>$row4[t_m3_name4]</a>";}
+									if($row4[t_m3_name5]){ echo "<a class='dropdown-item' href='$row4[t_m3_link5]'>$row4[t_m3_name5]</a>";}
+
+				echo "
+					        	</div>
+      					</li>";
+			}
+
+
+
+
+		if (!$row4[t_m4_name1])
+			{
+           		echo "
+						<li class='nav-item' role='presentation'>
+							<a class='nav-link' href='$row4[t_m4_link]'>$row4[t_m4_head]</a>
+						</li>
+					";
+			}
+
+		else
+
+			{
+           		echo "
+						<li class='nav-item dropdown'>
+        					<a class='nav-link dropdown-toggle' href='$row4[t_m4_link]' id='navbarDropdown' role='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>$row4[t_m4_head]</a>
+        						<div class='dropdown-menu' aria-labelledby='navbarDropdown'>
+					";
+
+									if($row4[t_m4_name1]){ echo "<a class='dropdown-item' href='$row4[t_m4_link1]'>$row4[t_m4_name1]</a>";}
+									if($row4[t_m4_name2]){ echo "<a class='dropdown-item' href='$row4[t_m4_link2]'>$row4[t_m4_name2]</a>";}
+									if($row4[t_m4_name3]){ echo "<a class='dropdown-item' href='$row4[t_m4_link3]'>$row4[t_m4_name3]</a>";}
+									if($row4[t_m4_name4]){ echo "<a class='dropdown-item' href='$row4[t_m4_link4]'>$row4[t_m4_name4]</a>";}
+									if($row4[t_m4_name5]){ echo "<a class='dropdown-item' href='$row4[t_m4_link5]'>$row4[t_m4_name5]</a>";}
+
+				echo "
+					        	</div>
+      					</li>";
+			}
+
+
+
+
+		if (!$row4[t_m5_name1])
+			{
+           		echo "
+						<li class='nav-item' role='presentation'>
+							<a class='nav-link' href='$row4[t_m5_link]'>$row4[t_m5_head]</a>
+						</li>
+					";
+			}
+
+		else
+
+			{
+           		echo "
+						<li class='nav-item dropdown'>
+        					<a class='nav-link dropdown-toggle' href='$row4[t_m5_link]' id='navbarDropdown' role='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>$row4[t_m5_head]</a>
+        						<div class='dropdown-menu' aria-labelledby='navbarDropdown'>
+					";
+
+									if($row4[t_m5_name1]){ echo "<a class='dropdown-item' href='$row4[t_m5_link1]'>$row4[t_m5_name1]</a>";}
+									if($row4[t_m5_name2]){ echo "<a class='dropdown-item' href='$row4[t_m5_link2]'>$row4[t_m5_name2]</a>";}
+									if($row4[t_m5_name3]){ echo "<a class='dropdown-item' href='$row4[t_m5_link3]'>$row4[t_m5_name3]</a>";}
+									if($row4[t_m5_name4]){ echo "<a class='dropdown-item' href='$row4[t_m5_link4]'>$row4[t_m5_name4]</a>";}
+									if($row4[t_m5_name5]){ echo "<a class='dropdown-item' href='$row4[t_m5_link5]'>$row4[t_m5_name5]</a>";}
+
+				echo "
+					        	</div>
+      					</li>";
+			}
+
+
+
+		if ($Login_User_ID and $rank == 0 )
+		{
+    		echo "<li class='nav-item dropdown'>
+        			<a class='nav-link dropdown-toggle' href='#' id='navbarDropdown' role='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
+          			<i class='icon-user icon-white'></i><i class='icon-home icon-white'></i>$Login_User_ID $rank_list 님 접속
+        			</a>
+
+        		<div class='dropdown-menu' aria-labelledby='navbarDropdown'>
+          			<a class='dropdown-item' href='mypage/'>회원정보</a>
+          			<a class='dropdown-item' href='mypage/admin_master_apply_list.html'>21/22 응시현황</a>
+          			<a class='dropdown-item' href='mypage/'>예약내역(전체)</a>
+          			<a class='dropdown-item' href='logout.html'>로그아웃</a>
+        		</div>
+
+      			</li>";
+		}
+
+		elseif ($Login_User_ID and $rank == 9)	
+		{
+		$admin_menu_query	= "SELECT * FROM 7G_ADMIN_MENU where SITE = '$site' order by MENU_ID ASC" ;
+		$admin_menu_result	= mysql_query($admin_menu_query,$connect);
+		$admin_menu			= mysql_fetch_array($admin_menu_result);
+
+   		echo "<li class='nav-item dropdown'>
+					<a class='nav-link dropdown-toggle' href='#' id='navbarDropdown' role='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false' style = 'color:#ffffff;font-weight:700;'>
+          			$Login_User_ID $rank_list 님 접속
+        			</a>
+        		<div class='dropdown-menu' aria-labelledby='navbarDropdown'>";
+        		
+  		while ($admin_menu){
+  		if($admin_menu[MENU_NAME] != 'LINE' and $admin_menu[ONOFF] == 0){echo "<a class='nav-link' href='$admin_menu[MENU_LINK]' style = 'color:$admin_menu[COLOR];font-weight:$admin_menu[WEIGHT];'>$admin_menu[MENU_NAME]</a>";}		
+  		if($admin_menu[MENU_NAME] == 'LINE' and $admin_menu[ONOFF] == 0){echo $line_gray;}		
+		$admin_menu = mysql_fetch_array($admin_menu_result);
+		}          			
+
+		echo "	
+        		</div>
+      		</li>";
+		}
+
+
+
+
+		if (!$Login_User_ID)
+
+		{
+            echo "<li class='nav-item' role='presentation'><a class='nav-link' href='member/member_login.html'>로그인/회원가입</a></li>";
+		}
+
+			echo "</ul></div></div></nav>";
+
+		}
+
+		$row4=mysql_fetch_array($result);
+	}
+
+//--+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+
+
+
+?>
+

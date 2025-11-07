@@ -1,0 +1,20 @@
+<?
+$The_No 	= $_GET["No"];
+
+
+$connect=mysql_connect("dbserver","skiresort","ll170505");
+mysql_select_db( "skiresort",$connect);
+extract($_REQUEST);
+
+	$popup_query= "select * from 7G_Skiresort_popup where No = '$The_No' order by No DESC limit 1 ";
+ 	$popup_result=mysql_query($popup_query,$connect );
+ 	$popup=mysql_fetch_array($popup_result);
+
+    Header(  "Content-type:  image/jpeg");
+
+
+	echo $popup[image];
+
+
+  mysql_close();
+ ?>

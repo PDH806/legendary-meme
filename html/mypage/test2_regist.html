@@ -1,0 +1,52 @@
+<?
+  extract($_REQUEST);
+  include '../db_config.html';
+
+  // 이메일 업데이트
+  $query="UPDATE 7G_Skiresort_Member SET EMAIL = '$BuyerEmail', BIRTH = '$BIRTH' where MEMBER_ID = '$Login_User_ID'";
+  $result=mysqli_query($link, $query);
+
+  $filename = $_FILES[image][tmp_name];
+  $handle = fopen($filename,"rb");
+  $size = GetImageSize($_FILES[image][tmp_name]);
+  $width = $size[0];
+  $height = $size[1];
+  $imageblob = addslashes(fread($handle, filesize($filename)));
+  $filesize = $filename;
+  fclose($handle);
+
+  if ($imageblob)
+    {
+      $query2="UPDATE 7G_Skiresort_Member SET image = '$imageblob' where MEMBER_ID = '$Login_User_ID'";
+      $result=mysqli_query($link, $query2);
+    }
+
+  // 신청테이블에 이번 신청내용이 등록되어 있는지 체크
+  $dup_query	= "SELECT * FROM 7G_Master_Apply where Test_No = '$Test_No' and TEST_ID = '$Test_id' and MEMBER_ID = '$Login_User_ID'";
+  $dup_result	= mysqli_query($link, $dup_query);
+  $dup_check	= mysqli_fetch_array($dup_result);
+  $dup_total_record = mysqli_num_rows($dup_result);
+
+  // 회원정보 추출
+	$query		= "SELECT * FROM 7G_Skiresort_Member where MEMBER_ID = '$Login_User_ID'";
+	$result		= mysql_query($query,$connect );
+	$member		= mysql_fetch_array($result);
+
+	if (!$link) {die("Connection failed: " . mysqli_connect_error());}
+
+	//$sql = "INSERT INTO 7G_Master_Apply (TEST_ID, Test_No, MEMBER_ID) VALUES ('$Test_id', $Test_No, '$Login_User_ID')";
+  $sql = "INSERT INTO 7G_Master_Apply (Test_No, TEST_ID, SKIRESORT_NO, MEMBER_ID, MEMBER_NO, MEMBER_NAME, MEMBER_PHONE, MEMBER_EMAIL, Apply_date, GENDER2, VACCINE, TRAN_STATUS) VALUES ($Test_No, '$Test_id', $Skiresort, '$Login_User_ID', '$member[NO]', '$member[MEMBER_NAME]', '$member[PHONE]', '$member[EMAIL]', '$today', '$GENDER2', '$VACCINE',  1)";
+  $result=mysqli_query($link, $sql);
+
+
+
+
+
+  echo "
+  <script>
+  alert('시험 응시등록이 완료되었습니다. 감사합니다.');
+  top.document.location.href = 'admin_master_apply_list.html';
+  </script>";
+
+
+?>

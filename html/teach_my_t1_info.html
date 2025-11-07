@@ -1,0 +1,131 @@
+<?
+    include "include/head_common.html";
+?>
+
+<body>
+    <div id="scroll_top">
+        <button type="button"><img src="images/scr_top.jpg"></button>
+    </div>
+
+    <div id="wrap">
+        <? 
+                include"include/sb_header.html" 
+            ?>
+        <!-- ㅡㅡㅡㅡㅡㅡㅡㅡ/SB_HEADERㅡㅡㅡㅡㅡㅡㅡㅡ -->
+        <div id="sbcenter" class="accept">
+            <div class="sbcenter teach_data">
+                <div class="sb_content">
+                    <!--/sb_top_text-->
+                    <div class="tab_wrap">
+                        <!--/tab_menu_area-->
+                        <div class="tab_list_area tab_click_list">
+                            <div class="tab1">
+                                <div class="patrol_list">
+                                    <div class="content_box">
+                                        <div class="txt_box add_accept">
+                                            <div class="tit_box"><span class="sb_tit">추가정보 입력</span></div>
+                                            <form method="post" name="" action="">
+                                                <fieldset>
+                                                    <table class="accept_table">
+                                                        <tbody>
+                                                            <tr class="photo">
+                                                                <th><a href="#pop3">사진첨부</a></th>
+                                                            </tr>
+                                                            <tr>
+                                                                <th>한글이름&nbsp;:</th>
+                                                                <td>
+                                                                    <input type="text">
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <th>영문이름&nbsp;:</th>
+                                                                <td>
+                                                                    <input type="text">
+                                                                </td>
+                                                            </tr>
+                                                            <tr class="nb">
+                                                                <th>생년월일 &nbsp;:</th>
+                                                                <td>
+                                                                    <input type="text" maxlength="4"><span>년</span>
+                                                                    <input type="text" maxlength="2"><span>월</span>
+                                                                    <input type="text" maxlength="2"><span>일</span>
+                                                                </td>
+                                                            </tr>
+                                                            <tr class="nb">
+                                                                <th>전화번호 &nbsp;:</th>
+                                                                <td>
+                                                                    <input type="text" maxlength="4"><span>-</span>
+                                                                    <input type="text" maxlength="4"><span>-</span>
+                                                                    <input type="text" maxlength="4">
+                                                                </td>
+                                                            </tr>
+                                                            <tr class="choose">
+                                                                <th>자격증 발급주소&nbsp;:</th>
+                                                                <td>
+                                                                    <input type="radio" id="apt_home" name="apt_send">
+                                                                    <label for="apt_home">집</label>
+                                                                    <input type="radio" id="apt_cpy" name="apt_send">
+                                                                    <label for="apt_cpy">직장</label>
+                                                                </td>
+                                                            </tr>
+                                                            <tr class="adress1">
+                                                                <th>주소&nbsp;:</th>
+                                                                <td>
+                                                                    <input type="text">
+                                                                    <button type="button">주소찾기</button>
+                                                                </td>
+                                                            </tr>
+                                                            <tr class="adress2">
+                                                                <th><span>상세주소</span></th>
+                                                                <td>
+                                                                    <input type="text">
+                                                                    <input type="text">
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                    <div class="click_btn">
+                                                        <input class="ok" type="button" value="확인">
+														<input type="button" value="확인증 출력" onclick="window.open('teach_output.html','','width=1240px, height= 700px, left=0px, top=0px')">
+														<input type="button" value="자격증 발급" onclick="window.open('teach_output.html','','width=1240px, height= 700px, left=0px, top=0px')">
+														<input type="button" value="자격증 재발급" onclick="window.open('teach_output.html','','width=1240px, height= 700px, left=0px, top=0px')">
+                                                    </div>
+                                                </fieldset>
+                                            </form>
+                                        </div>
+
+                                    </div>
+                                    <!--/content_box-->
+                                </div>
+                                <!--/partrol_list-->
+                            </div>
+                            <!--/tab1-->
+                        </div>
+                        <!--/tab_list_area-->
+                    </div>
+                    <!--/tab_wrap-->
+
+                    <div id="popup">
+                        <div id="pop_3">
+                            <span class="sb_tit">사진 등록</span>
+                            <p class="pop_file">
+                                <input type="file">
+                            </p>
+                            <button type="button" class="close">
+                                <img src="images/pop_close.png">
+                            </button>
+                            <a class="only_btn btn_ok" href="#self">등록하기</a>
+                        </div>
+                    </div>
+
+                </div>
+                <!--/sb_content-->
+            </div>
+            <!-- //sbcenter -->
+        </div>
+        <!-- //sbcenter -->
+
+        <!-- ㅡㅡㅡㅡㅡㅡㅡㅡFOOTERㅡㅡㅡㅡㅡㅡㅡㅡ -->
+        <?
+    include "include/footer.html";
+?>

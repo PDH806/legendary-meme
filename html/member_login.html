@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+	<link rel="shortcut icon" href="Myicon.png" type="image/x-icon">
+
+	<?
+		$main_title = '한국 스키장 경영협회';
+		include 'db_config.html';
+		echo "<title>$main_title / $page</title>";    	
+	?>
+
+</head>
+<body style = 'height:100%;'>
+        <div class="ofl_spt">
+            <script language="javascript">
+                $(document).ready(function() {
+                    //메인화면 PC/모바일 분기시 화면 스크롤
+                    isOnePageScroll();
+                });
+            </script>
+        </div>
+        
+		<? include 'link-files.html';
+           include"main_nav2.html"  ?>
+		<!-- end of Navigation -->
+
+        <div id="scroll_top" >
+            <button type="button"><img src="/images/scr_top.jpg"></button>
+        </div>
+        <div>
+
+<?
+
+		$return_page 		= $_GET['return_page'];
+		$Case 				= $_GET['Case'];
+		$type 				= $_GET["type"];
+
+        if ($Login_User_ID and $rank == 9) {
+            echo " <script language='javascript'>top.document.location.href = 'admin_index.html'</script>";
+        }
+
+        if ($Login_User_ID and $rank <> 9) {
+            echo " <script language='javascript'>top.document.location.href = 'mypage.html?category=4'</script>";
+        }
+?>
+
+
+    	<div class="login-dark">
+    	<? echo "<form method='post' action=member_login.php?case=$case&return_page=$return_page>"; ?>
+            	<div class="illustration"><i class="icon ion-ios-locked-outline"></i></div>
+            	<div class="form-group"><input class="form-control" type="text" name="MEMBER_ID" placeholder="ID"></div>
+            	<div class="form-group"><input class="form-control" type="password" name="PASSWORD" placeholder="Password"></div>
+            	<div class="form-group"><button class="btn btn-primary btn-block" type="submit">Log In</button></div>
+            	<input type = 'hidden' name='type' value = '<? echo $type ?>'>
+				<div class="form-group">
+            		<a class="btn btn-success btn-block"  href="member_regist.html">회원가입</a>
+            	</div>
+            	<div class="form-group"><a class="btn btn-danger btn-block"  href="password_change.html">비밀번호찾기</a></div>
+				<div class="form-group"><a class="btn btn-info btn-block"  href="id_search.html">아이디 찾기</a></div>
+				
+        	</form>
+    	</div>
+
+    	<!-- footer for skiresort.or.kr -->
+			<? include 'footer.html'; ?>
+		<!-- end of footer -->
+	
+	</body>
+
+<?
+		if ($Case == 2)
+		{echo "<script>alert('비밀번호가 틀립니다.');</script>";}
+
+?>
+
+</html>

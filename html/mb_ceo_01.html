@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+	<link rel="shortcut icon" href="Myicon.png" type="image/x-icon">
+
+	<?
+		$main_title = '한국 스키장 경영협회';
+		include 'db_config.html';
+		echo "<title>$main_title / $page</title>";    	
+	?>
+
+</head>
+<body>
+        <div class="ofl_spt">
+            <script language="javascript">
+                $(document).ready(function() {
+                    //메인화면 PC/모바일 분기시 화면 스크롤
+                    isOnePageScroll();
+                });
+            </script>
+        </div>
+        
+		<? include 'link-files.html';
+           include"main_nav2.html"  ?>
+		<!-- end of Navigation -->
+
+        <div id="scroll_top" >
+            <button type="button"><img src="images/scr_top.jpg"></button>
+        </div>
+        <div>
+                         
+        
+        <!-- ㅡㅡㅡㅡㅡㅡㅡㅡ/SB_HEADERㅡㅡㅡㅡㅡㅡㅡㅡ -->
+            <div id="sbcenter" class="mb">
+                <div class="sb_top_bg">
+                    <div class="inner_wrap">
+                       <h2>회원사 소개</h2>
+                    </div>
+                    <div class="sb_top_menu">
+                        <ul class="sbclear">
+                            <li class="on"><a href="mb_ceo.html">회원사 대표자 소개</a></li>
+                            <li><a href="mb_about_01.html">지역별 스키장 현황</a></li>
+                            <li><a href="mb_ski_list_1_01.html">회원사 소개</a></li>
+                        </ul>
+                    </div>
+                    <!--/sb_top_menu-->
+                </div>
+                <!--/sb_top_bg-->
+                <div class="sbcenter mb_ceo cp_about">
+                    <div class="sb_content">
+                        <div class="sb_top_text sbclear">
+                            <a href="#self" class="sb_prev"><img src="images/sb_prev_btn_off.png" alt="이전"></a>
+                            <h3>회원사 대표자 소개</h3>
+                            <a href="mb_about_01.html" class="sb_next"><img src="images/sb_next_btn_on.png" alt="다음"></a>
+                        </div>
+                        <!--/sb_top_text-->
+                        <div class="tab_wrap">
+                                <div class="tab_list_area">
+                                        <div class="tab_img">
+                                            <img src="images/mb_ceo.jpg" alt="협회소개">
+                                        </div>
+                                        <div class="cp_box">
+											<h4>임원사 <span>Officer</span></h4>
+											<table class="mb_ceo_list">
+												<caption>회원사 대표자 소개 - 임원</caption>
+												<tbody>
+													<tr>
+														<th class="tit" rowspan="2" width="20%">임원사</th>
+														<th width="50%">한국스키장경영협회(회장)</th>
+														<th width="50%"><a href="http://www.daemyungresort.com/vp/" target="_blank">비발디파크(부회장)</a></th>
+														<!--<th width="20%"><a href="http://www.o2resort.com/" target="_blank">오투리조트(부회장)</a></th> -->
+													</tr>
+													<tr class="name">
+													   <td>임충희 대표이사</td> 	
+													   <td>이병천 대표이사</td>
+													   <!-- <td>김영윤 대표이사</td> -->
+													</tr>
+												</tbody>
+											</table>
+											<h4>감사사<span> Auditor</span></h4>
+											<table class="mb_ceo_list">
+												<caption>회원사 대표자 소개 - 감사사</caption>
+												<tbody>
+													<tr>
+														<th class="tit" rowspan="2" width="20%">감사사</th>
+														<th width="80%"><a href="http://www.jisanresort.co.kr/" target="_blank">지산포레스트리조트(감사)</a></th>
+													</tr>
+													<tr class="name">
+													   <td>고호림 대표이사</td>
+													</tr>
+												</tbody>
+											</table>
+											<h4>회원사<span> Member Company</span></h4>
+											<table class="mb_ceo_list">
+												<caption>>회원사 대표자 소개 - 회원사</caption>
+												<tbody>
+													<tbody>
+													<tr>
+														<th class="tit" rowspan="6" width="20%">회원사</th>
+														<!--<th width="20%"><a href="http://www.pineresort.com/" target="_blank">양지파인리조트</a></th>-->
+														<th width="20%"><a href="http://www.yongpyong.co.kr/" target="_blank">용평리조트</a></th>
+														<th width="20%"><a href="http://www.mdysresort.com/" target="_blank">무주덕유산리조트</a></th>
+														<th width="20%"><a href="http://phoenixhnr.co.kr/pyeongchang/index" target="_blank">휘닉스파크</a></th>
+														<!--<th width="20%"><a href="http://www.daemyungresort.com/vp/" target="_blank">비발디파크</a></th>-->
+														<th width="20%"><a href="https://www.wellihillipark.com/sub3/" target="_blank">웰리힐리파크</a></th>
+													</tr>
+													<tr class="name">
+													   <!--<td>임태주 대표이사</td>-->
+													   <td>임학운 대표이사</td>
+													   <td>배성수 사장</td>
+													   <td>전영기 대표이사</td>
+													   <!--<td>민병소 대표이사</td>-->
+													   <td>민영민 대표이사</td>
+													</tr>
+													<tr>
+														<th><a href="https://www.elysian.co.kr/main.asp" target="_blank">엘리시안 강촌</a></th>
+														<th><a href="http://www.oakvalley.co.kr/" target="_blank">오크밸리</a></th>
+														<th><a href="http://www.high1.com/Hhome/main.high1" target="_blank">하이원리조트</a></th>
+														<th><a href="https://www.konjiamresort.co.kr/main.dev" target="_blank">곤지암리조트</a></th>
+													</tr>
+													<tr class="name">
+													   <td>김태진 대표이사</td>
+													   <td>조영환 대표이사</td>
+													   <td>&nbsp;</td>
+													   <td>정현 상무</td>
+													</tr>
+													<tr>
+														<th><a href="http://www.alpensiaresort.com" target="_blank">알펜시아리조트</a></th>
+														<th><a href="http://www.o2resort.com/" target="_blank">오투리조트</a></th>
+													</tr>
+													<tr class="name">
+													   <td>김강우 부사장</td>
+													   <td>김남규 대표이사</td>
+													</tr>													
+												</tbody>
+											</table>
+										</div>
+										<!-- /cp_box -->
+                                </div><!--/tab_list_area-->
+                            </div><!--/tab_wrap-->
+                       
+                    </div>
+                    <!--/sb_content-->
+               </div>
+                <!-- //sbcenter -->
+
+
+<?
+          include "include/sb_quick.html";
+?>
+            </div>
+            <!-- //sbcenter -->
+
+            <!-- ㅡㅡㅡㅡㅡㅡㅡㅡFOOTERㅡㅡㅡㅡㅡㅡㅡㅡ -->
+            <?
+    include "footer.html";
+?>

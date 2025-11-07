@@ -1,0 +1,28 @@
+<?
+$servername = "dbserver";
+$username = "skiresort";
+$password = "ll170505";
+$dbname = "skiresort";
+
+$delete_No		= $_GET["No"];
+
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+// Check connection
+
+
+// sql to delete a record
+$sql = "DELETE FROM 7G_Skiresort_popup WHERE No = '$delete_No'";
+
+if ($conn->query($sql) === TRUE) {
+} else {
+}
+
+$conn->close();
+
+ echo "<script>location.href='index.html?category=5&list=1';</script>";
+
+?>
+
+
+

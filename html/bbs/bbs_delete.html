@@ -1,0 +1,19 @@
+<?
+	include '../_db_config.html';
+	
+	if (!$Login_User_ID and $rank != 9){echo "<script language='javascript'>top.document.location.href = 'member_login.html?MEMBER_ID=$User_ID_Search&Case=9'</script>";}
+
+	$No   = $_GET['No'];
+	$page = $_GET['page'];
+
+	if (!$link) {die("Connection failed: " . mysqli_connect_error());}
+
+	$sql = 'DELETE FROM bbs WHERE docu_no = '.$No;
+
+	if (mysqli_query($link, $sql)) {echo "<script language='javascript'>
+	alert('선택하신 글이 삭제되었습니다.');
+	top.document.location.href = 'index.html?page=$page'</script>";} else {echo "Error: " . $sql . "<br>" . mysqli_error($link);}
+
+	mysqli_close($link);
+
+?>

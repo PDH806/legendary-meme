@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html>
+
+<?
+//--+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+	 					
+// 	코딩정보
+//--+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+	 					
+//
+//	+ 개발자 : friday1968
+//  + 이메일 : developer@7gate.kr
+//  
+//	+ 개발사 : (주)세븐게이트코리아
+//  + 연락처 : 010-2889-1483
+//
+//  + 화면내용 : 웹사이트 상단메뉴 (Top-Menu) 제너레이터
+//
+//--+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+	 					
+
+
+	$the_category = $_GET["category"];
+	$the_year = $_GET["year"];
+	if($the_year == ''){$the_year = 2019;}
+	$round 	  = $the_year - 2014;
+	
+	if (!$the_category){$the_category= '0';}
+	
+	if ($the_category == '0')
+			{	$category_active0 = 'selected';
+				$dir 		= "gallery/$the_year/total"; 
+				$dir2 		= "gallery/$the_year/total";
+			}
+	
+	if ($the_category == '1')
+			{	$category_active1 = 'selected';
+				$dir 	= "gallery/$the_year/gallery_1"; 
+				$dir2 	= "gallery/$the_year/gallery_1";			
+			}
+
+	if ($the_category == '2')
+			{	$category_active2 = 'selected';
+				$dir 	= "gallery/$the_year/gallery_2"; 
+				$dir2 	= "gallery/$the_year/gallery_2";			
+			}
+
+	if ($the_category == '3')
+			{	$category_active3 = 'selected';
+				$dir 	= "gallery/$the_year/gallery_3"; 
+				$dir2 	= "gallery/$the_year/gallery_3";			
+			}
+
+	if ($the_category == '4')
+			{	$category_active4 = 'selected';
+				$dir 	= "gallery/$the_year/gallery_4"; 
+				$dir2 	= "gallery/$the_year/gallery_4";			
+			}
+
+	if ($the_category == '5')
+			{	$category_active5 = 'selected';
+				$dir 	= "gallery/$the_year/gallery_5"; 
+				$dir2 	= "gallery/$the_year/gallery_5";			
+			}
+	
+	
+	$dh = opendir($dir);
+	
+	while(false !== ($filename = readdir($dh)))
+		{
+			$files[] = $filename;
+		}
+	
+	rsort($files); // 오름차순 배열정렬, 내림차순은 rsort()
+
+	include 'db_config.html';
+	$result=mysqli_query($link, $query);
+	$row=mysqli_fetch_array($result);
+
+?>
+
+	<head>
+	
+    	<meta charset="utf-8">
+    	<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+		<link rel="shortcut icon" href="Myicon.png" type="image/x-icon">
+    
+    	<title>제6회 포토겔러리 | 한솔섬유배 아름다운스키 기술선수권대회</title>
+    
+			<!-- 사전 셋팅된 스타일 불러오기 -->
+				<? include 'link-files.html'; ?>
+			<!-- 사전 셋팅된 스타일 불러오기 -->
+			
+	</head>
+
+
+
+		<style type="text/css">
+			@media screen and (max-width: 1140px) {img.card-img-top {height: 320px;object-fit: cover;}}
+			@media screen and (min-width: 1140px) {img.card-img-top {width: 1140px;object-fit: cover;}}
+			@media screen and (max-width: 768px) 
+					{
+						div.container {position: relative;width: 100%;padding-right: 0px;padding-left: 0px}
+						div.tour_images {position: relative;width: 100%;padding-right: 0px;padding-left: 0px;}
+						div.tour_titles {position: relative;width: 100%;padding-right: 5px;padding-left: 15px}
+						img.card-img-top {height: 280px;object-fit: cover;}
+					}
+			@media screen and (max-width: 560px) {
+					img.card-img-top {height:260px;object-fit: cover;}
+					img.card-img-top2 {width:100%;height:100%px;object-fit: cover;}
+					}
+			.vertical-center
+				{
+  				min-height: 100%;  /* Fallback for browsers do NOT support vh unit */
+				display: flex;
+  				align-items: center;
+				}
+
+			.middle_nav {
+    			font-family: 'Lato';
+				}
+
+			.modal {padding: 0 !important; // override inline padding-right added from js}
+			.modal .modal-dialog {
+			  	width: 100%;
+  				max-width: none;
+  				height: 100%;
+  				margin: 0;
+				}
+			.modal .modal-content {
+  				height: 100%;
+  				border: 0;
+  				border-radius: 0;
+				}
+			.modal .modal-body {
+  				overflow-y: auto;
+				}
+ 
+
+</style>
+
+	<body>
+
+
+		<!-- Navigation -->
+			<? include 'main-nav.html'; ?>
+		<!-- Navigation -->
+
+		<!-- Mid_nav 영역 시작 -->
+			<div class='countainer-fluid' style='background-color:#0c56a4;'>
+				<div class='container' style='padding-left:10px;'>
+					<br><br>
+					<span class = 'middle_nav' style='color:#ffffff; font-size:1.5rem'><? echo $the_year; ?>년 <? echo $round; ?><sup>th</sup> Festival</span>
+					<span class = 'middle_nav' style='color:#ffffff; font-size:.8rem'> / 주요사진</span>
+				</div>
+			</div>		
+		<!-- Mid_nav 영역 종료 -->
+
+  			<div class="container">
+
+  				<div class = "container d-none d-sm-block" style="background-image: url('/img/hansoll-sub-banner-2.jpg');height:300px;" >
+  				<br>
+            	<span class = 'middle_nav' style='padding:10px; color:#2044b0; font-size:1.3rem; font-weight:700'>제<? echo $round; ?>회 한솔섬유배 아름다운스키 Interski Festival</span><br>
+            	<span class = 'middle_nav' style='padding:10px; color:#2044b0; font-size:2.5rem; font-weight:700'>포토갤러리</span>
+				</div>
+
+  				<div class = "container d-block d-sm-none" style="background-image: url('/img/hansoll-sub-banner-2.jpg');height:30vmin;" >
+  				<br>
+            	<span class = 'middle_nav' style='padding:10px; color:#2044b0; font-size:1rem; font-weight:700'>제<? echo $round; ?>회 한솔섬유배 아름다운스키 Interski Festival</span><br>
+            	<span class = 'middle_nav' style='padding:10px; color:#2044b0; font-size:2rem; font-weight:700'>포토갤러리</span>
+				</div>
+
+				<br>
+
+
+
+<?
+//------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+	 					
+// 	메인페이지 - 시작
+//------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+	 					
+
+
+		// 페이징
+		
+		$numrow = count($files)-2;
+		
+		$page_length = 15;
+		$page = $_GET["page"];
+		if (!$page)	{$page = 1;}
+		$max_page1 = floor($numrow / $page_length);
+		$max_page2 = $numrow / $page_length;
+		if ($max_page2 > $max_page1)
+			{$max_page = $max_page1 + 1;}
+		else
+		{$max_page = $max_page1;}
+
+		if ($page>$max_page){$page = $max_page;}
+		$previous = $page - 1;
+		$next = $page + 1;
+
+		if ($next>$max_page){$next = $max_page;}
+		if ($previous<1){$previous = 1;}
+
+		$page_start = (($page - 1) * $page_length );
+		$page_end = $page_start + $page_length;
+
+		if ($page_end > $numrow) {$page_end = $numrow;}
+
+
+
+if ($year < 2021){
+
+echo "
+  			<div class='container' style = 'padding:0px;'>
+				<ul class='nav nav-tabs'>
+
+			  		<li class='nav-item'>				
+			   			 <a class='nav-link ' href='race_introduce.html?year=$the_year'>대회개요&수상자</a>
+			  		</li>
+  
+			  		<li class='nav-item'>
+			    		<a class='nav-link active' href='photo_gallery.html?year=$the_year'>포토 갤러리</a>
+			  		</li>
+  
+			  		<li class='nav-item'>
+			    		<a class='nav-link ' href='race_movies.html?year=$the_year'>주요 영상</a>
+			  		</li>
+  
+				</ul>
+			</div>
+				<br>";
+}
+
+
+
+	echo "
+  			<div class='container' style = 'padding:10px;'>
+				<select class='form-control' id='selectbox' name='' onchange='javascript:location.href = this.value;'>
+	     			<option value='?category=0&year=$the_year' $category_active0>전체</option>
+	     			<option value='?category=1&year=$the_year' $category_active1>개회식</option>
+   	     			<option value='?category=2&year=$the_year' $category_active2>경기1일차</option>
+	     			<option value='?category=3&year=$the_year' $category_active3>경기2일차</option>
+	     			<option value='?category=4&year=$the_year' $category_active4>시상식</option>
+	     			<option value='?category=5&year=$the_year' $category_active5>만찬</option>
+				</select>
+			</div>
+			<br>";
+
+?>
+
+		<div class="card-columns">
+
+<?
+	
+	for($i = $page_start ; $i < $page_end; $i++)
+		{
+			echo"
+			<div class = 'card row' style = 'border:0;'>
+					<a href='#' data-toggle='modal' data-target='#modal_$i'>
+						<img src='$dir2/$files[$i]' class = 'rounded card-img-top2' width = 100%></a><br><br>
+			</div>			
+			<br>			
+
+				<div class='modal fade' id='modal_$i' tabindex='-1' role='dialog' aria-labelledby='tplan_Modal_CenterTitle' aria-hidden='true'>
+  					<div class='modal-dialog' role='document'>
+    					<div class='modal-content'>
+      						<div class='modal-header'>
+       							 <h5 class='modal-title text-center' id='tplan_Modal_Long_Title'>제".$round."회 한솔섬유배 아름다운스키 갤러리 ($files[$i])</h5>
+        							<button type='button' class='close' data-dismiss='modal' aria-label='Close'>
+          							<span aria-hidden='true'>&times;</span>
+       								 </button>
+      						</div>
+      						<div class='modal-body text-center'>
+									<a href='#' data-dismiss='modal'><img src='$dir/$files[$i]' heigth=90vh><a>
+							</div>
+      						<div class='modal-footer'>
+        						<button type='button' class='btn btn-dark' data-dismiss='modal'>창닫기</button>
+      						</div>
+    					</div>
+  					</div>
+				</div>			
+
+			";
+		}
+?>  
+
+	</div>
+
+            	            	
+          </div>
+      </div>
+  </div>
+
+
+
+<?
+
+echo "
+
+<nav aria-label='...'>
+
+	<ul class='pagination justify-content-center'>";
+
+
+
+if ($page >= 4){ 
+ 	echo "
+    	<li class='page-item'>
+			<a class='page-link' href='?year=$the_year&category=$the_category&page=$previous'>Previous</a>
+    	</li>";
+    	
+    	
+	echo "   	
+		<li class='page-item'>
+			<a class='page-link' href='?year=$the_year&category=$the_category&page=1'>1</a>
+		</li>
+		
+	   	<li class='page-item'>
+	   	&nbsp;…&nbsp;
+		</li>
+		";
+    }
+
+
+$Start_no = $page - 2;
+$End_no = $page + 2;
+
+if ($Start_no <= 0){$Start_no = 1;$End_no = 5;}
+
+if ($End_no > $max_page){$End_no = $max_page;}
+
+
+if ($page_end > 11){
+	for ($i=$Start_no; $i<$End_no+1; $i++) {
+
+    	if ($page == $i) {
+        echo "
+    			<li class='page-item active' aria-current='page'>
+      				<a class='page-link' href='?year=$the_year&category=$the_category&page=$i'>$i<span class='sr-only'>(current)</span><a>
+    			</li>";
+		} else {
+        echo "
+    		   	<li class='page-item'>
+    				<a class='page-link' href='?year=$the_year&category=$the_category&page=$i'>$i</a>
+    			</li>";
+   		 }
+ 	}
+}
+
+
+if ($page < $max_page - 2){ 
+
+	echo " 
+	   	<li class='page-item'>
+	   		&nbsp;…&nbsp;
+		</li>
+	
+		<li class='page-item'>
+			<a class='page-link' href='?year=$the_year&category=$the_category&page=$max_page'>$max_page</a>
+		</li>
+		
+		";
+    }
+
+
+if ($page_end < $max_page){
+    echo "
+    	<li class='page-item'>
+      		<a class='page-link' href='?year=$the_year&?category=$the_category&page=$next'>Next</a>
+    	</li>";
+
+
+
+}
+
+
+
+		echo "
+  </ul>
+
+</nav>
+</div>
+<br><br>";
+
+
+
+
+?>
+
+
+
+<!-- footer for AUGMENT-SKI -->
+
+	<? include 'footer.html'; ?>
+
+<!-- end of footer -->
+
+
+
+</body>
+
+</html>

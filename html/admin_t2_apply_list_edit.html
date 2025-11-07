@@ -1,0 +1,350 @@
+<?
+	$The_no 	= $_GET["No"];
+	$category 	= $_GET["category"];
+	$main_title = '한국 스키장 경영협회';
+	include 'db_config.html';
+	
+	// 관리자가 아니면 member_login.html 페이지로 이동
+	if ($Login_User_ID or $rank != 9 or !$rank){
+	echo " <script>
+	alert('잘못된 접근입니다.');
+	top.document.location.href = 'member_login.html?MEMBER_ID=$User_ID_Search&Case=9';
+	</script>";
+	}
+?>
+
+
+
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+	<link rel="shortcut icon" href="Myicon.png" type="image/x-icon">
+    
+    <title>티칭2 응시원서 관리 | 한국스키장경영협회</title>
+      
+		<!-- Custom styles for ski-video.tv -->
+		<?
+		    include 'db_config.html';
+			include 'link-files.html'; 
+		?>
+		<!-- end of Link -->
+
+<script type="text/javascript">
+
+    function Postcode() {
+        new daum.Postcode({
+            oncomplete: function(data) {
+                // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+                // 각 주소의 노출 규칙에 따라 주소를 조합한다.
+                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+                var addr = ''; // 주소 변수
+                var extraAddr = ''; // 참고항목 변수
+
+                //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+                if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+                    addr = data.roadAddress;
+                } else { // 사용자가 지번 주소를 선택했을 경우(J)
+                    addr = data.jibunAddress;
+                }
+
+                // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
+                if(data.userSelectedType === 'R'){
+                    // 법정동명이 있을 경우 추가한다. (법정리는 제외)
+                    // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+                    if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+                        extraAddr += data.bname;
+                    }
+                    // 건물명이 있고, 공동주택일 경우 추가한다.
+                    if(data.buildingName !== '' && data.apartment === 'Y'){
+                        extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                    }
+                    // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+                    if(extraAddr !== ''){
+                        extraAddr = ' (' + extraAddr + ')';
+                    }
+                    // 조합된 참고항목을 해당 필드에 넣는다.
+                    document.getElementById('addr3').value = extraAddr;
+                
+                } else {
+                    document.getElementById('addr3').value = '';
+                }
+
+                // 우편번호와 주소 정보를 해당 필드에 넣는다.
+                document.getElementById('zipcode').value = data.zonecode;
+                document.getElementById('addr1').value = addr;
+                // 커서를 상세주소 필드로 이동한다.
+                document.getElementById('addr2').focus();
+            }
+        }).open();
+    }
+
+</script>
+
+
+
+		<? 
+			// 탑 네비게이션 
+			include 'main_nav2.html';
+						
+			$query2 = "select * from 7G_T2_Apply";
+ 			$result2=mysql_query($query2,$connect );
+ 			$row2=mysql_fetch_array($result2);
+
+ 			$total_record = mysql_num_rows($result2)."명";
+
+ 			$query= "select * from 7G_T2_Apply LEFT OUTER JOIN 7G_T2_Schedules ON 7G_T2_Apply.Test_No = 7G_T2_Schedules.No JOIN 7G_Skiresort_Member on 7G_T2_Apply.MEMBER_ID = 7G_Skiresort_Member.MEMBER_ID where 7G_T2_Apply.Apply_No = '$The_no' order by 7G_T2_Apply.Apply_date DESC ";
+ 			 			
+ 			$result=mysql_query($query,$connect );
+ 			$row=mysql_fetch_array($result);
+
+ ?>
+			<br>
+             <div id='sbcenter' class='mb'>
+                <div class='sb_top_bg'>
+                    <div class='inner_wrap'>
+                       <h2>한국스키장경영협회 티칭2 응시자(<? echo $row[MEMBER_NAME] ?>) 정보관리</h2>
+                    </div>
+                    
+            	</div>
+			</div>
+
+<br><br><br><br>
+
+	<div>
+		<div class="container">
+			<div style = 'height: 90%; min-height: 800px; overflow: auto;'>
+
+<?
+
+		if ($row[Skiresort] == 1){$Skiresort = '용평리조트';}
+		if ($row[Skiresort] == 2){$Skiresort = '양지파인리조트';}
+		if ($row[Skiresort] == 3){$Skiresort = '스타힐리조트';}
+		if ($row[Skiresort] == 4){$Skiresort = '무주덕유산리조트';}
+		if ($row[Skiresort] == 5){$Skiresort = '비발디파크';}
+		if ($row[Skiresort] == 6){$Skiresort = '피닉스평창';}
+		if ($row[Skiresort] == 7){$Skiresort = '월리힐리파크';}
+		if ($row[Skiresort] == 8){$Skiresort = '지산포레스트리조트';}
+		if ($row[Skiresort] == 9){$Skiresort = '엘리시안강촌';}
+		if ($row[Skiresort] == 10){$Skiresort = '오크밸리';}
+		if ($row[Skiresort] == 11){$Skiresort = '하이원리조트';}
+		if ($row[Skiresort] == 12){$Skiresort = '곤지암리조트';}
+		if ($row[Skiresort] == 13){$Skiresort = '알펜시아';}
+		if ($row[Skiresort] == 14){$Skiresort = '베어스타운';}
+		if ($row[Skiresort] == 15){$Skiresort = '에덴벨리리조트';}
+		if ($row[Skiresort] == 16){$Skiresort = '오투리조트';}
+		
+		$Testfee = number_format($row[Testfee])."원";
+		
+		if ($row[Payment_Method] == 1){$payment_select1 = 'selected';$payment_method = '카드';}
+		if ($row[Payment_Method] == 2){$payment_select1 = 'selected';$payment_method = '은행송금';}
+		if ($row[Ski_Brand] == 1){$Brand_SELECT1 = 'selected';}
+		if ($row[Ski_Brand] == 2){$Brand_SELECT2 = 'selected';}
+		if ($row[Ski_Brand] == 3){$Brand_SELECT3 = 'selected';}
+		if ($row[Ski_Brand] == 4){$Brand_SELECT4 = 'selected';}
+		if ($row[Ski_Brand] == 5){$Brand_SELECT5 = 'selected';}
+		if ($row[Ski_Brand] == 6){$Brand_SELECT6 = 'selected';}
+		if ($row[Ski_Brand] == 7){$Brand_SELECT7 = 'selected';}
+		if ($row[Ski_Brand] == 8){$Brand_SELECT8 = 'selected';}
+		if ($row[Ski_Brand] == 9){$Brand_SELECT9 = 'selected';}
+		if ($row[Ski_Brand] == 10){$Brand_SELECT10 = 'selected';}
+		if ($row[Ski_Brand] == 11){$Brand_SELECT11 = 'selected';}
+		if ($row[Ski_Brand] == 12){$Brand_SELECT12 = 'selected';}
+		if ($row[Ski_Brand] == 13){$Brand_SELECT13 = 'selected';}
+
+
+
+			echo "
+				<table class = 'table4_9' width = 100% >
+					<tr bgcolor= #d6e6ff valign = top height = 40px>
+
+					<td align = left width = 10%>
+						•검정년도<br>
+						•검정장소<br>
+						•응시정원<br>
+					</td>
+
+					<td align = left width = 40%>
+						2022 - $row[No]<br>
+						$Skiresort<br>
+						$row[Participate]명 / (총 응시자:$total_record)<br>
+					</td>
+					
+					<td align = left width = 10%>
+						•검정일<br>
+						•신청마감일<br>
+						•검정료<br>		
+					</td>
+			
+					<td align = left width = 40%>
+						$row[Date1] ($row[Time])<br>
+						$row[Date2]<br>
+						$Testfee<br>		
+					</td>
+					</tr>
+					</table><br>
+					";
+
+	echo "
+<div class = 'container-fluid' style='padding-left:20px;padding-right:20px;'>
+	<div class='container'>
+	<br><br><br>          
+	<div ng-controller='repeatCtrl'>  
+
+		<form  name='liveForm' method=post action='admin_t2_apply_list_edit.php' novalidate='novalidate'>
+		
+			<input class='form-control' type='text' name='apply_no' value = '$row[Apply_No]' hidden>
+
+			<label>&nbsp;<span class='badge badge-dark'>1</span>&nbsp;회원ID</label>
+			<div class='input-group'>
+				<input class='form-control' type='text' name='member_id' value = '$row[MEMBER_ID]' readonly>
+			</div>
+			<span id='user-availability-status' style='font-weight:700;'></span>
+			<br><br>
+
+			<label>&nbsp;<span class='badge badge-dark'>2</span>&nbsp;이름</label>
+			<div class='input-group'>
+				<input class='form-control' type='text'  name='member_name'  value = '$row[MEMBER_NAME]' readonly>
+			</div>
+			<br><br>
+
+			<label>&nbsp;<span class='badge badge-dark'>3</span>&nbsp;이메일</label>
+			<div class='input-group'>
+				<input class='form-control' type='text' name='member_email' value = '$row[EMAIL]' Placeholder='이메일 (옵션)'>
+			</div>
+			<br><br>
+			
+			<label>&nbsp;<span class='badge badge-dark'>4</span>&nbsp;전화번호</label>
+			<div class='input-group'>
+				<input class='form-control' type='text'name='member_phone' value = '$row[PHONE]' readonly>
+			</div>
+			<br><br>
+
+			
+			<label>&nbsp;<span class='badge badge-dark'>5</span>&nbsp;우편번호 & 주소</label>
+			<div class='input-group'>
+				<input class='form-control' type='text' id='zipcode' name='zip' value = '$row[ZIPCODE]' placeholder = '우편번호 검색' readonly>
+				  	<div class='input-group-append'>
+   						 <button class='btn btn-primary' type='button' onclick='Postcode()' style = 'width:120px;'>우편번호검색</button>
+ 					</div>
+			</div>
+			<br>
+			<div class='input-group'>
+				<input class='form-control' type='text' id='addr1' name='Address1' value = '$row[ADDR1]' placeholder = '기본주소' readonly><br>
+			</div>
+			
+			<div class='input-group'>
+				<input class='form-control' type='text' id='addr3' name='Address3' value = '$row[ADDR3]' placeholder = '부속주소' readonly><br>
+			</div>
+
+			<div class='input-group'>
+				<input class='form-control' type='text' id='addr2' name='Address2' value = '$row[ADDR2]' placeholder = '상세주소(아파트 동호수 등)'><br>
+			</div>
+
+
+			<br><br>
+			
+
+			<label>&nbsp;<span class='badge badge-dark'>6</span>&nbsp;스키 브랜드</label>
+			<div class='input-group'>
+				<select class='form-control' name='ski_Brand'>
+					<option value = '0' >스키브랜드</option>
+					<option value = '0' >--------------</option>
+					<option value = '1' $Brand_SELECT1>어그먼트(AUGMENT)</option>
+					<option value = '2' $Brand_SELECT2>아토믹(ATOMIC)</option>
+					<option value = '3' $Brand_SELECT3>살로몬(SALOMON)</option>
+					<option value = '4' $Brand_SELECT4>다이나스타(DYNASTAR)</option>
+					<option value = '5' $Brand_SELECT5>롤시뇰(ROSSIGNOL)</option>
+					<option value = '6' $Brand_SELECT6>스퇴클리(STOCKLI)</option>
+					<option value = '7' $Brand_SELECT7>뵐클(VOLKL)</option>
+					<option value = '8' $Brand_SELECT8>엘란(ELAN)</option>
+					<option value = '9' $Brand_SELECT9>블리자드(BLIZZARD)</option>
+					<option value = '10' $Brand_SELECT10>노르디카(NORDICA)</option>
+					<option value = '11' $Brand_SELECT11>해드(HEAD)</option>
+					<option value = '12' $Brand_SELECT12>하트(HART)</option>
+					<option value = '13' $Brand_SELECT13>피셔(FISHER)</option>
+
+				</select>
+            </div><br><br>
+
+
+
+
+			<label>&nbsp;<span class='badge badge-dark'>7</span>&nbsp;응시자가 남긴 하고싶은말</label>
+			<div class='input-group'>
+				<textarea rows=10 name = 'Memo1' style='width:100%;'>$row[T2_MEMO1]</textarea>
+			</div>
+			<br><br>			
+			
+			<label>&nbsp;<span class='badge badge-dark'>8</span>&nbsp;관리자 메모장 (응시접수관련)</label>
+			<div class='input-group'>
+				<textarea rows=10 name = 'Memo2' style='width:100%;' placeholder = '응시접수관련 메모를 남겨주세요'>$row[T2_MEMO2]</textarea>
+			</div>
+			<br><br>			
+			
+			<label>&nbsp;<span class='badge badge-dark'>9</span>&nbsp;관리자 메모장 (택배/BIB관련/결제/취소관련)</label>
+			<div class='input-group'>
+				<textarea rows=10 name = 'Memo3' style='width:100%;' placeholder = 'BIB관련/결제/취소관련 메모를 남겨주세요'>$row[T2_MEMO3]</textarea>
+			</div>
+			<br><br>			
+			
+			<label>&nbsp;<span class='badge badge-dark'>10</span>&nbsp;관리자 메모장 (검정 진행관련 메모장)</label>
+			<div class='input-group'>
+				<textarea rows=10 name = 'Memo4' style='width:100%;' placeholder = '경기진행과 관련된 메모를 남겨주세요'>$row[T2_MEMO4]</textarea>
+			</div>
+			<br><br>			
+			
+			
+			<label>&nbsp;<span class='badge badge-dark'>11</span>&nbsp;결제방법</label>
+			<div class='input-group'>
+				<select class='form-control' name='Payment_Method'>
+					<option value = '0' >결제방법(필수)</option>
+					<option value = '0' >--------------</option>
+					<option value = '1' $payment_select1>카드결제</option>
+					<option value = '2' $payment_select2>무통장입금</option>
+				</select>
+            </div><br><br>
+					
+			<label>&nbsp;<span class='badge badge-dark'>12</span>&nbsp;결제여부</label>
+			<div class='input-group'>
+				<select class='form-control' name='Payment'>
+					<option value = '0' >결제방법(필수)</option>
+					<option value = '0' >--------------</option>
+					<option value = '0' $payment_select0>미결제</option>
+					<option value = '1' $payment_select1>결제완료</option>
+				</select>
+            </div><br><br>
+					
+					
+					
+			</div></div><br><br>
+
+			<div class='form-group text-right'>
+				<input class='btn btn-danger text-uppercase' type='button' value='수정내용 저장' onclick='submit();'>
+			</div>
+			
+		</form>
+
+
+
+			";
+			
+			
+			
+?>
+  
+       </div>
+  </div>
+</div>
+ 
+     <!-- footer for AUGMENT-SKI -->
+	<? include 'footer.html'; ?>
+	<!-- end of footer -->
+	
+</body>
+
+</html>

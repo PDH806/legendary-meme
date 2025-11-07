@@ -1,0 +1,138 @@
+<?
+    include_once "include/head_common.html";
+	include_once $_SERVER['DOCUMENT_ROOT'].'/common.php';
+    include_once(G5_LIB_PATH.'/mailer.lib.php');
+
+ 	$_POST = array_map('trim',$_POST);
+	//print_r($_POST);
+	
+	if($_POST['mode']=='search'){
+	 
+	 //$_POST['seq']='0';
+	 if(!$_POST['seq']){
+	  echo "<script>alert('데이터 누락입니다.\\n다시 이용하시거나 정상적인 방법으로 이용해 주세요.');history.back();</script>";
+ 	  exit;
+	 }
+	
+	 $sql = "select (select gd_name from t_goods where gd_seq='{$_POST['seq']}') gd_name,  RS_BUYER_NAME, RS_BUYER_PWD, RS_BUYER_EMAIL 
+			 from t_reserve where gd_seq='{$_POST['seq']}' and rs_buyer_email='{$_POST['email']}' and rs_buyer_tel='{$_POST['tel1']}-{$_POST['tel2']}-{$_POST['tel3']}' 
+			 order by rs_date desc , insert_dt desc limit 1
+	 ";
+	 if($_SERVER['REMOTE_ADDR']=='125.132.71.189'){
+		//echo $sql;exit;
+	 }
+
+	 $rs = sql_query($sql);
+	 if(sql_num_rows($rs)){
+	  $r = sql_fetch_array($rs);
+	  // 이메일로 비밀번호 보내기
+	  $subject = '['.$config['cf_title'].'] 비밀번호 확인 메일입니다.';
+	  $mb_name = $r['RS_BUYER_NAME'];
+	  $gd_name = $r['gd_name'];
+      $passwd = $r['RS_BUYER_PWD'];
+
+	  ob_start();
+	  include_once "./email/find_passwd_mail.php";
+	  $content = ob_get_contents();
+      ob_end_clean();	
+	  mailer($config['cf_admin_email_name'], $config['cf_admin_email'], $r['RS_BUYER_EMAIL'], $subject,  $content, 1);
+	  echo "<script>location.href='./find_pw_done.html';</script>";exit;
+	 }else{
+		echo "
+			<form name='f2' method='post'>
+			 <input type='hidden' name='seq' value='{$_POST['seq']}' />
+			 <input type='hidden' name='email' value='{$_POST['email']}' />
+			 <input type='hidden' name='tel1' value='{$_POST['tel1']}' />
+			 <input type='hidden' name='tel2' value='{$_POST['tel2']}' />
+			 <input type='hidden' name='tel3' value='{$_POST['tel3']}' />
+		    </form>
+		    <script>alert('등록한 내역이 없습니다.');f2.submit()</script>
+		";
+	 }
+	}
+
+
+?>
+
+<body>
+    <div id="scroll_top">
+        <button type="button"><img src="images/scr_top.jpg"></button>
+    </div>
+
+    <div id="wrap">
+        <? 
+                include"include/sb_header.html" 
+            ?>
+        <!-- ㅡㅡㅡㅡㅡㅡㅡㅡ/SB_HEADERㅡㅡㅡㅡㅡㅡㅡㅡ -->
+        <div id="sbcenter" class="login find_id">
+            <div class="sbcenter">
+                <div class="sb_content">
+                    <div class="sb_top_text sbclear">
+                        <h3>비밀번호 찾기</h3>
+                        <p>접수시 등록한 이메일로 비밀번호를 보내드립니다.</p>
+
+                    </div>
+                    <!--/sb_top_text-->
+                    <div class="tab_wrap">
+                        <div class="ps">
+                            <p class="">&lt; 유의사항 &gt;</p>
+                            <span>접수 시 등록한 이메일과 동일해야 비밀번호가 재전송 됩니다.</span>
+                        </div>
+                        <form method="post" name="f1" action="" method='post'>
+                         <input type='hidden' name='seq' value='<?=$_POST['seq']?>' />
+                         <input type='hidden' name='mode' value='search' />
+                            <div class="login_box">
+                                <ul class="id_pw">
+                                    <li class="tel_box">
+                                        <p class="lg_tit">등록한 이메일</p>
+                                        <ul class="email_nb sbclear">
+                                            <li><input type="text" maxlength="100" name="email" value='<?=$_POST[email]?>' required></li>
+                                            <!-- <li class="code_tit"><button type="button" name="code_get">인증번호 받기</button></li> -->
+                                        </ul>
+                                    </li>
+                                    <li class="tel_box">
+                                        <p class="lg_tit">등록한 휴대폰 번호</p>
+                                        <ul class="phone_nb sbclear">
+                                            <li><input type="text" maxlength="3" name="tel1" value='<?=$_POST[tel1]?>' required></li>
+                                            <li><input type="text" maxlength="4" name="tel2" value='<?=$_POST[tel2]?>' required></li>
+                                            <li><input type="text" maxlength="4" name="tel3" value='<?=$_POST[tel3]?>' required></li>
+                                            <!-- <li class="code_tit"><button type="button" name="code_get">인증번호 받기</button></li> -->
+                                        </ul>
+                                    </li>
+                                    <!-- 
+                                    <li class="code_box pw_box">
+                                        <ul class="sbclear">
+                                         
+                                            <li class="code_tit">
+                                    
+                                            <input type='submit' value='확인' name='find_submit' />
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    -->
+                                </ul>
+                              
+                                <div class="click_btn">
+                                      <input class="ok" type='submit' value='확인' name='find_submit' />
+                                </div>
+                              
+                            </div>
+                            <!--/login_box-->
+                        </form>
+                    </div>
+                    <!--/tab_wrap-->
+                </div>
+                <!--/sb_content-->
+            </div>
+            <!-- //sbcenter -->
+        </div>
+
+        <!-- ㅡㅡㅡㅡㅡㅡㅡㅡFOOTERㅡㅡㅡㅡㅡㅡㅡㅡ -->
+        <? 
+			include"include/sb_footer.html" 
+		?>
+    </div>
+    <!-- //wrap -->
+</body>
+
+</html>

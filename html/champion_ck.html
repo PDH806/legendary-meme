@@ -1,0 +1,174 @@
+<?
+    include "include/head_common.html";
+?>
+
+    <body>
+        <div id="scroll_top">
+            <button type="button"><img src="images/scr_top.jpg"></button>
+        </div>
+
+        <div id="wrap">
+            <? 
+                include"include/sb_header.html" 
+            ?>
+                <!-- ㅡㅡㅡㅡㅡㅡㅡㅡ/SB_HEADERㅡㅡㅡㅡㅡㅡㅡㅡ -->
+                <div id="sbcenter" class="accept">
+                    <div class="sbcenter teach_data">
+                        <div class="sb_content">
+                            <!--/sb_top_text-->
+                            <div class="tab_wrap">
+                                <div class="accept_wrap menu">
+                                    <div class="tab_menu_area inner_menu">
+                                        <ul class="tab_menu sbclear">
+                                            <!-- <li><a href="champion_accept.html">접수하기</a></li> -->
+                                            <li class="on"><a href="champion_ck.html">접수내역/취소</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <!--/tab_menu_area-->
+                                <div class="tab_list_area tab_click_list">
+                                    <div class="tab2">
+                                        <div class="accept_cancel">
+                                            <div class="content_box">
+                                                <div class="txt_box">
+                                                    <div class="tit_box"><span class="sb_tit">접수내역 / 취소</span></div>
+                                                    <p class="star">접수시 설정하신 확인 / 취소 비밀번호를 입력해주세요.</p>
+                                                    <form method="post" name="f1" action="process/process.champion.php">
+                                                     <input type='hidden' name='key' value='<?=$_POST['key']?>' />
+                                                     <input type='hidden' name='seq' value='<?=$_POST['seq']?>' />
+                                                        <fieldset>
+                                                            <table class="accept_table">
+                                                                <caption>접수내역 취소</caption>
+                                                                <tbody>
+                                                                    <tr class="b_n">
+                                                                        <th>
+                                                                            <select name='kind' onchange='chkSelect(this);'>
+                                                                                <option value='RS_BUYER_EMAIL'>이메일</option>
+                                                                                <option value='RS_BUYER_TEL'>휴대폰</option>
+                                                                            </select>
+                                                                            <script>
+                                                                             function chkSelect(el){
+                                                                              if(el.value=='RS_BUYER_TEL'){ // 전화
+                                                                               $('#div_email').addClass('off').removeClass('on');
+                                                                               $('input[name="kind_value"]').prop('required',false);
+                                                                               $('#div_tel').addClass('on').removeClass('off');
+                                                                               $('input[name="hp1"]').prop('required',true);
+                                                                               $('input[name="hp2"]').prop('required',true);
+                                                                               $('input[name="hp3"]').prop('required',true);
+                                                                              }
+                                                                              else{ // 이메일
+                                                                               $('#div_email').addClass('on').removeClass('off');
+                                                                               $('input[name="kind_value"]').prop('required',true);
+                                                                               $('#div_tel').addClass('off').removeClass('on');
+                                                                               $('input[name="hp1"]').prop('required',false);
+                                                                               $('input[name="hp2"]').prop('required',false);
+                                                                               $('input[name="hp3"]').prop('required',false);
+                                                                              } 
+                                                                             }
+                                                                             $(function(){chkSelect(f1.kind);});
+                                                                            </script>
+                                                                            <style>
+                                                                             tr.b_n div.on{display:block}
+                                                                             tr.b_n div.off{display:none}
+                                                                            </style>
+                                                                        </th>
+                                                                        <td>
+                                                                        <div id='div_email' class='on'><input type="text" name='kind_value' required></div>
+                                                                        <div id='div_tel' class='off'>
+                                                                         <input type="text" maxlength="4" name="hp1"  style='width:80px'><span>-</span>
+                                                                         <input type="text" maxlength="4" name="hp2"  style='width:80px'><span>-</span>
+                                                                         <input type="text" maxlength="4" name="hp3"  style='width:80px'>
+                                                                        </div>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <th>비밀번호
+                                                                        </th>
+                                                                        <td><input type="password" name='RS_BUYER_PWD' required></td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                            <div class="click_btn">
+																<input class='ok' type='submit' value='확인'>
+																<input class='ok line' type='button' value='비밀번호 찾기'  onclick='find_idpw();'>
+																 <script>
+                                                                     function find_idpw(){
+                                                                   		f2.submit();
+                                                                     }
+                                                                    </script>
+                                                            </div>
+                                                        </fieldset>
+                                                    </form>
+                                                     <form name='f2' method='post' action='find_pw.html'>
+                                                     <input type='hidden' name='seq' value='<?=$_POST[seq]?>' />
+                                                     <input type='hidden' name='key' value='<?=$_POST[key]?>' />
+                                                    </form>
+                                                </div>
+                                                <!--txt_box-->
+                                            </div>
+                                            <!--/content_box-->
+                                        </div>
+                                        <!--/partrol_list-->
+                                    </div>
+                                    <!--/tab2-->
+                                </div>
+                                <!--/tab_list_area-->
+                            </div>
+                            <!--/tab_wrap-->
+
+                            <div id="popup">
+                                <div id="pop_1">
+                                    <span class="sb_tit">개인정보 수집/이용 동의 전문</span>
+                                    <p class="pop_txt">
+                                        한국스키장경영협회는 아래의 목적으로 개인정보를 수집 및 이용하며,
+                                        <br>회원의 개인정보를 안전하게 취급하는데 최선을 다합니다.
+                                        <br>
+                                        <br>- 항목 : 이름, 휴대폰번호, 이메일 주소
+                                        <br>- 목적 : 신청 접수 및 신청 확인 / 자격증 발급
+                                        <br>- 보유기간 : 홈페이지 회원 탈퇴 하거나 회원에서 제명된 때
+                                    </p>
+                                    <button type="button" class="close"><img src="images/pop_close.png"></button>
+                                </div>
+                                <div id="pop_2">
+                                    <span class="sb_tit">취소환불규정</span>
+                                    <p class="pop_txt">
+                                        참가비 환불은 아래기간의 경우에만 가능하며 이 후에는 취소 및 환불이 일체 불가능합니다.
+                                        <br>또한, 환불 시 이체 수수료는 참가자 본인이 부담해야 합니다.
+                                        <br>
+                                        <br>2월 11일 까지 취소(100% 환불)
+                                        <br>2월 12일 까지 취소(70% 환불)
+                                        <br>2월 13일 까지 취소(50% 환불)
+                                        <br>2월 14일 부터 취소(환불 불가)
+                                    </p>
+                                    <button type="button" class="close"><img src="images/pop_close.png"></button>
+                                </div>
+                                <div id="pop_3">
+                                    <span class="sb_tit">사진 등록</span>
+                                    <p class="pop_file">
+                                        <input type="file">
+                                    </p>
+                                    <button type="button" class="close">
+                                                    <img src="images/pop_close.png">
+                                                </button>
+                                    <a class="only_btn btn_ok" href="#self">등록하기</a>
+                                </div>
+                            </div>
+
+
+                        </div>
+                        <!--/sb_content-->
+                    </div>
+                    <!-- //sbcenter -->
+                </div>
+                <!-- //sbcenter -->
+
+                <!-- ㅡㅡㅡㅡㅡㅡㅡㅡFOOTERㅡㅡㅡㅡㅡㅡㅡㅡ -->
+        <!--footer-->
+                <? 
+			include"include/sb_footer.html" 
+		?>
+    </div>
+    <!-- //wrap -->
+</body>
+
+</html>

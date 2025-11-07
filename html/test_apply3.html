@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+	<link rel="shortcut icon" href="Myicon.png" type="image/x-icon">
+    
+    <title>스노보드 티칭1 검정신청 | 한국스키장경영협회</title>
+    
+<? 
+    	include 'db_config.html';
+    	include 'link_files.html';
+?>
+
+<script language="javascript"> 
+
+function on_pay() { 
+ myform = document.mobileweb; 
+ myform.action = "https://mobile.inicis.com/smart/payment/";
+ myform.target = "_self";
+ myform.submit(); 
+}  
+</script> 
+</head> 
+
+<body>
+
+<!-- 인코딩 euc-kr 필수 -->
+<form name="mobileweb" method="post" accept-charset="euc-kr"> 
+
+
+<!--*************************필수 세팅 부분************************************-->
+
+<!-- 리턴받는 가맹점 URL 세팅 -->
+<input type="text" name="P_NEXT_URL" value="http://skiresort.ivyro.net/skiresort/ski/payment_result.html"> 
+ 
+ 
+<!-- 지불수단 선택 (신용카드,계좌이체,가상계좌,휴대폰) -->
+<input type="text" name="P_INI_PAYMENT" value="CARD"> 
+
+
+<!-- 복합/옵션 파라미터 -->
+<input type="text" name="P_RESERVED" value="twotrs_isp=Y&block_isp=Y&twotrs_isp_noti=N"> 
+
+  
+<input type="text" name="P_MID" value="INIpayTest"> 
+<input type="text" name="P_OID" value="test_oid_123456">  
+<input type="text" name="P_GOODS" value="SB-Teaching2 Test"> 
+<input type="text" name="P_AMT" value="100000"> 
+<input type="text" name="P_UNAME" value="Lee Sang-Boo"> 
+
+
+<!--*************************선택 필수 세팅 부분************************************--> 
+
+<!-- 가상계좌 입금 노티 사용시 필수 -->
+<input type="text" name="P_NOTI_URL" value="">  
+
+
+<!-- 휴대폰결제 필수 [1:컨텐츠, 2:실물] -->
+<input type="text" name="P_HPP_METHOD" value="1">  
+
+
+
+<input type="button" name="pay" value="결제" onclick="on_pay()" >
+
+
+</form> 
+
+
+<?
+	include 'footer.html';
+
+?>
+
+		</body>
+	</html>
+

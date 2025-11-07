@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html ng-app="liveApp">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+	<link rel="shortcut icon" href="Myicon.png" type="image/x-icon">
+    
+    <title>아이디 찾기 | 한국스키장경영자협회 </title>
+      
+		<!-- Custom styles for SKIRESORT.OR.KR -->
+		<?
+		    include 'db_config.html';
+			include 'link-files.html'; 
+		?>
+		<!-- end of Link -->
+
+  <style>  
+  body  
+  {  
+   margin:0;  
+   padding:0;  
+   background-color:#f1f1f1;  
+  }  
+  .box  
+  {  
+   width:800px;  
+   border:1px solid #ccc;  
+   background-color:#fff;  
+   border-radius:5px;
+   margin-top:36px;  
+  }  
+  #sbcenter {
+  margin-top:30px;
+  }
+  </style>  
+
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
+<script type="text/javascript">
+function send_code3(){
+	var userid  = document.getElementById("username").value;
+	var phone3  = document.getElementById("phone1").value;
+  	var message = userid+"님!!!\n아래 확인버튼을 클릭하시면 비밀번호 변경을 위한 인증번호를 발송해드립니다.";
+
+	if (!userid){
+	alert('회원ID를 입력해 주세요 !!!+');
+	return;
+	}
+
+	if (phone3){
+	alert(message);
+	}
+	else
+	{
+	alert('전화번호를 입력해 주세요 !!!+');
+	return;
+	}
+
+	$.ajax({
+	url  : 'sms/password_change.php',
+	data : {
+		no        : phone3,
+		id		  : userid,
+	},
+	type : 'POST',
+	success:function(data){
+		$("#phone-availability-status").html(data);
+		$("#loaderIcon").hide();
+	},
+		error:function (){}
+	});
+}
+ 	 	
+function id_search(){
+	var email = document.getElementById("userEmail").value;
+	var phone3 = document.getElementById("phone1").value;
+	
+	if (!email){
+	alert('회원 이메일을 입력해 주세요 !!!');
+	return;
+	}
+
+	if (!phone3){
+	alert('전화번호를 입력해 주세요 !!!');
+	return;
+	}
+
+	$("#loaderIcon").show();
+	document.liveForm.submit();
+}
+		
+</script>
+
+<script type="text/javascript">
+
+  var liveApp = angular.module("liveApp", []); 
+
+  liveApp.controller("repeatCtrl", function ($scope)  
+  {  
+      $scope.student = {  
+          password: "",  
+          repeatPassword: ""  
+      };  
+  });  
+  liveApp.directive("compareTo", function ()  
+  {  
+      return {  
+          require: "ngModel",  
+          scope:  
+          {  
+              repeatPassword: "=compareTo"  
+          },  
+          link: function (scope, element, attributes, paramval)  
+          {  
+              paramval.$validators.compareTo = function (val)  
+              {  
+                  return val == scope.repeatPassword;  
+              };  
+              scope.$watch("repeatPassword", function ()  
+              {  
+                  paramval.$validate();  
+              });  
+          }  
+      };  
+  });  
+
+function check_id3() {
+	
+	var userid = document.getElementById("username").value;
+
+	if (!userid){
+	alert('회원ID를 입력해 주세요 !!!-');
+	return;
+	}
+	
+	$("#loaderIcon").show();
+	jQuery.ajax({
+	url: "check_id3.php",
+	data:'username='+$("#username").val(),
+	type: "POST",
+	success:function(data){
+		$("#user-availability-status").html(data);
+		$("#loaderIcon").hide();
+	},
+		error:function (){}
+	});
+}
+
+
+</script>
+
+</head>
+
+
+
+
+<body>
+
+		<!-- Navigation for AUGMENT-SKI -->
+			<? include 'main-nav.html'; ?>
+		<!-- end of Navigation -->
+
+		<br>
+	
+        <div id="scroll_top">
+            <button type="button"><img src="/images/scr_top.jpg"></button>
+        </div>
+        
+        
+		<!-- ㅡㅡㅡㅡㅡㅡㅡㅡ/SB_HEADERㅡㅡㅡㅡㅡㅡㅡㅡ -->
+            <div id="sbcenter" class="cp">
+                <div class="sb_top_bg">
+                    <div class="inner_wrap">
+                       <h2>한국스키장경영협회 아이디 찾기</h2>
+                    </div>
+            	</div>
+			</div>
+
+	
+	
+		
+	<?php
+
+	echo "<br><br>
+<div class = 'container' style='padding-left:30px;padding-right:30px;'>
+
+
+	<div ng-controller='repeatCtrl'>  
+
+		<form  name='liveForm' method=post action='id_search.php' novalidate='novalidate' target='ifrm'>
+
+			<label>&nbsp;❶&nbsp;회원 이메일</label>
+			<div class='input-group'>
+				<input class='form-control' type='text' id = 'userEmail' name='EMAIL' Placeholder='회원 이메일 (필수)' required>
+			</div>
+			<span id='user-availability-status' style='font-weight:700;'></span>
+			<br>
+
+			<label>&nbsp;❷&nbsp;전화번호</label>
+			<div class='input-group'>
+				<input class='form-control' type='text' id='phone1' name='PHONE' Placeholder='전화번호 (예:010-1234-5678)' required>
+			</div>
+			<span id='phone-availability-status' style='font-weight:700;'></span>
+			<br>
+			<div class='input-group searchedID' >
+
+			</div>
+		
+			<span id='code-availability-status' style='font-weight:700;'></span>
+			";
+			
+?>
+
+		
+			<span id='pass-availability-status' style='font-weight:700;'></span>
+
+			<div class='form-group text-left'>
+				<input class='btn btn-success text-uppercase' type='button' value='아이디 찾기' onclick='id_search();'>
+			</div>
+			
+		</form>
+	</div>
+</div>
+
+		<br><br><br><br>
+
+
+<!-- footer for AUGMENT-SKI -->
+	<? include 'footer4.html'; ?>
+<!-- end of footer -->
+</body>
+</html>
+<iframe name='ifrm' style='display:none'></iframe>

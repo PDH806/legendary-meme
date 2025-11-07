@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html>
+<script src="https://code.jquery.com/jquery-1.8.3.min.js"></script>
+<script src="https://code.jquery.com/jquery.menu.js?ver=171222"></script>
+<script src="https://code.jquery.com/common.js?ver=171222"></script>
+<!-- <script src="js/wrest.js?ver=171222"></script> -->
+<script src="js/placeholders.min.js"></script>
+<link rel="stylesheet" href="js/font-awesome/css/font-awesome.min.css">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv="Content-Script-Type" content="text/javascript" />
+	<meta http-equiv="Content-Style-Type" content="text/css" />
+	<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<meta property="og:image" content="images/meta_img.jpg" />
+	<meta property="og:description" content=""/>
+	<title></title>
+    <link rel="shortcut icon" type="image/x-icon" href="../skiresort/ski/images/favicon.ico">
+    <link rel="stylesheet" type="text/css" href="http://skiresort.ivyro.net/skiresort/ski/css/normalize.css">
+	<link rel="stylesheet" type="text/css" href="http://skiresort.ivyro.net/skiresort/ski/css/common.css" />	
+ 	<link rel="stylesheet" type="text/css" href="http://skiresort.ivyro.net/skiresort/ski/css/main.css" /> 	
+	<link rel="stylesheet" type="text/css" href="http://skiresort.ivyro.net/skiresort/ski/css/jquery.fullpage.css" />
+	<link rel="stylesheet" type="text/css" href="http://skiresort.ivyro.net/skiresort/ski/css/table.css" />
+	<link rel="stylesheet" type="text/css" href="http://skiresort.ivyro.net/skiresort/ski/css/sub_01.css" media='screen,print'/>	
+	<link rel="stylesheet" type="text/css" href="http://skiresort.ivyro.net/skiresort/ski/css/media_01.css" />
+
+	<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+	<script src="https://code.jquery.com/ui/1.11.2/jquery-ui.min.js"></script>
+	<script type="text/javascript" src="js/scrolloverflow.js" charset="utf-8"></script>
+	<script type="text/javascript" src="js/jquery.fullpage.js" charset="utf-8"></script>
+	<script type="text/javascript" src="js/slick.js" charset="utf-8"></script>
+	<script type="text/javascript" src="js/common.js" charset="utf-8"></script>
+	<script type="text/javascript" src="js/html5shiv.js" charset="utf-8"></script>
+	<script type="text/javascript" src="js/flexslider.js"  charset="utf-8"></script>
+
+    <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>  <!-- ���������ȣ API -->
+    <!--<script src="https://ssl.daumcdn.net/dmaps/map_js_init/postcode.v2.js"></script> ���������ȣ API -->
+	<!--[if lt IE 9]>
+		<script type="text/javascript" src="js/html5shiv.js"></script>
+	<![endif]-->
+</head>
+<body>
+        <div class="ofl_spt">
+            <script language="javascript">
+                $(document).ready(function() {
+                    //메인화면 PC/모바일 분기시 화면 스크롤
+                    isOnePageScroll();
+                });
+
+            </script>
+        </div>
+        <!--//ofl_spt -->
+
+<head>
+  <?
+    
+    
+    include 'db_config.html';
+
+   	$Login_User_ID	= $_COOKIE['Login_ID'];
+	$rank 			= $_COOKIE['rank'];
+    
+    $the_category 	= $_GET["category"];
+    $the_page 		= $_GET["category"];
+    $docu_no 		= $_GET['No'];
+    
+    $result			= mysql_query("select max(docu_no) num from bbs_Skiresort bs where docu_no < '$docu_no'", $connect);
+    $docu_no1	    = mysql_fetch_array($result)['num'];   //이전글
+
+    $result			= mysql_query("select min(docu_no) num from bbs_Skiresort bs where docu_no > '$docu_no'", $connect);
+    $docu_no2		= mysql_fetch_array($result)['num'];   //다음글
+  
+    $today   		= date("Y-M-D");
+
+    $query			= "SELECT * FROM $bbs_name where docu_no = '$docu_no'";
+    $result			= mysql_query($query, $connect);
+    $bbs			= mysql_fetch_array($result);
+
+    $query1			= "SELECT * FROM $bbs_name where docu_no = '$docu_no1'";
+    $result1		= mysql_query($query1, $connect);
+    $bbs1			= mysql_fetch_array($result1);
+
+    $query2			= "SELECT * FROM $bbs_name where docu_no = '$docu_no2'";
+    $result2		= mysql_query($query2, $connect);
+    $bbs2			= mysql_fetch_array($result2);
+
+  ?>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+	<link rel="shortcut icon" href="Myicon.png" type="image/x-icon">
+    
+    <title>
+    	<?
+            
+    	echo "$main_title / $page";    	
+    	?>    
+    </title>
+    
+		<!-- Custom styles for AUGMENT-SKI -->
+			<? include 'link-files.html'; ?>
+		<!-- end of Link -->
+		
+</head>
+<body>
+		<!-- Navigation for AUGMENT-SKI -->
+			<? include 'main-nav.html'; ?>
+		<!-- end of Navigation -->
+
+                    <script>
+                        $(function() {
+                            $('.slide').slick({
+                                fade: true,
+                                slidesToShow: 1,
+                                slidesToScroll: 1,
+                                autoplay: true,
+                                autoplaySpeed: 3000,
+                                speed: 1000,
+                                cssEase: 'ease-out',
+                                swipe: false,
+                                dots: false,
+                                arrows: false,
+                                pauseOnHover: false,
+                            });
+                            
+                        });
+                    </script>
+                    
+            <!-- ㅡㅡㅡㅡㅡㅡㅡㅡ/SB_HEADERㅡㅡㅡㅡㅡㅡㅡㅡ -->
+            <div id="sbcenter" class="sb_notice report sb_data_wrap">
+                <div class="sb_top_bg">
+                    <div class="inner_wrap">
+                       <h2>커뮤니티</h2>
+                    </div>
+                    <div class="sb_top_menu">
+                        <ul class="sbclear">
+                            <li class="on"><a href="sb_notice.html">공지사항</a></li>
+                            <li><a href="sb_safe.html">안전수칙</a></li>
+                            <!-- <li><a href="sb_data.html">자료실</a></li> -->
+                            <li><a href="sb_gallery.html">갤러리</a></li>
+                        </ul>
+                    </div>
+                    <!--/sb_top_menu-->
+                </div>
+                <!--/sb_top_bg-->
+                <div class="sbcenter sb_data">
+                    <div class="sb_content">
+                        <div class="sb_top_text sbclear">
+                            <a href="#self" class="sb_prev"><img src="images/sb_prev_btn_off.png" alt="이전"></a>
+                            <h3>공지사항</h3>
+                            <a href="sb_safe.html" class="sb_next"><img src="images/sb_next_btn_on.png" alt="다음"></a>
+                        </div>
+                        <!--/sb_top_text-->
+                        <div class="tab_wrap">
+                            <div class="all_list">
+                                <div class="list_on_box">
+                                    <ul class="list_on">
+                                        <li class="list_tit"><p><? echo $bbs[title];?></p><span>등록일&nbsp;<? echo $bbs[docu_date]; ?></span></li>
+                                        <li class="list_img"><!--이미지 없음--></li>
+                                        <li class="list_txt ft">
+                                            <? echo $bbs[contents]; ?>
+                                        </li>
+                                    </ul>
+                                    <ul class="list_chk sbclear">
+                                        <li class="list_chk_tit">이전글</li>
+                                        <li class="list_chk_txt">
+                                            <?
+                                            $docu_no1 = $bbs1[docu_no];
+                                            if($docu_no1){
+                                                echo "<a href='sb_notice_on.html?No=$bbs1[docu_no]'>".$bbs1[title]."</a>";
+                                            }
+                                            else{
+                                                echo "<a href='' style='pointer-events:none;'></a>&nbsp;";
+                                            }
+                                            ?>
+                                        </li>
+                                        <li class="list_chk_tit">다음글</li>
+                                        <li class="list_chk_txt">
+                                        <?
+                                            $docu_no2 = $bbs2[docu_no];
+                                            if($docu_no2){
+                                                echo "<a href='sb_notice_on.html?No=$bbs2[docu_no]'>".$bbs2[title]."</a>";
+                                            }
+                                            else{
+                                                echo "<a href='' style='pointer-events:none;'></a>&nbsp;";
+                                            }
+                                        ?>
+                                        </li>
+                                    </ul>
+                                </div><!--/list_on_box-->
+                                <p class="back_list_btn"><a href="sb_notice.html">목록</a></p>
+                                <?
+                                if($_COOKIE['rank'] == 9) {?>
+                                <p class="back_list_btn"><a href="javascript:del_confirm('<?echo $docu_no; ?>');">삭제</a></p>
+                                <p class="back_list_btn"><a href="../bbs/bbs_edit.html?No=<?echo $docu_no;?>">수정</a></p>
+                                
+                                <?}?>
+                            </div><!--/all_list-->
+                        </div><!--/tab_wrap-->
+                    </div>
+                    <!--/sb_content-->
+               </div>
+                <!-- //sbcenter -->
+<?if($_COOKIE['rank'] == 9) {?>
+<script>
+function del_confirm(num) {
+   if (confirm('선택하신 공지글을 삭제하시겠습니까?')) {
+      location.href = 'admin_notice_del.html?No='+num;      
+   }
+}
+</script>       
+<?
+}
+          include "include/sb_quick.html";
+?>
+            </div>
+            <!-- //sbcenter -->
+
+            <!-- ㅡㅡㅡㅡㅡㅡㅡㅡFOOTERㅡㅡㅡㅡㅡㅡㅡㅡ -->
+            <?
+    include "include/footer.html";
+?>

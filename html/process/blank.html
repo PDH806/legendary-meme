@@ -1,0 +1,244 @@
+<?php
+ include_once $_SERVER['DOCUMENT_ROOT'].'/common.php';
+define('G5_SERVER_TIME',    time());
+define('G5_TIME_YMDHIS',    date('Y-m-d H:i:s', G5_SERVER_TIME));
+
+ header('Content-Type: text/html; charset=UTF-8');
+ //print_r($_REQUEST);
+
+ $PayMethod		= $_REQUEST['PayMethod']==null?"":$_REQUEST['PayMethod']; // 지불수단
+	$MID			= $_REQUEST['MID']==null?"":$_REQUEST['MID']; // 상점 ID
+	$Amt			= $_REQUEST['Amt']==null?"":$_REQUEST['Amt']; // 금액
+	$BuyerName		= $_REQUEST['BuyerName']==null?"":$_REQUEST['BuyerName']; // 결제자명
+	$GoodsName		= $_REQUEST['GoodsName']==null?"":$_REQUEST['GoodsName']; // 상품명
+	$mallUserID     = $_REQUEST['mallUserID']==null?"":$_REQUEST['mallUserID']; // 고객사회원ID
+	$TID            = $_REQUEST['TID']==null?"":$_REQUEST['TID']; // 거래번호
+	$OID			= $_REQUEST['OID']==null?"":$_REQUEST['OID']; // 주문번호
+	$AuthDate		= $_REQUEST['AuthDate']==null?"":$_REQUEST['AuthDate']; // 승인일자
+	$AuthCode		= $_REQUEST['AuthCode']==null?"":$_REQUEST['AuthCode']; // 승인번호
+	$ResultCode		= $_REQUEST['ResultCode']==null?"":$_REQUEST['ResultCode']; // 결과코드
+	$ResultMsg		= $_REQUEST['ResultMsg']==null?"":$_REQUEST['ResultMsg']; // 결과메시지
+	$VbankNum		= $_REQUEST['VbankNum']==null?"":$_REQUEST['VbankNum']; // 가상계좌번호
+	$VbankName		= $_REQUEST['VbankName']==null?"":$_REQUEST['VbankName']; // 가상계좌은행명
+	
+	$BankCode		= $_REQUEST['BankCode']==null?"":$_REQUEST['BankCode']; // 계좌이체 은행코드
+	$BankName		= $_REQUEST['BankName']==null?"":$_REQUEST['BankName']; // 게좌이체 은행명
+	
+	
+	$fn_cd			= $_REQUEST['fn_cd']==null?"":$_REQUEST['fn_cd']; // 결제카드사코드, 가상계좌, 계좌이체
+	$fn_name		= $_REQUEST['fn_name']==null?"":$_REQUEST['fn_name']; // 결제카드사명, 가상계좌, 계좌이체
+	$CardQuota		= $_REQUEST['CardQuota']==null?"":$_REQUEST['CardQuota']; // 할부개월수
+	$BuyerTel		= $_REQUEST['BuyerTel']==null?"":$_REQUEST['BuyerTel']; // 구매자 전화번호
+	$BuyerEmail		= $_REQUEST['BuyerEmail']==null?"":$_REQUEST['BuyerEmail']; // 구매자이메일주소
+	$BuyerAuthNum	= $_REQUEST['BuyerAuthNum']==null?"":$_REQUEST['BuyerAuthNum']; // 구매자주민번호
+	$ReceiptType	= $_REQUEST['ReceiptType']==null?"":$_REQUEST['ReceiptType']; // 현금영수증유형
+	$SignValue		= $_REQUEST['SignValue']==null?"":$_REQUEST['SignValue']; // 위변조 사인값
+	
+	$TaxCD			= $_REQUEST['TaxCD']==null?"":$_REQUEST['TaxCD']; // TAX 코드
+	$SvcAmt			= $_REQUEST['SvcAmt']==null?"":$_REQUEST['SvcAmt']; // 봉사료
+	$Tax			= $_REQUEST['Tax']==null?"":$_REQUEST['Tax']; // 부가세
+	$AcquCardCode	= $_REQUEST['AcquCardCode']==null?"":$_REQUEST['AcquCardCode']; // 매입사코드 
+
+	$DivideInfo = $_REQUEST['DivideInfo']==null?"":$_REQUEST['DivideInfo']; // 서브몰 정보 
+
+	if (!empty($DivideInfo)) {
+		if (strpos($DivideInfo, '%') != false)
+			$DivideInfo = urldecode($DivideInfo);
+
+		$byteDivideInfo = base64_decode($DivideInfo);
+		$DivideInfo = iconv("utf-8", "euc-kr", $byteDivideInfo); // 가맹점 페이지 인코딩 타입에 따른 처리 필요 (utf-8 로 인코딩 처리 후 전달됨)
+	}
+
+	$merchantKey = "0/4GFsSd7ERVRGX9WHOzJ96GyeMTwvIaKSWUCKmN3fDklNRGw3CualCFoMPZaS99YiFGOuwtzTkrLo4bR4V+Ow=="; // SMTPAY001m (MID) 가맹점 키
+	//$merchantKey = "nd0So1DPQJEYbLTjyvSAZI8iXf71lL1Kx3klcJZXqmgnVLs3pcpW56D+BItbg2Sxm0vu5nIbP9ShJwqD/5nF4w=="; 실결제키
+	
+	$VerifySignValue = base64_encode(md5(substr($TID,0,10).$ResultCode.substr($TID,10,5).$merchantKey.substr($TID,15,15)));
+
+function write_log($str){
+	    $date = date("Y-m-d");
+	    $fp = fopen("../../pg/logs/{$date}_Log.txt","a");
+	    @fwrite($fp, $str);
+	    fclose($fp);
+	}
+	
+	//$log_content = implode("||",$_REQUEST)."\n";
+	foreach($_REQUEST as $k=>$v){
+	 $log_content .= "{$k}=>{$v} ||";
+	}
+	$log_content .= "\n";
+	
+	//exit;
+
+	write_log($log_content);
+
+
+	// 웹 링크 버전일 경우에 실제 스마트로 서버의 승인 값을 검증 하기 위해서 아래의 값을 비교 합니다.
+    if ($ResultCode == "3001" || $ResultCode == "4000") { // CARD 결제성공
+    	foreach($_REQUEST as $k=>$v){
+	            if($k=='MallReserved'){
+	             $tmpStr = base64_decode($v);
+	             $tmpStr01 = explode("&", $tmpStr);
+	             
+	             foreach($tmpStr01 as $k1=>$v1){
+	                 $v2 = explode("=", $v1);
+	                 $_POST[$v2[0]] = $v2[1];
+	             }
+	            }
+	                
+	        }
+	        
+	        //print_r($_POST);
+	       
+	        $_POST['BuyerName'] = $_POST['BuyerName'] ? $_POST['BuyerName'] : $BuyerName;
+	        $_POST['pm_method'] = $_POST['pm_method'] ? $_POST['pm_method'] : $PayMethod;
+	        $_POST['tel']       = $_POST['tel'] ? $_POST['tel'] : $_REQUEST['tel'];
+	        
+			$_POST['BuyerName'] = $_POST['BuyerName'] ? $_POST['BuyerName'] : $_POST['name'];
+			$_POST['tel']       = $_POST['tel'] ? $_POST['tel'] : $_POST['BuyerTel'];	
+
+	        $sql1 = "INSERT INTO  t_reserve SET
+            IDKEY='{$_POST['key']}', GD_SEQ='{$_POST['seq']}', RS_SEQ='{$OID}',
+            RS_DATE='".G5_TIME_YMDHIS."', RS_SD_DATE='".$_POST['sd_date']."', RS_BUYER_IDKEY='{$_POST['rs_buyer_idkey']}',
+            RS_BUYER_NAME='{$_POST['BuyerName']}', RS_BUYER_EMAIL='{$_POST['BuyerEmail']}', RS_BUYER_TEL='{$_POST['tel']}',
+            RS_BUYER_PWD = '{$_POST['passwd']}' ,  RS_BUYER_AMOUNT='{$Amt}' , RS_PERSON='1',
+            RS_STATUS = '{$_POST['rs_status']}', RS_TOT_AMT = '{$Amt}', RS_BUYER_PHOTO='{$_POST['RS_BUYER_PHOTO']}',
+			RS_BUYER_DOC='{$_POST['bf_file']}', RS_BUYER_DOC1='{$_POST['bf_file1']}',
+            INSERT_IDKEY='{$_POST['rs_buyer_idkey']}', INSERT_DT='".G5_TIME_YMDHIS."', LICENSE_NUM='{$_POST['license_num']}', etc='{$_POST['re_issue']}'";
+	        
+	        //echo '<p>'.$sql1;exit;
+	        
+	        
+	        $sql2 = "INSERT INTO  t_reserve_add_info SET
+            IDKEY='{$_POST['key']}', GD_SEQ='{$_POST['seq']}', RS_SEQ='{$OID}',
+            ADD_NAME_KOR='{$_POST['hname']}', ADD_NAME_ENG='{$_POST['ename']}', ADD_BIRTH='{$_POST['birth']}', ADD_TEL='{$_POST['tel']}',
+            ADD_BELONG_TO='{$_POST['branch']}', ADD_ADDR_TYPE='{$_POST['part']}', ADD_ZIPCODE='{$_POST['zip']}',
+            ADD_ADDR1 = '{$_POST['addr1']}' ,  ADD_ADDR2='{$_POST['addr2']}' , ADD_EXEMPT_TYPE='{$_POST['except']}',
+            REGIST_DATE = '".G5_TIME_YMDHIS."' , ADD_WHAT='{$_POST['re_issue']}'";
+	        
+	        //echo '<p>'.$sql2;exit;
+	        
+	        
+	        
+	        $sql3 = "INSERT INTO  t_payment SET
+            IDKEY='{$_POST['key']}', RS_SEQ='{$OID}', PM_PAY_METHOD='{$_POST['pm_method']}',
+            PM_TRANS_NO='{$TID}', PM_ORDER_NO='{$OID}', PM_PAY_AMOUNT='{$Amt}',
+            PM_APPROVAL_DATE='".date('Ymd')."', PM_APPROVAL_TIME='".date('His')."', PM_BANK_CODE='' , PM_PAYMENT_TYPE='1' ,
+            PM_PG_NAME='SMARTRO' , PM_CARD_ISSUE_NAME='{$fn_name}', PM_ACQUIRER_CODE='{$fn_cd}', PM_BANK_NAME='{$fn_name}',
+            PM_ACCOUNT_NO='', PM_DEPOSIT_NAME='{$_POST['BuyerName']}', PM_EXPIRE_DATE='',  PM_REGIST_DATE='".G5_TIME_YMDHIS."', PM_REGIST_ID='{$_POST['BuyerName']}',
+			pc_mobile='{$_POST['pc_mobile']}'
+			 ";
+	        /*echo '<p>'.$fn_cd;
+	        echo '<p>'.$fn_name;
+	        echo '<p>';
+	        print_r($_REQUEST);
+	        */
+	        
+	        //echo '<p>'.$sql3;exit;
+	        
+	        // 입력데이터가 있는지 확인
+	        $t11 = sql_fetch("select count(*) cnt from t_reserve where RS_SEQ='{$OID}' ");
+	        if(!$t11['cnt']) sql_query($sql1);
+	        
+	        
+	        $t12 = sql_fetch("select count(*) cnt from t_reserve_add_info where RS_SEQ='{$OID}' ");
+	        if(!$t12['cnt']) sql_query($sql2);
+	        
+	        $t13 = sql_fetch("select count(*) cnt from t_payment where RS_SEQ='{$OID}' ");
+	        if(!$t13['cnt']) sql_query($sql3);
+
+// SMS 보내기
+	        if(!$t11['cnt'] && !$t12['cnt'] && !$t13['cnt']){
+	            
+	            include_once(G5_SMS5_PATH.'/sms5.lib.php');
+	            $SMS = new SMS5;
+	            $SMS->SMS_con($config['cf_icode_server_ip'], $config['cf_icode_id'], $config['cf_icode_pw'], $config['cf_icode_server_port']);
+	            /*
+	             *  array([0] => array([bk_hp]=>01074118679 [bk_name]=>이석호)) 형식
+	             *
+	             */
+	            $reply = '0234731275';
+	            $wr_message = "-(사)한국스키장경영협회- {$_POST['GoodsName']} 접수가 완료되었습니다. ";
+	            
+	            $tel = $_POST['hp1'].$_POST['hp2'].$_POST['hp3'];
+	            $tel = $tel ? $tel : str_replace('-','',$_POST['tel']);
+	            
+	            $list[0] = array('bk_hp'=> $tel , 'bk_name'=>$_POST['BuyerName']);
+	            $wr_total = count($list);
+	            
+	            $rslt = $SMS->Add2($list, $reply,'','',$wr_message, $booking, $wr_total);
+	            
+	            if($rslt){
+	                
+	                // check
+	                $wr_memo = "{$_POST['hp1']}{$_POST['hp2']}{$_POST['hp3']}||{$_POST['seq']}||{$_POST['TID']}";
+	                $sql = "SELECT count(*) cnt FROM {$g5['sms5_write_table']} WHERE wr_memo = '$wr_memo' ";
+	                $chk = sql_fetch($sql);
+	                
+	                if(!$chk['cnt']){
+	                    $rslt_1 = $SMS->Send();
+	                    if($rslt_1){
+	                        $row = sql_fetch("select max(wr_no) as wr_no from {$g5['sms5_write_table']}");
+	                        if ($row)  $wr_no = $row['wr_no'] + 1;
+	                        else   $wr_no = 1;
+	                        
+	                        sql_query("insert into {$g5['sms5_write_table']} set
+             wr_no='$wr_no', wr_renum=0, wr_reply='$reply', wr_message='$wr_message',
+             wr_booking='$wr_booking', wr_total='$wr_total', wr_datetime='".G5_TIME_YMDHIS."', wr_memo='$wr_memo' ");
+	                    }
+	                }
+	            }
+	            $SMS->Init();
+	            
+	        }
+	        // SMS 보내기 끝
+
+	}
+    /*else if ($ResultCode == "4000") {// BANK 결제성공
+    	// 승인 성공 시 DB 처리 하세요.
+    	// TID 결제 성공한 데이터 존재시 UPDATE, 존재하지 않을 경우 INSERT
+    }*/
+    else if ($ResultCode == "4100") {// VBANK 결제성공
+    	// 승인 성공 시 DB 처리 하세요.
+    	// TID 결제 성공한 데이터 존재시 UPDATE, 존재하지 않을 경우 INSERT
+    }
+    else if ($ResultCode == "A000") {// cellphone 결제성공
+    	// 승인 성공 시 DB 처리 하세요.
+    	// TID 결제 성공한 데이터 존재시 UPDATE, 존재하지 않을 경우 INSERT
+    }
+    else if ($ResultCode == "B000") {// CLGIFT 결제성공
+    	// 승인 성공 시 DB 처리 하세요.
+    	// TID 결제 성공한 데이터 존재시 UPDATE, 존재하지 않을 경우 INSERT
+    }
+    else if ($ResultCode == "9999") {// 사용자에 의한 취소
+        echo "<script>window.opener.history.back();window.close();</script>";
+    }
+    else{
+        echo "<script>alert('결제오류입니다.({$ResultMsg}:{$ResultCode})\\n잠시 후 다시 결제부탁드립니다.');</script>";
+    }
+
+	if($ResultCode=='3001' || $ResultCode=='4000'){
+?>
+<script>
+if(window.opener.document.frm1){
+opener.document.frm1.amount.value='<?php echo $Amt?>';
+opener.document.frm1.OID.value='<?php echo $OID?>';
+opener.document.frm1.TID.value='<?php echo $TID?>';
+opener.document.frm1.GoodsName.value='<?php echo $GoodsName?>';
+opener.document.frm1.BankCode.value='<?php echo $BankCode?>';
+opener.document.frm1.BankName.value='<?php echo $BankName?>';
+opener.document.frm1.VbankExpDate.value='<?php echo $VbankExpDate?>';
+opener.document.frm1.AuthDate.value='<?php echo $AuthDate?>';
+//alert('frm1.OID.value='+opener.document.frm1.OID.value);
+opener.document.frm1.submit();
+self.close();
+}else{
+ window.opener.parent.document.frm1.action='/ski/end/p_request_end.php';
+ window.opener.parent.document.frm1.target='';
+ window.opener.parent.document.frm1.submit();
+ window.close();	
+}
+<?php }else{?>
+window.opener.history.back();
+window.close();
+ <?php }?>
+</script>

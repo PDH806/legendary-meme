@@ -1,0 +1,21 @@
+table{border-collapse: separate;border-collapse: collapse;width:100%;}
+.table_col{border-top: 1px solid #333;}
+.table_col th{background: #f8f8f8;color: #222;font-size: 16px;font-family:'NotoSansMedium';height: 60px;border-bottom: 1px solid #ddd;}
+.table_col td{color: #555;font-size: 14px;padding:10px 0;height: 35px;text-align: center;border-bottom: 1px solid #ddd;line-height:20px;}
+.table_col td.lf{text-align: left;padding-left: 20px;}
+.table_col .tr_tdbold td{color: #222;font-family:'NotoSansMedium';}
+.a_space{display: inline-block;color: #fff;font-size: 14px;width: 68px;height: 25px;line-height: 25px;text-align: center;border-radius: 15px;
+font-family:'NotoSansMedium';background: linear-gradient(to right, #08d054, #00a7eb );}
+
+.table_row td{text-align: left;padding: 10px 20px;}
+.table_row td input[type="text"]{border: 1px solid #ddd;width: 480px;padding-left: 10px;box-sizing: border-box;}
+.table_row td textarea{border: 1px solid #ddd;height: 260px;}
+.table_row td input[type="text"].widf100{width: 100%;}
+.table_row td input[type="file"]{border: 0;padding: 0;}
+.table_row td.ct{text-align: center;}
+
+.table_border th{border-left: 1px solid #ddd;}
+.table_border td{border-left: 1px solid #ddd;}
+.table_border .no_bor{border-left:0;}
+
+

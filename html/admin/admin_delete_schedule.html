@@ -1,0 +1,41 @@
+<?
+	include '../db_config.html';
+
+	if ($rank < 7 ){echo "<script language='javascript'>top.document.location.href = '../member_login.html?MEMBER_ID=$User_ID_Search&Case=9'</script>";}
+
+	$No       = $_GET['No'];
+	$ID       = $_GET['ID'];
+	$ST       = $_GET['ST'];
+	$S_No 	  = $_GET['S_No'];
+	$S_No2 	  = $_GET['S_No2'];
+
+	if(!$ST){$ST = 9;}
+	if($S_No2){$ST = 0;}
+
+ 	if($No and $ID){$query = "SELECT Test_id FROM 7G_Master_Schedules where Test_id = '$ID' and TEST_NO = '$No'";}
+	if($S_No){$query = "SELECT Test_id FROM 7G_Master_Schedules where S_No = '$S_No'";}
+	if($S_No2){$query = "SELECT Test_id FROM 7G_Master_Schedules where S_No = '$S_No2'";}
+
+	$result=mysqli_query($link, $query);
+	$row=mysqli_fetch_array($result);
+
+	if (!$link) {die("Connection failed: " . mysqli_connect_error());}
+
+	if ($No and $ID){$sql = "update 7G_Master_Schedules set Status = $ST WHERE Test_id = '$ID' and Test_No = $No";}
+	if ($S_No){$sql = "update 7G_Master_Schedules set Status = $ST WHERE S_No = $S_No";}
+	if ($S_No2){$sql = "update 7G_Master_Schedules set Status = $ST WHERE S_No = $S_No2";}
+
+	if ($rank == 9){$return_page = "admin_master_schedule_list.html?ID=$row[Test_id]";}
+	if ($rank == 8 or $rank == 7){$return_page = "admin_t1_schedule_list.html?ID=$row[Test_id]";}
+	
+
+	if (mysqli_query($link, $sql)) {
+
+		echo "<script>top.document.location.href = '$return_page'</script>";
+
+	} else {echo "Error: " . $sql . "<br>" . mysqli_error($link);}
+
+echo $sql;
+	mysqli_close($link);
+
+?>

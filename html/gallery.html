@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+	<link rel="shortcut icon" href="Myicon.png" type="image/x-icon">
+    
+<?
+ 	extract($_REQUEST);
+ 	$filename1 = $_FILES[image][tmp_name];
+ 	$handle1 = fopen($filename1,"rb");
+ 	$size1 = GetImageSize($_FILES[image][tmp_name]);
+ 	$width1 = $size1[0];
+ 	$height1 = $size1[1];
+ 	$imageblob1 = addslashes(fread($handle1, filesize($filename1)));
+ 	$filesize1 = filesize($filename1);
+ 	fclose($handle1);
+ 	//메모리 오류 방지
+
+ 	if(!$act){$act=$act2;}
+ 	$main_title = '관리자 화면';
+ 	include 'db_config.html';
+  
+ 	$query2= "SELECT * FROM gallery";
+ 	$result2=mysql_query($query2,$connect );
+ 	$popup=mysql_fetch_array($result);
+
+	echo "<title>$main_title</title>";
+    include 'link-files.html';
+
+?>
+	
+</head>
+
+<body>
+
+<? 
+	include 'main-nav.html'; 
+	$rank 				= $_COOKIE['rank'];
+	// 관리자가 아니면 
+	if ($rank != 9){echo " <script language='javascript'alert('이페이지는 관리자만 접근가능합니다.');top.document.location.href = 'mypage.html'</script>";}
+	
+	echo "
+		<div class='container-fluid' style='background-color: rgb(204,204,204);'>
+		<br><br>
+
+		<div class='container'>
+		<br><br><br>
+		";
+		
+		// 겔러리 이미지 출력하기
+		if(!$act)
+		{
+			if($category == 1){$search = 'where category = 1';}
+			if($category == 2){$search = 'where category = 2';}
+			if($category == 3){$search = 'where category = 3';}
+			if($category == 4){$search = 'where category = 4';}
+			if($category == 5){$search = 'where category = 5';}
+			if($category == 6){$search = 'where category = 6';}
+			if($category == 7){$search = 'where category = 7';}
+			if($category == 8){$search = 'where category = 8';}
+			if($category == 9){$search = 'where category = 9';}
+
+			$gallery_query	= "SELECT * FROM $gallery $search order by id DESC" ;
+ 			$gallery_result	= mysql_query($gallery_query,$connect );
+ 			$gallery		= mysql_fetch_array($gallery_result);
+
+			echo "
+			<div class = 'text-right'>
+			<a href = 'gallery.html?act=1'><button class = 'btn-green' style = 'height:40px;font-size:18px;'>&nbsp;&nbsp;갤러리 이미지 등록&nbsp;&nbsp;</button></a>&nbsp;
+			<a href = 'gallery.html'><button class = 'btn-white' style = 'height:40px;font-size:18px;'>&nbsp;&nbsp;전체목록&nbsp;&nbsp;</button></a>&nbsp;
+			<a href = 'gallery.html?&category=1'><button class = 'btn-black' style = 'height:40px;font-size:18px;'>&nbsp;&nbsp;일반&nbsp;&nbsp;</button></a>&nbsp;
+			<a href = 'gallery.html?&category=2'><button class = 'btn-gray' style = 'height:40px;font-size:18px;'>&nbsp;&nbsp;스키&nbsp;&nbsp;</button></a>&nbsp;
+			<a href = 'gallery.html?&category=3'><button class = 'btn-gray' style = 'height:40px;font-size:18px;'>&nbsp;&nbsp;바인딩&nbsp;&nbsp;</button></a>&nbsp;
+			<a href = 'gallery.html?&category=4'><button class = 'btn-gray' style = 'height:40px;font-size:18px;'>&nbsp;&nbsp;인터페이스&nbsp;&nbsp;</button></a>&nbsp;
+			<a href = 'gallery.html?&category=5'><button class = 'btn-pink' style = 'height:40px;font-size:18px;'>&nbsp;&nbsp;카탈로그&nbsp;&nbsp;</button></a>&nbsp;
+			<a href = 'gallery.html?&category=6'><button class = 'btn-sky' style = 'height:40px;font-size:18px;'>&nbsp;&nbsp;팀멤버&nbsp;&nbsp;</button></a>&nbsp;
+			<a href = 'gallery.html?&category=7'><button class = 'btn-red' style = 'height:40px;font-size:18px;'>&nbsp;&nbsp;로고&nbsp;&nbsp;</button></a>&nbsp;
+			<a href = 'gallery.html?&category=8'><button class = 'btn-orange' style = 'height:40px;font-size:18px;'>&nbsp;&nbsp;이벤트&nbsp;&nbsp;</button></a>&nbsp;
+			<a href = 'gallery.html?&category=9'><button class = 'btn-black' style = 'height:40px;font-size:18px;'>&nbsp;&nbsp;바이크&nbsp;&nbsp;</button></a>&nbsp;
+
+			<br><br>
+			</div>
+			<div class='card-columns'>
+			";
+
+ 			while($gallery){
+			$image_id = $gallery[id];
+				
+			if($gallery[category] == 1){$gallery_category = '일반';}
+			if($gallery[category] == 2){$gallery_category = '스키';}
+			if($gallery[category] == 3){$gallery_category = '바인딩';}
+			if($gallery[category] == 4){$gallery_category = '인터페이스';}
+			if($gallery[category] == 5){$gallery_category = '카탈로그';}
+			if($gallery[category] == 6){$gallery_category = '팀멤버';}
+			if($gallery[category] == 7){$gallery_category = '로고';}
+			if($gallery[category] == 8){$gallery_category = '이벤트';}
+			if($gallery[category] == 9){$gallery_category = '바이크';}
+				
+     		echo  "
+ 			  <div class='card col mb-2' style = 'padding-top:10px;'>
+    			<img src = gallery_view.html?id=$gallery[id] class='card-img-top'>
+   					<div style = 'padding-bottom:10px;padding-top:10px;'>
+     					 <p class = 'bbs_title'><button class = 'btn-green'>$image_id</button> $gallery[title]($gallery[width] x $gallery[height])</p>
+     					<div class = 'text-right'>
+      					<p class='card-text'>$gallery[upload_date] // $gallery_category</p>
+      						<a href = 'gallery.html?act=2&id=$image_id'><button class = 'btn-red' style = 'font-size:15px;'>&nbsp;&nbsp;삭제하기&nbsp;&nbsp;</button></a>
+							<a href = 'gallery.html?act=3&id=$image_id'><button class = 'btn-gray' style = 'font-size:15px;'>&nbsp;&nbsp;수정하기&nbsp;&nbsp;</button></a>						
+    					</div>
+    				</div>
+  				</div>";
+						
+		 	$gallery=mysql_fetch_array($gallery_result);
+ 			
+ 			}
+		}
+
+		// 겔러리 이미지 등록
+		
+		if($act == 1){
+		
+		$fixed_bottom = 'fixed-bottom';		
+		
+   		echo "<p align = 'center' style = 'font-size:35px;font-weight:600;'>갤러리 이미지 신규 등록</p>";
+
+		echo "<br><br><br>
+		<form action='gallery.html' method='POST' enctype='multipart/form-data'>
+				<input class='form-control' type='text' name='act2' value = '11' placeholder='수행조건' hidden>
+				<input class='form-control' type='text' name='site_name' value = '$site[site]' placeholder='사이트-url' hidden>
+
+                <div class='form-group' style='padding-left:10px'>
+						<div class='input-group'>
+  							<div class='input-group-prepend'>
+								<button class='btn btn-info' type='button' style = 'width:150px;'>이미지 타이틀</button>
+  							</div>
+								<input class='form-control'  type='text' name='title' required>
+						</div>											
+                </div>
+                
+                <div class='form-group' style='padding-left:10px'>
+						<div class='input-group'>
+  							<div class='input-group-prepend'>
+								<button class='btn btn-info' type='button' style = 'width:150px;'>이미지 파일</button>
+  							</div>
+								<input class='form-control' type='file' name='image' placeholder='이미지 파일 (6M Byte 이하)'>
+						</div>											
+                </div>
+                
+	            <div class='form-group' style='padding-left:10px'>
+					<div class='input-group'>
+  						<div class='input-group-prepend'>
+							<button class='btn btn-info' type='button' style = 'width:150px;'>이미지 카테고리</button>
+  						</div>
+								<select class='form-control' name='category'>
+									<option value = ''>이미지 카테고리</option>
+									<option value = ''>--------------</option>
+									<option value = '1' >일반</option>
+									<option value = '2' >스키</option>
+									<option value = '3' >바인딩</option>
+									<option value = '4' >인터페이스</option>
+									<option value = '5' >카탈로그</option>
+									<option value = '6' >팀멤버</option>
+									<option value = '7' >로고</option>
+									<option value = '8' >이벤트</option>
+									<option value = '9' >바이크</option>
+
+								</select>
+						</div>
+			  	</div>
+
+                <div class='form-group text-right'>
+					&nbsp;<input type 'submit' class='btn btn-primary text-uppercase' type='button' value='이미지 신규등록' onclick='submit()';>
+					&nbsp;<input type 'submit' class='btn btn-warning text-uppercase' type='button' value='이미지 목록' onclick='go1_click();';>
+
+					<script>
+					function go1_click(){
+					location.href='gallery.html';
+					}
+					</script>
+
+                </div>
+			</form>
+			<br><br><br>
+			";
+			}
+			
+		// 갤러리 이미지 DB 등록
+		
+		if($act == 11){
+		
+		$sql="Insert $gallery (title, image, width, height, site, upload_date, category)
+		VALUES ('$title', '$imageblob1', '$width1', '$height1', '$site_name', '$today', '$category')";
+
+		if (mysqli_query($link, $sql)) {echo "<script>location.href='gallery.html';</script>";} 
+		else{echo "Error: " . $sql . "<br>" . mysqli_error($link);}
+		mysqli_close($link);
+		}
+		
+		// 갤러리 이미지 DB 삭제
+		
+		if($act == 2){
+		
+		$sql="DELETE FROM $gallery WHERE id = '$id'";
+
+		if (mysqli_query($link, $sql)) {echo "<script>location.href='gallery.html';</script>";} 
+		else{echo "Error: " . $sql . "<br>" . mysqli_error($link);}
+		mysqli_close($link);
+		}
+
+		// 갤러리 이미지 수정
+		if($act == 3 and $rank == 9){
+		
+			$gallery_query	= "SELECT * FROM $gallery where id = $id" ;
+ 			$gallery_result	= mysql_query($gallery_query,$connect );
+ 			$gallery		= mysql_fetch_array($gallery_result);
+
+			if($gallery[category] == 1){$gallery_selected1 = 'selected';}
+			if($gallery[category] == 2){$gallery_selected2 = 'selected';}
+			if($gallery[category] == 3){$gallery_selected3 = 'selected';}
+			if($gallery[category] == 4){$gallery_selected4 = 'selected';}
+			if($gallery[category] == 5){$gallery_selected5 = 'selected';}
+			if($gallery[category] == 6){$gallery_selected6 = 'selected';}
+			if($gallery[category] == 7){$gallery_selected7 = 'selected';}
+			if($gallery[category] == 8){$gallery_selected8 = 'selected';}
+			if($gallery[category] == 9){$gallery_selected9 = 'selected';}
+			
+   		echo "<br><br><br><p align = 'center' style = 'font-size:35px;font-weight:600;'>이미지 수정하기</p>";
+
+		echo "<br><br><br>
+		<form action='gallery.html' method='POST' enctype='multipart/form-data'>
+				<input class='form-control' type='text' name='image_id' value = '$gallery[id]' placeholder='이미지id' hidden>
+				<input class='form-control' type='text' name='act' value = '33' placeholder='수행조건' hidden>
+
+                <div class='form-group' style='padding-left:10px'>
+						<div class='input-group'>
+  							<div class='input-group-prepend'>
+								<button class='btn btn-info' type='button' style = 'width:150px;'>이미지 제목</button>
+  							</div>
+								<input class='form-control'  type='text' name='title' value = '$gallery[title]' placeholder='이미지 제목' required>
+						</div>											
+                </div>
+                
+                <div class='form-group' style='padding-left:10px'>
+						<div class='input-group'>
+  							<div class='input-group-prepend'>
+								<button class='btn btn-info' type='button' style = 'width:150px;'>이미지 설명</button>
+  							</div>
+								<textarea class='form-control' name='contents' placeholder='글내용' rows='5'>$gallery[contents]</textarea>
+						</div>											
+                </div>
+
+                <div class='form-group' style='padding-left:10px'>
+						<div class='input-group'>
+  							<div class='input-group-prepend'>
+								<button class='btn btn-info' type='button' style = 'width:150px;'>팝업이미지</button>
+  							</div>";
+  							
+							if ($gallery[image]){ echo "&nbsp;&nbsp;<img src='gallery_view.html?id=$gallery[id]' width = 50%>&nbsp;&nbsp;";}
+		
+  				echo "
+								<input class='form-control' type='file' name='image' placeholder='팝업이미지 (6M Byte 이하)'>
+						</div>											
+                </div>
+                
+   	            <div class='form-group' style='padding-left:10px'>
+					<div class='input-group'>
+  						<div class='input-group-prepend'>
+							<button class='btn btn-info' type='button' style = 'width:150px;'>이미지 카테고리</button>
+  						</div>
+								<select class='form-control' name='category'>
+									<option value = ''>이미지 카테고리</option>
+									<option value = ''>--------------</option>
+									<option value = '1' $gallery_selected1>풍경</option>
+									<option value = '2' $gallery_selected2>빌리지</option>
+									<option value = '3' $gallery_selected3>마운틴</option>
+									<option value = '4' $gallery_selected4>하이킹코스</option>
+									<option value = '5' $gallery_selected5>스키맵</option>
+									<option value = '6' $gallery_selected6>스키리프트</option>
+									<option value = '7' $gallery_selected7>스키훈련</option>
+									<option value = '8' $gallery_selected7>숙소</option>
+									<option value = '9' $gallery_selected7>주변관광지</option>
+									<option value = '0' $gallery_selected7>미분류</option>
+								</select>
+						</div>
+			  	</div>
+
+                <div class='form-group text-right'>";
+                
+                $pre = $id - 1;
+                $next = $id + 1;
+                echo "
+					&nbsp;<button class='btn-blue text-uppercase' onclick='go0_click();';>이전 이미지 수정</button>
+					&nbsp;<button class='btn-red text-uppercase' onclick='submit()';>수정등록</button>
+					&nbsp;<input type 'submit' class='btn-green text-uppercase' type='button' value='다음수정' onclick='go2_click();';>
+					&nbsp;<input type 'submit' class='btn-blue text-uppercase' type='button' value='이미지 목록' onclick='go1_click();';>
+
+					<script>function go1_click(){location.href='gallery.html';}</script>
+					<script>function go0_click(){location.href='gallery.html?act=3&id=$pre';}</script>
+					<script>function go2_click(){location.href='gallery.html?act=3&id=$next';}</script>
+                </div>
+			</form>";
+			}
+
+		if($act == 4 and $rank == 9){
+		
+		$sql="update gallery set category = 0 WHERE id = '$id'";
+		if (mysqli_query($link, $sql)) {echo "<script>location.href='gallery.html';</script>";} 
+		else{echo "Error: " . $sql . "<br>" . mysqli_error($link);}
+		mysqli_close($link);
+		}
+			
+
+		if($act == 33 and $rank == 9){
+		
+		if ($imageblob1){$sql="update gallery set title = '$title', image = '$imageblob1', width = '$width1', height = '$height1', category = '$category', contents = '$contents' WHERE id = '$image_id'";}
+		else {$sql="update gallery set title = '$title', category = '$category', contents = '$contents' WHERE id = '$image_id'";}
+
+		if (mysqli_query($link, $sql)) {echo "<script>location.href='gallery.html?act=3&id=$image_id';</script>";} 
+		else{echo "Error: " . $sql . "<br>" . mysqli_error($link);}
+		mysqli_close($link);
+		}
+
+?>
+
+	</div></div><br><br><br></div>
+ 
+    <? include "footer.html"; ?>
+	
+</body>
+
+</html>

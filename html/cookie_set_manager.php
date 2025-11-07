@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<?
+include 'db_config.html';
+?>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+	<link rel="shortcut icon" href="Myicon.png" type="image/x-icon">
+    
+    <title>
+    	<?
+    	echo "$main_title";    	
+    	?>    
+    </title>
+    
+		<!-- Custom styles for AUGMENT-SKI -->
+			<? include 'link-files.html'; ?>
+		<!-- end of Link -->
+		
+</head>
+
+<body>
+
+		<!-- Navigation for AUGMENT-SKI -->
+			<? 	include 'main_nav2.html'; 
+				include 'header_sub_page.html';
+			?>
+		<!-- end of Navigation -->
+
+<?php
+
+$test_id = array('admin01','admin02','admin03','admin04','admin05','admin06','admin07','admin08','admin09','admin10');
+if ($rank == 9 or strpos($Login_User_ID, 'test0') !== false  ){} else 
+{echo "<script>alert('비정상적인 접근입니다.')</script>";}
+
+echo "<div class = 'container'>
+
+		   <div class='divTable'>
+				<div class='divTableBody'>						
+					<div class='divTableRow' style = 'height:100px;'>
+						<div class='divTableCell' style = 'font-size:24px;'>테스트용 관리자 로그인 (관리자용)</div>
+					</div>
+				</div>
+			</div>
+				
+            <table>
+            <tr align = center style = 'background-color:#ededed;font-size:16px;height:70px;border-bottom:1px solid #707070;border-top:1px solid #707070;'><td>관리자</td><td>스키1</td><td>스키2</td><td>스키3</td><td>보드1</td><td>보드2</td><td>보드3</td><td>패트롤</td><td>로그인</td></tr>";
+            
+            foreach($test_id as $TEST_ID){
+            
+ 			$query= "SELECT * FROM 7G_Skiresort_Member where MEMBER_ID = '$TEST_ID'" ;
+ 			$result=mysql_query($query,$connect );
+ 			$login_member=mysql_fetch_array($result);
+			if ($Login_User_ID == $TEST_ID){$bgcolor = "#ffb2a1"; $login = "<button class = 'btn-blue'>로그인중</button>";} else {$bgcolor = ""; $login = "<a href = 'cookie_set_tester.php?id=$TEST_ID'><button class = 'btn-red'>로그인</button></a>";}
+			if ($login_member[T1_LICENSE] == 1){$login_member[T1_LICENSE] = '𝝤';}
+			if ($login_member[T2_LICENSE] == 1){$login_member[T2_LICENSE] = '𝝤';}
+			if ($login_member[T3_LICENSE] == 1){$login_member[T3_LICENSE] = '𝝤';}
+			if ($login_member[SBT1_LICENSE] == 1){$login_member[SBT1_LICENSE] = '𝝤';}
+			if ($login_member[SBT2_LICENSE] == 1){$login_member[SBT2_LICENSE] = '𝝤';}
+			if ($login_member[SBT3_LICENSE] == 1){$login_member[SBT3_LICENSE] = '𝝤';}
+			if ($login_member[PATROL_LICENSE] == 1){$login_member[PATROL_LICENSE] = '𝝤';}
+
+			echo "
+            <tr align = center style = 'background-color:$bgcolor;font-size:16px;height:70px;border-bottom:1px solid #707070;'>
+            <td style = 'background-color:#ffd9d9;font-size:16px;color:red;font-weight:700;'>$TEST_ID</td>
+            <td style = 'border-left:1px solid #707070;'>$login_member[T1_LICENSE]</td>
+            <td style = 'background-color:#c4f2ff;border-left:1px solid #707070;'>$login_member[T2_LICENSE]</td>
+            <td style = 'border-left:1px solid #707070;'>$login_member[T3_LICENSE]</td>
+            <td style = 'background-color:#c4f2ff;border-left:1px solid #707070;'>$login_member[SBT1_LICENSE]</td>
+            <td style = 'border-left:1px solid #707070;'>$login_member[SBT2_LICENSE]</td>
+            <td style = 'background-color:#c4f2ff;border-left:1px solid #707070;'>$login_member[SBT3_LICENSE]</td>
+            <td style = 'border-left:1px solid #707070;'>$login_member[PATROL_LICENSE]</td>
+            <td style = 'background-color:#c4f2ff;border-left:1px solid #707070;'>$login</td></tr>";
+      
+			}
+echo "
+</table>
+</div>";
+?>
+
+<br><br><br>
+
+</body>
+
+		<!-- Custom styles for AUGMENT-SKI -->
+			<? include 'footer.html'; ?>
+		<!-- end of Link -->
+	
+</body>		
+</html>

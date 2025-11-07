@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+	<link rel="shortcut icon" href="../Myicon.png" type="image/x-icon">
+
+	<?
+		$main_title = '한국 스키장 경영협회';
+		include 'db_config.html';
+		echo "<title>$main_title / $page</title>";    	
+	?>
+
+</head>
+<body>
+        <div class="ofl_spt">
+            <script language="javascript">
+                $(document).ready(function() {
+                    //메인화면 PC/모바일 분기시 화면 스크롤
+                    isOnePageScroll();
+                });
+            </script>
+        </div>
+        
+		<? include 'link-files.html';
+           include"main_nav2.html"  ?>
+		<!-- end of Navigation -->
+
+        <div id="scroll_top" >
+            <button type="button"><img src="../images/scr_top.jpg"></button>
+        </div>
+        <div>
+
+
+        
+		<!-- ㅡㅡㅡㅡㅡㅡㅡㅡ/SB_HEADERㅡㅡㅡㅡㅡㅡㅡㅡ -->
+            <div id="sbcenter" class="teach">
+                <div class="sb_top_bg">
+                    <div class="inner_wrap">
+                       <h2>스키 지도 요원</h2>
+                    </div>
+                    <div class="sb_top_menu">
+                        <ul class="sbclear">
+                            <li><a href="../teach_ski_01.html">스키 지도 요원 소개</a></li>
+                            <li><a href="../teach_test_01.html">시험 정보 및 자료</a></li>
+                            <li><a href="../teach_data_01.html">원서 접수 및 조회</a></li>
+							<li><a href="../teach_check_01.html">자격 확인</a></li>
+							<li class="on"><a href="../teach_demon_01.html">데몬스트레이터</a></li>
+                            <li><a href="../teach_champion_01.html">기술 선수권 대회</a></li>
+                        </ul>
+                    </div>
+                    <!--/sb_top_menu-->
+                    
+			</div>
+			<!--/sb_top_bg-->
+			<div class="sbcenter cp_about teach_demon">
+				<div class="sb_content">
+					<div class="sb_top_text sbclear">
+						<a href="../teach_check_01.html" class="sb_prev"><img src="../images/sb_prev_btn_on.png" alt="이전"></a>
+						<h3>Demonstrator</h3>
+						<a href="../teach_champion_01.html" class="sb_next"><img src="../images/sb_next_btn_on.png" alt="다음"></a>
+					</div>
+					<!--/sb_top_text-->
+					<div class="tab_wrap">
+						<div class="tab_menu_area">
+							<ul class="tab_menu tab_click sbclear">
+								<li class="on"><a href="#tab1">데몬 1기</a></li>
+								<li><a href="#tab2">데몬 2기</a></li>
+								<li><a href="#tab3">데몬 3기</a></li>
+								<li><a href="#tab4">데몬 4기</a></li>
+							</ul>
+						</div>
+						<!--/tab_menu_area-->
+						<div class="tab_list_area tab_click_list">
+							<!-- 데몬1기 -->
+							<div id="tab1" class="cp_president cp_box">
+								<h4>데몬 1기</h4>
+								<ol class="cp_demon" reversed class="sbclear">
+									<li>
+										<ul>
+											<li class="prd_img"><img src="../images/demon1.jpg"></li>
+											<li class="prd_txt">
+												<p class="prd_txt_name">노은진</p>
+											</li>
+										</ul>
+									</li>
+									<li>
+										<ul>
+											<li class="prd_img"><img src="../images/demon2.jpg"></li>
+											<li class="prd_txt">
+												<p class="prd_txt_name">민지나</p>
+											</li>
+										</ul>
+									</li>
+									<li>
+										<ul>
+											<li class="prd_img"><img src="../images/demon3.jpg"></li>
+											<li class="prd_txt">
+												<p class="prd_txt_name">김정훈</p>
+											</li>
+										</ul>
+									</li>
+									<li>
+										<ul>
+											<li class="prd_img"><img src="../images/demon4.jpg"></li>
+											<li class="prd_txt">
+												<p class="prd_txt_name">변기덕</p>
+											</li>
+										</ul>
+									</li>
+									<li class="prd_none">
+										<ul>
+											<li class="prd_img"><img src="../images/demon5.jpg"></li>
+											<li class="prd_txt">
+												<p class="prd_txt_name">김창연</p>
+											</li>
+										</ul>
+									</li>
+									<li>
+										<ul>
+											<li class="prd_img"><img src="../images/demon6.jpg"></li>
+											<li class="prd_txt">
+												<p class="prd_txt_name">안영택</p>
+											</li>
+										</ul>
+									</li>
+									<li>
+										<ul>
+											<li class="prd_img"><img src="../images/demon7.jpg"></li>
+											<li class="prd_txt">
+												<p class="prd_txt_name">김경래</p>
+											</li>
+										</ul>
+									</li>
+								</ol>
+							</div>
+							<!-- //데몬1기 -->
+							<!-- 데몬2기 -->
+							<div id="tab2" class="cp_president cp_box">
+								<h4>데몬 2기</h4>
+								<ol class="cp_demon" reversed class="sbclear">
+									<li>
+										<ul>
+											<li class="prd_img"><img src="../images/demon_2_1.jpg"></li>
+											<li class="prd_txt">
+												<p class="prd_txt_name">노은진</p>
+											</li>
+										</ul>
+									</li>
+									<li>
+										<ul>
+											<li class="prd_img"><img src="../images/demon_2_2.jpg"></li>
+											<li class="prd_txt">
+												<p class="prd_txt_name">김정훈</p>
+											</li>
+										</ul>
+									</li>
+									<li>
+										<ul>
+											<li class="prd_img"><img src="../images/demon_2_7.jpg"></li>
+											<li class="prd_txt">
+												<p class="prd_txt_name">김창연</p>
+											</li>
+										</ul>
+									</li>
+									<li>
+										<ul>
+											<li class="prd_img"><img src="../images/demon_2_3.jpg"></li>
+											<li class="prd_txt">
+												<p class="prd_txt_name">김태규</p>
+											</li>											
+										</ul>
+									</li>
+									<li class="prd_none">
+										<ul>
+											<li class="prd_img"><img src="../images/demon_2_4.jpg"></li>
+											<li class="prd_txt">
+												<p class="prd_txt_name">방정문</p>
+											</li>
+										</ul>
+									</li>
+									<li>
+										<ul>
+											<li class="prd_img"><img src="../images/demon_2_5.jpg"></li>
+											<li class="prd_txt">
+												<p class="prd_txt_name">변기덕</p>
+											</li>
+										</ul>
+									</li>
+									<li class="prd_none">
+										<ul>
+											<li class="prd_img"><img src="../images/demon_2_6.jpg"></li>
+											<li class="prd_txt">
+												<p class="prd_txt_name">전길영</p>
+											</li>
+										</ul>
+									</li>
+								</ol>
+							</div>
+							<!-- //데몬2기 -->
+							<!-- 데몬3기 -->
+							<div id="tab3" class="cp_president cp_box">
+								<h4>데몬 3기</h4>
+								<ol class="cp_demon" reversed class="sbclear">
+									<li>
+										<ul>
+											<li class="prd_img"><img src="../images/d321.jpg"></li>
+											<li class="prd_txt">
+												<p class="prd_txt_name">이정미</p>
+											</li>
+										</ul>
+									</li>
+									<li>
+										<ul>
+											<li class="prd_img"><img src="../images/d322.jpg"></li>
+											<li class="prd_txt">
+												<p class="prd_txt_name">전선옥</p>
+											</li>
+										</ul>
+									</li>
+									<li>
+										<ul>
+											<li class="prd_img"><img src="../images/d311.jpg"></li>
+											<li class="prd_txt">
+												<p class="prd_txt_name">김정훈</p>
+											</li>
+										</ul>
+									</li>
+									<li>
+										<ul>
+											<li class="prd_img"><img src="../images/d312.jpg"></li>
+											<li class="prd_txt">
+												<p class="prd_txt_name">김창연</p>
+											</li>											
+										</ul>
+									</li>
+									<li class="prd_none">
+										<ul>
+											<li class="prd_img"><img src="../images/d313.jpg"></li>
+											<li class="prd_txt">
+												<p class="prd_txt_name">방정문</p>
+											</li>
+										</ul>
+									</li>
+									<li>
+										<ul>
+											<li class="prd_img"><img src="../images/d314.jpg"></li>
+											<li class="prd_txt">
+												<p class="prd_txt_name">변기덕</p>
+											</li>
+										</ul>
+									</li>
+									<li class="prd_none">
+										<ul>
+											<li class="prd_img"><img src="../images/d315.jpg"></li>
+											<li class="prd_txt">
+												<p class="prd_txt_name">전길영</p>
+											</li>
+										</ul>
+									</li>
+								</ol>
+							</div>
+							<!-- //데몬3기 -->
+							<!-- 데몬4기 -->
+							<div id="tab4" class="cp_president cp_box">
+								<h4>데몬 4기</h4>
+								<ol class="cp_demon" reversed class="sbclear">
+									<li>
+										<ul>
+											<li class="prd_img"><img src="../images/d41.jpg"></li>
+											<li class="prd_txt">
+												<p class="prd_txt_name">김가람</p>
+											</li>
+										</ul>
+									</li>
+									<li>
+										<ul>
+											<li class="prd_img"><img src="../images/d42.jpg"></li>
+											<li class="prd_txt">
+												<p class="prd_txt_name">김정훈</p>
+											</li>
+										</ul>
+									</li>
+									<li>
+										<ul>
+											<li class="prd_img"><img src="../images/d43.jpg"></li>
+											<li class="prd_txt">
+												<p class="prd_txt_name">김창연</p>
+											</li>
+										</ul>
+									</li>
+									<li>
+										<ul>
+											<li class="prd_img"><img src="../images/d44.jpg"></li>
+											<li class="prd_txt">
+												<p class="prd_txt_name">방정문</p>
+											</li>											
+										</ul>
+									</li>
+									<li class="prd_none">
+										<ul>
+											<li class="prd_img"><img src="../images/d45.jpg"></li>
+											<li class="prd_txt">
+												<p class="prd_txt_name">변기덕</p>
+											</li>
+										</ul>
+									</li>
+									<li>
+										<ul>
+											<li class="prd_img"><img src="../images/d46.jpg"></li>
+											<li class="prd_txt">
+												<p class="prd_txt_name">전길영</p>
+											</li>
+										</ul>
+									</li>
+									<li class="prd_none">
+										<ul>
+											<li class="prd_img"><img src="../images/d47.jpg"></li>
+											<li class="prd_txt">
+												<p class="prd_txt_name">전선옥</p>
+											</li>
+										</ul>
+									</li>
+								</ol>
+							</div>
+							<!-- //데몬4기 -->
+						</div>
+						<!--/tab_list_area-->
+					</div>
+					<!--/tab_wrap-->
+					<div class="demon_profile">
+						<div class="sbclear">
+							<p class="demon_profile_img"></p>
+							<div class="demon_career">
+							</div>
+							<button type="button" class="close">
+								<img src="../images/pop_close.png">
+							</button>
+						</div>
+					</div>
+					<!--/demon_profile-->
+				</div>
+				<!--/sb_content-->
+			</div>
+			<!-- //sbcenter -->
+			<?
+          include "include/sb_quick.html";
+?>
+		</div>
+		<!-- //sbcenter -->
+
+		<script>
+			// var demon = $(".cp_demon").find("li");
+			// var demonProfile = $(".demon_profile");
+			// demon.on('click', function() {
+			// 	var demonImg = $(this).find(".prd_img").html();
+			// 	var demonCareer = $(this).find(".prd_prf").html();
+			// 	demonProfile.fadeIn(200).find(".demon_profile_img").append(demonImg);
+			// 	demonProfile.find(".demon_career").append(demonCareer);
+			// });
+			// $(".close").click(function() {
+			// 	demonProfile.fadeOut(function() {
+			// 		$(this).find(".demon_profile_img").children("img").remove();
+			// 		$(this).find(".demon_career").html("");
+			// 	});
+			// });
+
+		</script>
+		<!-- ㅡㅡㅡㅡㅡㅡㅡㅡFOOTERㅡㅡㅡㅡㅡㅡㅡㅡ -->
+		<?
+    include "footer.html";
+?>

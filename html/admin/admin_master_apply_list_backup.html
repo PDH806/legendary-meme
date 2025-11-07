@@ -1,0 +1,700 @@
+<?
+	$The_No 	= $_GET["No"];
+	$month 		= $_GET["month"];
+	$ID			= $_GET['ID'];
+	$token		= $_GET['token'];
+
+	$main_title = '한국 스키장 경영협회';
+
+	include '../db_config.html';
+
+	// 관리자가 아니면 member_login.html 페이지로 이동
+	if ($rank < 7){
+	echo " <script>
+	alert('접근권한이 없습니다.');
+	top.document.location.href = '../member_login.html?MEMBER_ID=$User_ID_Search&Case=9';
+	</script>";
+	}
+
+	//if (!$token){
+	//echo " <script>
+	//alert('잘못된 접근 (인증값 오류) 입니다. ');
+	//top.document.location.href = '../member_login.html?MEMBER_ID=$User_ID_Search&Case=9';
+	//</script>";
+	//}
+
+?>
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Admin Dashboard | (사)한국스키장경영협회</title>
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="../images/favicon.ico">
+	<link rel="stylesheet" href="./vendor/chartist/css/chartist.min.css">
+    <link href="./vendor/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet">
+	<!-- Datatable -->
+    <link href="./vendor/datatables/css/jquery.dataTables.min.css" rel="stylesheet">
+    <link href="./css/style.css" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&family=Roboto:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
+
+<?
+
+			// Head Title 설정
+			$Dashboard_Title = '응시자명단';
+			if ($ID == 'all'){$Dashboard_Title = $Dashboard_Title.' > 전체';}
+			if ($ID == 'T1'){$Dashboard_Title = $Dashboard_Title.' > 스키지도요원 티칭1';}
+			if ($ID == 'T2'){$Dashboard_Title = $Dashboard_Title.' > 스키지도요원 티칭2';}
+			if ($ID == 'T3'){$Dashboard_Title = $Dashboard_Title.' > 스키지도요원 티칭3 & 기선전';}
+			if ($ID == 'SBT1'){$Dashboard_Title = $Dashboard_Title.' > 스노보드지도요원 티칭1';}
+			if ($ID == 'SBT2'){$Dashboard_Title = $Dashboard_Title.' > 스노보드지도요원 티칭1';}
+			if ($ID == 'PATROL'){$Dashboard_Title = $Dashboard_Title.' > 스키구조요원';}
+
+		if ($The_No){$search_test_no = "and 7G_Master_Apply.Test_No = '$The_No'";}
+
+		if ($ID and $ID != 'all'){$search = "where 7G_Master_Apply.TEST_ID = '$ID' and 7G_Master_Apply.PAYMENT_STATUS > 1 $search_test_no";}
+		if ($ID == 'T1' or $ID == 'SBT1'){$search = "where 7G_Master_Apply.TEST_ID = '$ID' $search_test_no";}
+		if ($ID == 'all'){$search = "";}
+		if ($ID == 'T4'){$search = "where 7G_Master_Apply.TEST_ID = 'T3' and 7G_Master_Apply.PAYMENT_STATUS > 1 and 7G_Skiresort_Member.T3_LICENSE = 1";}
+
+		// 시험정보불러오기
+ 		$query9		= "select * from 7G_Master_Schedules where Test_id = '$ID' and TEST_NO = $The_No";
+ 		$result9	= mysql_query($query9,$connect );
+ 		$row9		= mysql_fetch_array($result9);
+
+		// $search = "where 7G_Master_Apply.Test_ID = 'PATROL'";
+ 		$query= "select * from 7G_Master_Apply LEFT OUTER JOIN 7G_Skiresort_Member on 7G_Master_Apply.MEMBER_ID = 7G_Skiresort_Member.MEMBER_ID $search order by 7G_Master_Apply.TEST_ID ASC";
+ 		$result=mysql_query($query,$connect );
+ 		$row=mysql_fetch_array($result);
+		$total_record = mysql_num_rows($result);
+
+ 		$query1= "select * from 7G_Master_Apply where No = '$The_No'";
+ 		$result1=mysql_query($query1,$connect );
+ 		$row1=mysql_fetch_array($result1);
+
+		if ($row9[Skiresort] == 1){$Skiresort = '용평리조트';}
+		if ($row9[Skiresort] == 2){$Skiresort = '양지파인리조트';}
+		if ($row9[Skiresort] == 3){$Skiresort = '스타힐리조트';}
+		if ($row9[Skiresort] == 4){$Skiresort = '무주덕유산리조트';}
+		if ($row9[Skiresort] == 5){$Skiresort = '비발디파크';}
+		if ($row9[Skiresort] == 6){$Skiresort = '피닉스평창';}
+		if ($row9[Skiresort] == 7){$Skiresort = '월리힐리파크';}
+		if ($row9[Skiresort] == 8){$Skiresort = '지산포레스트리조트';}
+		if ($row9[Skiresort] == 9){$Skiresort = '엘리시안강촌';}
+		if ($row9[Skiresort] == 10){$Skiresort = '오크밸리';}
+		if ($row9[Skiresort] == 11){$Skiresort = '하이원리조트';}
+		if ($row9[Skiresort] == 12){$Skiresort = '곤지암리조트';}
+		if ($row9[Skiresort] == 13){$Skiresort = '알펜시아';}
+		if ($row9[Skiresort] == 14){$Skiresort = '베어스타운';}
+		if ($row9[Skiresort] == 15){$Skiresort = '에덴벨리리조트';}
+		if ($row9[Skiresort] == 16){$Skiresort = '오투리조트';}
+
+		// $style001 = "font-size:15;weight:900;width:50px;padding-left:0px;padding-right:0px;padding-top:13px;padding-bottom:13px;border:2px solid #009c47;";
+		// $style002 = "font-size:15;weight:900;width:50px;padding-left:0px;padding-right:0px;padding-top:13px;padding-bottom:13px;border:2px solid #ff1e00;";
+		$style_gender = "font-size:12;weight:900;padding-left:3px;padding-right:3px;padding-top:0px;padding-bottom:0px;";
+
+		// 점수 기준
+		$cut_line = 70;
+		$cut_line_total = 210;
+?>
+
+</head>
+<body>
+
+    <!--*******************
+        Preloader start
+    ********************-->
+    <div id="preloader">
+        <div class="sk-three-bounce">
+            <div class="sk-child sk-bounce1"></div>
+            <div class="sk-child sk-bounce2"></div>
+            <div class="sk-child sk-bounce3"></div>
+        </div>
+    </div>
+    <!--*******************
+        Preloader end
+    ********************-->
+
+
+    <!--**********************************
+        Main wrapper start
+    ***********************************-->
+    <div id="main-wrapper">
+
+        <!--**********************************
+            Nav header start
+        ***********************************-->
+        <div class="nav-header">
+            <a href="../index.html" class="brand-logo">
+                <img src="../images/sb_logo.png" width = 90%>
+            </a>
+
+            <div class="nav-control">
+                <div class="hamburger">
+                    <span class="line"></span><span class="line"></span><span class="line"></span>
+                </div>
+            </div>
+        </div>
+        <!--**********************************
+            Nav header end
+        ***********************************-->
+
+		<?
+		// 챗팅박스 + 헤드네비 불러오기
+		include '_chat_box.html';
+		include '_head_bar.html';
+
+		// 좌측 네비게이션
+	    if ($rank == 9){include '_admin_menu.html';}
+	    if ($rank == 8){include '_admin_menu2.html';}
+   	    if ($rank == 7){include '_admin_menu3.html';}
+	    ?>
+
+
+        <!--**********************************
+            Content body start
+        ***********************************-->
+        <div class="content-body">
+            <!-- container starts -->
+            <div class="container-fluid">
+                <!-- row -->
+
+				<?
+				echo "
+
+				<div class='d-flex flex-wrap mb-2 align-items-center justify-content-between'>
+					<div class='mb-3 mr-3'>
+						<h6 class='fs-16 text-black font-w600 mb-0'>$total_record Total Applys</h6>
+						<span class='fs-14'>Based SBAK DBMS System</span>
+					</div>
+					<div class='event-tabs mb-3 mr-3'>
+						<ul class='nav nav-tabs' role='tablist'>
+							<li class='nav-item'>
+								<a class='nav-link active' data-toggle='tab' href='#All' role='tab' aria-selected='true'>
+									All
+								</a>
+							</li>
+							<li class='nav-item'>
+								<a class='nav-link' data-toggle='tab' href='#Paid' role='tab' aria-selected='false'>
+									시험예정
+								</a>
+							</li>
+							<li class='nav-item'>
+								<a class='nav-link' data-toggle='tab' href='#Not_Paid' role='tab' aria-selected='false'>
+									시험완료
+								</a>
+							</li>
+							<li class='nav-item'>
+								<a class='nav-link' data-toggle='tab' href='#Canceled' role='tab' aria-selected='false'>
+									시험취소
+								</a>
+							</li>
+						</ul>
+					</div>
+					<div class='d-flex mb-3'>
+						<select class='form-control style-2 default-select mr-3'>
+							<option>최신순</option>
+							<option>이번달</option>
+							<option>이번주</option>
+						</select>
+						<a href='javascript:excel($The_No)' class='btn btn-primary text-nowrap'><i class='fa fa-file-text scale5 mr-3' aria-hidden='true'></i>엑셀 다운로드</a>
+					</div>
+				</div>
+
+				<div class='row'>
+					<div class='col-xl-12'>
+						<div class='tab-content'>
+							<div id='All' class='tab-pane active fade show'>
+								<div class='table-responsive'>";
+
+                                            if ($ID == 'all'){$ID = '전체';}
+
+
+											echo"
+                                            <br><br><br>
+                                            <div class = 'text-center'>
+                                            	<span class = 'font32'>$ID 검정 응시자 명단</span><br>";
+
+                                            	if ($The_No){echo "<br><span class = 'font24'>($Skiresort #$The_No / $row9[Test_Date])</span>";}
+
+                                            echo "
+                                            </div>
+                                            <br><br><br>
+
+                                    <table id='example2' class='table card-table display dataTablesCard'>
+										<thead>
+                                            <tr>
+                                                <th width = 210px>응시자</th>
+                                                <th width = 250px>응시자정보</th>";
+
+                                                if($ID == 'T1' or $ID == 'SBT1'){
+                                                echo "<th width = 100px>
+                                                스키장
+                                                </th>";
+                                                }
+
+                                                echo "
+                                                <th width = 100px>지원분야</th>
+												<th width = 100px>진행상태</th>
+                                                <th>시험결과</th>
+                                            </tr>
+                                        </thead>
+										<tbody>";
+
+ 		while($row){
+ 		$i = $i + 1;
+
+		if ($row[SKIRESORT_NO] == 1){$Skiresort = '용평리조트';$Skiresort2 = '용평';}
+		if ($row[SKIRESORT_NO] == 2){$Skiresort = '양지파인리조트'; $Skiresort2 = '양지';}
+		if ($row[SKIRESORT_NO] == 4){$Skiresort = '무주덕유산리조트'; $Skiresort2 = '무주';}
+		if ($row[SKIRESORT_NO] == 5){$Skiresort = '비발디파크'; $Skiresort2 = '비발디';}
+		if ($row[SKIRESORT_NO] == 6){$Skiresort = '피닉스평창'; $Skiresort2 = '피닉스';}
+		if ($row[SKIRESORT_NO] == 7){$Skiresort = '월리힐리파크'; $Skiresort2 = '윌리힐리';}
+		if ($row[SKIRESORT_NO] == 8){$Skiresort = '지산포레스트리조트'; $Skiresort2 = '지산';}
+		if ($row[SKIRESORT_NO] == 9){$Skiresort = '엘리시안강촌'; $Skiresort2 = '강촌';}
+		if ($row[SKIRESORT_NO] == 10){$Skiresort = '오크밸리'; $Skiresort2 = '오크밸리';}
+		if ($row[SKIRESORT_NO] == 11){$Skiresort = '하이원리조트'; $Skiresort2 = '하이원';}
+		if ($row[SKIRESORT_NO] == 12){$Skiresort = '곤지암리조트'; $Skiresort2 = '곤지암';}
+		if ($row[SKIRESORT_NO] == 13){$Skiresort = '알펜시아'; $Skiresort2 = '알펜시아';}
+		if ($row[SKIRESORT_NO] == 14){$Skiresort = '베어스타운';$Skiresort2 = '베어스';}
+		if ($row[SKIRESORT_NO] == 15){$Skiresort = '에덴벨리리조트'; $Skiresort2 = '에덴벨리';}
+		if ($row[SKIRESORT_NO] == 16){$Skiresort = '오투리조트'; $Skiresort2 = '오투';}
+
+		if ($row[GENDER] == 1){$GENDER = "<span class='badge badge-pill badge-info' style = '$style_gender'>남</span>";}
+		if ($row[GENDER] == 2){$GENDER = "<span class='badge badge-pill badge-danger' style = '$style_gender'>여</span>";}
+		if ($row[GENDER] == 3){$GENDER = "<span class='badge badge-pill badge-success' style = '$style_gender'>관</span>";}
+
+		$Testfee = number_format($row[Testfee]);
+
+
+
+		$bottom_line = "border-bottom:1px solid #707070;";
+
+		echo "
+			<tr>
+				<td style = 'font-size:14pt' width = 200px >
+					<span>$row[MEMBER_NAME] <small>($row[MEMBER_ID])</small> $GENDER</span><br>";
+
+		if ($row[PHOTO3]){$img = "<img src = '../data/$row[PHOTO3]' class = 'border border-dark img-thumbnail rounded-lg' width = 100%>";}
+		if (!$row[PHOTO3]){$img = "<img src = '../data/no_image.jpg' class = 'border border-dark img-thumbnail rounded-lg' width = 100%>";}
+		if ($row[image]){$img = "<img src = '../view3.html?id=$row[MEMBER_ID]' class = 'border border-dark img-thumbnail rounded-lg' width = 100%>";}
+
+		if($rank == 9){$img = "<a href = 'admin_member_edit.html?No=$row[NO]'>$img</a>"; }
+
+		echo "	$img
+	    	 	</td>
+
+				<td style = 'font-size:13pt'align = left>
+					• $row[PHONE]<br>
+					• 응시번호 : $row[TEST_ID]-$row[Test_No]-$row[Apply_No]<br>
+					• 신청일자 : $row[Apply_date]
+				</td>";
+
+				if($ID == 'T1' or $ID == 'SBT1'){
+					echo "<td width = 100px>
+					<span class='btn btn-rounded btn-primary' style = 'font-size:12;weight:900;width:50px;padding-left:0px;padding-right:0px;'>$Skiresort2</span></td>";
+				}
+
+				echo "
+				<td style = 'font-size:13pt'>";
+
+
+					if ($row[TEST_ID] == 'T1'){echo "<span class='btn btn-rounded btn-primary' style = 'font-size:12;weight:900;width:50px;padding-left:0px;padding-right:0px;'>T1</span>";}
+					if ($row[TEST_ID] == 'T2'){echo "<span class='btn btn-rounded btn-primary' style = 'font-size:12;weight:900;width:50px;padding-left:0px;padding-right:0px;'>T2</span>";}
+					if ($row[TEST_ID] == 'T3' and ($row[T3_LICENSE] == 0 or $row[T3_LICENSE] == '')){echo "<span class='btn btn-rounded btn-primary' style = 'font-size:12;weight:900;width:50px;padding-left:0px;padding-right:0px;'>T3</span>";}
+					if ($row[TEST_ID] == 'T3' and $row[T3_LICENSE] == 1){echo "<span class='btn btn-rounded btn-primary' style = 'font-size:12;weight:900;width:50px;padding-left:0px;padding-right:0px;'>기선전</span>";}
+					if ($row[TEST_ID] == 'SBT1'){echo "<span class='btn btn-rounded btn-vimeo' style = 'font-size:12;weight:900;width:50px;padding-left:0px;padding-right:0px;'>SB-T1</span>";}
+					if ($row[TEST_ID] == 'SBT2'){echo "<span class='btn btn-rounded btn-vimeo' style = 'font-size:12;weight:900;width:50px;padding-left:0px;padding-right:0px;'>SB-T2</span>";}
+					if ($row[TEST_ID] == 'SBT3'){echo "<span class='btn btn-rounded btn-vimeo' style = 'font-size:12;weight:900;width:50px;padding-left:0px;padding-right:0px;'>SB-T3</span>";}
+					if ($row[TEST_ID] == 'PATROL'){echo "<span class='btn btn-rounded btn-success' style = 'font-size:12;weight:900;width:50px;padding-left:0px;padding-right:0px;'>PATROL</span>";}
+
+				echo "
+				</td>
+			<td style = 'font-size:14pt' width = 120px align = center>";
+
+					if ($row[PAYMENT_STATUS] == 0){echo "<span class='btn btn-rounded btn-primary' style = 'font-size:12;weight:900;width:50px;padding-left:0px;padding-right:0px;'>미결제</span>&nbsp;";}
+					if ($row[PAYMENT_STATUS] == 2){echo "<span class='btn btn-rounded btn-vimeo' style = 'font-size:12;weight:900;width:50px;padding-left:0px;padding-right:0px;'>결제완료</span>&nbsp;";}
+
+					if ($row[TRAN_STATUS] == 1){echo "<span class='btn btn-rounded btn-success' style = 'font-size:12;weight:900;width:50px;padding-left:0px;padding-right:0px;'>신청완료</span>&nbsp;";}
+					if ($row[TRAN_STATUS] == 2){echo "<span class='btn btn-rounded btn-success' style = 'font-size:12;weight:900;width:50px;padding-left:0px;padding-right:0px;'>취소신청</span>&nbsp;";}
+					if ($row[TRAN_STATUS] == 3){echo "<span class='btn btn-rounded btn-success' style = 'font-size:12;weight:900;width:50px;padding-left:0px;padding-right:0px;'>환불완료</span>&nbsp;";}
+					if ($row[TRAN_STATUS] == 4){echo "<span class='btn btn-rounded btn-success' style = 'font-size:12;weight:900;width:50px;padding-left:0px;padding-right:0px;'>불참</span>&nbsp;";}
+					if ($row[TRAN_STATUS] == 5){echo "<span class='btn btn-rounded btn-success' style = 'font-size:12;weight:900;width:50px;padding-left:0px;padding-right:0px;'>경기참석</span>&nbsp;";}
+					if ($row[TRAN_STATUS] == 7){echo "<span class='btn btn-rounded btn-success' style = 'font-size:12;weight:900;width:50px;padding-left:0px;padding-right:0px;'>시험완료</span>&nbsp;";}
+					if ($row[TRAN_STATUS] == 9){echo "<span class='btn btn-rounded btn-primary' style = 'font-size:12;weight:900;width:50px;padding-left:0px;padding-right:0px;'>결과확정</span>&nbsp;";}
+
+			echo "
+			</td>
+			<td align = right>";
+
+			if ($row[PAYMENT_STATUS] == 0 or !$row[PAYMENT_STATUS]){echo "<a href = 'admin_t1_payment.html?No=$row[Apply_No]&Test_No=$The_No' class='btn btn-rounded btn-primary' style = 'font-size:12;weight:900;width:50px;padding-left:0px;padding-right:0px;'>결제처리</a>";}
+
+			if ($row[PAYMENT_STATUS] == 2 and $row[TRAN_STATUS] == 1 and $row[TEST_ID] == 'T1'){echo "<a href = 't1_test_individual_result_input.php?Apply_No=$row[Apply_No]' class='btn btn-rounded btn-vimeo' style = 'font-size:12;weight:900;width:50px;padding-left:0px;padding-right:0px;'>결과등록</a>";}
+
+			if ($row[PAYMENT_STATUS] == 2 and $row[TRAN_STATUS] == 1 and $row[TEST_ID] == 'SBT1'){echo "<a href = 'sbt1_test_individual_result_input.php?Apply_No=$row[Apply_No]' class='btn btn-rounded btn-vimeo' style = 'font-size:12;weight:900;width:50px;padding-left:0px;padding-right:0px;'>결과등록</a>";}
+
+
+			if ($row[TRAN_STATUS] == 7 and $row[TEST_ID] == 'T1'){
+
+				if ($row[T1_Score1] < $cut_line)
+						{echo "<button type='button' class = 'btn btn-rounded light btn-danger' style = 'font-size:15;weight:900;width:50px;padding-left:0px;padding-right:0px;padding-top:13px;padding-bottom:13px;border:2px solid #ff1e00;'>$row[T_Score1]</button>&nbsp;";}
+							else
+						{echo "<button type='button' class = 'btn btn-rounded light btn-success' style = 'font-size:15;weight:900;width:50px;padding-left:0px;padding-right:0px;padding-top:13px;padding-bottom:13px;border:2px solid #009c47;'>$row[T_Score1]</button>&nbsp;";}
+
+				if ($row[T1_Score2] < $cut_line)
+						{echo "<button type='button' class = 'btn btn-rounded light btn-danger' style = 'font-size:15;weight:900;width:50px;padding-left:0px;padding-right:0px;padding-top:13px;padding-bottom:13px;border:2px solid #ff1e00;'>$row[T_Score2]</button>&nbsp;";}
+							else
+						{echo "<button type='button' class = 'btn btn-rounded light btn-success' style = 'font-size:15;weight:900;width:50px;padding-left:0px;padding-right:0px;padding-top:13px;padding-bottom:13px;border:2px solid #009c47;'>$row[T_Score2]</button>&nbsp;";}
+
+				if ($row[T1_Score3] < $cut_line)
+						{echo "<button type='button' class = 'btn btn-rounded light btn-danger' style = 'font-size:15;weight:900;width:50px;padding-left:0px;padding-right:0px;padding-top:13px;padding-bottom:13px;border:2px solid #ff1e00;'>$row[T_Score3]</button>&nbsp;";}
+							else
+						{echo "<button type='button' class = 'btn btn-rounded light btn-success' style = 'font-size:15;weight:900;width:50px;padding-left:0px;padding-right:0px;padding-top:13px;padding-bottom:13px;border:2px solid #009c47;'>$row[T_Score3]</button>&nbsp;";}
+
+
+				if ($row[T_Total_Score] >= $cut_line_total){$row[T_Total_Score] = "합격 : $row[T_Total_Score]"; $bg_color4 = "btn btn-rounded light btn-success";} else {$row[T_Total_Score] = "탈락 : $row[T_Total_Score]";  $bg_color4 = "btn btn-rounded light btn-danger";}
+
+				echo "<button type='button' class='$bg_color4'> $row[T_Total_Score]</button><br><br>";
+
+				echo "<a href = 't1_test_individual_result_input.php?Apply_No=$row[Apply_No]' class='btn btn-rounded btn-info' style = 'font-size:12;weight:900;width:50px;padding-left:0px;padding-right:0px;'>점수수정 및 결과확정</a>";
+			}
+
+			if ($row[TRAN_STATUS] == 9 and $row[TEST_ID] == 'T1'){
+
+				if ($row[T1_Score1] < $cut_line)
+						{echo "<button type='button' class = 'btn btn-rounded light btn-danger' style = 'font-size:15;weight:900;width:50px;padding-left:0px;padding-right:0px;padding-top:13px;padding-bottom:13px;border:2px solid #ff1e00;'>$row[T_Score1]</button>&nbsp;";}
+							else
+						{echo "<button type='button' class = 'btn btn-rounded light btn-success' style = 'font-size:15;weight:900;width:50px;padding-left:0px;padding-right:0px;padding-top:13px;padding-bottom:13px;border:2px solid #009c47;'>$row[T_Score1]</button>&nbsp;";}
+
+				if ($row[T1_Score2] < $cut_line)
+						{echo "<button type='button' class = 'btn btn-rounded light btn-danger' style = 'font-size:15;weight:900;width:50px;padding-left:0px;padding-right:0px;padding-top:13px;padding-bottom:13px;border:2px solid #ff1e00;'>$row[T_Score2]</button>&nbsp;";}
+							else
+						{echo "<button type='button' class = 'btn btn-rounded light btn-success' style = 'font-size:15;weight:900;width:50px;padding-left:0px;padding-right:0px;padding-top:13px;padding-bottom:13px;border:2px solid #009c47;'>$row[T_Score2]</button>&nbsp;";}
+
+				if ($row[T1_Score3] < $cut_line)
+						{echo "<button type='button' class = 'btn btn-rounded light btn-danger' style = 'font-size:15;weight:900;width:50px;padding-left:0px;padding-right:0px;padding-top:13px;padding-bottom:13px;border:2px solid #ff1e00;'>$row[T_Score3]</button>&nbsp;";}
+							else
+						{echo "<button type='button' class = 'btn btn-rounded light btn-success' style = 'font-size:15;weight:900;width:50px;padding-left:0px;padding-right:0px;padding-top:13px;padding-bottom:13px;border:2px solid #009c47;'>$row[T_Score3]</button>&nbsp;";}
+
+
+				if ($row[T_Total_Score] >= $cut_line_total){$row[T_Total_Score] = "합격 : $row[T_Total_Score]"; $bg_color4 = "btn btn-rounded light btn-success";} else {$row[T_Total_Score] = "탈락 : $row[T_Total_Score]";  $bg_color4 = "btn btn-rounded light btn-danger";}
+
+				echo "<button type='button' class='$bg_color4'> $row[T_Total_Score]</button>";
+
+			}
+
+
+			if ($row[TRAN_STATUS] == 7 and $row[TEST_ID] == 'SBT1'){
+
+				if ($row[T1_Score1] < $cut_line)
+						{echo "<button type='button' class = 'btn btn-rounded light btn-danger' style = 'font-size:15;weight:900;width:50px;padding-left:0px;padding-right:0px;padding-top:13px;padding-bottom:13px;border:2px solid #ff1e00;'>$row[T_Score1]</button>&nbsp;";}
+							else
+						{echo "<button type='button' class = 'btn btn-rounded light btn-success' style = 'font-size:15;weight:900;width:50px;padding-left:0px;padding-right:0px;padding-top:13px;padding-bottom:13px;border:2px solid #009c47;'>$row[T_Score1]</button>&nbsp;";}
+
+				if ($row[T1_Score2] < $cut_line)
+						{echo "<button type='button' class = 'btn btn-rounded light btn-danger' style = 'font-size:15;weight:900;width:50px;padding-left:0px;padding-right:0px;padding-top:13px;padding-bottom:13px;border:2px solid #ff1e00;'>$row[T_Score2]</button>&nbsp;";}
+							else
+						{echo "<button type='button' class = 'btn btn-rounded light btn-success' style = 'font-size:15;weight:900;width:50px;padding-left:0px;padding-right:0px;padding-top:13px;padding-bottom:13px;border:2px solid #009c47;'>$row[T_Score2]</button>&nbsp;";}
+
+				if ($row[T1_Score3] < $cut_line)
+						{echo "<button type='button' class = 'btn btn-rounded light btn-danger' style = 'font-size:15;weight:900;width:50px;padding-left:0px;padding-right:0px;padding-top:13px;padding-bottom:13px;border:2px solid #ff1e00;'>$row[T_Score3]</button>&nbsp;";}
+							else
+						{echo "<button type='button' class = 'btn btn-rounded light btn-success' style = 'font-size:15;weight:900;width:50px;padding-left:0px;padding-right:0px;padding-top:13px;padding-bottom:13px;border:2px solid #009c47;'>$row[T_Score3]</button>&nbsp;";}
+
+
+				if ($row[T_Total_Score] >= $cut_line_total){$row[T_Total_Score] = "합격 : $row[T_Total_Score]"; $bg_color4 = "btn btn-rounded light btn-success";} else {$row[T_Total_Score] = "탈락 : $row[T_Total_Score]";  $bg_color4 = "btn btn-rounded light btn-danger";}
+
+				echo "<button type='button' class='$bg_color4'> $row[T_Total_Score]</button><br><br>";
+
+				echo "<a href = 'sbt1_test_individual_result_input.php?Apply_No=$row[Apply_No]' class='btn btn-rounded btn-info' style = 'font-size:12;weight:900;width:50px;padding-left:0px;padding-right:0px;'>점수수정 및 결과확정</a>";
+			}
+
+			if ($row[TRAN_STATUS] == 9 and $row[TEST_ID] == 'SBT1'){
+
+				if ($row[T1_Score1] < $cut_line)
+						{echo "<button type='button' class = 'btn btn-rounded light btn-danger' style = 'font-size:15;weight:900;width:50px;padding-left:0px;padding-right:0px;padding-top:13px;padding-bottom:13px;border:2px solid #ff1e00;'>$row[T_Score1]</button>&nbsp;";}
+							else
+						{echo "<button type='button' class = 'btn btn-rounded light btn-success' style = 'font-size:15;weight:900;width:50px;padding-left:0px;padding-right:0px;padding-top:13px;padding-bottom:13px;border:2px solid #009c47;'>$row[T_Score1]</button>&nbsp;";}
+
+				if ($row[T1_Score2] < $cut_line)
+						{echo "<button type='button' class = 'btn btn-rounded light btn-danger' style = 'font-size:15;weight:900;width:50px;padding-left:0px;padding-right:0px;padding-top:13px;padding-bottom:13px;border:2px solid #ff1e00;'>$row[T_Score2]</button>&nbsp;";}
+							else
+						{echo "<button type='button' class = 'btn btn-rounded light btn-success' style = 'font-size:15;weight:900;width:50px;padding-left:0px;padding-right:0px;padding-top:13px;padding-bottom:13px;border:2px solid #009c47;'>$row[T_Score2]</button>&nbsp;";}
+
+				if ($row[T1_Score3] < $cut_line)
+						{echo "<button type='button' class = 'btn btn-rounded light btn-danger' style = 'font-size:15;weight:900;width:50px;padding-left:0px;padding-right:0px;padding-top:13px;padding-bottom:13px;border:2px solid #ff1e00;'>$row[T_Score3]</button>&nbsp;";}
+							else
+						{echo "<button type='button' class = 'btn btn-rounded light btn-success' style = 'font-size:15;weight:900;width:50px;padding-left:0px;padding-right:0px;padding-top:13px;padding-bottom:13px;border:2px solid #009c47;'>$row[T_Score3]</button>&nbsp;";}
+
+
+				if ($row[T_Total_Score] >= $cut_line_total){$row[T_Total_Score] = "합격 : $row[T_Total_Score]"; $bg_color4 = "btn btn-rounded light btn-success";} else {$row[T_Total_Score] = "탈락 : $row[T_Total_Score]";  $bg_color4 = "btn btn-rounded light btn-danger";}
+
+				echo "<button type='button' class='$bg_color4'> $row[T_Total_Score]</button>";
+
+			}
+
+
+	echo "	</td>
+		</tr>";
+
+ 		  $row=mysql_fetch_array($result);
+   		}
+
+   echo "</tbody></table><br>
+   ";
+									?>
+
+										</tbody>
+									</table>
+								</div>
+							</div>
+
+
+							<div id="Paid" class="tab-pane fade">
+								<div class="table-responsive">
+                                    <table id="example3" class="table card-table display dataTablesCard">
+										<thead>
+                                            <tr>
+                                            <tr>
+                                                <th>회원성명</th>
+                                                <th>신청일</th>
+                                                <th>License</th>
+                                                <th>결제상태</th>
+												<th>결제금액</th>
+                                                <th>진행상태</th>
+                                                <th>택배사</th>
+                                                <th>운송장번호</th>
+                                                <th>발송일</th>
+                                                <th>Total Revenue</th>
+                                            </tr>
+                                            </tr>
+                                        </thead>
+										<tbody>
+									<?
+
+									$License_query	= "SELECT * FROM 7G_License_Renew where PAYMENT_STATUS = '결제완료' ORDER BY MEMBER_NAME DESC ";
+									$License_result	= mysqli_query($link, $License_query);
+									$row			= mysqli_fetch_array($License_result);
+
+									while($row){
+									$row[TRAN_TIME] = substr($row[TRAN_TIME],0,2).":".substr($row[TRAN_TIME],2,2).";".substr($row[TRAN_TIME],4,2);
+									if($row[DELIVERY_DATE] == NULL){$row[DELIVERY_DATE] = '미발송';}
+										echo "
+											<tr>
+												<td>$row[MEMBER_NAME]</td>
+												<td>$row[TRAN_DATE]<br>$row[TRAN_TIME]</td>
+												<td><span class='text-nowrap'>$row[LICENSE_NO]</span></td>
+												<td>$row[PAYMENT_STATUS]</td>
+												<td>$row[AMOUNT]</td>
+												<td>$row[TRAN_STATUS]</td>
+												<td>$row[DELIVERY_AGENCY]</td>
+												<td>$row[TRACKING_NO]</td>
+												<td>$row[DELIVERY_DATE]</td>
+												<td><a href='javascript:void(0)' class='btn btn-primary btn-sm light'>$125,70</a></td>
+											</tr>";
+
+											$row	= mysqli_fetch_array($License_result);
+
+
+									}
+
+									?>
+
+										</tbody>
+									</table>
+								</div>
+							</div>
+							<div id="Not_Paid" class="tab-pane fade">
+								<div class="table-responsive">
+                                    <table id="example4" class="table card-table display dataTablesCard">
+										<thead>
+                                            <tr>
+                                                <th>회원성명</th>
+                                                <th>신청일</th>
+                                                <th>License</th>
+                                                <th>결제상태</th>
+												<th>결제금액</th>
+                                                <th>진행상태</th>
+                                                <th>택배사</th>
+                                                <th>운송장번호</th>
+                                                <th>발송일</th>
+                                                <th>Total Revenue</th>
+                                            </tr>
+                                        </thead>
+										<tbody>
+
+									<?
+
+									$License_query	= "SELECT * FROM 7G_License_Renew where PAYMENT_STATUS = '미결제' ORDER BY MEMBER_NAME DESC ";
+									$License_result	= mysqli_query($link, $License_query);
+									$row			= mysqli_fetch_array($License_result);
+
+									while($row){
+									$row[TRAN_TIME] = substr($row[TRAN_TIME],0,2).":".substr($row[TRAN_TIME],2,2).";".substr($row[TRAN_TIME],4,2);
+									if($row[DELIVERY_DATE] == NULL){$row[DELIVERY_DATE] = '미발송';}
+										echo "
+											<tr>
+												<td>$row[MEMBER_NAME]</td>
+												<td>$row[TRAN_DATE]<br>$row[TRAN_TIME]</td>
+												<td><span class='text-nowrap'>$row[LICENSE_NO]</span></td>
+												<td>$row[PAYMENT_STATUS]</td>
+												<td>$row[AMOUNT]</td>
+												<td>$row[TRAN_STATUS]</td>
+												<td>$row[DELIVERY_AGENCY]</td>
+												<td>$row[TRACKING_NO]</td>
+												<td>$row[DELIVERY_DATE]</td>
+												<td><a href='javascript:void(0)' class='btn btn-primary btn-sm light'>$125,70</a></td>
+											</tr>";
+
+											$row	= mysqli_fetch_array($License_result);
+
+
+									}
+
+									?>
+
+										</tbody>
+									</table>
+								</div>
+							</div>
+							<div id="Canceled" class="tab-pane fade">
+								<div class="table-responsive">
+                                    <table id="example5" class="table card-table display dataTablesCard">
+										<thead>
+                                            <tr>
+                                                <th>회원성명</th>
+                                                <th>신청일</th>
+                                                <th>License</th>
+                                                <th>결제상태</th>
+												<th>결제금액</th>
+                                                <th>진행상태</th>
+                                                <th>택배사</th>
+                                                <th>운송장번호</th>
+                                                <th>발송일</th>
+                                                <th>Total Revenue</th>
+                                            </tr>
+                                        </thead>
+										<tbody>
+									<?
+
+									$License_query	= "SELECT * FROM 7G_License_Renew where PAYMENT_STATUS = '결제완료' and TRAN_STATUS = '미발송' ORDER BY MEMBER_NAME DESC ";
+									$License_result	= mysqli_query($link, $License_query);
+									$row			= mysqli_fetch_array($License_result);
+
+									while($row){
+									$row[TRAN_TIME] = substr($row[TRAN_TIME],0,2).":".substr($row[TRAN_TIME],2,2).";".substr($row[TRAN_TIME],4,2);
+									if($row[DELIVERY_DATE] == NULL){$row[DELIVERY_DATE] = '미발송';}
+
+										echo "
+											<tr>
+												<td>$row[MEMBER_NAME]</td>
+												<td>$row[TRAN_DATE]<br>$row[TRAN_TIME]</td>
+												<td><span class='text-nowrap'>$row[LICENSE_NO]</span></td>
+												<td>$row[PAYMENT_STATUS]</td>
+												<td>$row[AMOUNT]</td>
+												<td>$row[TRAN_STATUS]</td>
+												<td>$row[DELIVERY_AGENCY]</td>
+												<td>$row[TRACKING_NO]</td>
+												<td>$row[DELIVERY_DATE]</td>
+												<td><a href='javascript:void(0)' class='btn btn-primary btn-sm light'>$125,70</a></td>
+											</tr>";
+
+											$row	= mysqli_fetch_array($License_result);
+
+
+									}
+
+									?>
+
+										</tbody>
+									</table>
+
+
+                <!-- Row ends -->
+            </div>
+            <!-- container ends -->
+        </div>
+        <!--**********************************
+                Content body end
+            ***********************************-->
+
+
+        <!--**********************************
+            Footer start
+        ***********************************-->
+        <div class="footer">
+            <div class="copyright">
+                <p>© Designed &amp; Developed by <a href="https://7gate.kr/" target="_blank">podong28.com</a> 2019</p>
+            </div>
+        </div>
+        <!--**********************************
+            Footer end
+        ***********************************-->
+
+
+    </div>
+    <!--**********************************
+        Main wrapper end
+    ***********************************-->
+
+    <!--**********************************
+        Scripts
+    ***********************************-->
+    <!-- Required vendors -->
+    <script src="./vendor/global/global.min.js"></script>
+	<script src="./vendor/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
+    <script src="./js/custom.min.js"></script>
+	<script src="./js/deznav-init.js"></script>
+
+	<!-- Datatable -->
+    <script src="./vendor/datatables/js/jquery.dataTables.min.js"></script>
+	<script>
+		(function($) {
+			var table = $('#example2').DataTable({
+				searching: false,
+				paging:true,
+				select: false,
+				//info: false,
+				lengthChange:false
+
+			});
+			var table = $('#example3').DataTable({
+				searching: false,
+				paging:true,
+				select: false,
+				//info: false,
+				lengthChange:false
+
+			});
+			var table = $('#example4').DataTable({
+				searching: false,
+				paging:true,
+				select: false,
+				//info: false,
+				lengthChange:false
+
+			});
+			var table = $('#example5').DataTable({
+				searching: false,
+				paging:true,
+				select: false,
+				//info: false,
+				lengthChange:false
+
+			});
+			$('#example tbody').on('click', 'tr', function () {
+				var data = table.row( this ).data();
+
+			});
+		})(jQuery);
+		
+		function excel(num){
+		top.document.location.href = '_excel_01.html?Test_No='+num;
+		}
+		
+	</script>
+</body>
+</html>

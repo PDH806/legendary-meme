@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html>
+
+<script src="https://code.jquery.com/jquery-1.8.3.min.js"></script>
+<script src="https://code.jquery.com/jquery.menu.js?ver=171222"></script>
+<script src="https://code.jquery.com/common.js?ver=171222"></script>
+<!-- <script src="js/wrest.js?ver=171222"></script> -->
+<script src="js/placeholders.min.js"></script>
+<link rel="stylesheet" href="js/font-awesome/css/font-awesome.min.css">
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv="Content-Script-Type" content="text/javascript" />
+	<meta http-equiv="Content-Style-Type" content="text/css" />
+	<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<meta property="og:image" content="images/meta_img.jpg" />
+	<meta property="og:description" content=""/>
+	<title></title>
+    <link rel="shortcut icon" type="image/x-icon" href="../skiresort/ski/images/favicon.ico">
+    <link rel="stylesheet" type="text/css" href="http://skiresort.ivyro.net/skiresort/ski/css/normalize.css">
+	<link rel="stylesheet" type="text/css" href="http://skiresort.ivyro.net/skiresort/ski/css/common.css" />	
+ 	<link rel="stylesheet" type="text/css" href="http://skiresort.ivyro.net/skiresort/ski/css/main.css" /> 	
+	<link rel="stylesheet" type="text/css" href="http://skiresort.ivyro.net/skiresort/ski/css/jquery.fullpage.css" />
+	<link rel="stylesheet" type="text/css" href="http://skiresort.ivyro.net/skiresort/ski/css/table.css" />
+	<link rel="stylesheet" type="text/css" href="http://skiresort.ivyro.net/skiresort/ski/css/sub_01.css" media='screen,print'/>	
+	<link rel="stylesheet" type="text/css" href="http://skiresort.ivyro.net/skiresort/ski/css/media_01.css" />
+
+	<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+	<script src="https://code.jquery.com/ui/1.11.2/jquery-ui.min.js"></script>
+	<script type="text/javascript" src="js/scrolloverflow.js" charset="utf-8"></script>
+	<script type="text/javascript" src="js/jquery.fullpage.js" charset="utf-8"></script>
+	<script type="text/javascript" src="js/slick.js" charset="utf-8"></script>
+	<script type="text/javascript" src="js/common.js" charset="utf-8"></script>
+	<script type="text/javascript" src="js/html5shiv.js" charset="utf-8"></script>
+	<script type="text/javascript" src="js/flexslider.js"  charset="utf-8"></script>
+
+    <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>  <!-- ���������ȣ API -->
+    <!--<script src="https://ssl.daumcdn.net/dmaps/map_js_init/postcode.v2.js"></script> ���������ȣ API -->
+	<!--[if lt IE 9]>
+		<script type="text/javascript" src="js/html5shiv.js"></script>
+	<![endif]-->
+</head>
+<body>
+        <div class="ofl_spt">
+            <script language="javascript">
+                $(document).ready(function() {
+                    //메인화면 PC/모바일 분기시 화면 스크롤
+                    isOnePageScroll();
+                });
+
+            </script>
+        </div>
+        <!--//ofl_spt -->
+
+<head>
+
+<?
+	$main_title = '한국 스키장 경영협회';
+	$link 	= 	mysqli_connect("dbserver","skiresort","ll170505","skiresort");
+	include 'db_config.html';
+?>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+	<link rel="shortcut icon" href="Myicon.png" type="image/x-icon">
+    
+    <title>
+    	<?
+    	echo "$main_title / $page";    	
+    	?>    
+    </title>
+    
+		<!-- Custom styles for AUGMENT-SKI -->
+			<? include 'link-files.html'; ?>
+		<!-- end of Link -->
+		
+</head>
+<body>
+		<!-- Navigation for AUGMENT-SKI -->
+			<? include 'main-nav.html'; ?>
+		<!-- end of Navigation -->
+
+                    <script>
+                        $(function() {
+                            $('.slide').slick({
+                                fade: true,
+                                slidesToShow: 1,
+                                slidesToScroll: 1,
+                                autoplay: true,
+                                autoplaySpeed: 3000,
+                                speed: 1000,
+                                cssEase: 'ease-out',
+                                swipe: false,
+                                dots: false,
+                                arrows: false,
+                                pauseOnHover: false,
+                            });
+                            
+                        });
+                    </script>
+
+
+    <body>
+        <div id="scroll_top">
+            <button type="button"><img src="/images/scr_top.jpg"></button>
+        </div>
+
+        <div>
+        
+		<!-- ㅡㅡㅡㅡㅡㅡㅡㅡ/SB_HEADERㅡㅡㅡㅡㅡㅡㅡㅡ -->
+            <div id="sbcenter" class="teach">
+                <div class="sb_top_bg">
+                    <div class="inner_wrap">
+                       <h2>스키 지도 요원</h2>
+                    </div>
+                    <div class="sb_top_menu">
+                        <ul class="sbclear">
+                            <li><a href="teach_ski_01.html">스키 지도 요원 소개</a></li>
+                            <li><a href="teach_test_01.html">시험 정보 및 자료</a></li>
+                            <li><a href="teach_data_01.html">원서 접수 및 조회</a></li>
+							<li><a href="teach_check_01.html">자격 확인</a></li>
+							<li class="on"><a href="teach_demon_01.html">데몬스트레이터</a></li>
+                            <li><a href="teach_champion_01.html">기술 선수권 대회</a></li>
+                        </ul>
+                    </div>
+                    <!--/sb_top_menu-->
+                    
+			</div>
+			<!--/sb_top_bg-->
+			<div class="sbcenter cp_about teach_demon">
+				<div class="sb_content">
+					<div class="sb_top_text sbclear">
+						<a href="teach_check_01.html" class="sb_prev"><img src="images/sb_prev_btn_on.png" alt="이전"></a>
+						<h3>Demonstrator</h3>
+						<a href="teach_champion_01.html" class="sb_next"><img src="images/sb_next_btn_on.png" alt="다음"></a>
+					</div>
+					<!--/sb_top_text-->
+					<div class="tab_wrap">
+						<div class="tab_menu_area">
+							<ul class="tab_menu tab_click sbclear">
+								<li class="on"><a href="#tab1">데몬 1기</a></li>
+								<li><a href="#tab2">데몬 2기</a></li>
+								<li class="tab_all"><a href="#tab3">데몬 3기</a></li>
+							</ul>
+						</div>
+						<!--/tab_menu_area-->
+						<div class="tab_list_area tab_click_list">
+							<!-- 데몬1기 -->
+							<div id="tab1" class="cp_president cp_box">
+								<h4>데몬 1기</h4>
+								<ol class="cp_demon" reversed class="sbclear">
+									<li>
+										<ul>
+											<li class="prd_img"><img src="images/demon1.jpg"></li>
+											<li class="prd_txt">
+												<p class="prd_txt_name">노은진</p>
+											</li>
+											<li class="prd_prf">
+												<div>
+													<p class="name">노은진<span>NO EUN JIN</span></p>
+													<p>프로필</p>
+													<ul>
+														<li><span>2002~2018</span>대명비발디파크 인터스키 소속</li>
+														<li><span>2016</span>한국스키장경영협회 티칭3 취득</li>
+														<li><span>2016 ~</span>한국스키장경영협회 (SBAK) Demonstrator 활동 중</li>
+													</ul>
+													<p>경력사항</p>
+													<ul>
+														<li><span>2011</span>지산배 스키술선수권대회 4위</li>
+														<li><span>2011</span>대한스키지도자연맹 기술선수권대회 6위</li>
+														<li><span>2012</span>대한스키지도자연맹 기술선수권대회 3위</li>
+														<li><span>2013</span>대한스키지도자연맹 기술선수권대회 4위</li>
+														<li><span>2014</span>대한스키지도자연맹 기술선수권대회 6위</li>
+														<li><span>2015</span>신안그룹회장배 기술선수권대회 2위</li>
+														<li><span>2015</span>서울특별시연합회장기 1위</li>
+														<li><span>2015</span>대한스키지도자연맹 기술선수권대회 6위</li>
+														<li><span>2016</span>한솔섬유배 인터스키대회 2위</li>
+														<li><span>2016</span>스파이더배 한국스키장경영협회 기술선수권대회 1위</li>
+														<li><span>2017</span>스파이더배 한국스키장경영협회 기술선수권대회 1위</li>
+														<li><span>2018</span>스파이더배 한국스키장경영협회 기술선수권대회 1위</li>
+													</ul>
+												</div>
+											</li>
+											<!--//prd_prf -->
+										</ul>
+									</li>
+									<li>
+										<ul>
+											<li class="prd_img"><img src="images/demon2.jpg"></li>
+											<li class="prd_txt">
+												<p class="prd_txt_name">민지나</p>
+											</li>
+											<li class="prd_prf">
+												<div>
+													<p class="name">민지나<span>MIN JI NA</span></p>
+													<p>프로필</p>
+													<ul>
+														<li><span></span></li>
+														<li><span></span></li>
+													</ul>
+													<p>경력사항</p>
+													<ul>
+														<li><span></span></li>
+														<li><span></span></li>
+													</ul>
+												</div>
+											</li>
+											<!--//prd_prf -->
+										</ul>
+									</li>
+									<li>
+										<ul>
+											<li class="prd_img"><img src="images/demon3.jpg"></li>
+											<li class="prd_txt">
+												<p class="prd_txt_name">김정훈</p>
+											</li>
+											<li class="prd_prf">
+												<div>
+													<p class="name">김정훈<span>KIM JUNG HUN</span></p>
+													<p>프로필</p>
+													<ul>
+														<li><span>1993 ~ 1995</span>스키 꿈나무 대표팀 활동</li>
+														<li><span>1996 ~ 1999</span>스키 국가대표 상비군 활동</li>
+														<li><span>2001 ~ 2005</span>스키 국가대표선수 활동</li>
+														<li><span>1992 ~ 2005</span>국내대회 다수 입상</li>
+														<li><span>2010 ~ 2015</span>대한스키지도자연맹 데몬스트레이터 선발</li>
+														<li><span>2016</span>한국스키장경영협회 티칭3 취득</li>
+														<li><span>2016 ~</span>한국스키장경영협회 (SBAK) Demonstrator 활동 중</li>
+														<li><span>2017 ~</span>경남스키협회 이사</li>
+													</ul>
+													<p>경력사항</p>
+													<ul>
+														<li><span>2009</span>지산배 기술선수권대회 1위</li>
+														<li><span>2009</span>대한스키지도자연맹 기술선수권대회 1위</li>
+														<li><span>2010</span>지산배 기술선수권대회 1위</li>
+														<li><span>2011</span>대한스키지도자연맹 기술선수권대회 1위</li>
+														<li><span>2012</span>대한스키지도자연맹 기술선수권대회 1위</li>
+														<li><span>2012</span>하이원배 오픈스키 챔피언쉽 기술선수권대회 1위</li>
+														<li><span>2013</span>지산배 기술선수권대회 1위</li>
+														<li><span>2013</span>하이원배 오픈스키 챔피언쉽 기술선수권대회 1위</li>
+														<li><span>2014</span>대한스키지도자연맹 기술선수권대회 1위</li>
+														<li><span>2015</span>신안그룹회장배 기술선수권대회 1위</li>
+														<li><span>2016</span>신안그룹회장배 기술선수권대회 1위</li>
+														<li><span>2016</span>스파이더배 한국스키장경영협회 기술선수권대회 1위</li>
+														<li><span>2018</span>스파이더배 한국스키장경영협회 기술선수권대회 1위</li>
+													</ul>
+												</div>
+											</li>
+											<!--//prd_prf -->
+										</ul>
+									</li>
+									<li>
+										<ul>
+											<li class="prd_img"><img src="images/demon4.jpg"></li>
+											<li class="prd_txt">
+												<p class="prd_txt_name">변기덕</p>
+											</li>
+											<li class="prd_prf">
+												<div>
+													<p class="name">변기덕<span>BYUN KI DUK</span></p>
+													<p>프로필</p>
+													<ul>
+														<li><span></span>현 오크밸리 스키아카데미 감독</li>
+														<li><span>2016</span>한국스키장경영협회 티칭3 취득</li>
+														<li><span>2016 ~</span>한국스키장경영협회 (SBAK) Demonstrator 활동 중</li>
+														<li><span>2018 ~</span>유튜브체널 스키사용설명서 운영 중</li>
+													</ul>
+													<p>경력사항</p>
+													<ul>
+														<li><span>2016</span>스파이더배 한국스키장경영협회 기술선수권대회 4위</li>
+														<li><span>2018</span>스파이더배 한국스키장경영협회 기술선수권대회 4위</li>
+													</ul>
+												</div>
+											</li>
+											<!--//prd_prf -->
+										</ul>
+									</li>
+									<li class="prd_none">
+										<ul>
+											<li class="prd_img"><img src="images/demon5.jpg"></li>
+											<li class="prd_txt">
+												<p class="prd_txt_name">김창연</p>
+											</li>
+											<li class="prd_prf">
+												<div>
+													<p class="name">김창연<span>KIM CHANG YEON</span></p>
+													<p>프로필</p>
+													<ul>
+														<li><span>2007 ~ 2017</span>비발디파크 스키학교 근무</li>
+														<li><span>2016</span>한국스키장경영협회 티칭3 취득</li>
+														<li><span>2017 ~</span>비발디파크 스키학교 정직원 근무</li>
+														<li><span>2016 ~</span>한국스키장경영협회 (SBAK) Demonstrator 활동 중</li>
+													</ul>
+													<p>경력사항</p>
+													<ul>
+														<li><span>2016</span>스파이더배 한국스키장경영협회 기술선수권대회 5위</li>
+														<li><span>2017</span>스파이더배 한국스키장경영협회 기술선수권대회 2위</li>
+														<li><span>2018</span>스파이더배 한국스키장경영협회 기술선수권대회 10위</li>
+													</ul>
+												</div>
+											</li>
+											<!--//prd_prf -->
+										</ul>
+									</li>
+									<li>
+										<ul>
+											<li class="prd_img"><img src="images/demon6.jpg"></li>
+											<li class="prd_txt">
+												<p class="prd_txt_name">안영택</p>
+											</li>
+											<li class="prd_prf">
+												<div>
+													<p class="name">안영택<span>AHN YOUNG TAEK</span></p>
+													<p>프로필</p>
+													<ul>
+														<li><span>1990 ~ 2000</span>알파인 스키선수 생활</li>
+														<li><span>2000 ~ 2003</span>보광 휘닉스파크 레이싱팀 코치</li>
+														<li><span>2004 ~ 2008</span>보광 휘닉스파크 스키학교</li>
+														<li><span>2007 ~ 2008</span>부천 타이거월드 스키팀 (비시즌)</li>
+														<li><span>2001</span>스키 준지도자 자격 취득 (level 2)</li>
+														<li><span>2003</span>스키 정지도자 자격 취득 (level 3)</li>
+														<li><span>2007 ~ 2009</span>한국 데몬스트레이터</li>
+														<li><span>2001 ~ 2008</span>뉴질랜드 투어 7회, 일본 투어 4회 진행</li>
+														<li><span class="prd-n"></span>현, 휘닉스파크 스키학교 강사 교육담당, 아토믹 스키 데모팀</li>
+													</ul>
+													<p>경력사항</p>
+													<ul>
+														<li><span>2007</span>한국 스키 기술선수권 대회 종합 12위</li>
+														<li><span>2007</span>한국 국가대표 데모선발전 종합 11위</li>
+														<li><span>2008</span>한국 스키 기술선수권 대회 종합 14위</li>
+														<li><span>2008</span>한국 국가대표 데모선발전 종합 10위</li>
+													</ul>
+												</div>
+											</li>
+											<!--//prd_prf -->
+										</ul>
+									</li>
+									<li>
+										<ul>
+											<li class="prd_img"><img src="images/demon7.jpg"></li>
+											<li class="prd_txt">
+												<p class="prd_txt_name">김경래</p>
+											</li>
+											<li class="prd_prf">
+												<div>
+													<p class="name">김경래<span>KIM KYUNG RAE</span></p>
+													<p>프로필</p>
+													<ul>
+														<li><span>1998 ~ 2004</span>알파인스키 국가대표상비군 활동</li>
+														<li><span>2005 ~ 2006</span>알파인스키 국가대표 활동</li>
+													</ul>
+													<p>경력사항</p>
+													<ul>
+														<li><span>1995 ~ 2006</span>전국동계 체육대회 금메달외 다수입상</li>
+														<li><span>2008 ~ 2009</span>제1회 지산배오픈챔피언십 6위</li>
+														<li><span>2009 ~ 2010</span>제2회 지산배챔피언십 6위</li>
+														<li><span>2011 ~ 2012</span>제1회 하이원 오픈 챔피언십 5위</li>
+														<li><span>2012 ~ 2013</span>제2회 하이원챔피언십 4위</li>
+														<li><span class="prd-n"></span>제29회 기술선수권대회 5위</li>
+													</ul>
+												</div>
+											</li>
+											<!--//prd_prf -->
+										</ul>
+									</li>
+								</ol>
+							</div>
+							<!-- //데몬1기 -->
+							<!-- 데몬2기 -->
+							<div id="tab2" class="cp_president cp_box">
+								<h4>데몬 2기</h4>
+								<ol class="cp_demon" reversed class="sbclear">
+									<li>
+										<ul>
+											<li class="prd_img"><img src="images/demon_2_1.jpg"></li>
+											<li class="prd_txt">
+												<p class="prd_txt_name">노은진</p>
+											</li>
+											<li class="prd_prf">
+												<div>
+													<p class="name">노은진<span>NO EUN JIN</span></p>
+													<p>프로필</p>
+													<ul>
+														<li><span>2002~2018</span>대명비발디파크 인터스키 소속</li>
+														<li><span>2016</span>한국스키장경영협회 티칭3 취득</li>
+														<li><span>2016 ~</span>한국스키장경영협회 (SBAK) Demonstrator 활동 중</li>
+													</ul>
+													<p>경력사항</p>
+													<ul>
+														<li><span>2011</span>지산배 스키술선수권대회 4위</li>
+														<li><span>2011</span>대한스키지도자연맹 기술선수권대회 6위</li>
+														<li><span>2012</span>대한스키지도자연맹 기술선수권대회 3위</li>
+														<li><span>2013</span>대한스키지도자연맹 기술선수권대회 4위</li>
+														<li><span>2014</span>대한스키지도자연맹 기술선수권대회 6위</li>
+														<li><span>2015</span>신안그룹회장배 기술선수권대회 2위</li>
+														<li><span>2015</span>서울특별시연합회장기 1위</li>
+														<li><span>2015</span>대한스키지도자연맹 기술선수권대회 6위</li>
+														<li><span>2016</span>한솔섬유배 인터스키대회 2위</li>
+														<li><span>2016</span>스파이더배 한국스키장경영협회 기술선수권대회 1위</li>
+														<li><span>2017</span>스파이더배 한국스키장경영협회 기술선수권대회 1위</li>
+														<li><span>2018</span>스파이더배 한국스키장경영협회 기술선수권대회 1위</li>
+													</ul>
+												</div>
+											</li>
+											<!--//prd_prf -->
+										</ul>
+									</li>
+									<li>
+										<ul>
+											<li class="prd_img"><img src="images/demon_2_2.jpg"></li>
+											<li class="prd_txt">
+												<p class="prd_txt_name">김정훈</p>
+											</li>
+											<li class="prd_prf">
+												<div>
+													<p class="name">김정훈<span>KIM JUNG HUN</span></p>
+													<p>프로필</p>
+													<ul>
+														<li><span>1993 ~ 1995</span>스키 꿈나무 대표팀 활동</li>
+														<li><span>1996 ~ 1999</span>스키 국가대표 상비군 활동</li>
+														<li><span>2001 ~ 2005</span>스키 국가대표선수 활동</li>
+														<li><span>1992 ~ 2005</span>국내대회 다수 입상</li>
+														<li><span>2010 ~ 2015</span>대한스키지도자연맹 데몬스트레이터 선발</li>
+														<li><span>2016</span>한국스키장경영협회 티칭3 취득</li>
+														<li><span>2016 ~</span>한국스키장경영협회 (SBAK) Demonstrator 활동 중</li>
+														<li><span>2017 ~</span>경남스키협회 이사</li>
+													</ul>
+													<p>경력사항</p>
+													<ul>
+														<li><span>2009</span>지산배 기술선수권대회 1위</li>
+														<li><span>2009</span>대한스키지도자연맹 기술선수권대회 1위</li>
+														<li><span>2010</span>지산배 기술선수권대회 1위</li>
+														<li><span>2011</span>대한스키지도자연맹 기술선수권대회 1위</li>
+														<li><span>2012</span>대한스키지도자연맹 기술선수권대회 1위</li>
+														<li><span>2012</span>하이원배 오픈스키 챔피언쉽 기술선수권대회 1위</li>
+														<li><span>2013</span>지산배 기술선수권대회 1위</li>
+														<li><span>2013</span>하이원배 오픈스키 챔피언쉽 기술선수권대회 1위</li>
+														<li><span>2014</span>대한스키지도자연맹 기술선수권대회 1위</li>
+														<li><span>2015</span>신안그룹회장배 기술선수권대회 1위</li>
+														<li><span>2016</span>신안그룹회장배 기술선수권대회 1위</li>
+														<li><span>2016</span>스파이더배 한국스키장경영협회 기술선수권대회 1위</li>
+														<li><span>2018</span>스파이더배 한국스키장경영협회 기술선수권대회 1위</li>
+													</ul>
+												</div>
+											</li>
+											<!--//prd_prf -->
+										</ul>
+									</li>
+									<li>
+										<ul>
+											<li class="prd_img"><img src="images/demon_2_7.jpg"></li>
+											<li class="prd_txt">
+												<p class="prd_txt_name">김창연</p>
+											</li>
+											<li class="prd_prf">
+												<div>
+													<p class="name">김창연<span>KIM CHANG YEON</span></p>
+													<p>프로필</p>
+													<ul>
+														<li><span>2007 ~ 2017</span>비발디파크 스키학교 근무</li>
+														<li><span>2016</span>한국스키장경영협회 티칭3 취득</li>
+														<li><span>2017 ~</span>비발디파크 스키학교 정직원 근무</li>
+														<li><span>2016 ~</span>한국스키장경영협회 (SBAK) Demonstrator 활동 중</li>
+													</ul>
+													<p>경력사항</p>
+													<ul>
+														<li><span>2016</span>스파이더배 한국스키장경영협회 기술선수권대회 5위</li>
+														<li><span>2017</span>스파이더배 한국스키장경영협회 기술선수권대회 2위</li>
+														<li><span>2018</span>스파이더배 한국스키장경영협회 기술선수권대회 10위</li>
+													</ul>
+												</div>
+											</li>
+											<!--//prd_prf -->
+										</ul>
+									</li>
+									<li>
+										<ul>
+											<li class="prd_img"><img src="images/demon_2_3.jpg"></li>
+											<li class="prd_txt">
+												<p class="prd_txt_name">김태규</p>
+											</li>
+											<li class="prd_prf">
+												<div>
+													<p class="name">김태규<span>KIM TAE KYU</span></p>
+													<p>프로필</p>
+													<ul>
+														<li><span>2018</span>한국스키장경영협회 티칭3 취득</li>
+														<li><span>2018 ~</span>한국스키장경영협회 (SBAK) Demonstrator 활동 중</li>
+													</ul>
+													<p>경력사항</p>
+													<ul>
+														<li><span>2012</span>한국대학스키연맹 레이싱 2위</li>
+														<li><span>2013</span>살로몬배 기술선수권대회 5위</li>
+														<li><span>2013</span>지산배 기술선수권대회 31위</li>
+														<li><span>2018</span>스파이더배 한국스키장경영협회 기술선수권대회 12위</li>
+													</ul>
+												</div>
+											</li>
+											<!--//prd_prf -->
+										</ul>
+									</li>
+									<li class="prd_none">
+										<ul>
+											<li class="prd_img"><img src="images/demon_2_4.jpg"></li>
+											<li class="prd_txt">
+												<p class="prd_txt_name">방정문</p>
+											</li>
+											<li class="prd_prf">
+												<div>
+													<p class="name">방정문<span>BANG JUNG MOON</span></p>
+													<p>프로필</p>
+													<ul>
+														<li><span></span>현 인천광역시 공무원 스키 동호회(All Ways) 기술고문</li>
+														<li><span>2012 ~</span>V.P_SKILAB(방정문 스키스쿨) 설립</li>
+														<li><span>2016 ~</span>한국스키장경영협회 (SBAK) Demonstrator 활동 중</li>
+													</ul>
+													<p>경력사항</p>
+													<ul>
+														<li><span>2015</span>신안그룹회장배 기술선수권대회 9위</li>
+														<li><span>2016</span>대한스키지도자연맹 기술선수권대회 17위</li>
+														<li><span>2017</span>한솔섬유배 인터스키대회 17위</li>
+														<li><span>2018</span>스파이더배 한국스키장경영협회 기술선수권대회 11위</li>
+														<li><span>2018</span>한솔섬유배 인터스키대회 17위</li>
+													</ul>
+												</div>
+											</li>
+											<!--//prd_prf -->
+										</ul>
+									</li>
+									<li>
+										<ul>
+											<li class="prd_img"><img src="images/demon_2_5.jpg"></li>
+											<li class="prd_txt">
+												<p class="prd_txt_name">변기덕</p>
+											</li>
+											<li class="prd_prf">
+												<div>
+													<p class="name">변기덕<span>BYUN KI DUK</span></p>
+													<p>프로필</p>
+													<ul>
+														<li><span></span>현 오크밸리 스키아카데미 감독</li>
+														<li><span>2016</span>한국스키장경영협회 티칭3 취득</li>
+														<li><span>2016 ~</span>한국스키장경영협회 (SBAK) Demonstrator 활동 중</li>
+														<li><span>2018 ~</span>유튜브체널 스키사용설명서 운영 중</li>
+													</ul>
+													<p>경력사항</p>
+													<ul>
+														<li><span>2016</span>스파이더배 한국스키장경영협회 기술선수권대회 4위</li>
+														<li><span>2018</span>스파이더배 한국스키장경영협회 기술선수권대회 4위</li>
+													</ul>
+												</div>
+											</li>
+											<!--//prd_prf -->
+										</ul>
+									</li>
+									<li class="prd_none">
+										<ul>
+											<li class="prd_img"><img src="images/demon_2_6.jpg"></li>
+											<li class="prd_txt">
+												<p class="prd_txt_name">전길영</p>
+											</li>
+											<li class="prd_prf">
+												<div>
+													<p class="name">전길영<span>JEON GIL YOUNG</span></p>
+													<p>프로필</p>
+													<ul>
+														<li><span>2002 ~ 2003</span>대명 비발디 스키학교 강사 (1년차)</li>
+														<li><span>2003 ~ 2004</span>대명 인터스키 코치 활동</li>
+														<li><span>2006 ~ 2008</span>대명 인터스키 코치 활동</li>
+														<li><span>2008 ~ 2010</span>한솔 오크밸리 시즌 레슨 헤드 코치 활동</li>
+														<li><span>2010 ~ 2015</span>휘닉스 평창 정직원 근무</li>
+														<li><span>2013 ~ 2015</span>휘닉스 평창 인터스키스쿨 기획 및 운영 </li>
+														<li><span>2015 ~ 2016</span>대한스키지도자연맹 데몬스트레이터 선발</li>
+														<li><span>2016 ~ 2018</span>웰리힐리파크 스키 아카데미 활동</li>
+														<li><span>2016 ~</span>SKITZO 영업 및 마케팅</li>
+														<li><span>2018</span>한국스키장경영협회 티칭3 취득</li>
+														<li><span>2018 ~</span>한국스키장경영협회 (SBAK) Demonstrator 활동 중</li>
+													</ul>
+													<p>경력사항</p>
+													<ul>
+														<li><span>2012</span>대한스키지도자연맹 기술선수권대회 18위</li>
+														<li><span>2013</span>대한스키지도자연맹 기술선수권 대회 20위</li>
+														<li><span>2015</span>한솔섬유배 인터스키대회 6위</li>
+														<li><span>2018</span>스파이더배 한국스키장경영협회 기술선수권 대회 5위</li>
+													</ul>
+												</div>
+											</li>
+											<!--//prd_prf -->
+										</ul>
+									</li>
+								</ol>
+							</div>
+							<!-- //데몬2기 -->
+							<!-- 데몬3기 -->
+							<div id="tab3" class="cp_president cp_box">
+								<h4>데몬 3기</h4>
+								<ol class="cp_demon" reversed class="sbclear">
+								</ol>
+							</div>
+							<!-- //데몬3기 -->
+
+						</div>
+						<!--/tab_list_area-->
+					</div>
+					<!--/tab_wrap-->
+					<div class="demon_profile">
+						<div class="sbclear">
+							<p class="demon_profile_img"></p>
+							<div class="demon_career">
+							</div>
+							<button type="button" class="close">
+								<img src="images/pop_close.png">
+							</button>
+						</div>
+					</div>
+					<!--/demon_profile-->
+				</div>
+				<!--/sb_content-->
+			</div>
+			<!-- //sbcenter -->
+			<?
+          include "include/sb_quick.html";
+?>
+		</div>
+		<!-- //sbcenter -->
+
+		<script>
+			var demon = $(".cp_demon").find("li");
+			var demonProfile = $(".demon_profile");
+			demon.on('click', function() {
+				var demonImg = $(this).find(".prd_img").html();
+				var demonCareer = $(this).find(".prd_prf").html();
+				demonProfile.fadeIn(200).find(".demon_profile_img").append(demonImg);
+				demonProfile.find(".demon_career").append(demonCareer);
+			});
+			$(".close").click(function() {
+				demonProfile.fadeOut(function() {
+					$(this).find(".demon_profile_img").children("img").remove();
+					$(this).find(".demon_career").html("");
+				});
+			});
+
+		</script>
+		<!-- ㅡㅡㅡㅡㅡㅡㅡㅡFOOTERㅡㅡㅡㅡㅡㅡㅡㅡ -->
+		<?
+    include "footer.html";
+?>

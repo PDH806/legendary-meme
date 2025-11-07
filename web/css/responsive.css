@@ -1,0 +1,195 @@
+@charset "utf-8"; 
+/* 
+	copyright(c) WEBsiting.co.kr 
+	모바일화면 관련 css파일입니다.
+	각 넓이에 따른 스타일 설정이 가능합니다.
+*/
+
+/* 디바이스 981px 이상에서 적용*/
+@media all and (min-width:981px)
+{
+	html,body{overflow:auto; }
+	html.ovfH,body.ovfH{overflow:auto; }
+	#snbOpen,
+	#sideBarCover,
+	#snbMvAr,
+	#snbMvArBottom,
+	.leftMenuUseFlase #sideBar,
+	.bNBarMwWrap{display:none; }
+	.leftMenuUseFlase #ctWrap {background:none !important;}
+	.leftMenuUseFlase #container {width:100%; max-width:1100px; margin:0 auto; float:none;}
+
+	
+	.leftMenuUseFlase .contentTitle{text-align:center;}
+	.leftMenuUseFlase .contentTitle strong{float:none;}
+	.leftMenuUseFlase .contentTitle .locationBar{float:none;  }
+
+	#hd{-webkit-transition-duration: 0.2s; -webkit-transition-timing-function: ease; transition-duration: 0.2s; transition-timing-function: ease; }
+	#hd.scDown{background:#fff; margin-top:-35px; -webkit-transition-duration: 0.2s; -webkit-transition-timing-function: ease; transition-duration: 0.2s; transition-timing-function: ease; }
+	#topSpacer{height:115px; }
+	.pc_br{display:block !important; }
+	.pc_block{display:block !important; }
+	.mobile_block{display:none !important; }
+	.pc_inline-block{display:block !important; }
+	.mobile_inline-block{display:inline-block !important; }
+
+}
+/* 디바이스 1100px 이하에서 적용*/
+@media all and (max-width:1100px)
+{
+	#gnb .gnb_1dli .gnb_1da{padding:0 8px; }
+}
+/* 디바이스 980px 이하에서 적용*/
+@media all and (max-width:980px)
+{
+	
+	html.ovfH,body.ovfH{overflow:hidden; }
+	.mobileNone{display:none; }
+
+	#tnb,
+	.gnb_1dli{display:none; }
+
+	.pc_block{display:none !important; }
+	.mobile_block{display:block !important; }
+	.pc_inline-block{display:none !important; }
+	.mobile_inline-block{display:inline-block !important; }
+
+	#topSpacer{height:50px; }
+
+	#gnb{position:fixed; left:0px; top:0px; width:100%; z-index:999; background:#fff; }
+
+	.allSchBoxWr{display:block !important; }
+	#btnSchbox{position:fixed; right:50px; top:0px; width:50px; height:50px; line-height:50px; padding:0px; font-size:18px; text-align:center; z-index:99; }
+	#allSchBox{position:fixed; top:50px; right:0px; left:0px; margin-top:0px; padding:10px; background:#333; z-index:999; }
+	#allSchBox fieldset{border-radius:25px; width:100%; margin-right:50px; border-radius:0; }
+	.allSchBoxWr #btnSchbox{margin-top:0px; -webkit-transition-duration: 0.2s; -webkit-transition-timing-function: ease; transition-duration: 0.2s; transition-timing-function: ease; }
+	.allSchBoxWr.on #btnSchbox{margin-top:50px; -webkit-transition-duration: 0.2s; -webkit-transition-timing-function: ease; transition-duration: 0.2s; transition-timing-function: ease; }
+
+
+	#logo a{padding:10px; }
+	#logo a img{height:30px; }
+
+	/* 좌측메뉴를 모바일전용메뉴로 */	#snbOpen,
+	#snbOpen:focus{display:block; width:52px; height:51px; line-height:50px; text-align:center; color:#fff; font-size:24px; background:#000; position:fixed; right:0px; top:0px; z-index:99999999; cursor:pointer; border:0px;outline:0;}
+	#snbOpen b{display:block; width:24px; height:22px; margin:13px 15px; position:relative; overflow:hidden; -webkit-transition-duration: 0.2s; -webkit-transition-timing-function: ease; transition-duration: 0.2s; transition-timing-function: ease;}
+	#snbOpen b i{display:block; width:100%; height:2px; position:absolute; right:50%; margin-right:-50%; width:100%; background:#fff; border-radius:5px; -webkit-transition-duration: 0.2s; -webkit-transition-timing-function: ease-out; transition-duration: 0.2s; transition-timing-function: ease-out; }
+	#snbOpen b i:nth-child(1){top:0px;}
+	#snbOpen b i:nth-child(2){top:50%;margin-top:-1px; width:70%; right:0px; margin-right:0px; -webkit-transition-duration: 0.9s; -webkit-transition-timing-function: ease; transition-duration: 0.9s; transition-timing-function: ease;}
+	#snbOpen b i:nth-child(3){bottom:0px;}
+	.ovfH #snbOpen {margin-top:-1px;}
+	.ovfH #snbOpen b i:nth-child(1){top:50%; transform: rotate(135deg);}
+	.ovfH #snbOpen b i:nth-child(2){width:1px; filter:Alpha(opacity=0); opacity:0; -moz-opacity:0; -webkit-transition-duration: 0.1s; -webkit-transition-timing-function: ease; transition-duration: 0.1s; transition-timing-function: ease;}
+	.ovfH #snbOpen b i:nth-child(3){top:50%; bottom:auto; transform: rotate(-135deg);}
+
+	#snbMvAr{display:block; position:absolute; left:0px; top:0px; right:0px; border-bottom:1px solid #f2f2f2; }
+	#snbMvAr a#btnHome{background:#fff; padding:0 15px; font-weight:bold; font-size:14px; height:50px; line-height:50px; }
+	#snbMvAr a#snbClose{background:#000; border-left:1px solid #f2f2f2; width:50px; height:50px; line-height:50px; text-align:center; color:#fff; font-size:18px; position:absolute; top:0px; right:0px; }
+
+	#sideBarCover{display:none; background:rgba(0,0,0,0.6); position:fixed; left:0px; top:0px; bottom:0px; right:0px; z-index:999999; -webkit-transition-duration: 0.2s; -webkit-transition-timing-function: ease; transition-duration: 0.2s; transition-timing-function: ease; }
+	#sideBarCover.on{display:block; }
+
+	#sideBar{display:block; position:fixed; right:-281px; top:0px; bottom:0px; z-index:9999999; width:280px; overflow:auto; background:#fff; -webkit-transition-duration: 0.2s; -webkit-transition-timing-function: ease; transition-duration: 0.2s; transition-timing-function: ease; }
+	#sideBar.on{right:0px; -webkit-transition-duration: 0.2s; -webkit-transition-timing-function: ease; transition-duration: 0.2s; transition-timing-function: ease; }
+	#sideBar #snb {margin-top:50px; }
+	#sideBar #snb .snb{display:block !important; border-bottom:1px solid #f2f2f2; position:relative; }
+	#sideBar #snb .snb > h2{position:relative; }
+	#sideBar #snb .snb > h2 a{padding:0 15px; height:50px; line-height:50px; text-align:left; color:#000; background:#fff; }
+	#sideBar #snb .snb > h2 a b{font-size:14px; padding-right:50px; }
+	#sideBar #snb .snb > h2 a sub{display:none; }
+	#sideBar #snb .snb.active > h2{border-left:3px solid #000; }
+
+
+	#sideBar #snb .snb .snb2dDown{display:block; position:absolute; right:0px; top:0px; height:50px; width:50px; overflow:hidden; }
+	#sideBar #snb .snb .snb2dDown i,
+	#sideBar #snb .snb .snb2dDown u{text-decoration:none; text-align:center; width:30px; height:30px; line-height:30px; font-size:20px; margin:10px; border-radius:50%; }
+	#sideBar #snb .snb .snb2dDown i{display:block; background:#efefef; color:#999; }
+	#sideBar #snb .snb .snb2dDown u{display:none; background:#efefef; color:#000; }
+	#sideBar #snb .snb.show .snb2dDown i{display:none; }
+	#sideBar #snb .snb.show .snb2dDown u{display:block; }
+
+
+	#sideBar #snb .snb > ul{display:none; margin-bottom:0px;} 
+	#sideBar #snb .snb > ul > li{border-top:1px dashed #ddd; border-bottom:0px; }
+	#sideBar #snb .snb > ul > li a{padding:10px 10px 10px 15px; }
+	#sideBar #snb .snb > ul > li a b{font-size:12px; color:#999; }
+	#sideBar #snb .snb > ul > li a b i{display:none; }
+
+	#sideBar #snb .snb > ul.snb2dul > li.active a{background:#e8e8e8; }
+	#sideBar #snb .snb.active > ul.snb2dul{display:block; }
+
+	#sideBar #snb li.noInfoPageTit,
+	#sideBar #snb li.noInfoPageTit.active{display:none !important; }
+	.snbCS{border:0px; }
+
+	.snbMvArBtn{height:50px; overflow:hidden; position:absolute; right:50px; top:0px; padding:10px; }
+	.snbMvArBtn a{display:inline-block; padding:5px 7px; border:1px solid #ddd; border-radius:3px; font-size:11px; }
+	#snbMvArBottom{border-top:1px dashed #efefef; padding:10px; text-align:center; }
+	#snbMvArBottom a{display:inline-block; padding:5px 10px; border:1px solid #ddd; border-radius:3px; }
+
+	
+	/* 서브페이지 상단 모바일 네비 */
+	.subTopLocNav{display:block;margin-top:-20px;}
+	.subTopLocNav .loc1DA,
+	.subTopLocNav .loc2DA{height:40px; line-height:40px;font-size:12px;}
+	.subTopLocNav .loc1DA b,
+	.subTopLocNav .loc2DA b{display:block; text-align:left; height:40px; line-height:40px; margin:0 36px 0 16px;}
+	.bNBar1D, 
+	.bNBar2D{top:40px; }
+	.bNBar1D .snb h2 a b,
+	.bNBar2D .snb2d a b{font-size:12px;}
+
+	
+	.bNBar1D .snb h2 a b,
+	.bNBar2D .snb2d a b{padding:12px; font-size:13px;}
+
+	/* 중간 레이아웃 */
+	#ctWrap{ margin:15px auto; }
+	#container{width:auto; float:none; padding:15px; }
+
+	
+	.contentTitle{border-bottom:0px !important;}
+	.contentTitle{padding:10px 0 30px;margin-bottom:30px; text-align:center;}
+	.contentTitle strong{float:none; color:#333; font-size:30px;}
+	.contentTitle .locationBar{float:none;  }
+	.contentTitle .locationBar i{padding:0 5px;}
+
+	
+	.leftMenuUseFlase .contentTitle{margin-bottom:5px;}
+	.leftMenuUseFlase .contentTitle:after{width:45px;margin:15px auto;}
+}
+
+/* 디바이스 850px 이하에서 적용*/
+@media all and (max-width:850px)
+{
+	/* contents */
+	#page_title .page_title_in {padding:60px 10px; text-align:center; }
+	#page_title .page_title_in h2 strong{font-size:30px; }
+	#page_title .page_title_in h2{text-align:center; }
+
+}
+/* 디바이스 650px 이하에서 적용*/
+@media all and (max-width:650px)
+{
+	/* contents */
+	#page_title .page_title_in{padding:40px 10px; }
+	#page_title .page_title_in h2 strong{font-size:18px; height:30px; line-height:60px; padding:20px 0 10px 0; }
+	#page_title .page_title_in h2 .locationBar span{font-size:10px; }
+	#page_title.on .page_title_in h2 > strong{height:30px; line-height:30px; padding:0 0 10px 0; }
+
+	.contentTitle strong{font-size:20px;}
+	.contentTitle .locationBar{font-size:12px;}
+
+	/* footer */
+	#footer > dl > dd a,
+	#footer address {font-size:11px; letter-spacing:-0.05em; }
+	#footer address em{display:none; }
+	#footer p span{display:none; }
+}
+
+/* 디바이스 420px 이하에서 적용*/
+@media all and (max-width:420px)
+{
+	/* contents */
+	#page_title {background-size:auto 100%; }
+
+}

@@ -1,0 +1,374 @@
+<?php
+	$The_No 		= $_GET["SNo"];
+	$month 			= $_GET["month"];
+	$category 		= $_GET["category"];
+	$Player_search 	= $_POST["Player"];
+	$Year_search 	= $_POST["Year"];
+	$Gender_search 	= $_POST["GENDER"];
+
+	$main_title = 'Admin Dashboard | (사)한국스키장경영협회';
+	
+	// Head Title 설정
+	$Dashboard_Title = '온라인 회원 관리';
+	if ($category == '1'){$Dashboard_Title = $Dashboard_Title.' > 남성회원';}
+	if ($category == '2'){$Dashboard_Title = $Dashboard_Title.' > 여성회원';}
+	if ($category == '4'){$Dashboard_Title = $Dashboard_Title.' > 스키지도요원 티칭1';} 
+	if ($category == '5'){$Dashboard_Title = $Dashboard_Title.' > 스키지도요원 티칭2';} 
+	if ($category == '6'){$Dashboard_Title = $Dashboard_Title.' > 스키지도요원 티칭3';}                
+	if ($category == '7'){$Dashboard_Title = $Dashboard_Title.' > 스노보드-지도요원 티칭1';} 
+	if ($category == '8'){$Dashboard_Title = $Dashboard_Title.' > 스노보드-지도요원 티칭2';} 
+	if ($category == '9'){$Dashboard_Title = $Dashboard_Title.' > 스키구조요원';}                
+	if ($category == '10'){$Dashboard_Title = $Dashboard_Title.' > 티칭#3 심사위원';}                
+	if ($category == '21'){$Dashboard_Title = $Dashboard_Title.' > 관리자';}                
+
+	include '../db_config.html';
+	
+	// 관리자가 아니면 member_login.html 페이지로 이동
+	if ($rank != 9){
+	echo " <script>
+	alert('잘못된 접근입니다.');
+	top.document.location.href = '../member_login.html?MEMBER_ID=$User_ID_Search&Case=9';
+	</script>";
+	}
+?>
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title><? echo $main_title; ?></title>
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="../images/favicon.ico">
+	<link rel="stylesheet" href="./vendor/chartist/css/chartist.min.css">
+    <link href="./vendor/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet">
+	<!-- Datatable -->
+    <link href="./vendor/datatables/css/jquery.dataTables.min.css" rel="stylesheet">
+    <link href="./css/style.css" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&family=Roboto:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
+
+<body>
+
+<?
+	if($Gender_search == 'W'){$cheched_W = 'checked';}
+	if($Gender_search == 'M'){$cheched_M = 'checked';}
+
+	$page = ($_GET['page'])?$_GET['page']:1;
+	$list = 4000; // 페이자당 목록수
+	$show = 10; // 하단 페이지네이션 갯수
+
+    $db_start = ($page - 1) * $list;
+	$db_end = $db_start + $list;
+	$main_title = '한국 스키장 경영협회';
+	include '../db_config.html';
+
+		if($Player_search){$search1 = " a.MEMBER_NAME like '%$Player_search%'";}
+		if($Year_search){$search2 = " and a.LICENSE_YEAR = '$Year_search'";}
+		if($Gender_search){$search3 = " and b.ADD_SEX = '$Gender_search'";}
+		if($search1 or $search2 or $search3){$search = 'where'.$search1.$search2.$search3;}
+
+		$connect=mysql_connect("dbserver","skiresort","ll170505");
+		mysql_select_db( "skiresort",$connect);
+		
+		$query1= "select * from 7G_Skiresort_Member a left join 7G_T_Reserve_Info b on a.PHONE=b.ADD_TEL and a.MEMBER_NAME=b.ADD_NAME_KOR $search order by a.MEMBER_NAME ASC" ;
+		$result1=mysql_query($query1,$connect );
+
+		$query= "select * from 7G_Skiresort_Member a left join 7G_T_Reserve_Info b on a.PHONE=b.ADD_TEL and a.MEMBER_NAME=b.ADD_NAME_KOR $search order by a.MEMBER_NAME ASC limit $db_start, $db_end" ;
+		$result=mysql_query($query,$connect );
+		$row=mysql_fetch_array($result);
+		$total_record = mysql_num_rows($result1);
+?>
+
+    <!--*******************
+        Preloader start
+    ********************-->
+    <div id="preloader">
+        <div class="sk-three-bounce">
+            <div class="sk-child sk-bounce1"></div>
+            <div class="sk-child sk-bounce2"></div>
+            <div class="sk-child sk-bounce3"></div>
+        </div>
+    </div>
+    <!--*******************
+        Preloader end
+    ********************-->
+
+
+    <!--**********************************
+        Main wrapper start
+    ***********************************-->
+    <div id="main-wrapper">
+
+        <!--**********************************
+            Nav header start
+        ***********************************-->
+        <div class="nav-header">
+            <a href="../index.html" class="brand-logo">
+                <img src="../images/sb_logo.png" width = 90%>
+            </a>
+
+            <div class="nav-control">
+                <div class="hamburger">
+                    <span class="line"></span><span class="line"></span><span class="line"></span>
+                </div>
+            </div>
+        </div>
+        <!--**********************************
+            Nav header end
+        ***********************************-->
+		
+		<?
+		// 챗팅박스 + 헤드네비 불러오기
+		include '_chat_box.html';
+		include '_head_bar.html';
+
+		// 좌측 네비게이션
+	    if ($rank == 9){include '_admin_menu.html';}
+	    if ($rank == 8){include '_admin_menu2.html';}
+	    ?>
+	    
+	    
+        <!--**********************************
+            Content body start
+        ***********************************-->
+        <div class="content-body">
+            <!-- container starts -->
+            <div class="container-fluid">
+                <!-- row -->
+
+
+				<div class="d-flex flex-wrap mb-2 align-items-center justify-content-between">
+					<div class="mb-3 mr-3">
+						<h6 class="fs-16 text-black font-w600 mb-0"><? echo $count; ?> Total Orders</h6>
+						<span class="fs-14">Based your preferences</span>
+					</div>
+					
+					<div class="d-flex mb-3">
+						<select class="form-control style-2 default-select mr-3">
+							<option>최신순</option>
+							<option>이번달</option>
+							<option>이번주</option>
+						</select>
+						<a href="javascript:void(0)" class="btn btn-primary text-nowrap"><i class="fa fa-file-text scale5 mr-3" aria-hidden="true"></i>엑셀 다운로드</a>
+					</div>
+		        </div>
+
+				<div class="row">
+					<div class="col-xl-12">
+						<div class="tab-content">
+							<div id="All" class="tab-pane active fade show">
+
+								<?
+									// 페이징
+									$max_page1 = floor($total_record / $list);
+									$max_page2 = $total_record / $list;
+									if ($max_page2 > $max_page1){$max_page = $max_page1 + 1;}else{$max_page = $max_page1;}
+									if ($page>$max_page){$page = $max_page;}
+									$previous = $page - 1;
+									$next = $page + 1;
+									if ($next>$max_page){$next = $max_page;}
+									if ($previous<1){$previous = 1;}
+									$page_start = (($page - 1) * $list );
+									if ($page_start <= 0){$page_start = 0;}
+									$page_end = $page_start + $list;
+								
+									echo "
+									<div class='text-center' style = 'padding:10px;'>
+											<p style = 'font-size:35px;font-weight:600;'>$table_title 리스트</p>
+											<p style = 'font-size:18px;font-weight:600;'>(총 $total_record 명)</p><br>
+									</div>";
+
+									if ($page_end > $total_record) {$page_end = $total_record;}
+
+									$List_No = $page_start + 1;
+
+									echo "<div class = 'row'>";
+
+									for($i=$page_start; $i<$page_end; $i++){
+																
+										// 성별변경후 처리
+										if ($i < $The_No){} else {
+										
+										// 사진 교체/편집이 필요한 사진들....
+										if ($row[S_PHOTO] == 7){
+										
+										if (!$row[GENDER] or $row[GENDER] == 0){$GENDER = "<span class='badge badge-pill' style = 'background-color:#ffff00;border-color:red; color:red;$style_gender'>미</span>";}
+										if ($row[GENDER] == 1){$GENDER = "<span class='badge badge-pill badge-info' style = '$style_gender'>남</span>";}
+										if ($row[GENDER] == 2){$GENDER = "<span class='badge badge-pill badge-danger' style = '$style_gender'>여</span>";}
+										if ($row[GENDER] == 3){$GENDER = "<span class='badge badge-pill badge-success' style = '$style_gender'>관</span>";}
+
+																				
+										if (!$row[GENDER] or $row[GENDER] == 0){$GENDER = "<span class='badge badge-pill' style = 'background-color:#ffff00;border-color:red; color:red;$style_gender'>미</span>";}
+										if ($row[GENDER] == 1){$GENDER = "<span class='badge badge-pill badge-info' style = '$style_gender'>남</span>";}
+										if ($row[GENDER] == 2){$GENDER = "<span class='badge badge-pill badge-danger' style = '$style_gender'>여</span>";}
+										if ($row[GENDER] == 3){$GENDER = "<span class='badge badge-pill badge-success' style = '$style_gender'>관</span>";}
+
+										
+											if ($row[BIRTH] == '0000-00-00'){$row[BIRTH] = $row[ADD_BIRTH];}
+											if (substr($row[MEMBER_ID],0,3) == 'NO_'){$row[MEMBER_ID] = "미등록"; $text_color = 'color:#ff9500;';}
+
+											if ($MEMBER_CHECK != $row[PHONE]){
+
+											if($List_No % 2 == 1){ $bgcolor =''; } else{ $bgcolor = '#ededed'; }
+
+											echo "<div class = 'col-4' style = 'padding-bottom:200px;'>
+													$List_No $row[MEMBER_NAME] ($row[MEMBER_ID]) $GENDER 
+													<a class='badge badge-primary' href=admin_member_edit.html?No=$row[NO]>관리</a><br>";
+																											
+															if($row[image]){echo "<img src = '../view3.html?id=$row[MEMBER_ID]' width = 30%><br>";}
+															
+															else
+															{
+															
+															if(!$row[EXT] and !$row[PHOTO3]){echo "<img src = '../data/no_image.jpg' width = 30%><br>";}
+														
+															if($row[EXT] and !$row[PHOTO3]){
+															if(!$category or $category == '1' or $category == '2' or $category == '3'){$image_file = $row[PHOTO3];}
+															if($category == '4'){$image_file = "$row[NO_T1].$row[EXT]";}
+															if($category == '5'){$image_file = "$row[NO_T2].$row[EXT]";}
+															if($category == '6'){$image_file = "$row[NO_T3].$row[EXT]";}
+
+															if($category == '7'){$image_file = "$row[NO_SBT1].$row[EXT]";}
+															if($category == '8'){$image_file = "$row[NO_SBT2].$row[EXT]";}
+															if($category == '9'){$image_file = "$row[NO_P].$row[EXT]";}
+
+															if($row[PHOTO3] == '' and ($category > 3 and $category))
+															{
+																echo "NO<br>";
+																$update_photo = "update 7G_Skiresort_Member set PHOTO3 = '$image_file' where NO = $row[NO]"; 
+																$update_result = mysql_query($update_photo,$connect);	 				  
+															}  				  
+															
+																echo "<img src = '../data/$image_file' width = 30%><br><br>";
+															}
+															
+															if($row[PHOTO3]){$image_file = "$row[PHOTO3]"; echo "<img src = '../data/$image_file' width = 30%><br>";}
+															
+															} 
+															
+															if($row[PHOTO1]){$image_file = "$row[PHOTO1]"; echo "<img src = '..$image_file' width = 30%><br>";}
+															if($row[PHOTO2]){$image_file = "$row[PHOTO2]"; echo "<img src = '..$image_file' width = 30%><br>";}
+
+															
+															if (!$row[GENDER] or $row[GENDER] == 0){
+															echo "<br>";
+															echo "<a href = '_gender_chage.html?category=$category&page=$page&NO=$row[NO]&gender=1&SNo=$i' class='btn btn-rounded btn-info' style = 'font-size:12;weight:900;width:50px;padding-left:0px;padding-right:0px;'>남자</a>&nbsp";
+															echo "<a href = '_gender_chage.html?category=$category&page=$page&NO=$row[NO]&gender=2&SNo=$i' class='btn btn-rounded btn-danger' style = 'font-size:12;weight:900;width:50px;padding-left:0px;padding-right:0px;'>여자</a>&nbsp;";
+															echo "<a href = '_gender_chage.html?category=$category&page=$page&NO=$row[NO]&gender=3&SNo=$i' class='btn btn-rounded btn-success' style = 'font-size:12;weight:900;width:50px;padding-left:0px;padding-right:0px;'>단체</a>&nbsp;";
+															echo "<a href = '_gender_chage.html?category=$category&page=$page&NO=$row[NO]&gender=0&SNo=$i&s_photo=8' class='btn btn-rounded btn-dribbble' style = 'font-size:12;weight:900;width:50px;padding-left:0px;padding-right:0px;'>사진편집</a>&nbsp;";
+															echo "<a href = '_gender_chage.html?category=$category&page=$page&NO=$row[NO]&gender=0&SNo=$i&s_photo=9' class='btn btn-rounded btn-secondary' style = 'font-size:12;weight:900;width:50px;padding-left:0px;padding-right:0px;'>사진교체</a>&nbsp;";
+															echo "<a href = '_gender_chage.html?category=$category&page=$page&NO=$row[NO]&gender=0&SNo=$i&s_photo=7' class='btn btn-rounded btn-tumblr' style = 'font-size:12;weight:900;width:50px;padding-left:0px;padding-right:0px;'>링크오류</a><br><br>";
+
+															}
+															
+															
+															
+															
+																												
+																
+												echo "</div>";
+
+														}
+												
+
+											$List_No = $List_No + 1;
+									}
+									}
+											$MEMBER_CHECK = $row[PHONE];
+											$row=mysql_fetch_array($result);
+											$i = $i + 1;		
+									}
+									
+									echo "</div><br><br><br>";
+
+
+	echo "
+    <div class='copyright'>
+	<nav aria-label='...'>
+	<ul class='pagination justify-content-center'>
+  
+		<li class='page-item'>
+			<a class='page-link' href='admin_link_error.html?category=$category&page=$previous'>Previous</a>
+    	</li>";
+    	
+$show_end_page = $page+$show;
+$show_start_page = $page;
+
+if ($show_end_page > $max_page){$show_end_page = $max_page + 1;}
+if ($max_page <= $show){$show_start_page = 1;}
+    	
+for($i=$show_start_page; $i<$show_end_page; $i++)
+	{
+    	if($page == $i)
+    		{
+    			echo "
+    			<li class='page-item active' aria-current='page'>
+      				<a class='page-link' href='admin_link_error.html?category=$category&page=$i'>$i<span class='sr-only'>(current)</span><a>
+    			</li>";
+   			}
+    
+    	else
+    	
+    		{
+    			echo "
+    		   	<li class='page-item'>
+    				<a class='page-link' href='admin_link_error.html?category=$category&page=$i'>$i</a>
+    			</li>";
+    		}
+
+	}    
+    echo "
+    	<li class='page-item'>
+      		<a class='page-link' href='admin_link_error.html?category=$category&page=$next'>Next</a>
+    	</li>
+    
+  </ul>
+  
+</nav>
+</div>
+";
+?>
+
+
+
+                <!-- Row ends -->
+            </div>
+            <!-- container ends -->
+        </div>
+        <!--**********************************
+                Content body end
+            ***********************************-->
+
+
+        <!--**********************************
+            Footer start
+        ***********************************-->
+        <div class="footer">
+            <div class="copyright">
+                <p>© Designed &amp; Developed by <a href="https://7gate.kr/" target="_blank">podong28.com</a> 2019</p>
+            </div>
+        </div>
+        <!--**********************************
+            Footer end
+        ***********************************-->
+        
+        
+    </div>
+    <!--**********************************
+        Main wrapper end
+    ***********************************-->
+
+    <!--**********************************
+        Scripts
+    ***********************************-->
+    <!-- Required vendors -->
+    <script src="./vendor/global/global.min.js"></script>
+	<script src="./vendor/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
+    <script src="./js/custom.min.js"></script>
+	<script src="./js/deznav-init.js"></script>
+	
+
+</body>
+
+</html>

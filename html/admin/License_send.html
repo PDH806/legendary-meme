@@ -1,0 +1,399 @@
+<?
+	include "../db_config.html";
+	$The_No 	= $_GET["No"];
+
+	$style_header 			= 'width:150px;font-size:13pt';
+	$style_header2 			= 'width:150px;font-size:12pt';
+	
+	$style_primary_readonly = "style = 'background-color: #e8e8e8; border: solid 1px #ff8080;'";
+	$style_primary 			= "style = 'background-color: #F7F8FB; border: solid 1px #ff8080;'";
+	$style_info 			= "style = 'background-color: #F7F8FB; border: solid 1px #582CDE;'";
+
+	$class_light_info 		= "class='btn light btn-info border-info'";
+	$class_light_warning 	= "class='btn light btn-warning border-warning'";
+	$class_light_primary 	= "class='btn light btn-primary border-primary'";
+
+	$Dashboard_Title =  '택배발송처리 / 자격증 라이센스 재발송';
+	$DELIVERY_DATE = date("Y-m-d");
+	
+	// 관리자가 아니면 member_login.html 페이지로 이동
+	if ($rank != 9){
+	echo " <script>
+	alert('잘못된 접근입니다.');
+	top.document.location.href = '../member_login.html?MEMBER_ID=$User_ID_Search&Case=9';
+	</script>";
+	}
+
+?>
+
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<title>택배발송처리 | 자격증재발급신청</title>
+	<!-- Favicon icon -->
+	<link rel="icon" type="image/png" sizes="16x16" href="./images/favicon.png">
+	<link href="./vendor/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet">
+	<link href="./css/style.css" rel="stylesheet">
+	<link
+		href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&family=Roboto:wght@100;300;400;500;700;900&display=swap"
+		rel="stylesheet">
+
+	<style>
+		.form-control {
+			border-radius: radius;
+			background: white;
+			border: 1px solid border;
+			font-size: 13pt;
+			color: #f54242;
+			height: 56px;
+
+			@include respond('laptop') {
+				height: 41px;
+			}
+
+			:hover,
+			:focus,
+			.active {
+				box-shadow: none;
+				background: white;
+				color: dark;
+			}
+		}
+	</style>
+
+
+	<?
+		$License_query	= "SELECT * FROM 7G_License_Renew where NO = $The_No";
+		$License_result	= mysqli_query($link, $License_query);
+		$row			= mysqli_fetch_array($License_result);
+		
+		$Member_query	= "SELECT * FROM 7G_Skiresort_Member where MEMBER_ID = '$row[MEMBER_ID]'";
+		$Member_result	= mysqli_query($link, $Member_query);
+		$Member			= mysqli_fetch_array($Member_result);
+ 		
+/*	
+	if ($Member[PHOTO3]){$img = "<img src = '../data/$Member[PHOTO3]' class = 'rounded' width = 100px border = 1>";}
+		if (!$Member[PHOTO3]){$img = "<img src = '../data/no_image.jpg' class = 'rounded' width = 100px border = 1>";}
+		if ($Member[image]){$img = "<img src = '../view3.html?id=$Member[MEMBER_ID]' class = 'rounded' width = 100px border = 1>";} 
+		*/
+
+
+				// 회원이미지 불러오기
+				$member_imgs_jpg = "../member_imgs/". $row['MEMBER_ID'] .".jpg";
+
+
+				if (file_exists($member_imgs_jpg)) {
+    $img_url = $member_imgs_jpg;
+} else {
+    $img_url = "../data/no_image.jpg";
+}
+
+
+
+	$img = "<img src='".$img_url."' class = 'rounded' width = 100px border = 1>";
+
+
+				
+?>
+
+
+
+
+
+
+
+
+
+</head>
+
+<body>
+
+	<!--*******************
+        Preloader start
+    ********************-->
+	<div id="preloader">
+		<div class="sk-three-bounce">
+			<div class="sk-child sk-bounce1"></div>
+			<div class="sk-child sk-bounce2"></div>
+			<div class="sk-child sk-bounce3"></div>
+		</div>
+	</div>
+	<!--*******************
+        Preloader end
+    ********************-->
+
+
+	<!--**********************************
+        Main wrapper start
+    ***********************************-->
+	<div id="main-wrapper">
+
+		<!--**********************************
+            Nav header start
+        ***********************************-->
+		<div class="nav-header">
+			<a href="../index.html" class="brand-logo">
+				<img src="../images/sb_logo.png" width=90%>
+			</a>
+
+			<div class="nav-control">
+				<div class="hamburger">
+					<span class="line"></span><span class="line"></span><span class="line"></span>
+				</div>
+			</div>
+		</div>
+		<!--**********************************
+            Nav header end
+        ***********************************-->
+
+		<?
+		// 챗팅박스 + 헤드네비 불러오기
+		include '_chat_box.html';
+		include '_head_bar.html';
+
+		// 좌측 네비게이션
+	    if ($rank == 9){include '_admin_menu.html';}
+	    if ($rank == 8){include '_admin_menu2.html';}
+	    ?>
+
+
+		<!--**********************************
+            Content body start
+        ***********************************-->
+		<div class="content-body">
+			<!-- container starts -->
+			<div class="container-fluid">
+				<!-- row -->
+
+
+
+				<?
+
+	if ($category == 0 or $category == 1)
+		{
+		
+		if ($row[RANK] == 0) {$row[RANK] = '일반';}
+		if ($row[RANK] == 8) {$row[RANK] = '스키장관리자';} 
+		if ($row[RANK] == 9) {$row[RANK] = '관리자';} 
+
+
+	    
+		echo "<br><br>
+			<form action='License_send.php' method='POST' enctype='multipart/form-data'>
+
+                <div class='form-group' >
+						<div class='input-group'>
+  							<div class='input-group-prepend'>
+								<button class='btn btn-primary light border-primary' type='button' style = 'width:130px;'>접수번호</button>
+  							</div>
+								<input class='form-control'  type='text' name='NO' value = '$The_No'  $style_primary_readonly readonly>
+						</div>											
+                </div>
+
+
+                <div class='form-group' >
+						<div class='input-group'>
+  							<div class='input-group-prepend'>
+								<button class='btn btn-primary light border-primary' type='button' style = 'width:130px;'>성 명</button>
+  							</div>
+								<input class='form-control'  type='text' name='' value = '$row[MEMBER_NAME] ($row[MEMBER_ID])'  $style_primary_readonly readonly>
+						</div>											
+                </div>
+
+                <div class='form-group'>
+						<div class='input-group'>
+  							<div class='input-group-prepend'>
+								<button class='btn light btn-primary border-primary' type='button' style = 'width:130px;'>핸드폰</button>
+  							</div>
+								<input class='form-control'  type='text' name='' value = '$row[MEMBER_PHONE]' border-primary $style_primary_readonly readonly>
+						</div>											
+                </div>
+                
+                <div class='form-group' >
+						<div class='input-group'>
+  							<div class='input-group-prepend'>
+								<button class='btn light btn-primary border-primary' type='button' style = 'width:130px;'>신청내용</button>
+  							</div>
+								<input class='form-control'  type='text' name='' value = '$row[PRODUCT_NAME]' $style_primary_readonly readonly>
+						</div>											
+                </div>                
+                          
+				<div class='form-group' >
+						<div class='input-group'>
+  							<div class='input-group-prepend'>
+								<button class='btn light btn-primary border-primary' type='button' style = 'width:130px;'>결제금액</button>
+  							</div>
+								<input class='form-control'  type='text' name='' value = '$row[AMOUNT]' $style_primary_readonly readonly>
+						</div>											
+                </div>                
+                              
+				<div class='form-group' >
+						<div class='input-group'>
+  							<div class='input-group-prepend'>
+								<button class='btn light btn-primary border-primary' type='button' style = 'width:130px;'>승인번호</button>
+  							</div>
+								<input class='form-control'  type='text' name='' value = '$row[APPROVAL_NO]' $style_primary_readonly readonly>
+						</div>											
+                </div>                
+  
+      
+                <div class='form-group' >
+						<div class='input-group'>
+  							<div class='input-group-prepend'>
+								<button class='btn btn-info border-dark' type='button' style = 'width:130px;'>프로필사진</button>
+  							</div>
+  							
+  							
+  							$img
+  							
+  						</div>
+  				</div>
+                
+                <div class='form-group' >
+						<div class='input-group'>
+  							<div class='input-group-prepend'>
+								<button $class_light_info type='button' style = 'width:130px;'>이메일</button>  
+  							</div>
+								<input class='form-control'  type='text' name='' value = '$row[MEMBER_EMAIL]' $style_info placeholder='이메일'>
+						</div>											
+                </div>
+                
+                <div class='form-group' >
+						<div class='input-group'>
+  							<div class='input-group-prepend'>
+								<button $class_light_info type='button' style = 'width:130px;'>생년월일</button>  
+  							</div>
+								<input class='form-control'  type='text' name='' id='date-1' value = '$Member[BIRTH]' $style_info placeholder='이메일'>
+						</div>											
+                </div>
+					<br><br>
+                <div class='form-group' >
+						<div class='input-group'>
+  							<div class='input-group-prepend'>
+								<button $class_light_info type='button' style = 'width:130px;'>우편번호</button>  
+  							</div>
+								<input class='form-control'  type='text' name='' id='date-1' value = '$row[ZIPCODE]' $style_info placeholder='이메일'>
+						</div>											
+                </div>
+
+                <div class='form-group' >
+						<div class='input-group'>
+  							<div class='input-group-prepend'>
+								<button $class_light_info type='button' style = 'width:130px;'>도로명</button>  
+  							</div>
+								<input class='form-control'  type='text' name='' id='date-1' value = '$row[ADDR1]' $style_info placeholder='이메일'>
+						</div>											
+                </div>
+
+                <div class='form-group' >
+						<div class='input-group'>
+  							<div class='input-group-prepend'>
+								<button $class_light_info type='button' style = 'width:130px;'>세부주소</button>  
+  							</div>
+								<input class='form-control'  type='text' name='' id='date-1' value = '$row[ADDR2]' $style_info placeholder='이메일'>
+						</div>											
+                </div>
+
+                <div class='form-group' >
+						<div class='input-group'>
+  							<div class='input-group-prepend'>
+								<button $class_light_info type='button' style = 'width:130px;'>건물</button>  
+  							</div>
+								<input class='form-control'  type='text' name='' id='date-1' value = '$row[ADDR3]' $style_info placeholder='이메일'>
+						</div>											
+                </div>
+                <br>
+                <br>
+                
+				<div class='form-group' >
+						<div class='input-group'>
+  							<div class='input-group-prepend'>
+								<button $class_light_info type='button' style = 'width:130px;'>택배회사</button>  
+  							</div>
+								<input class='form-control'  type='text' name='DELIVERY_AGENCY' id='' $style_info placeholder='택배회사'>
+						</div>											
+                </div>
+
+                <div class='form-group' >
+						<div class='input-group'>
+  							<div class='input-group-prepend'>
+								<button $class_light_info type='button' style = 'width:130px;'>택배번호</button>  
+  							</div>
+								<input class='form-control'  type='text' name='TRACKING_NO' id='date-1' $style_info placeholder='택배번호'>
+						</div>											
+                </div>
+
+                <div class='form-group' >
+						<div class='input-group'>
+  							<div class='input-group-prepend'>
+								<button $class_light_info type='button' style = 'width:130px;'>택배요금</button>  
+  							</div>
+								<input class='form-control'  type='text' name='DELIVERY_FEE' id='date-1' $style_info placeholder='택배요금'>
+						</div>											
+                </div>
+
+				<div class='form-group' >
+						<div class='input-group'>
+  							<div class='input-group-prepend'>
+								<button $class_light_info type='button' style = 'width:130px;'>발송일</button>  
+  							</div>
+								<input class='form-control'  type='text' name='DELIVERY_DATE' id='date-1' value = '$DELIVERY_DATE' $style_info placeholder='발송일'>
+						</div>											
+                </div>
+
+                
+                
+                <div class='form-group text-right'>
+					&nbsp;<input type = 'submit' class='btn light btn-primary text-uppercase border-primary' type='button' value='택배등록' onclick='submit()';>
+                </div>
+			</form>";
+                
+		} 
+
+?>
+
+				<!-- Row ends -->
+			</div>
+			<!-- container ends -->
+		</div>
+		<!--**********************************
+                Content body end
+            ***********************************-->
+
+
+		<!--**********************************
+            Footer start
+        ***********************************-->
+		<div class="footer">
+			<div class="copyright">
+				<p>© Designed &amp; Developed by <a href="https://7gate.kr/" target="_blank">podong28.com</a> 2019</p>
+			</div>
+		</div>
+		<!--**********************************
+            Footer end
+        ***********************************-->
+
+
+	</div>
+	<!--**********************************
+        Main wrapper end
+    ***********************************-->
+
+	<!--**********************************
+        Scripts
+    ***********************************-->
+	<!-- Required vendors -->
+	<script src="./vendor/global/global.min.js"></script>
+	<script src="./vendor/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
+	<script src="./js/custom.min.js"></script>
+	<script src="./js/deznav-init.js"></script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,18 @@
+<?
+$connect=mysql_connect("dbserver","skiresort","ll170505");
+mysql_select_db( "skiresort",$connect);
+extract($_REQUEST);
+
+ $query= "select * from site_config where No = 3" ;
+ $result=mysql_query($query,$connect );
+ $row=mysql_fetch_array($result);
+    Header(  "Content-type: image/png");
+	//if ($img == 'logo'){echo $row[company_logo];}
+	if ($img == 'logo'){echo 'https://skiresort.or.kr/images/logo.png';}
+	if ($img == 1){echo $row[image1];}
+	if ($img == 2){echo $row[image2];}
+	if ($img == 3){echo $row[image3];}
+	if ($img == 4){echo $row[notice1_image];}
+	if ($img == 5){echo $row[notice2_image];}
+  mysql_close();
+ ?>

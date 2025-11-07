@@ -1,0 +1,23 @@
+<?
+include "db_config.html";
+// include "check_rank.php";
+$delete_No		= $_GET["No"];
+
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+// Check connection
+
+
+// sql to delete a record
+$sql = "DELETE FROM bbs_Skiresort WHERE docu_no = '$delete_No'";
+
+if ($conn->query($sql) === TRUE) {
+} else {
+}
+
+$conn->close();
+ echo "<script>location.href='sb_notice.html';</script>";
+?>
+
+
+

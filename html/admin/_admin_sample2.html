@@ -1,0 +1,291 @@
+<?
+include "../db_config.html";
+?>
+
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>공지사항 글등록하기</title>
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="./images/favicon.png">
+    <link href="./css/style.css" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&family=Roboto:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
+
+ <!-- include jquery -->
+ <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.js"></script>
+
+ <!-- include libs stylesheets -->
+ <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.css" />
+ <script src="//cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.js"></script>
+ <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.js"></script>
+ <script src="https://use.fontawesome.com/releases/v5.13.1/js/all.js"></script>
+  <script src='https://kit.fontawesome.com/678c3e80a7.js' crossorigin='anonymous'></script>
+
+  <!-- include summernote -->
+  <link rel="stylesheet" href="../summernote/dist/summernote-bs4.css">
+  <script type="text/javascript" src="../summernote/dist/summernote-bs4.js"></script>
+
+  <link rel="stylesheet" href="../summernote/examples/example.css">
+
+  <script type="text/javascript">
+
+    $(function() {
+      $('.summernote').summernote({
+        height: 600,
+        lang: 'ko-KR',
+        fontNames: ['나눔바른고딕', '나눔명조', 'Arial', 'Arial Black', 'Comic Sans MS', 'Courier New', ],
+      	fontNamesIgnoreCheck: ['나눔바른고딕', '나눔명조'],
+    	lineHeights: ['0.2', '0.3', '0.4', '0.5', '0.6', '0.8', '1.0', '1.2', '1.4', '1.5', '1.8', '2.0', '2.5', '3.0'],
+  		toolbar: [
+    	['style', ['bold', 'italic', 'underline', 'clear']],
+    	['font', ['strikethrough', 'superscript', 'subscript', 'fontname']],
+    	['fontsize', ['fontsize']],
+    	['color', ['color']],
+    	['para', ['ul', 'ol', 'paragraph']],
+    	['height', ['height']],
+    	['Insert',['picture','link','video','table','hr']],
+    	['Misc',['fullscreen','codeview','undo','redo','help']],
+  		],
+        callbacks: {
+          onImageUpload: function(files, editor, welEditable) {
+            console.log('image upload:', files);
+            sendFile(files[0], editor, welEditable);
+          },
+        }
+      });
+
+      function sendFile(file, editor, welEditable) {
+        data = new FormData();
+        data.append("file", file);
+        $.ajax({
+          url: "../upload.php", // image 저장 소스
+          data: data,
+          cache: false,
+          contentType: false,
+          processData: false,
+          type: 'POST',
+          success: function(data) {
+            var image = $('<img>').attr('src', '' + data);
+            $('.summernote').summernote("insertNode", image[0]);
+          },
+          error: function(jqXHR, textStatus, errorThrown) {
+            console.log(textStatus + " " + errorThrown);
+          }
+        });
+      }
+
+      $('form').on('submit', function(e) {
+        e.preventDefault();
+      });
+    });
+
+  </script>
+
+</head>
+
+<body>
+
+    <!--*******************
+        Preloader start
+    ********************-->
+    <div id="preloader">
+        <div class="sk-three-bounce">
+            <div class="sk-child sk-bounce1"></div>
+            <div class="sk-child sk-bounce2"></div>
+            <div class="sk-child sk-bounce3"></div>
+        </div>
+    </div>
+    <!--*******************
+        Preloader end
+    ********************-->
+
+
+    <!--**********************************
+        Main wrapper start
+    ***********************************-->
+    <div id="main-wrapper">
+
+        <!--**********************************
+            Nav header start
+        ***********************************-->
+        <div class="nav-header">
+            <a href="../index.html" class="brand-logo">
+                <img src="../images/sb_logo.png" width = 90%>
+            </a>
+
+            <div class="nav-control">
+                <div class="hamburger">
+                    <span class="line"></span><span class="line"></span><span class="line"></span>
+                </div>
+            </div>
+        </div>
+        <!--**********************************
+            Nav header end
+        ***********************************-->
+		
+		<?
+		// 챗팅박스 + 헤드네비 불러오기
+		include '_chat_box.html';
+		include '_head_bar.html';
+
+		// 좌측 네비게이션
+	    if ($rank == 9){include '_admin_menu.html';}
+	    if ($rank == 8){include '_admin_menu2.html';}
+	    ?>
+	    
+	    
+        <!--**********************************
+            Content body start
+        ***********************************-->
+        <div class="content-body">
+            <!-- container starts -->
+            <div class="container-fluid">
+                <!-- 여기에 내용을 삽입해 주세요 !!! -->
+
+
+
+
+
+  <div class="container">
+    <h1>BBS 글 등록</h1>
+
+    <form id='contactForm' method='post' action='bbs_write.php' novalidate='novalidate'>
+
+			<div class='input-group'>
+  				<div class='input-group-prepend'>
+					<button class='btn btn-primary' type='button' style = 'width:120px;'>제목</button>
+  				</div>
+                    <input class='form-control' type='text' name='title' placeholder='글제목'>
+			</div>
+			<br>			
+
+			<div class='input-group'>
+        <div class='input-group-prepend'>
+        <button class='btn btn-primary' type='button' style = 'width:120px;'>부제목</button>
+        </div>
+                  <input class='form-control' type='text' name='sub_title' placeholder='부제목'>
+      </div>
+      <br>
+
+
+
+			<div class='input-group'>
+  				<div class='input-group-prepend'>
+					<button class='btn btn-primary' type='button' style = 'width:120px;'>카테고리</button>
+  				</div>
+                      <select class='form-control' name='category'>
+            							<option value = ''>글 목록 카테고리</option>
+            							<option value = ''>--------------</option>
+            							
+<?
+                 			 $query3= "SELECT * FROM bbs_category order by category ASC" ;
+                  			 $result3=mysqli_query($link, $query3);
+                  			 $row3=mysqli_fetch_array($result3);
+
+
+                  			while ($row3) {
+                      						if ($row3[category] == 0 or $row3[category] == 10 or $row3[category] == 20 or $row3[category] == 30 or $row3[category] == 40 or
+                      							$row3[category] == 50 or $row3[category] == 60 or $row3[category] == 70 or $row3[category] == 80 or $row3[category] == 90)
+                      							{$row_no = "";} 
+                      						else 
+                      						{
+                          						$row_no = "$row3[category] : ";
+                     					    }
+
+                      		echo "<option value = '$row3[category]'>$row_no $row3[category_name]</option>";
+
+                      		$row3=mysqli_fetch_array($result3);
+                      }
+?>
+            		</select>
+            </div>
+			<br>
+
+      <div class='input-group'>
+        <div class='input-group-prepend'>
+          <button class='btn btn-primary' type='button' style = 'width:120px;'>태그</button>
+        </div>
+          <input class='form-control' type='text' name='tag' placeholder='태그를 여러개 입력하실 때에는 콤마로 구분해 주세요 !!!'>
+      </div>
+      <br>
+
+      <input type = 'radio' name = 'view' value = '1'>공개&nbsp;<input type = 'radio' name = 'view' value = ''>비공개&nbsp; 지정을 하지 않으면, 비공개 처리됩니다.<br>
+      <br>
+      <textarea class="summernote" name="contents"></textarea>
+
+      <div class='form-group'>
+        <table border=0, width=100%>
+          <tr>
+            <td width=15% align=right>
+            </td>
+            <td align = 'right'>
+              <br>
+			  <a class='btn btn-warning text-right' href = 'index.html'>전체목록</a>&nbsp;&nbsp;  			      
+			  <a class='btn btn-danger text-right' href = 'bbs_write.html?category=$the_category'>새글작성</a>&nbsp;&nbsp;  			      
+              <input class='btn btn-success text-uppercase' type='button' value='글 등록' onclick='submit();'>
+            </td>
+          </tr>
+        </table>
+      </div>
+
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                <!-- Row ends -->
+            </div>
+            <!-- container ends -->
+        </div>
+        <!--**********************************
+                Content body end
+            ***********************************-->
+
+
+        <!--**********************************
+            Footer start
+        ***********************************-->
+        <div class="footer">
+            <div class="copyright">
+                <p>© Designed &amp; Developed by <a href="https://7gate.kr/" target="_blank">podong28.com</a> 2019</p>
+            </div>
+        </div>
+        <!--**********************************
+            Footer end
+        ***********************************-->
+        
+        
+    </div>
+    <!--**********************************
+        Main wrapper end
+    ***********************************-->
+
+    <!--**********************************
+        Scripts
+    ***********************************-->
+    <!-- Required vendors -->
+	<script src="./vendor/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
+    <script src="./js/custom.min.js"></script>
+	<script src="./js/deznav-init.js"></script>
+	
+
+</body>
+
+</html>

@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html>
+<?php
+  //--+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+
+  // 	코딩정보
+  //--+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+
+  //
+  //	+ 개발자 : @friday1968
+  //  + 이메일 : developer@7gate.kr
+  //
+  //	+ 개발사 : (주)세븐게이트코리아
+  //  + 연락처 : 010-2889-1483
+  //
+  //  + 화면내용 : 회원정보 등록화면 (패스워드 암호)
+  //--+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+
+?>
+
+<body>
+
+  <?php
+    include 'db_config.html';
+    $the_category = $_GET["category"];
+    if($the_category){$query = "where category = $the_category";}
+    if(!$the_category){
+    	$query = "";
+		$the_category = 0;
+	}	 
+
+    $today   = date("Y-M-D");
+
+    $sql    = "SELECT * FROM $bbs_name $query order by docu_no DESC" ;
+    $link   = mysqli_connect("dbserver",$username,"ll170505",$dbname);
+    $result	= mysqli_query($link,$sql);
+    $numrow = mysqli_num_rows($result);
+
+    for($i=0; $i<$numrow; $i++) {
+        $bbs[$i]=mysqli_fetch_array($result);
+    }
+
+  ?>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+  <link rel="shortcut icon" href="Myicon.png" type="image/x-icon">
+
+  <script src='https://use.fontawesome.com/releases/v5.2.0/js/all.js'></script>
+  <script src='https://kit.fontawesome.com/678c3e80a7.js' crossorigin='anonymous'></script>
+
+
+<?php
+//--+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+
+// 	글 내용에서 이미지 정보 추출
+//--+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+-------+
+
+
+
+//  echo $matches[0]; // img 태그 전체
+//  echo $matches[1]; // img 태그 중 src 값
+?>
+
+
+<!-- Custom styles for AUGMENT-SKI -->
+  <? include 'link-files.html'; ?>
+<!-- end of Link -->
+
+  <title><? echo $site_title; ?></title>
+
+</head>
+
+<body>
+
+<!-- Navigation for AUGMENT-SKI -->
+  <? include 'main-nav.html'; ?>
+<!-- end of Navigation -->
+
+<br><br><br><br>
+
+<?
+
+$page_length = 10;
+$page = $_GET["page"];
+if (!$page)	{$page = 1;}
+$max_page1 = floor($numrow / $page_length);
+$max_page2 = $numrow / $page_length;
+if ($max_page2 > $max_page1)
+	{$max_page = $max_page1 + 1;}
+	else
+	{$max_page = $max_page1;}
+
+if ($page>$max_page){$page = $max_page;}
+$previous = $page - 1;
+$next = $page + 1;
+if ($next>$max_page){$next = $max_page;}
+if ($previous<1){$previous = 1;}
+
+
+echo "
+        <div class='container'>
+        <table border=0 width = 100% style = 'border-bottom: 1px solid #d4d4d4;'>";
+
+
+            $page_start = (($page - 1) * $page_length );
+            $page_end = $page_start + $page_length;
+
+            if ($page_end > $numrow) {$page_end = $numrow;}
+            
+            if ($page_end > 0)
+				{
+            for($i=$page_start; $i<$page_end; $i++)
+                	{
+                        $docu_no 	  = $bbs[$i][docu_no];
+                    	$title        = $bbs[$i][title];
+                 		$contents     = $bbs[$i][contents];
+                 		$sub_title    = $bbs[$i][sub_title];
+                 		$category     = $bbs[$i][category];
+                        $docu_date    = $bbs[$i][docu_date];
+                        $update_date  = $bbs[$i][update_date];
+                        $member_id    = $bbs[$i][member_id];
+                        $count        = $bbs[$i][count];
+                        $notice		  = $bbs[$i][notice];
+                        $authority	  = $bbs[$i][authority];
+                        $bbs_docu_no  = $i + 1;
+                                                
+                        if($notice == 1)
+                        {
+                          $bbs_docu_no = "공지";
+                        }
+                        
+                        
+                        
+                        
+
+                        preg_match("/<img[^>]*src=[\"']?([^>\"']+)[\"']?[^>]*>/i", $contents, $matches);
+                        if($matches[1]==''){$matches[1]='upload_images/basic_image.jpg';}
+
+                          echo "
+                          <tr>
+                            <td width = 80px style = 'border-top: 1px solid #d4d4d4; padding:10px' valign=top>
+                              	<a href = 'bbs_view.html?no=$docu_no&page=$page&category=$the_category' class = 'ski_title'><button class='btn btn-secondary'>$bbs_docu_no</button>
+							</td>
+                          
+                            <td style = 'border-top: 1px solid #d4d4d4; padding:10px' valign=top>
+                              	<a href = 'bbs_view.html?no=$docu_no&page=$page&category=$the_category' class = 'ski_title'>$title</a><br>
+								<span class = 'justify-content-end' style='font-size:.8rem;color:#737373'><i class='fas fa-user-edit'></i>&nbsp;$member_id&nbsp;&nbsp;&nbsp;
+								<i class='fas fa-pencil-alt'></i>&nbsp;&nbsp;$docu_date&nbsp;&nbsp;&nbsp;<i class='fas fa-eye'></i>&nbsp;$count&nbsp;&nbsp;</span>
+							</td>
+                            <td width = 100px style = 'border-top: 1px solid #d4d4d4; padding:10px' align = center>
+                              <a href = 'bbs_view.html?no=$docu_no&page=$page&category=$the_category'><img class = 'card-img-top' src = '$matches[1]' width = '80px'></a>
+                            </td>
+
+                          </tr>
+                          ";
+
+                  }}
+            else
+            {
+            echo "
+            <div class='alert alert-primary'>
+			  등록된 글이 없습니다!!!
+			</div>   
+            ";
+            
+            }
+
+echo "
+
+</table>
+<br><span class = 'text-right'>
+<a class='btn btn-danger text-right' href = 'bbs_write.html?category=$the_category'>새글작성</a></span>
+</div>
+
+";
+
+
+
+
+echo "
+
+<nav aria-label='...'>
+
+	<ul class='pagination justify-content-center'>";
+
+
+
+    if ($page_end > 5)
+		{  echo "
+      <li class='page-item'>
+			<a class='page-link' href='bbs_list.html?category=$the_category&page=$previous'>Previous</a>
+    	</li>";
+    }
+
+
+	if ($page_end > 11)
+	{
+for ($i=1; $i<$max_page+1; $i++) {
+    if ($page == $i) {
+        echo "
+    			<li class='page-item active' aria-current='page'>
+      				<a class='page-link' href='bbs_list.html?category=$the_category&page=$i'>$i<span class='sr-only'>(current)</span><a>
+    			</li>";
+    } else {
+        echo "
+    		   	<li class='page-item'>
+    				<a class='page-link' href='bbs_list.html?category=$the_category&page=$i'>$i</a>
+    			</li>";
+    }
+ }}
+    if ($page_end > 5)
+		{
+    echo "
+    	<li class='page-item'>
+      		<a class='page-link' href='bbs_list.html?category=$the_category&page=$next'>Next</a>
+    	</li>";
+    	}
+
+		echo "
+  </ul>
+
+</nav>
+</div>
+<br><br>";
+?>
+
+
+<!-- footer for AUGMENT-SKI -->
+<? include 'footer.html'; ?>
+<!-- end of footer -->
+
+
+</body>
+
+</html>

@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <?php
+
+      include '../_db_config.html';
+      $the_category = $_GET["category"];
+      $the_page 		= $_GET["category"];
+      $docu_no 			= $_GET['no'];
+      $page 			  = $_GET['page'];
+      $today  			= date("Y-M-D");
+      
+      if(!$the_category){$query = ""; $the_category = 0;}	 
+      if($the_category == 0){$category_name = "커뮤니티";}
+      if($the_category == 1){$category_name = "공지사항";}
+      if($the_category == 3){$category_name = "Q&A";}
+      if($the_category == 4){$category_name = "자유게시판";}
+
+      $query= "SELECT * FROM site_config where site = '$site'" ;
+      $result=mysqli_query($link, $query);
+      $row2=mysqli_fetch_array($result);
+
+    ?>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <link rel="shortcut icon" href="../view.html?img=logo" type="image/x-icon">
+
+  <!-- include CSS -->
+     <link rel="stylesheet" href="../assets/css/Footer-Dark.css">
+
+
+  <!-- include jquery -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.js"></script>
+
+  <!-- include libs stylesheets -->
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.css" />
+    <script src="//cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.js"></script>
+    <script src="https://use.fontawesome.com/releases/v5.13.1/js/all.js"></script>
+    <script src='https://kit.fontawesome.com/678c3e80a7.js' crossorigin='anonymous'></script>
+
+  <!-- include summernote -->
+    <link rel="stylesheet" href="../summernote/dist/summernote-bs4.css">
+    <script type="text/javascript" src="../summernote/dist/summernote-bs4.js"></script>
+    <link rel="stylesheet" href="../summernote/examples/example.css">
+    <script type="text/javascript">
+
+    $(function() {
+      $('.summernote').summernote({
+        height: 600,
+        lang: 'ko-KR',
+        fontNames: ['나눔바른고딕', '나눔명조', 'Arial', 'Arial Black', 'Comic Sans MS', 'Courier New', ],
+      	fontNamesIgnoreCheck: ['나눔바른고딕', '나눔명조'],
+        lineHeights: ['0.2', '0.3', '0.4', '0.5', '0.6', '0.8', '1.0', '1.2', '1.4', '1.5', '1.8', '2.0', '2.5', '3.0'],
+        toolbar: [
+            ['style', ['bold', 'italic', 'underline', 'clear']],
+            ['font', ['strikethrough', 'superscript', 'subscript', 'fontname']],
+            ['fontsize', ['fontsize']],
+            ['color', ['color']],
+            ['para', ['ul', 'ol', 'paragraph']],
+            ['height', ['height']],
+            ['Insert',['picture','link','video','table','hr']],
+            ['Misc',['fullscreen','codeview','undo','redo','help']],
+  		  ],
+        callbacks: {
+          onImageUpload: function(files, editor, welEditable) {
+            console.log('image upload:', files);
+            sendFile(files[0], editor, welEditable);
+          },
+        }
+      });
+
+      function sendFile(file, editor, welEditable) {
+        data = new FormData();
+        data.append("file", file);
+        $.ajax({
+          url: "../upload.php", // image 저장해주는 php 소스
+          data: data,
+          cache: false,
+          contentType: false,
+          processData: false,
+          type: 'POST',
+          success: function(data) {
+            var image = $('<img>').attr('src', '' + data);
+            $('.summernote').summernote("insertNode", image[0]);
+          },
+          error: function(jqXHR, textStatus, errorThrown) {
+            console.log(textStatus + " " + errorThrown);
+          }
+        });
+      }
+
+      $('form').on('submit', function(e) {
+        e.preventDefault();
+      });
+    });
+
+  </script>
+
+  <title><?php echo "$main_title | 컨텐츠 수정"; ?></title>
+
+</head>
+
+<body>
+
+    <!-- Navigation for site -->
+      <?php include '../_main-nav.html'; ?>
+      <br><br>
+    <!-- end of Navigation -->
+
+  <div class="container">
+    <h1>BBS 글 수정</h1>
+
+    <?php
+    $query	= "SELECT * FROM bbs where docu_no = $docu_no" ;
+    $result	= mysqli_query($link, $query);
+    $bbs	= mysqli_fetch_array($result);
+
+    if ($bbs[view] == '0' or $bbs[view] == '' or $bbs[view] == NULL){$selected_00 = 'checked';}
+    if ($bbs[view] == '1' ){$selected_01 = 'checked';}
+
+echo "
+    <form id='contactForm' method='post' action='bbs_edit.php' novalidate='novalidate'>
+
+			<div class='input-group'>
+  				<div class='input-group-prepend'>
+					<button class='btn btn-primary' type='button' style = 'width:120px;'>글번호</button>
+  				</div>
+                	<input class='form-control' type='text' name='docu_no' value='$bbs[docu_no]' placeholder='문서번호' readonly>
+                  <input class='form-control' type='text' name='page' value='$page' placeholder='페이지번호' hidden>
+
+			</div>
+			<br>
+			
+			<div class='input-group'>
+  				<div class='input-group-prepend'>
+					<button class='btn btn-primary' type='button' style = 'width:120px;'>제목</button>
+  				</div>
+                    <input class='form-control' type='text' name='title' value='$bbs[title]' placeholder='글제목' required>
+			</div>
+			<br>			
+
+			<div class='input-group'>
+        <div class='input-group-prepend'>
+        <button class='btn btn-primary' type='button' style = 'width:120px;'>부제목</button>
+        </div>
+                  <input class='form-control' type='text' name='sub_title' value='$bbs[sub_title]' placeholder='부제목' required>
+      </div>
+      <br>			
+
+			<div class='input-group'>
+        <div class='input-group-prepend'>
+        <button class='btn btn-primary' type='button' style = 'width:120px;'>작성일</button>
+        </div>
+                  <input class='form-control' type='text' name='docu_date' value='$bbs[docu_date]' placeholder='작성일' required>
+      </div>
+      <br>			
+
+			<div class='input-group'>
+        <div class='input-group-prepend'>
+        <button class='btn btn-primary' type='button' style = 'width:120px;'>조회수</button>
+        </div>
+                  <input class='form-control' type='text' name='count' value='$bbs[count]' placeholder='조회수' required>
+      </div>
+      <br>			
+
+
+
+			<div class='input-group'>
+  				<div class='input-group-prepend'>
+					<button class='btn btn-primary' type='button' style = 'width:120px;'>카테고리</button>
+  				</div>
+                      <select class='form-control' name='category'>
+            							<option value = ''>글 목록 카테고리</option>
+            							<option value = ''>--------------</option>";
+                                $query5= "select * from bbs_category order by category ASC" ;
+                                $result5=mysqli_query($link, $query5);
+                                $row5=mysqli_fetch_array($result5);
+
+                                while ($row5) {
+                                    $selected = '';
+                                    if ($row5[category] == $bbs[category]) {
+                                        $selected = 'selected';
+                                    }
+
+                                    echo "<option value = '$row5[category]' $selected>$row5[category_name]</option>";
+                                    $row5=mysqli_fetch_array($result5);
+                                }
+
+                          echo "
+                    </select>
+      </div>
+			<br>
+
+      <div class='input-group'>
+        <div class='input-group-prepend'>
+          <button class='btn btn-primary' type='button' style = 'width:120px;'>태그</button>
+        </div>
+          <input class='form-control' type='text' name='tag' value = '$bbs[tag]' placeholder='태그를 여러개 입력하실 때에는 콤마로 구분해 주세요 !!!'>
+      </div>
+      <br>
+      ";
+
+      if($bbs[view] == '1'){ 
+          echo "
+                <input type = 'radio' name = 'view' value = '1' checked> 공개&nbsp;
+                <input type = 'radio' name = 'view' value = '0' > 비공개&nbsp;<br>
+              ";
+      }
+
+      else
+
+      {
+
+        echo "
+        <input type = 'radio' name = 'view' value = '1' > 공개&nbsp;
+        <input type = 'radio' name = 'view' value = '0' checked> 비공개&nbsp;<br>
+      ";
+
+
+      }
+
+      echo "
+      <textarea class='summernote' name='contents' required>$bbs[contents]</textarea>
+
+      <div class='form-group'>
+        <table border=0, width=100%>
+          <tr>
+            <td width=15% align=right>
+            </td>
+            <td align = 'right'>
+              <br>
+                  <span style = 'padding-right:20px'>
+                     <a class='btn btn-danger text-right' href = 'bbs_write.html?category=$the_category'>새글작성</a>&nbsp;&nbsp;  			      
+                    <input class='btn btn-success text-uppercase' type='button' value='수정완료' onclick='submit();'>
+                  </span>
+            </td>
+          </tr>
+        </table>
+
+  </div>
+  </div>";
+
+  include '_bbs_list_bottom.html';
+  include '_bbs_list_paging.html';
+
+  include '../_footer3.html';
+
+
+?>
+
+
+
+</body>
+
+</html>

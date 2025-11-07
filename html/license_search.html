@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+	<link rel="shortcut icon" href="Myicon.png" type="image/x-icon">
+
+	<?
+		$main_title = '한국 스키장 경영협회';
+		include 'db_config.html';
+		$category = $_GET[category];
+		echo "<title>$main_title / $page</title>";    	
+	?>
+
+</head>
+<body>
+        <div class="ofl_spt">
+            <script language="javascript">
+                $(document).ready(function() {
+                    //메인화면 PC/모바일 분기시 화면 스크롤
+                    isOnePageScroll();
+                });
+            </script>
+        </div>
+        
+		<? include 'link-files.html';
+           include 'main_nav2.html';
+           include 'header_sub_page.html';  ?>
+
+		<!-- end of Navigation -->
+
+        <div id="scroll_top" >
+            <button type="button"><img src="images/scr_top.jpg"></button>
+        </div>
+        <div>
+        
+	<?php
+
+	if($category == 1){$category_name = "스키 지도요원"; $category_image = "<img src='images/teach_ski.jpg' width = 100%>";}
+	if($category == 2){$category_name = "스노보드 지도요원"; $category_image = "<img src='images/teach_test.jpg' width = 100%>";}
+	if($category == 3){$category_name = "스키 구조요원"; $category_image = "<img src=images/patrol_check.jpg width = 100%>";}
+
+                                    
+	echo "<br><br><br><br>
+	<div class = 'container-fluid'>
+		<div class='container'>
+			<p class = 'font30 text-center'>$category_name 자격확인</p><br>
+			<br><br><br>
+		
+			<div class='tab_img'>
+				$category_image
+			</div>
+		
+			<br><br><br>";
+		
+		
+echo "							<!--/tab_menu_area-->
+						<div class='tab_list_area tab_click_list'>
+									<div class='patrol_list'>
+										<div class='content_box'>
+											<div class='tit_box'><span class='sb_tit' style = 'font-size:24px;color:$brand_color'>자격 사항 조회</span></div>
+											<div class='txt_box ft'>
+												<div>
+													<p class='font24' style = 'color:#cc7700'>• $category_name 자격 확인</p>
+													<ul class='txt_b font18' style = 'padding-left:30px'>
+														<li>아래 자격사항조회를 통해 $category_name 자격확인이 가능합니다. </li>
+														<li><b style='font-weight:bold'>확인서 출력 및 자격증 재발급</b>은 자격사항 조회 후에 출력 및 발급 요청을 할 수 있습니다.</li>
+														<li>자격증 재발급 신청의 경우 추가 비용이 발생 됩니다.</li>
+													</ul>
+													<br><br>
+													<ul class='chk_price'>
+														<li class='font24' style = 'color:#cc7700'>• 자격증 재발급 비용 안내</li>
+														<li>
+															<ul class='chk_inner font18' style = 'padding-left:30px'>
+																<li>자격증(A4) : 7,000원</li>
+																<li>ID카드 : 16,000원</li>
+																<li>자격증 + ID카드 : 20,000원</li>
+															</ul>
+														</li>
+													</ul>
+												</div>
+											</div>
+											<!--txt_box-->
+										</div>
+										<!--/content_box-->
+							</div>
+							<!--/tab1-->
+";		
+		
+		
+echo "<br><br><br><br>       
+	<div ng-controller='repeatCtrl'>  
+
+		<form  name='liveForm' method=post action='license_search.php' novalidate='novalidate'>
+
+			<input class='form-control' type='hidden' id = 'category' name='category' value = '$category'>
+			
+			<label>&nbsp;❶&nbsp;이름</label>
+			<div class='input-group'>
+				<input class='form-control' type='text' id = 'member_name' name='member_name' Placeholder='이름(필수)' requied>
+			</div>
+			<br>
+			
+			<label>&nbsp;❸&nbsp;전화번호</label>
+			<div class='input-group'>
+				<input class='form-control' type='text' id='phone' name='phone' Placeholder='전화번호 (예:01012345678)' required>
+			</div>
+			<br>";
+			
+?>
+			<div class='form-group text-right'>
+				<input class='btn btn-success text-uppercase' type='button' value='자격확인' onclick='submit();'>
+			</div>
+			
+		</form>
+	</div>
+</div>
+</div>
+
+		<br><br><br><br>
+
+
+<?
+          include "include/sb_quick.html";
+?>
+            </div>
+            <!-- //sbcenter -->
+
+            <!-- ㅡㅡㅡㅡㅡㅡㅡㅡFOOTERㅡㅡㅡㅡㅡㅡㅡㅡ -->
+            <?
+    include "footer.html";
+?>

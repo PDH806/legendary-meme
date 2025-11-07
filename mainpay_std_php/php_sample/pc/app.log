@@ -1,0 +1,725 @@
+[2025-09-05 15:00:52.432730] READY-API: https://test-api-std.mainpay.co.kr/v1/payment/ready
+[2025-09-05 15:00:52.432790] PARAM: Array
+(
+    [version] => V001
+    [mbrNo] => 100011
+    [mbrRefNo] => P000010001
+    [paymethod] => CARD
+    [amount] => 1004
+    [goodsName] => 카약-슬라이더406
+    [goodsCode] => GOOD0001
+    [approvalUrl] => https://상점도메인/pc/_3_approval.php
+    [closeUrl] => https://상점도메인/pc/_3_close.php
+    [customerName] => 고객명
+    [customerEmail] => test@spc.co.kr
+    [timestamp] => 202509051500522481
+    [signature] => e20a617965aaacf09375b6bfbf138dbee87c5c6aed6c92b377569a6986022614
+)
+
+[2025-09-05 15:01:20.330393] READY-API: https://test-api-std.mainpay.co.kr/v1/payment/ready
+[2025-09-05 15:01:20.330421] PARAM: Array
+(
+    [version] => V001
+    [mbrNo] => 100011
+    [mbrRefNo] => P000010001
+    [paymethod] => CARD
+    [amount] => 1004
+    [goodsName] => 카약-슬라이더406
+    [goodsCode] => GOOD0001
+    [approvalUrl] => https://상점도메인/pc/_3_approval.php
+    [closeUrl] => https://상점도메인/pc/_3_close.php
+    [customerName] => 고객명
+    [customerEmail] => test@spc.co.kr
+    [timestamp] => 202509051501208037
+    [signature] => 647ddfe3de7e3009d89104484cb1feb94cf7e2f7bde453dc6ccaeea62fd5455c
+)
+
+[2025-09-05 15:01:24.046096] READY-API: https://test-api-std.mainpay.co.kr/v1/payment/ready
+[2025-09-05 15:01:24.046123] PARAM: Array
+(
+    [version] => V001
+    [mbrNo] => 100011
+    [mbrRefNo] => P000010001
+    [paymethod] => CARD
+    [amount] => 1004
+    [goodsName] => 카약-슬라이더406
+    [goodsCode] => GOOD0001
+    [approvalUrl] => https://상점도메인/pc/_3_approval.php
+    [closeUrl] => https://상점도메인/pc/_3_close.php
+    [customerName] => 고객명
+    [customerEmail] => test@spc.co.kr
+    [timestamp] => 202509051501243497
+    [signature] => dc8c0cc3e002a6c1e83c9840e170b4e94505557c3732cb47bce5116a8192791d
+)
+
+[2025-09-05 15:01:33.617827] READY-API: https://test-api-std.mainpay.co.kr/v1/payment/ready
+[2025-09-05 15:01:33.617855] PARAM: Array
+(
+    [version] => V001
+    [mbrNo] => 100011
+    [mbrRefNo] => P000010001
+    [paymethod] => CARD
+    [amount] => 1004
+    [goodsName] => 카약-슬라이더406
+    [goodsCode] => GOOD0001
+    [approvalUrl] => https://상점도메인/pc/_3_approval.php
+    [closeUrl] => https://상점도메인/pc/_3_close.php
+    [customerName] => 고객명
+    [customerEmail] => test@spc.co.kr
+    [timestamp] => 202509051501334281
+    [signature] => ad3d1ea2402fc8b625e11869dc714f9d4bfd43e0965c3bdc62fb9f7da20c7e7d
+)
+
+[2025-09-05 15:02:13.041498] READY-API: https://test-api-std.mainpay.co.kr/v1/payment/ready
+[2025-09-05 15:02:13.041525] PARAM: Array
+(
+    [version] => V001
+    [mbrNo] => 100011
+    [mbrRefNo] => P000010001
+    [paymethod] => CARD
+    [amount] => 1004
+    [goodsName] => 카약-슬라이더406
+    [goodsCode] => GOOD0001
+    [approvalUrl] => https://상점도메인/pc/_3_approval.php
+    [closeUrl] => https://상점도메인/pc/_3_close.php
+    [customerName] => 고객명
+    [customerEmail] => test@spc.co.kr
+    [timestamp] => 202509051502134902
+    [signature] => 6c01aa098997d4d16e9cd158a50b5124dbe0a06c287b2fe4a9f1f5b80cca788e
+)
+
+[2025-09-05 15:03:43.601591] READY-API: https://test-api-std.mainpay.co.kr/v1/payment/ready
+[2025-09-05 15:03:43.601618] PARAM: Array
+(
+    [version] => V001
+    [mbrNo] => 100011
+    [mbrRefNo] => P000010001
+    [paymethod] => CARD
+    [amount] => 1004
+    [goodsName] => 카약-슬라이더406
+    [goodsCode] => GOOD0001
+    [approvalUrl] => https://상점도메인/pc/_3_approval.php
+    [closeUrl] => https://상점도메인/pc/_3_close.php
+    [customerName] => 고객명
+    [customerEmail] => test@spc.co.kr
+    [timestamp] => 202509051503436845
+    [signature] => ec450b0830869c73f8362b108942d09536bc3e4f2b1467b71d3d0fac81601a6c
+)
+
+[2025-09-05 15:04:23.137721] READY-API: https://test-api-std.mainpay.co.kr/v1/payment/ready
+[2025-09-05 15:04:23.137749] PARAM: Array
+(
+    [version] => V001
+    [mbrNo] => 100011
+    [mbrRefNo] => P000010001
+    [paymethod] => CARD
+    [amount] => 1004
+    [goodsName] => 카약-슬라이더406
+    [goodsCode] => GOOD0001
+    [approvalUrl] => https://상점도메인/pc/_3_approval.php
+    [closeUrl] => https://상점도메인/pc/_3_close.php
+    [customerName] => 고객명
+    [customerEmail] => test@spc.co.kr
+    [timestamp] => 202509051504230165
+    [signature] => 8e620efe39d4b06881c27388b53b80516b85c615b087d65e10f288841f5d580d
+)
+
+[2025-09-05 15:09:26.215783] READY-API: https://test-api-std.mainpay.co.kr/v1/payment/ready
+[2025-09-05 15:09:26.215812] PARAM: Array
+(
+    [version] => V001
+    [mbrNo] => 100011
+    [mbrRefNo] => P000010001
+    [paymethod] => CARD
+    [amount] => 1004
+    [goodsName] => 카약-슬라이더406
+    [goodsCode] => GOOD0001
+    [approvalUrl] => https://asiaski.org/mainpay_std_php/php_sample/pc/_3_approval.php
+    [closeUrl] => https://asiaski.org/mainpay_std_php/php_sample/pc/_3_close.php
+    [customerName] => 고객명
+    [customerEmail] => test@spc.co.kr
+    [timestamp] => 202509051509261852
+    [signature] => 17fed9c260ba6ae71384067dec610eaee1f281b6716fc9a6aed4edbeef6d18cf
+)
+
+[2025-09-05 15:09:33.264359] READY-API: https://test-api-std.mainpay.co.kr/v1/payment/ready
+[2025-09-05 15:09:33.264386] PARAM: Array
+(
+    [version] => V001
+    [mbrNo] => 100011
+    [mbrRefNo] => P000010001
+    [paymethod] => CARD
+    [amount] => 1004
+    [goodsName] => 카약-슬라이더406
+    [goodsCode] => GOOD0001
+    [approvalUrl] => https://asiaski.org/mainpay_std_php/php_sample/pc/_3_approval.php
+    [closeUrl] => https://asiaski.org/mainpay_std_php/php_sample/pc/_3_close.php
+    [customerName] => 고객명
+    [customerEmail] => test@spc.co.kr
+    [timestamp] => 202509051509334293
+    [signature] => 1dfe7af4fc757ed6f88b4bb0229147928e9acc0c8f43bed04ed081c6cc8afde8
+)
+
+[2025-09-05 15:10:28.119455] READY-API: https://test-api-std.mainpay.co.kr/v1/payment/ready
+[2025-09-05 15:10:28.119483] PARAM: Array
+(
+    [version] => V001
+    [mbrNo] => 100011
+    [mbrRefNo] => P000010001
+    [paymethod] => CARD
+    [amount] => 1004
+    [goodsName] => 카약-슬라이더406
+    [goodsCode] => GOOD0001
+    [approvalUrl] => https://asiaski.org/mainpay_std_php/php_sample/pc/_3_approval.php
+    [closeUrl] => https://asiaski.org/mainpay_std_php/php_sample/pc/_3_close.php
+    [customerName] => 고객명
+    [customerEmail] => test@spc.co.kr
+    [timestamp] => 202509051510285179
+    [signature] => 557c99d71cf8716f4bd9d8a1b39032924906ba0813e826b19682f3fe0d1ac5d1
+)
+
+[2025-09-05 16:30:29.938503] READY-API: https://test-api-std.mainpay.co.kr/v1/payment/ready
+[2025-09-05 16:30:29.938531] PARAM: Array
+(
+    [version] => V001
+    [mbrNo] => 100011
+    [mbrRefNo] => P000010001
+    [paymethod] => CARD
+    [amount] => 1004
+    [goodsName] => 카약-슬라이더406
+    [goodsCode] => GOOD0001
+    [approvalUrl] => https://asiaski.org/mainpay_std_php/php_sample/pc/_3_approval.php
+    [closeUrl] => https://asiaski.org/mainpay_std_php/php_sample/pc/_3_close.php
+    [customerName] => 고객명
+    [customerEmail] => test@spc.co.kr
+    [timestamp] => 202509051630290687
+    [signature] => ec4c6f0e3f2aa42c63172f37e97e984dffca3ecd51db6c3b858700b49cbcd4f1
+)
+
+[2025-09-05 16:31:23.582788] READY-API: https://test-api-std.mainpay.co.kr/v1/payment/ready
+[2025-09-05 16:31:23.582814] PARAM: Array
+(
+    [version] => V001
+    [mbrNo] => 100011
+    [mbrRefNo] => P000010001
+    [paymethod] => CARD
+    [amount] => 1004
+    [goodsName] => 카약-슬라이더406
+    [goodsCode] => GOOD0002
+    [approvalUrl] => https://asiaski.org/mainpay_std_php/php_sample/pc/_3_approval.php
+    [closeUrl] => https://asiaski.org/mainpay_std_php/php_sample/pc/_3_close.php
+    [customerName] => 고객명
+    [customerEmail] => test@spc.co.kr
+    [timestamp] => 202509051631230167
+    [signature] => d321f935d089487a15e888f29127cca966d92aed523d8703a77433bd95512368
+)
+
+[2025-09-05 16:32:38.467695] READY-API: https://test-api-std.mainpay.co.kr/v1/payment/ready
+[2025-09-05 16:32:38.467724] PARAM: Array
+(
+    [version] => V001
+    [mbrNo] => 100011
+    [mbrRefNo] => P000010001
+    [paymethod] => CARD
+    [amount] => 1004
+    [goodsName] => 샘플상품013
+    [goodsCode] => GOOD0005
+    [approvalUrl] => https://asiaski.org/mainpay_std_php/php_sample/pc/_3_approval.php
+    [closeUrl] => https://asiaski.org/mainpay_std_php/php_sample/pc/_3_close.php
+    [customerName] => 고객명
+    [customerEmail] => test@spc.co.kr
+    [timestamp] => 202509051632381508
+    [signature] => fc0567bfe531f10590df59353cde5c8d9cffbfb38ebdf553441b7bc881e817b6
+)
+
+[2025-09-05 16:43:10.272533] READY-API: https://test-api-std.mainpay.co.kr/v1/payment/ready
+[2025-09-05 16:43:10.272563] PARAM: Array
+(
+    [version] => V001
+    [mbrNo] => 100011
+    [mbrRefNo] => P000010001
+    [paymethod] => CARD
+    [amount] => 1004
+    [goodsName] => 샘플상품013
+    [goodsCode] => GOOD0005
+    [approvalUrl] => https://asiaski.org/mainpay_std_php/php_sample/pc/_3_approval.php
+    [closeUrl] => https://asiaski.org/mainpay_std_php/php_sample/pc/_3_close.php
+    [customerName] => 고객명
+    [customerEmail] => test@spc.co.kr
+    [timestamp] => 202509051643101973
+    [signature] => f119d5cfa5c834b9922cff06fca1375b9a49334a65769983fac4794241807e50
+)
+
+[2025-09-05 16:44:26.776987] READY-API: https://test-api-std.mainpay.co.kr/v1/payment/ready
+[2025-09-05 16:44:26.777018] PARAM: Array
+(
+    [version] => V001
+    [mbrNo] => 100011
+    [mbrRefNo] => P000010001
+    [paymethod] => CARD
+    [amount] => 1004
+    [goodsName] => 카약-슬라이더406
+    [goodsCode] => GOOD0001
+    [approvalUrl] => https://asiaski.org/mainpay_std_php/php_sample/pc/_3_approval.php
+    [closeUrl] => https://asiaski.org/mainpay_std_php/php_sample/pc/_3_close.php
+    [customerName] => 고객명
+    [customerEmail] => test@spc.co.kr
+    [timestamp] => 202509051644265076
+    [signature] => 7b089b10bf7a43a2738b3aee62877d3452172422c199a31aaff124aba24abc03
+)
+
+[2025-09-05 17:14:55.770801] READY-API: https://test-api-std.mainpay.co.kr/v1/payment/ready
+[2025-09-05 17:14:55.770830] PARAM: Array
+(
+    [version] => V001
+    [mbrNo] => 100011
+    [mbrRefNo] => P000010001
+    [paymethod] => CARD
+    [amount] => 1004
+    [goodsName] => 카약-슬라이더406
+    [goodsCode] => GOOD0001
+    [approvalUrl] => https://asiaski.org/mainpay_std_php/php_sample/pc/_3_approval.php
+    [closeUrl] => https://asiaski.org/mainpay_std_php/php_sample/pc/_3_close.php
+    [customerName] => 고객명
+    [customerEmail] => test@spc.co.kr
+    [timestamp] => 202509051714553861
+    [signature] => 869efeb541377b21ce86992017871912781ec2147b61cf50428a5c347ac8a9db
+)
+
+[2025-09-05 17:54:49.847903] READY-API: https://test-api-std.mainpay.co.kr/v1/payment/ready
+[2025-09-05 17:54:49.847934] PARAM: Array
+(
+    [version] => V001
+    [mbrNo] => 100011
+    [mbrRefNo] => P000010001
+    [paymethod] => CARD
+    [amount] => 1004
+    [goodsName] => 카약-슬라이더406
+    [goodsCode] => GOOD0001
+    [approvalUrl] => https://asiaski.org/mainpay_std_php/php_sample/pc/_3_approval.php
+    [closeUrl] => https://asiaski.org/mainpay_std_php/php_sample/pc/_3_close.php
+    [customerName] => 고객명
+    [customerEmail] => test@spc.co.kr
+    [timestamp] => 202509051754497543
+    [signature] => 7787090c305681b0c74984775073f1e3aa510638c21fa2cb316c20a12a4eaa51
+)
+
+[2025-09-05 17:54:49.930660] RESPONSE: {"resultCode":"200","resultMessage":"OK","developerMessage":"","detailResultCode":"","data":{"aid":"aid553784c2d24543f4ae482466e26934acb6f40","nextMobileUrl":"https://test-ui-card.mainpay.co.kr/mobile?aid=aid553784c2d24543f4ae482466e26934acb6f40&key=aid553784c2d24543f4ae482466e26934acb6f40","nextPcUrl":"https://test-ui-card.mainpay.co.kr/pc?aid=aid553784c2d24543f4ae482466e26934acb6f40&key=aid553784c2d24543f4ae482466e26934acb6f40","nextAppUrl":"https://test-ui-card.mainpay.co.kr/app?aid=aid553784c2d24543f4ae482466e26934acb6f40&key=aid553784c2d24543f4ae482466e26934acb6f40","createTime":"2025-09-05T17:54:49.923","expireTime":"2025-09-05T18:09:49.923"}}
+[2025-09-05 17:57:02.736846] READY-API: https://test-api-std.mainpay.co.kr/v1/payment/ready
+[2025-09-05 17:57:02.736875] PARAM: Array
+(
+    [version] => V001
+    [mbrNo] => 100011
+    [mbrRefNo] => P000010001
+    [paymethod] => CARD
+    [amount] => 1004
+    [goodsName] => 카약-슬라이더4066
+    [goodsCode] => GOOD0030
+    [approvalUrl] => https://asiaski.org/mainpay_std_php/php_sample/pc/_3_approval.php
+    [closeUrl] => https://asiaski.org/mainpay_std_php/php_sample/pc/_3_close.php
+    [customerName] => 고객명
+    [customerEmail] => test@spc.co.kr
+    [timestamp] => 202509051757026298
+    [signature] => 370fa3fb68fb34d780229cd1949a501cb191d3a82d44d267ba7726af55deb62f
+)
+
+[2025-09-05 17:57:02.774792] RESPONSE: {"resultCode":"200","resultMessage":"OK","developerMessage":"","detailResultCode":"","data":{"aid":"aida782f77564154a7796b786bf0c17a9e2e3157","nextMobileUrl":"https://test-ui-card.mainpay.co.kr/mobile?aid=aida782f77564154a7796b786bf0c17a9e2e3157&key=aida782f77564154a7796b786bf0c17a9e2e3157","nextPcUrl":"https://test-ui-card.mainpay.co.kr/pc?aid=aida782f77564154a7796b786bf0c17a9e2e3157&key=aida782f77564154a7796b786bf0c17a9e2e3157","nextAppUrl":"https://test-ui-card.mainpay.co.kr/app?aid=aida782f77564154a7796b786bf0c17a9e2e3157&key=aida782f77564154a7796b786bf0c17a9e2e3157","createTime":"2025-09-05T17:57:02.768","expireTime":"2025-09-05T18:12:02.768"}}
+[2025-09-08 13:53:08.546124] READY-API: https://test-api-std.mainpay.co.kr/v1/payment/ready
+[2025-09-08 13:53:08.546152] PARAM: Array
+(
+    [version] => V001
+    [mbrNo] => 100011
+    [mbrRefNo] => P000010001
+    [paymethod] => CARD
+    [amount] => 1004
+    [goodsName] => 카약-슬라이더406
+    [goodsCode] => GOOD0001
+    [approvalUrl] => https://asiaski.org/mainpay_std_php/php_sample/pc/_3_approval.php
+    [closeUrl] => https://asiaski.org/mainpay_std_php/php_sample/pc/_3_close.php
+    [customerName] => 고객명
+    [customerEmail] => test@spc.co.kr
+    [timestamp] => 202509081353088395
+    [signature] => 491c41bee0bd8f7db92a9672ff9283957ba9995f1d3dc5909dae0d8001c51bbc
+)
+
+[2025-09-08 13:53:08.653958] RESPONSE: {"resultCode":"200","resultMessage":"OK","developerMessage":"","detailResultCode":"","data":{"aid":"aid4de732365c5b426cbd74ec3a87cd00a58a4c3","nextMobileUrl":"https://test-ui-card.mainpay.co.kr/mobile?aid=aid4de732365c5b426cbd74ec3a87cd00a58a4c3&key=aid4de732365c5b426cbd74ec3a87cd00a58a4c3","nextPcUrl":"https://test-ui-card.mainpay.co.kr/pc?aid=aid4de732365c5b426cbd74ec3a87cd00a58a4c3&key=aid4de732365c5b426cbd74ec3a87cd00a58a4c3","nextAppUrl":"https://test-ui-card.mainpay.co.kr/app?aid=aid4de732365c5b426cbd74ec3a87cd00a58a4c3&key=aid4de732365c5b426cbd74ec3a87cd00a58a4c3","createTime":"2025-09-08T13:53:08.645","expireTime":"2025-09-08T14:08:08.645"}}
+[2025-09-08 13:53:20.077080] READY-API: https://test-api-std.mainpay.co.kr/v1/payment/ready
+[2025-09-08 13:53:20.077107] PARAM: Array
+(
+    [version] => V001
+    [mbrNo] => 100011
+    [mbrRefNo] => P000010001
+    [paymethod] => CARD
+    [amount] => 1004
+    [goodsName] => 카약-슬라이더406
+    [goodsCode] => GOOD0001
+    [approvalUrl] => https://asiaski.org/mainpay_std_php/php_sample/pc/_3_approval.php
+    [closeUrl] => https://asiaski.org/mainpay_std_php/php_sample/pc/_3_close.php
+    [customerName] => 고객명
+    [customerEmail] => test@spc.co.kr
+    [timestamp] => 202509081353209038
+    [signature] => 34b4d0e385b6d68d04b258dd920cb06ed4050c788783bdd906a8b052e1668c27
+)
+
+[2025-09-08 13:53:20.136103] RESPONSE: {"resultCode":"200","resultMessage":"OK","developerMessage":"","detailResultCode":"","data":{"aid":"aidc51703bcbb2b480dbe22641dba5e7c83de7eb","nextMobileUrl":"https://test-ui-card.mainpay.co.kr/mobile?aid=aidc51703bcbb2b480dbe22641dba5e7c83de7eb&key=aidc51703bcbb2b480dbe22641dba5e7c83de7eb","nextPcUrl":"https://test-ui-card.mainpay.co.kr/pc?aid=aidc51703bcbb2b480dbe22641dba5e7c83de7eb&key=aidc51703bcbb2b480dbe22641dba5e7c83de7eb","nextAppUrl":"https://test-ui-card.mainpay.co.kr/app?aid=aidc51703bcbb2b480dbe22641dba5e7c83de7eb&key=aidc51703bcbb2b480dbe22641dba5e7c83de7eb","createTime":"2025-09-08T13:53:20.129","expireTime":"2025-09-08T14:08:20.129"}}
+[2025-09-08 13:57:15.913593] READY-API: https://test-api-std.mainpay.co.kr/v1/payment/ready
+[2025-09-08 13:57:15.913623] PARAM: Array
+(
+    [version] => V001
+    [mbrNo] => 100011
+    [mbrRefNo] => P000010001
+    [paymethod] => CARD
+    [amount] => 1004
+    [goodsName] => 카약-슬라이더406
+    [goodsCode] => GOOD0001
+    [approvalUrl] => https://asiaski.org/mainpay_std_php/php_sample/pc/_3_approval.php
+    [closeUrl] => https://asiaski.org/mainpay_std_php/php_sample/pc/_3_close.php
+    [customerName] => 고객명
+    [customerEmail] => test@spc.co.kr
+    [timestamp] => 202509081357155742
+    [signature] => cb08a6aace4e092270c470baa4f40f0f62ded46137344c04d1b774a10fb607ed
+)
+
+[2025-09-08 13:57:16.016976] RESPONSE: {"resultCode":"200","resultMessage":"OK","developerMessage":"","detailResultCode":"","data":{"aid":"aid173e3a3366224f12b11ba8e5664e732834bb9","nextMobileUrl":"https://test-ui-card.mainpay.co.kr/mobile?aid=aid173e3a3366224f12b11ba8e5664e732834bb9&key=aid173e3a3366224f12b11ba8e5664e732834bb9","nextPcUrl":"https://test-ui-card.mainpay.co.kr/pc?aid=aid173e3a3366224f12b11ba8e5664e732834bb9&key=aid173e3a3366224f12b11ba8e5664e732834bb9","nextAppUrl":"https://test-ui-card.mainpay.co.kr/app?aid=aid173e3a3366224f12b11ba8e5664e732834bb9&key=aid173e3a3366224f12b11ba8e5664e732834bb9","createTime":"2025-09-08T13:57:16.010","expireTime":"2025-09-08T14:12:16.010"}}
+[2025-09-08 13:57:48.732217] READY-API: https://test-api-std.mainpay.co.kr/v1/payment/ready
+[2025-09-08 13:57:48.732244] PARAM: Array
+(
+    [version] => V001
+    [mbrNo] => 100011
+    [mbrRefNo] => P000010001
+    [paymethod] => CARD
+    [amount] => 1004
+    [goodsName] => 카약-슬라이더406
+    [goodsCode] => GOOD0001
+    [approvalUrl] => https://asiaski.org/mainpay_std_php/php_sample/pc/_3_approval.php
+    [closeUrl] => https://asiaski.org/mainpay_std_php/php_sample/pc/_3_close.php
+    [customerName] => 고객명
+    [customerEmail] => test@spc.co.kr
+    [timestamp] => 202509081357483571
+    [signature] => d9938b9b8de7817192d6cff2d5fcd27b9c145112adfe1490a96c2f3afdd2d1c7
+)
+
+[2025-09-08 13:57:48.774915] RESPONSE: {"resultCode":"200","resultMessage":"OK","developerMessage":"","detailResultCode":"","data":{"aid":"aid9777b619100c4724bce2cc7113774a0843a66","nextMobileUrl":"https://test-ui-card.mainpay.co.kr/mobile?aid=aid9777b619100c4724bce2cc7113774a0843a66&key=aid9777b619100c4724bce2cc7113774a0843a66","nextPcUrl":"https://test-ui-card.mainpay.co.kr/pc?aid=aid9777b619100c4724bce2cc7113774a0843a66&key=aid9777b619100c4724bce2cc7113774a0843a66","nextAppUrl":"https://test-ui-card.mainpay.co.kr/app?aid=aid9777b619100c4724bce2cc7113774a0843a66&key=aid9777b619100c4724bce2cc7113774a0843a66","createTime":"2025-09-08T13:57:48.767","expireTime":"2025-09-08T14:12:48.767"}}
+[2025-09-08 14:11:42.552801] READY-API: https://test-api-std.mainpay.co.kr/v1/payment/ready
+[2025-09-08 14:11:42.552831] PARAM: Array
+(
+    [version] => V001
+    [mbrNo] => 100011
+    [mbrRefNo] => P000010001
+    [paymethod] => CARD
+    [amount] => 1004
+    [goodsName] => 카약-슬라이더406
+    [goodsCode] => GOOD0001
+    [approvalUrl] => https://asiaski.org/mainpay_std_php/php_sample/pc/_3_approval.php
+    [closeUrl] => https://asiaski.org/mainpay_std_php/php_sample/pc/_3_close.php
+    [customerName] => 고객명
+    [customerEmail] => test@spc.co.kr
+    [timestamp] => 202509081411420392
+    [signature] => 1c655ed0e08132666b802476d4660fded5741483b83960946317e1f1f0f26f9b
+)
+
+[2025-09-08 14:11:42.819785] RESPONSE: {"resultCode":"200","resultMessage":"OK","developerMessage":"","detailResultCode":"","data":{"aid":"aidd0bb52018f124f5fbbdcafae760204f1991ba","nextMobileUrl":"https://test-ui-card.mainpay.co.kr/mobile?aid=aidd0bb52018f124f5fbbdcafae760204f1991ba&key=aidd0bb52018f124f5fbbdcafae760204f1991ba","nextPcUrl":"https://test-ui-card.mainpay.co.kr/pc?aid=aidd0bb52018f124f5fbbdcafae760204f1991ba&key=aidd0bb52018f124f5fbbdcafae760204f1991ba","nextAppUrl":"https://test-ui-card.mainpay.co.kr/app?aid=aidd0bb52018f124f5fbbdcafae760204f1991ba&key=aidd0bb52018f124f5fbbdcafae760204f1991ba","createTime":"2025-09-08T14:11:42.813","expireTime":"2025-09-08T14:26:42.813"}}
+[2025-09-08 14:21:20.722899] READY-API: https://test-api-std.mainpay.co.kr/v1/payment/ready
+[2025-09-08 14:21:20.722929] PARAM: Array
+(
+    [version] => V001
+    [mbrNo] => 100011
+    [mbrRefNo] => P000010001
+    [paymethod] => CARD
+    [amount] => 1004
+    [goodsName] => 카약-슬라이더406
+    [goodsCode] => GOOD0001
+    [approvalUrl] => https://asiaski.org/mainpay_std_php/php_sample/pc/_3_approval.php
+    [closeUrl] => https://asiaski.org/mainpay_std_php/php_sample/pc/_3_close.php
+    [customerName] => 고객명
+    [customerEmail] => test@spc.co.kr
+    [timestamp] => 202509081421205164
+    [signature] => cbe71bf0b7df56527d473e1d275b2672ddb0dfbbef1a10c771901cefa8ac3caa
+)
+
+[2025-09-08 14:21:20.812576] RESPONSE: {"resultCode":"200","resultMessage":"OK","developerMessage":"","detailResultCode":"","data":{"aid":"aid785a456df2fe4347833d6407c87bd1086bd9a","nextMobileUrl":"https://test-ui-card.mainpay.co.kr/mobile?aid=aid785a456df2fe4347833d6407c87bd1086bd9a&key=aid785a456df2fe4347833d6407c87bd1086bd9a","nextPcUrl":"https://test-ui-card.mainpay.co.kr/pc?aid=aid785a456df2fe4347833d6407c87bd1086bd9a&key=aid785a456df2fe4347833d6407c87bd1086bd9a","nextAppUrl":"https://test-ui-card.mainpay.co.kr/app?aid=aid785a456df2fe4347833d6407c87bd1086bd9a&key=aid785a456df2fe4347833d6407c87bd1086bd9a","createTime":"2025-09-08T14:21:20.805","expireTime":"2025-09-08T14:36:20.805"}}
+[2025-09-08 14:22:08.480920] READY-API: https://test-api-std.mainpay.co.kr/v1/payment/ready
+[2025-09-08 14:22:08.480948] PARAM: Array
+(
+    [version] => V001
+    [mbrNo] => 100011
+    [mbrRefNo] => P000010001
+    [paymethod] => CARD
+    [amount] => 1004
+    [goodsName] => 카약-슬라이더406
+    [goodsCode] => GOOD0001
+    [approvalUrl] => https://asiaski.org/mainpay_std_php/php_sample/pc/_3_approval.php
+    [closeUrl] => https://asiaski.org/mainpay_std_php/php_sample/pc/_3_close.php
+    [customerName] => 고객명
+    [customerEmail] => test@spc.co.kr
+    [timestamp] => 202509081422081743
+    [signature] => 52635401c9d44fb6f6a944fa25d73bf08e285c4a6f8441d112b9d6286ae4f445
+)
+
+[2025-09-08 14:22:08.527166] RESPONSE: {"resultCode":"200","resultMessage":"OK","developerMessage":"","detailResultCode":"","data":{"aid":"aid84d1057a9cf74fbface6fb0043692628195d5","nextMobileUrl":"https://test-ui-card.mainpay.co.kr/mobile?aid=aid84d1057a9cf74fbface6fb0043692628195d5&key=aid84d1057a9cf74fbface6fb0043692628195d5","nextPcUrl":"https://test-ui-card.mainpay.co.kr/pc?aid=aid84d1057a9cf74fbface6fb0043692628195d5&key=aid84d1057a9cf74fbface6fb0043692628195d5","nextAppUrl":"https://test-ui-card.mainpay.co.kr/app?aid=aid84d1057a9cf74fbface6fb0043692628195d5&key=aid84d1057a9cf74fbface6fb0043692628195d5","createTime":"2025-09-08T14:22:08.518","expireTime":"2025-09-08T14:37:08.518"}}
+[2025-09-08 14:54:35.583877] READY-API: https://test-api-std.mainpay.co.kr/v1/payment/ready
+[2025-09-08 14:54:35.583908] PARAM: Array
+(
+    [version] => V001
+    [mbrNo] => 100011
+    [mbrRefNo] => P000010001
+    [paymethod] => CARD
+    [amount] => 1004
+    [goodsName] => 티칭2
+    [goodsCode] => GOOD0001
+    [approvalUrl] => https://asiaski.org/mainpay_std_php/php_sample/pc/_3_approval.php
+    [closeUrl] => https://asiaski.org/mainpay_std_php/php_sample/pc/_3_close.php
+    [customerName] => 고객명
+    [customerEmail] => test@spc.co.kr
+    [timestamp] => 202509081454359218
+    [signature] => 5a91628524acfaf8228878a074282a76f5128c819680adb647369bd113fed85e
+)
+
+[2025-09-08 14:54:35.689214] RESPONSE: {"resultCode":"200","resultMessage":"OK","developerMessage":"","detailResultCode":"","data":{"aid":"aiddcd010a0599a47239df17cb64ed7caee08a50","nextMobileUrl":"https://test-ui-card.mainpay.co.kr/mobile?aid=aiddcd010a0599a47239df17cb64ed7caee08a50&key=aiddcd010a0599a47239df17cb64ed7caee08a50","nextPcUrl":"https://test-ui-card.mainpay.co.kr/pc?aid=aiddcd010a0599a47239df17cb64ed7caee08a50&key=aiddcd010a0599a47239df17cb64ed7caee08a50","nextAppUrl":"https://test-ui-card.mainpay.co.kr/app?aid=aiddcd010a0599a47239df17cb64ed7caee08a50&key=aiddcd010a0599a47239df17cb64ed7caee08a50","createTime":"2025-09-08T14:54:35.681","expireTime":"2025-09-08T15:09:35.681"}}
+[2025-09-08 15:04:39.349541] READY-API: https://test-api-std.mainpay.co.kr/v1/payment/ready
+[2025-09-08 15:04:39.349569] PARAM: Array
+(
+    [version] => 1.0
+    [mbrNo] => 100011
+    [mbrRefNo] => P021110001
+    [paymethod] => CARD
+    [amount] => 1000
+    [goodsName] => 카약-슬라이더406
+    [goodsCode] => GOOD0001
+    [approvalUrl] => https://asiaski.org/mobile/_3_approval.php
+    [closeUrl] => https://asiaski.org/mobile/_3_close.php
+    [customerName] => 고객명
+    [customerEmail] => hong@sample.com
+    [timestamp] => 202509081504399361
+    [signature] => ebe4f1302457146e4fede50fff9fa812830821fbb65aeb2f1dbe4f530cabe6e6
+)
+
+[2025-09-08 15:04:39.444341] RESPONSE: {"resultCode":"200","resultMessage":"OK","developerMessage":"","detailResultCode":"","data":{"aid":"aid6740eaa7d503439fa0782005ffc8fefa17e21","nextMobileUrl":"https://test-ui-card.mainpay.co.kr/mobile?aid=aid6740eaa7d503439fa0782005ffc8fefa17e21&key=aid6740eaa7d503439fa0782005ffc8fefa17e21","nextPcUrl":"https://test-ui-card.mainpay.co.kr/pc?aid=aid6740eaa7d503439fa0782005ffc8fefa17e21&key=aid6740eaa7d503439fa0782005ffc8fefa17e21","nextAppUrl":"https://test-ui-card.mainpay.co.kr/app?aid=aid6740eaa7d503439fa0782005ffc8fefa17e21&key=aid6740eaa7d503439fa0782005ffc8fefa17e21","createTime":"2025-09-08T15:04:39.436","expireTime":"2025-09-08T15:19:39.436"}}
+[2025-09-08 15:10:19.725250] READY-API: https://test-api-std.mainpay.co.kr/v1/payment/ready
+[2025-09-08 15:10:19.725281] PARAM: Array
+(
+    [version] => V001
+    [mbrNo] => 100011
+    [mbrRefNo] => P000010001
+    [paymethod] => CARD
+    [amount] => 1004
+    [goodsName] => 티칭2
+    [goodsCode] => GOOD0001
+    [approvalUrl] => https://asiaski.org/mainpay_std_php/php_sample/pc/_3_approval.php
+    [closeUrl] => https://asiaski.org/mainpay_std_php/php_sample/pc/_3_close.php
+    [customerName] => 고객명
+    [customerEmail] => test@spc.co.kr
+    [timestamp] => 202509081510191872
+    [signature] => ca8481adfbfd9824446c130b1167b84d266fdacccee31fbbfa6a5ef36df5594c
+)
+
+[2025-09-08 15:10:19.825132] RESPONSE: {"resultCode":"200","resultMessage":"OK","developerMessage":"","detailResultCode":"","data":{"aid":"aid8f73bb2137e041799279fd0aba847ec009379","nextMobileUrl":"https://test-ui-card.mainpay.co.kr/mobile?aid=aid8f73bb2137e041799279fd0aba847ec009379&key=aid8f73bb2137e041799279fd0aba847ec009379","nextPcUrl":"https://test-ui-card.mainpay.co.kr/pc?aid=aid8f73bb2137e041799279fd0aba847ec009379&key=aid8f73bb2137e041799279fd0aba847ec009379","nextAppUrl":"https://test-ui-card.mainpay.co.kr/app?aid=aid8f73bb2137e041799279fd0aba847ec009379&key=aid8f73bb2137e041799279fd0aba847ec009379","createTime":"2025-09-08T15:10:19.818","expireTime":"2025-09-08T15:25:19.818"}}
+[2025-09-08 15:10:44.469926] READY-API: https://test-api-std.mainpay.co.kr/v1/payment/ready
+[2025-09-08 15:10:44.469951] PARAM: Array
+(
+    [version] => 1.0
+    [mbrNo] => 100011
+    [mbrRefNo] => P021110001
+    [paymethod] => CARD
+    [amount] => 1000
+    [goodsName] => 카약-슬라이더406
+    [goodsCode] => GOOD0001
+    [approvalUrl] => https://asiaski.org/mobile/_3_approval.php
+    [closeUrl] => https://asiaski.org/mobile/_3_close.php
+    [customerName] => 고객명
+    [customerEmail] => hong@sample.com
+    [timestamp] => 202509081510446493
+    [signature] => 5126e7eb34e17c5bd0cc9ea582f2773c055e48345b54ae08b1a7d3908802a79e
+)
+
+[2025-09-08 15:10:44.521973] RESPONSE: {"resultCode":"200","resultMessage":"OK","developerMessage":"","detailResultCode":"","data":{"aid":"aid7139f98afd9e42428056b8b59578f1b5e9341","nextMobileUrl":"https://test-ui-card.mainpay.co.kr/mobile?aid=aid7139f98afd9e42428056b8b59578f1b5e9341&key=aid7139f98afd9e42428056b8b59578f1b5e9341","nextPcUrl":"https://test-ui-card.mainpay.co.kr/pc?aid=aid7139f98afd9e42428056b8b59578f1b5e9341&key=aid7139f98afd9e42428056b8b59578f1b5e9341","nextAppUrl":"https://test-ui-card.mainpay.co.kr/app?aid=aid7139f98afd9e42428056b8b59578f1b5e9341&key=aid7139f98afd9e42428056b8b59578f1b5e9341","createTime":"2025-09-08T15:10:44.515","expireTime":"2025-09-08T15:25:44.515"}}
+[2025-09-08 16:34:00.626815] READY-API: https://test-api-std.mainpay.co.kr/v1/payment/ready
+[2025-09-08 16:34:00.626844] PARAM: Array
+(
+    [version] => V001
+    [mbrNo] => 100011
+    [mbrRefNo] => P000010001
+    [paymethod] => CARD
+    [amount] => 1004
+    [goodsName] => 티칭2
+    [goodsCode] => GOOD0001
+    [approvalUrl] => https://asiaski.org/mainpay_std_php/php_sample/pc/_3_approval.php
+    [closeUrl] => https://asiaski.org/mainpay_std_php/php_sample/pc/_3_close.php
+    [customerName] => 고객명
+    [customerEmail] => test@spc.co.kr
+    [timestamp] => 202509081634004518
+    [signature] => 0a9f34cd0b6e187197dee5bc8e9cf26729c9db17fb565d696ee51271c6963ae1
+)
+
+[2025-09-08 16:34:00.717982] RESPONSE: {"resultCode":"200","resultMessage":"OK","developerMessage":"","detailResultCode":"","data":{"aid":"aid0b85c3a56894429a8d95f7bc31519c267458b","nextMobileUrl":"https://test-ui-card.mainpay.co.kr/mobile?aid=aid0b85c3a56894429a8d95f7bc31519c267458b&key=aid0b85c3a56894429a8d95f7bc31519c267458b","nextPcUrl":"https://test-ui-card.mainpay.co.kr/pc?aid=aid0b85c3a56894429a8d95f7bc31519c267458b&key=aid0b85c3a56894429a8d95f7bc31519c267458b","nextAppUrl":"https://test-ui-card.mainpay.co.kr/app?aid=aid0b85c3a56894429a8d95f7bc31519c267458b&key=aid0b85c3a56894429a8d95f7bc31519c267458b","createTime":"2025-09-08T16:34:00.711","expireTime":"2025-09-08T16:49:00.711"}}
+[2025-09-08 16:37:00.152642] READY-API: https://test-api-std.mainpay.co.kr/v1/payment/ready
+[2025-09-08 16:37:00.152674] PARAM: Array
+(
+    [version] => V001
+    [mbrNo] => 100011
+    [mbrRefNo] => P000010001
+    [paymethod] => CARD
+    [amount] => 1004
+    [goodsName] => 티칭2
+    [goodsCode] => GOOD0001
+    [approvalUrl] => https://asiaski.org/mainpay_std_php/php_sample/pc/_3_approval.php
+    [closeUrl] => https://asiaski.org/mainpay_std_php/php_sample/pc/_3_close.php
+    [customerName] => 고객명
+    [customerEmail] => test@spc.co.kr
+    [timestamp] => 202509081637008405
+    [signature] => b5c12c7e5fd5841e8a890586088d5be1b4e302ce5bb133d838cca3ea1746cfee
+)
+
+[2025-09-08 16:37:00.200052] RESPONSE: {"resultCode":"200","resultMessage":"OK","developerMessage":"","detailResultCode":"","data":{"aid":"aid409a4d6536514ec6b999eb6f4f280b64219ac","nextMobileUrl":"https://test-ui-card.mainpay.co.kr/mobile?aid=aid409a4d6536514ec6b999eb6f4f280b64219ac&key=aid409a4d6536514ec6b999eb6f4f280b64219ac","nextPcUrl":"https://test-ui-card.mainpay.co.kr/pc?aid=aid409a4d6536514ec6b999eb6f4f280b64219ac&key=aid409a4d6536514ec6b999eb6f4f280b64219ac","nextAppUrl":"https://test-ui-card.mainpay.co.kr/app?aid=aid409a4d6536514ec6b999eb6f4f280b64219ac&key=aid409a4d6536514ec6b999eb6f4f280b64219ac","createTime":"2025-09-08T16:37:00.193","expireTime":"2025-09-08T16:52:00.193"}}
+[2025-09-08 16:40:47.688362] READY-API: https://test-api-std.mainpay.co.kr/v1/payment/ready
+[2025-09-08 16:40:47.688393] PARAM: Array
+(
+    [version] => V001
+    [mbrNo] => 100011
+    [mbrRefNo] => P000010001
+    [paymethod] => CARD
+    [amount] => 1004
+    [goodsName] => 티칭2
+    [goodsCode] => GOOD0001
+    [approvalUrl] => https://asiaski.org/mainpay_std_php/php_sample/pc/_3_approval.php
+    [closeUrl] => https://asiaski.org/mainpay_std_php/php_sample/pc/_3_close.php
+    [customerName] => 고객명
+    [customerEmail] => test@spc.co.kr
+    [timestamp] => 202509081640472670
+    [signature] => 778cb6c7c01078bcc457c99aa2a49fa0930cfdec517f5af2c9d3d26475bb6171
+)
+
+[2025-09-08 16:40:47.738401] RESPONSE: {"resultCode":"200","resultMessage":"OK","developerMessage":"","detailResultCode":"","data":{"aid":"aidc143b97daeba40b4b56fa8ca7a3635a93fa81","nextMobileUrl":"https://test-ui-card.mainpay.co.kr/mobile?aid=aidc143b97daeba40b4b56fa8ca7a3635a93fa81&key=aidc143b97daeba40b4b56fa8ca7a3635a93fa81","nextPcUrl":"https://test-ui-card.mainpay.co.kr/pc?aid=aidc143b97daeba40b4b56fa8ca7a3635a93fa81&key=aidc143b97daeba40b4b56fa8ca7a3635a93fa81","nextAppUrl":"https://test-ui-card.mainpay.co.kr/app?aid=aidc143b97daeba40b4b56fa8ca7a3635a93fa81&key=aidc143b97daeba40b4b56fa8ca7a3635a93fa81","createTime":"2025-09-08T16:40:47.731","expireTime":"2025-09-08T16:55:47.731"}}
+[2025-09-08 16:43:56.878076] READY-API: https://test-api-std.mainpay.co.kr/v1/payment/ready
+[2025-09-08 16:43:56.878108] PARAM: Array
+(
+    [version] => V001
+    [mbrNo] => 100011
+    [mbrRefNo] => P000010001
+    [paymethod] => CARD
+    [amount] => 1004
+    [goodsName] => 티칭2
+    [goodsCode] => GOOD0001
+    [approvalUrl] => https://asiaski.org/mainpay_std_php/php_sample/pc/_3_approval.php
+    [closeUrl] => https://asiaski.org/mainpay_std_php/php_sample/pc/_3_close.php
+    [customerName] => 고객명
+    [customerEmail] => test@spc.co.kr
+    [timestamp] => 202509081643567059
+    [signature] => f43fcbd94e2bbd4a282b8236cf98e5b1f9be2e96a97f4f63132444f84a73c12b
+)
+
+[2025-09-08 16:43:56.962340] RESPONSE: {"resultCode":"200","resultMessage":"OK","developerMessage":"","detailResultCode":"","data":{"aid":"aid6f12c7fbaa1f447ab04ae27e9273606969486","nextMobileUrl":"https://test-ui-card.mainpay.co.kr/mobile?aid=aid6f12c7fbaa1f447ab04ae27e9273606969486&key=aid6f12c7fbaa1f447ab04ae27e9273606969486","nextPcUrl":"https://test-ui-card.mainpay.co.kr/pc?aid=aid6f12c7fbaa1f447ab04ae27e9273606969486&key=aid6f12c7fbaa1f447ab04ae27e9273606969486","nextAppUrl":"https://test-ui-card.mainpay.co.kr/app?aid=aid6f12c7fbaa1f447ab04ae27e9273606969486&key=aid6f12c7fbaa1f447ab04ae27e9273606969486","createTime":"2025-09-08T16:43:56.955","expireTime":"2025-09-08T16:58:56.955"}}
+[2025-09-09 14:17:16.730549] READY-API: https://test-api-std.mainpay.co.kr/v1/payment/ready
+[2025-09-09 14:17:16.730577] PARAM: Array
+(
+    [version] => V001
+    [mbrNo] => 100011
+    [mbrRefNo] => P000010001
+    [paymethod] => CARD
+    [amount] => 1004
+    [goodsName] => 티칭2
+    [goodsCode] => GOOD0001
+    [approvalUrl] => https://asiaski.org/mainpay_std_php/php_sample/pc/_3_approval.php
+    [closeUrl] => https://asiaski.org/mainpay_std_php/php_sample/pc/_3_close.php
+    [customerName] => 고객명
+    [customerEmail] => test@spc.co.kr
+    [timestamp] => 202509091417166920
+    [signature] => dc84e584a57cb923a1e1236badb5b4d95e37d192046176aa1edfccdb2c264c46
+)
+
+[2025-09-09 14:17:16.828559] RESPONSE: {"resultCode":"200","resultMessage":"OK","developerMessage":"","detailResultCode":"","data":{"aid":"aid896801fab2b34addb98a02f147345b3408db9","nextMobileUrl":"https://test-ui-card.mainpay.co.kr/mobile?aid=aid896801fab2b34addb98a02f147345b3408db9&key=aid896801fab2b34addb98a02f147345b3408db9","nextPcUrl":"https://test-ui-card.mainpay.co.kr/pc?aid=aid896801fab2b34addb98a02f147345b3408db9&key=aid896801fab2b34addb98a02f147345b3408db9","nextAppUrl":"https://test-ui-card.mainpay.co.kr/app?aid=aid896801fab2b34addb98a02f147345b3408db9&key=aid896801fab2b34addb98a02f147345b3408db9","createTime":"2025-09-09T14:17:16.822","expireTime":"2025-09-09T14:32:16.822"}}
+[2025-09-09 14:19:03.941114] READY-API: https://test-api-std.mainpay.co.kr/v1/payment/ready
+[2025-09-09 14:19:03.941142] PARAM: Array
+(
+    [version] => V001
+    [mbrNo] => 100011
+    [mbrRefNo] => P000010001
+    [paymethod] => CARD
+    [amount] => 1004
+    [goodsName] => 티칭2
+    [goodsCode] => GOOD0001
+    [approvalUrl] => https://asiaski.org/mainpay_std_php/php_sample/pc/_3_approval.php
+    [closeUrl] => https://asiaski.org/mainpay_std_php/php_sample/pc/_3_close.php
+    [customerName] => 고객명
+    [customerEmail] => test@spc.co.kr
+    [timestamp] => 202509091419037356
+    [signature] => 6a4b7b4a2544512661052b4026556cd2fb383adea8317bcf4d3817706eae2ad3
+)
+
+[2025-09-09 14:19:03.986065] RESPONSE: {"resultCode":"200","resultMessage":"OK","developerMessage":"","detailResultCode":"","data":{"aid":"aid7e990101e43d4aa9bf26a45c2e441e5f3058d","nextMobileUrl":"https://test-ui-card.mainpay.co.kr/mobile?aid=aid7e990101e43d4aa9bf26a45c2e441e5f3058d&key=aid7e990101e43d4aa9bf26a45c2e441e5f3058d","nextPcUrl":"https://test-ui-card.mainpay.co.kr/pc?aid=aid7e990101e43d4aa9bf26a45c2e441e5f3058d&key=aid7e990101e43d4aa9bf26a45c2e441e5f3058d","nextAppUrl":"https://test-ui-card.mainpay.co.kr/app?aid=aid7e990101e43d4aa9bf26a45c2e441e5f3058d&key=aid7e990101e43d4aa9bf26a45c2e441e5f3058d","createTime":"2025-09-09T14:19:03.980","expireTime":"2025-09-09T14:34:03.980"}}
+[2025-09-09 15:13:50.796332] READY-API: https://test-api-std.mainpay.co.kr/v1/payment/ready
+[2025-09-09 15:13:50.796362] PARAM: Array
+(
+    [version] => V001
+    [mbrNo] => 100011
+    [mbrRefNo] => P000010001
+    [paymethod] => CARD
+    [amount] => 1004
+    [goodsName] => 티칭2
+    [goodsCode] => GOOD0001
+    [approvalUrl] => https://asiaski.org/mainpay_std_php/php_sample/pc/_3_approval.php
+    [closeUrl] => https://asiaski.org/mainpay_std_php/php_sample/pc/_3_close.php
+    [customerName] => 고객명
+    [customerEmail] => test@spc.co.kr
+    [timestamp] => 202509091513504051
+    [signature] => 8120f0f3484be9aa0cf0339417a8af32f1863fa1b03e48508604570836e30cca
+)
+
+[2025-09-09 15:13:50.882095] RESPONSE: {"resultCode":"200","resultMessage":"OK","developerMessage":"","detailResultCode":"","data":{"aid":"aidbf5c3084bacc4eb9a5d7bf46a2112dcf8844b","nextMobileUrl":"https://test-ui-card.mainpay.co.kr/mobile?aid=aidbf5c3084bacc4eb9a5d7bf46a2112dcf8844b&key=aidbf5c3084bacc4eb9a5d7bf46a2112dcf8844b","nextPcUrl":"https://test-ui-card.mainpay.co.kr/pc?aid=aidbf5c3084bacc4eb9a5d7bf46a2112dcf8844b&key=aidbf5c3084bacc4eb9a5d7bf46a2112dcf8844b","nextAppUrl":"https://test-ui-card.mainpay.co.kr/app?aid=aidbf5c3084bacc4eb9a5d7bf46a2112dcf8844b&key=aidbf5c3084bacc4eb9a5d7bf46a2112dcf8844b","createTime":"2025-09-09T15:13:50.875","expireTime":"2025-09-09T15:28:50.875"}}
+[2025-09-09 15:17:25.341485] READY-API: https://test-api-std.mainpay.co.kr/v1/payment/ready
+[2025-09-09 15:17:25.341515] PARAM: Array
+(
+    [version] => V001
+    [mbrNo] => 100011
+    [mbrRefNo] => P000010001
+    [paymethod] => CARD
+    [amount] => 1004
+    [goodsName] => 티칭2
+    [goodsCode] => GOOD0001
+    [approvalUrl] => https://asiaski.org/mainpay_std_php/php_sample/pc/_3_approval.php
+    [closeUrl] => https://asiaski.org/mainpay_std_php/php_sample/pc/_3_close.php
+    [customerName] => 고객명
+    [customerEmail] => test@spc.co.kr
+    [timestamp] => 202509091517251432
+    [signature] => 5cbf41e622536a0a7b78b34198bfe9f5a208fb6880ccbf4fef761787ee939032
+)
+
+[2025-09-09 15:17:25.422850] RESPONSE: {"resultCode":"200","resultMessage":"OK","developerMessage":"","detailResultCode":"","data":{"aid":"aide55d7ede5e224401b535acd3dd0caba38441f","nextMobileUrl":"https://test-ui-card.mainpay.co.kr/mobile?aid=aide55d7ede5e224401b535acd3dd0caba38441f&key=aide55d7ede5e224401b535acd3dd0caba38441f","nextPcUrl":"https://test-ui-card.mainpay.co.kr/pc?aid=aide55d7ede5e224401b535acd3dd0caba38441f&key=aide55d7ede5e224401b535acd3dd0caba38441f","nextAppUrl":"https://test-ui-card.mainpay.co.kr/app?aid=aide55d7ede5e224401b535acd3dd0caba38441f&key=aide55d7ede5e224401b535acd3dd0caba38441f","createTime":"2025-09-09T15:17:25.416","expireTime":"2025-09-09T15:32:25.416"}}
+[2025-09-09 15:34:04.955343] READY-API: https://test-api-std.mainpay.co.kr/v1/payment/ready
+[2025-09-09 15:34:04.955373] PARAM: Array
+(
+    [version] => V001
+    [mbrNo] => 100011
+    [mbrRefNo] => P000010001
+    [paymethod] => CARD
+    [amount] => 1004
+    [goodsName] => 티칭2
+    [goodsCode] => GOOD0001
+    [approvalUrl] => https://asiaski.org/mainpay_std_php/php_sample/pc/_3_approval.php
+    [closeUrl] => https://asiaski.org/mainpay_std_php/php_sample/pc/_3_close.php
+    [customerName] => 고객명
+    [customerEmail] => test@spc.co.kr
+    [timestamp] => 202509091534043871
+    [signature] => 3732e2295e5d4473e7ede226a8b05798a2111eafdb809b7b13e9b201719cd768
+)
+
+[2025-09-09 15:34:05.060454] RESPONSE: {"resultCode":"200","resultMessage":"OK","developerMessage":"","detailResultCode":"","data":{"aid":"aid01f7be350009455e85c4fb60acb08efb19b5b","nextMobileUrl":"https://test-ui-card.mainpay.co.kr/mobile?aid=aid01f7be350009455e85c4fb60acb08efb19b5b&key=aid01f7be350009455e85c4fb60acb08efb19b5b","nextPcUrl":"https://test-ui-card.mainpay.co.kr/pc?aid=aid01f7be350009455e85c4fb60acb08efb19b5b&key=aid01f7be350009455e85c4fb60acb08efb19b5b","nextAppUrl":"https://test-ui-card.mainpay.co.kr/app?aid=aid01f7be350009455e85c4fb60acb08efb19b5b&key=aid01f7be350009455e85c4fb60acb08efb19b5b","createTime":"2025-09-09T15:34:05.054","expireTime":"2025-09-09T15:49:05.054"}}
+[2025-09-09 15:34:12.036913] READY-API: https://test-api-std.mainpay.co.kr/v1/payment/ready
+[2025-09-09 15:34:12.036939] PARAM: Array
+(
+    [version] => V001
+    [mbrNo] => 100011
+    [mbrRefNo] => P000010001
+    [paymethod] => CARD
+    [amount] => 1004
+    [goodsName] => 티칭2
+    [goodsCode] => GOOD0001
+    [approvalUrl] => https://asiaski.org/mainpay_std_php/php_sample/pc/_3_approval.php
+    [closeUrl] => https://asiaski.org/mainpay_std_php/php_sample/pc/_3_close.php
+    [customerName] => 고객명
+    [customerEmail] => test@spc.co.kr
+    [timestamp] => 202509091534120359
+    [signature] => 08cc69ae54d20a4abd2faf81113cc8a1f60dc134f582fa3c9a2a957e2de5a1fb
+)
+
+[2025-09-09 15:34:12.075985] RESPONSE: {"resultCode":"200","resultMessage":"OK","developerMessage":"","detailResultCode":"","data":{"aid":"aid77bfe71e23db420d8a4e18cba9a7dc638c41a","nextMobileUrl":"https://test-ui-card.mainpay.co.kr/mobile?aid=aid77bfe71e23db420d8a4e18cba9a7dc638c41a&key=aid77bfe71e23db420d8a4e18cba9a7dc638c41a","nextPcUrl":"https://test-ui-card.mainpay.co.kr/pc?aid=aid77bfe71e23db420d8a4e18cba9a7dc638c41a&key=aid77bfe71e23db420d8a4e18cba9a7dc638c41a","nextAppUrl":"https://test-ui-card.mainpay.co.kr/app?aid=aid77bfe71e23db420d8a4e18cba9a7dc638c41a&key=aid77bfe71e23db420d8a4e18cba9a7dc638c41a","createTime":"2025-09-09T15:34:12.069","expireTime":"2025-09-09T15:49:12.069"}}

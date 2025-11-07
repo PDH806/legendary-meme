@@ -1,0 +1,539 @@
+<?
+	$The_No 	= $_GET["No"];
+	$month 		= $_GET["month"];
+	$main_title = '한국 스키장 경영협회';
+	include '../db_config.html';
+	
+	// 관리자가 아니면 member_login.html 페이지로 이동
+	if ($rank != 9){
+	echo " <script>
+	alert('잘못된 접근입니다.');
+	top.document.location.href = '../member_login.html?MEMBER_ID=$User_ID_Search&Case=9';
+	</script>";
+	}
+?>
+
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Admin Dashboard | (사)한국스키장경영협회</title>
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="../images/favicon.ico">
+	<link rel="stylesheet" href="./vendor/chartist/css/chartist.min.css">
+    <link href="./vendor/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet">
+	<!-- Datatable -->
+    <link href="./vendor/datatables/css/jquery.dataTables.min.css" rel="stylesheet">
+    <link href="./css/style.css" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&family=Roboto:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
+<?
+
+ 			$query= "select * from 7G_Patrol_Schedules order by Test_Date DESC" ;
+ 			$result=mysql_query($query,$connect );
+ 			$row=mysql_fetch_array($result);
+
+ 			$query2= "SELECT * FROM `7G_Skiresort_Member` where MEMBER_ID = '$Login_User_ID'" ;
+ 			$result2=mysql_query($query2,$connect );
+ 			$login_member=mysql_fetch_array($result2);
+ 			
+			//$current_page = $_SERVER['REQUEST_URI'];
+			//$current_page = str_replace('/skiresort/ski/','',$current_page);
+
+?>
+
+
+</head>
+<body>
+
+    <!--*******************
+        Preloader start
+    ********************-->
+    <div id="preloader">
+        <div class="sk-three-bounce">
+            <div class="sk-child sk-bounce1"></div>
+            <div class="sk-child sk-bounce2"></div>
+            <div class="sk-child sk-bounce3"></div>
+        </div>
+    </div>
+    <!--*******************
+        Preloader end
+    ********************-->
+
+
+    <!--**********************************
+        Main wrapper start
+    ***********************************-->
+    <div id="main-wrapper">
+
+        <!--**********************************
+            Nav header start
+        ***********************************-->
+        <div class="nav-header">
+            <a href="../index.html" class="brand-logo">
+                <img src="../images/sb_logo.png" width = 90%>
+            </a>
+
+            <div class="nav-control">
+                <div class="hamburger">
+                    <span class="line"></span><span class="line"></span><span class="line"></span>
+                </div>
+            </div>
+        </div>
+        <!--**********************************
+            Nav header end
+        ***********************************-->
+		
+		<?
+		// 챗팅박스 + 헤드네비 불러오기
+		include '_chat_box.html';
+		include '_head_bar.html';
+
+		// 좌측 네비게이션
+	    if ($rank == 9){include '_admin_menu.html';}
+	    if ($rank == 8){include '_admin_menu2.html';}
+	    ?>
+	    
+	    
+        <!--**********************************
+            Content body start
+        ***********************************-->
+        <div class="content-body">
+            <!-- container starts -->
+            <div class="container-fluid">
+                <!-- row -->
+
+				<?
+				echo "
+				<div class='d-flex flex-wrap mb-2 align-items-center justify-content-between'>
+					<div class='mb-3 mr-3'>
+						<h6 class='fs-16 text-black font-w600 mb-0'>$total_record Total Schdeduls</h6>
+						<span class='fs-14'>Based SBAK DBMS System</span>
+					</div>
+					<div class='event-tabs mb-3 mr-3'>
+						<ul class='nav nav-tabs' role='tablist'>
+							<li class='nav-item'>
+								<a class='nav-link active' data-toggle='tab' href='#All' role='tab' aria-selected='true'>
+									All
+								</a>
+							</li>
+							<li class='nav-item'>
+								<a class='nav-link' data-toggle='tab' href='#Paid' role='tab' aria-selected='false'>
+									검정예정
+								</a>
+							</li>
+							<li class='nav-item'>
+								<a class='nav-link' data-toggle='tab' href='#Not_Paid' role='tab' aria-selected='false'>
+									검정완료
+								</a>
+							</li>
+							<li class='nav-item'>
+								<a class='nav-link' data-toggle='tab' href='#Canceled' role='tab' aria-selected='false'>
+									검정취소
+								</a>
+							</li>
+						</ul>
+					</div>
+					<div class='d-flex mb-3'>
+						<select class='form-control style-2 default-select mr-3'>
+							<option>최신순</option>
+							<option>이번달</option>
+							<option>이번주</option>
+						</select>
+						<a href='javascript:void(0)' class='btn btn-primary text-nowrap'><i class='fa fa-file-text scale5 mr-3' aria-hidden='true'></i>엑셀 다운로드</a>
+					</div>
+				</div>
+				<div class='row'>
+					<div class='col-xl-12'>
+						<div class='tab-content'>
+							<div id='All' class='tab-pane active fade show'>
+								<div class='table-responsive'>
+                                                                         
+                                        
+                                            <br><br><br>
+											<div class = 'text-center'>
+                                            	<span class = 'font32'>스키구조요원 시험일정</span>
+                                            <br><br><br>";
+                                   
+                                
+
+                                        // T1 검정일정 테이블 헤더
+                                        echo "
+                                            <table id='example2' class='table card-table display dataTablesCard'>
+											<thead>
+                                            <tr>
+                                                <th width = 100px align = 'center'>연도</th>
+                                                <th width = 150px align = 'center'>장소</th>
+                                                <th>시험일자</th>
+                                                <th>신청마감일</th>
+												<th>정원/응시자</th>
+                                                <th>응시료</th>
+												<th>진행상황</th>
+												<th>관리</th>
+
+                                            </tr>
+                                        </thead>
+										<tbody>";
+                
+ while($row)
+ 
+ 	{
+                
+                                
+ 		$i = $i + 1;
+ 		
+	    $query9 = "SELECT * FROM 7G_Master_Apply WHERE TEST_ID = 'PATROL' and PAYMENT_STATUS > 1 and Test_No = '$row[No]'";
+ 		$result9=mysql_query($query9,$connect);
+		$total_record9 = mysql_num_rows($result9);		
+
+ 		
+		if ($row[Skiresort] == 1){$Skiresort = '용평리조트';}
+		if ($row[Skiresort] == 2){$Skiresort = '양지파인리조트';}
+		if ($row[Skiresort] == 3){$Skiresort = '스타힐리조트';}
+		if ($row[Skiresort] == 4){$Skiresort = '무주덕유산리조트';}
+		if ($row[Skiresort] == 5){$Skiresort = '비발디파크';}
+		if ($row[Skiresort] == 6){$Skiresort = '피닉스평창';}
+		if ($row[Skiresort] == 7){$Skiresort = '월리힐리파크';}
+		if ($row[Skiresort] == 8){$Skiresort = '지산포레스트리조트';}
+		if ($row[Skiresort] == 9){$Skiresort = '엘리시안강촌';}
+		if ($row[Skiresort] == 10){$Skiresort = '오크밸리';}
+		if ($row[Skiresort] == 11){$Skiresort = '하이원리조트';}
+		if ($row[Skiresort] == 12){$Skiresort = '곤지암리조트';}
+		if ($row[Skiresort] == 13){$Skiresort = '알펜시아';}
+		if ($row[Skiresort] == 14){$Skiresort = '베어스타운';}
+		if ($row[Skiresort] == 15){$Skiresort = '에덴벨리리조트';}
+		if ($row[Skiresort] == 16){$Skiresort = '오투리조트';}
+
+        if ($row[Status] == 0){$Status = '접수중';}
+        if ($row[Status] == 1){$Status = '접수완료';}
+        if ($row[Status] == 2){$Status = '검정완료';}
+                                
+        $dateDifference2 = abs(strtotime($row[Date2]) - strtotime($today));
+        $dateDifference1 = abs(strtotime($row[Date1]) - strtotime($today));
+                                
+        if ($dateDifference2 >= 0){$Status = '접수중';} 
+		if ($dateDifference2 < 0){$Status = '접수완료';} 	
+        if ($dateDifference1 < 0){$Status = '검정완료';} 	
+
+ 		$Testfee = number_format($row[Testfee]);
+ 	
+     echo "
+
+			<tr height = 100px style = 'border-bottom:1px solid #b3b3b3;font-size:16px;'>
+    	 
+ 				<td style = 'font-size:13pt;' align = center>
+               		$row[Test_Year]
+				</td>
+
+				<td style = 'font-size:13pt;' align = center width = 200px>
+					<img src = 'resort-icon/$row[Skiresort].jpg' width = 100%><br>
+               		$Skiresort     
+				</td>
+
+				<td style = 'font-size:13pt;' align = center>
+					$row[Test_Date]<br>($row[Time])
+            	</td>
+			
+				<td style = 'font-size:13pt;' align = center>
+               		$row[Expired_Date]
+				</td>
+
+				<td style = 'font-size:13pt;' align = center>
+               		$row[Participate] 명 / $total_record9 명
+				</td>
+
+				<td style = 'font-size:13pt;' align = center>
+               		$Testfee 원
+				</td>
+
+				<td style = 'font-size:13pt;' align = center>
+               		$Status
+				</td>
+			
+				<td align = right>
+				
+					<a href = 'admin_patrol_schedule_edit.html?No=$row[No]' class='btn btn-rounded light btn-vimeo' style = 'font-size:13pt;weight:900;width:80px;padding-left:0px;padding-right:0px;'>수정</a>&nbsp;
+					<a href = 'javascript:dele($row[No])' class='btn btn-rounded light btn-primary' style = 'font-size:13pt;weight:900;width:80px;padding-left:0px;padding-right:0px;'>삭제</a>&nbsp;";
+					if ($total_record9 > 0 ){echo "<a href = 'admin_master_apply_list.html?ID=PATROL&No=$row[No]'  class='btn btn-rounded light btn-success' style = 'font-size:13pt;weight:900;width:80px;padding-left:0px;padding-right:0px;'>응시자</a>";}
+				
+				
+			echo "</td>
+			<tr> ";	
+
+ 		  	$row=mysql_fetch_array($result);
+
+   			}
+                                 
+                                   echo "</tbody></table>";
+                                      
+                                      
+                                   echo "<br>
+                                           <div class='form-group text-right'>
+                                                <a href=../admin_patrol_schedule_regist.html class='btn btn-outline-primary btn-sm light'>스키구조요원 검정일정 신규등록</a>
+                                            </div>";
+                                 
+                                ?>
+                                          </div>
+                                 
+
+
+
+
+								</div>
+							</div>
+							
+							
+							<div id="Paid" class="tab-pane fade">
+								<div class="table-responsive">
+                                    <table id="example3" class="table card-table display dataTablesCard">
+										<thead>
+                                            <tr>
+                                            <tr>
+                                                <th>회원성명</th>
+                                                <th>신청일</th>
+                                                <th>License</th>
+                                                <th>결제상태</th>
+												<th>결제금액</th>
+                                                <th>진행상태</th>
+                                                <th>택배사</th>
+                                                <th>운송장번호</th>
+                                                <th>발송일</th>
+                                                <th>Total Revenue</th>
+                                            </tr>
+                                            </tr>
+                                        </thead>
+										<tbody>
+									<?
+									
+									$License_query	= "SELECT * FROM 7G_License_Renew where PAYMENT_STATUS = '결제완료' ORDER BY MEMBER_NAME DESC ";
+									$License_result	= mysqli_query($link, $License_query);
+									$row			= mysqli_fetch_array($License_result);
+
+									while($row){
+									$row[TRAN_TIME] = substr($row[TRAN_TIME],0,2).":".substr($row[TRAN_TIME],2,2).";".substr($row[TRAN_TIME],4,2);
+									if($row[DELIVERY_DATE] == NULL){$row[DELIVERY_DATE] = '미발송';}
+										echo "
+											<tr>
+												<td>$row[MEMBER_NAME]</td>
+												<td>$row[TRAN_DATE]<br>$row[TRAN_TIME]</td>
+												<td><span class='text-nowrap'>$row[LICENSE_NO]</span></td>
+												<td>$row[PAYMENT_STATUS]</td>
+												<td>$row[AMOUNT]</td>
+												<td>$row[TRAN_STATUS]</td>
+												<td>$row[DELIVERY_AGENCY]</td>
+												<td>$row[TRACKING_NO]</td>
+												<td>$row[DELIVERY_DATE]</td>
+												<td><a href='javascript:void(0)' class='btn btn-primary btn-sm light'>$125,70</a></td>
+											</tr>";
+									
+											$row	= mysqli_fetch_array($License_result);
+
+
+									}
+									
+									?>	
+
+										</tbody>
+									</table>
+								</div>
+							</div>
+							<div id="Not_Paid" class="tab-pane fade">
+								<div class="table-responsive">
+                                    <table id="example4" class="table card-table display dataTablesCard">
+										<thead>
+                                            <tr>
+                                                <th>회원성명</th>
+                                                <th>신청일</th>
+                                                <th>License</th>
+                                                <th>결제상태</th>
+												<th>결제금액</th>
+                                                <th>진행상태</th>
+                                                <th>택배사</th>
+                                                <th>운송장번호</th>
+                                                <th>발송일</th>
+                                                <th>Total Revenue</th>
+                                            </tr>
+                                        </thead>
+										<tbody>
+
+									<?
+									
+									$License_query	= "SELECT * FROM 7G_License_Renew where PAYMENT_STATUS = '미결제' ORDER BY MEMBER_NAME DESC ";
+									$License_result	= mysqli_query($link, $License_query);
+									$row			= mysqli_fetch_array($License_result);
+
+									while($row){
+									$row[TRAN_TIME] = substr($row[TRAN_TIME],0,2).":".substr($row[TRAN_TIME],2,2).";".substr($row[TRAN_TIME],4,2);
+									if($row[DELIVERY_DATE] == NULL){$row[DELIVERY_DATE] = '미발송';}
+										echo "
+											<tr>
+												<td>$row[MEMBER_NAME]</td>
+												<td>$row[TRAN_DATE]<br>$row[TRAN_TIME]</td>
+												<td><span class='text-nowrap'>$row[LICENSE_NO]</span></td>
+												<td>$row[PAYMENT_STATUS]</td>
+												<td>$row[AMOUNT]</td>
+												<td>$row[TRAN_STATUS]</td>
+												<td>$row[DELIVERY_AGENCY]</td>
+												<td>$row[TRACKING_NO]</td>
+												<td>$row[DELIVERY_DATE]</td>
+												<td><a href='javascript:void(0)' class='btn btn-primary btn-sm light'>$125,70</a></td>
+											</tr>";
+									
+											$row	= mysqli_fetch_array($License_result);
+
+
+									}
+									
+									?>	
+
+										</tbody>
+									</table>
+								</div>
+							</div>
+							<div id="Canceled" class="tab-pane fade">
+								<div class="table-responsive">
+                                    <table id="example5" class="table card-table display dataTablesCard">
+										<thead>
+                                            <tr>
+                                                <th>회원성명</th>
+                                                <th>신청일</th>
+                                                <th>License</th>
+                                                <th>결제상태</th>
+												<th>결제금액</th>
+                                                <th>진행상태</th>
+                                                <th>택배사</th>
+                                                <th>운송장번호</th>
+                                                <th>발송일</th>
+                                                <th>Total Revenue</th>
+                                            </tr>
+                                        </thead>
+										<tbody>
+									<?
+									
+									$License_query	= "SELECT * FROM 7G_License_Renew where PAYMENT_STATUS = '결제완료' and TRAN_STATUS = '미발송' ORDER BY MEMBER_NAME DESC ";
+									$License_result	= mysqli_query($link, $License_query);
+									$row			= mysqli_fetch_array($License_result);
+
+									while($row){
+									$row[TRAN_TIME] = substr($row[TRAN_TIME],0,2).":".substr($row[TRAN_TIME],2,2).";".substr($row[TRAN_TIME],4,2);
+									if($row[DELIVERY_DATE] == NULL){$row[DELIVERY_DATE] = '미발송';}
+									
+										echo "
+											<tr>
+												<td>$row[MEMBER_NAME]</td>
+												<td>$row[TRAN_DATE]<br>$row[TRAN_TIME]</td>
+												<td><span class='text-nowrap'>$row[LICENSE_NO]</span></td>
+												<td>$row[PAYMENT_STATUS]</td>
+												<td>$row[AMOUNT]</td>
+												<td>$row[TRAN_STATUS]</td>
+												<td>$row[DELIVERY_AGENCY]</td>
+												<td>$row[TRACKING_NO]</td>
+												<td>$row[DELIVERY_DATE]</td>
+												<td><a href='javascript:void(0)' class='btn btn-primary btn-sm light'>$125,70</a></td>
+											</tr>";
+									
+											$row	= mysqli_fetch_array($License_result);
+
+
+									}
+									
+									?>	
+
+										</tbody>
+									</table>
+
+
+
+
+                <!-- Row ends -->
+            </div>
+            <!-- container ends -->
+        </div>
+        <!--**********************************
+                Content body end
+            ***********************************-->
+
+
+        <!--**********************************
+            Footer start
+        ***********************************-->
+        <div class="footer">
+            <div class="copyright">
+                <p>© Designed &amp; Developed by <a href="https://7gate.kr/" target="_blank">podong28.com</a> 2019</p>
+            </div>
+        </div>
+        <!--**********************************
+            Footer end
+        ***********************************-->
+        
+        
+    </div>
+    <!--**********************************
+        Main wrapper end
+    ***********************************-->
+
+    <!--**********************************
+        Scripts
+    ***********************************-->
+    <!-- Required vendors -->
+    <script src="./vendor/global/global.min.js"></script>
+	<script src="./vendor/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
+    <script src="./js/custom.min.js"></script>
+	<script src="./js/deznav-init.js"></script>
+	
+
+	<!-- Datatable -->
+    <script src="./vendor/datatables/js/jquery.dataTables.min.js"></script>
+	<script>
+		(function($) {
+			var table = $('#example2').DataTable({
+				searching: false,
+				paging:true,
+				select: false,
+				//info: false,         
+				lengthChange:false 
+				
+			});
+			var table = $('#example3').DataTable({
+				searching: false,
+				paging:true,
+				select: false,
+				//info: false,         
+				lengthChange:false 
+				
+			});
+			var table = $('#example4').DataTable({
+				searching: false,
+				paging:true,
+				select: false,
+				//info: false,         
+				lengthChange:false 
+				
+			});
+			var table = $('#example5').DataTable({
+				searching: false,
+				paging:true,
+				select: false,
+				//info: false,         
+				lengthChange:false 
+				
+			});
+			$('#example tbody').on('click', 'tr', function () {
+				var data = table.row( this ).data();
+				
+			});
+		})(jQuery);
+	function dele(num) {
+   	if (confirm('선택하신 일정이 삭제됩니다.')) {
+      location.href = '../admin_delete_schedule.html?category=Patrol&No='+num;      
+   	}
+   	else {
+      alert('삭제가 취소되었습니다.');
+   	}
+	}
+	</script>
+	
+</body>
+</html>

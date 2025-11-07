@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+
+<?
+include 'db_config.html';
+?>
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+	<link rel="shortcut icon" href="Myicon.png" type="image/x-icon">
+    
+    <title>티칭1 검정신청 | 한국스키장경영협회</title>
+    
+	<? include 'link-files.html'; ?>
+	
+</head>
+
+<body>
+
+	<? include 'main_nav2.html'; ?>
+
+<?php
+$Test_No		= $_GET["No"];
+$Date 			= date('Ymd');
+
+// 신청테이블에 이번 신청내용이 등록되어 있는지 체크
+$dup_query	= "SELECT * FROM 7G_T1_Apply where Test_No = '$Test_No' and MEMBER_ID = '$Login_User_ID'";
+$dup_result	= mysql_query($dup_query,$connect);
+$dup_check	= mysql_fetch_array($dup_result);
+$dup_total_record = mysql_num_rows($dup_result);
+
+	echo "<br><br><br><br>";
+
+	if (!$link) {die("Connection failed: " . mysqli_connect_error());}
+
+	$sql = "INSERT INTO 7G_T1_Apply (Test_No, MEMBER_ID, Apply_date, Process) VALUES ('$Test_No','$Login_User_ID','$Date','1')";
+	
+if ($dup_total_record == 0 and $Login_User_ID != '' and $Test_No > 0 ){
+	
+	if (mysqli_query($link, $sql)) 
+	{
+		if ($Skiresort == 1){$Skiresort = '용평리조트';}
+		if ($Skiresort == 2){$Skiresort = '양지파인리조트';}
+		if ($Skiresort == 3){$Skiresort = '스타힐리조트';}
+		if ($Skiresort == 4){$Skiresort = '무주덕유산리조트';}
+		if ($Skiresort == 5){$Skiresort = '비발디파크';}
+		if ($Skiresort == 6){$Skiresort = '피닉스평창';}
+		if ($Skiresort == 7){$Skiresort = '월리힐리파크';}
+		if ($Skiresort == 8){$Skiresort = '지산포레스트리조트';}
+		if ($Skiresort == 9){$Skiresort = '엘리시안강촌';}
+		if ($Skiresort == 10){$Skiresort = '오크밸리';}
+		if ($Skiresort == 11){$Skiresort = '하이원리조트';}
+		if ($Skiresort == 12){$Skiresort = '곤지암리조트';}
+		if ($Skiresort == 13){$Skiresort = '알펜시아';}
+		if ($Skiresort == 14){$Skiresort = '베어스타운';}
+		if ($Skiresort == 15){$Skiresort = '에덴벨리리조트';}
+		if ($Skiresort == 16){$Skiresort = '오투리조트';}
+
+		echo "
+    		<div class='container'>
+      			<div class='row'>
+        			<div class='col-lg-12 text-center'>
+          				<h2 class='section-heading text-uppercase'>한국스키장경영협회 티칭1 검정신청</h2>
+          				<p class='text-success'>검정신청 등록내용을 확인바랍니다.</p>
+        			</div>
+      			</div>
+      		</div>
+			<br><br>
+    
+    		<div class='container'>
+      			<div class='row'>
+        			<div class='col-lg-12 text-center'>
+        				<table style='border-top:1px solid #d6d6d6;' width = 100%>
+  			    			<tr style='border-bottom:1px solid #d6d6d6;height:50px'><td width = 50%>신청자ID</td><td class='text-success'>$Login_User_ID</td></tr>
+  			    			<tr style='border-bottom:1px solid #d6d6d6;height:50px'><td>검정번호</td><td class='text-success'>$Test_No</td></tr>
+  			    			<tr style='border-bottom:1px solid #d6d6d6;height:50px'><td>신청일자</td><td class='text-success'>$Date</td></tr>
+         				</table>
+         				<br>
+         			</div>
+					<div class = 'text-right'>         		
+         				<a href = 'member_index.html' class='btn btn-red text-uppercase'>응시료 결제</a>
+					</div>
+        		</div>
+      		</div>
+		";
+
+	} 
+	else
+	{
+     	 echo "Error: " . $sql . "<br>" . mysqli_error($link);
+	}
+		
+	mysqli_close($link);
+	
+}
+
+elseif ($dup_total_record == 0 and ($Login_User_ID == '' or $Test_No == ''))
+
+{
+
+echo "<script>alert('비정상적인 접근입니다.')</script>";
+
+}
+
+
+if ($dup_total_record == 1){echo "<script>alert('이미 신청이 되어있습니다.')</script>";}
+
+	include 'footer.html';
+
+	echo "
+		</body>
+	</html>
+	";
+
+?>

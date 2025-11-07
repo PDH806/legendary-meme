@@ -1,0 +1,347 @@
+<?
+include "../db_config.html";
+?>
+
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Acara - Ticketing Bootstrap Admin Dashboard</title>
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="./images/favicon.png">
+	<link href="./vendor/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet">
+    <link href="./css/style.css" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&family=Roboto:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+    <!--*******************
+        Preloader start
+    ********************-->
+    <div id="preloader">
+        <div class="sk-three-bounce">
+            <div class="sk-child sk-bounce1"></div>
+            <div class="sk-child sk-bounce2"></div>
+            <div class="sk-child sk-bounce3"></div>
+        </div>
+    </div>
+    <!--*******************
+        Preloader end
+    ********************-->
+
+
+    <!--**********************************
+        Main wrapper start
+    ***********************************-->
+    <div id="main-wrapper">
+
+        <!--**********************************
+            Nav header start
+        ***********************************-->
+        <div class="nav-header">
+            <a href="../index.html" class="brand-logo">
+                <img src="../images/sb_logo.png" width = 90%>
+            </a>
+
+            <div class="nav-control">
+                <div class="hamburger">
+                    <span class="line"></span><span class="line"></span><span class="line"></span>
+                </div>
+            </div>
+        </div>
+        <!--**********************************
+            Nav header end
+        ***********************************-->
+		
+		<?
+		// 챗팅박스 + 헤드네비 불러오기
+		include '_chat_box.html';
+		include '_head_bar.html';
+
+		// 좌측 네비게이션
+	    if ($rank == 9){include '_admin_menu.html';}
+	    if ($rank == 8){include '_admin_menu2.html';}
+	    ?>
+	    
+	    
+        <!--**********************************
+            Content body start
+        ***********************************-->
+        <div class="content-body">
+            <!-- container starts -->
+            <div class="container-fluid">
+                <!-- 여기에 내용을 삽입해 주세요 !!! -->
+
+
+<?
+
+	echo "
+	<div class='container'>
+	<br><br><br>          
+	<div ng-controller='repeatCtrl'>  
+
+		<form method=post action='_test_id_regist.php' novalidate='novalidate'>
+
+			<label>&nbsp;❶&nbsp;회원ID</label>
+			<div class='input-group'>
+				<input class='form-control' type='text' id = 'username' name='member_id' Placeholder='테스트 ID (필수)' required>
+				  	<div class='input-group-append'>
+   						 <button class='btn btn-primary' type='button' onclick='check_id2()' style = 'width:150px;'>ID 중복체크</button>
+ 					</div>
+			</div>
+			<span id='user-availability-status' style='font-weight:700;'></span>
+			<br>
+
+			<label>&nbsp;❷&nbsp;이름</label>
+			<div class='input-group'>
+				<input class='form-control' type='text' id = 'member_name' name='member_name' Placeholder='이름 (필수)' requied>
+			</div>
+			<br>
+
+			<label>&nbsp;❸&nbsp;이메일</label>
+			<div class='input-group'>
+				<input class='form-control' type='text' id = 'email' name='member_email' Placeholder='이메일 (옵션)'>
+			</div>
+			<br>
+			
+			<label>&nbsp;❹&nbsp;생년월일</label>
+			<div class='input-group'>
+				<input class='form-control' type='date' name='member_birth' id='date-1' placeholder='생년월일 (YYYY-MM-DD)' required>
+			</div>
+			<br>
+
+			<label>&nbsp;❺&nbsp;전화번호</label>
+			<div class='input-group'>
+				<input class='form-control' type='text' id='phone1' name='member_phone' Placeholder='전화번호 (예:01012345678)' required>
+			</div>
+			<br>
+
+			<br><br><br>";
+			
+?>
+
+			<div class='form-group text-right'>
+				<input class='btn btn-success text-uppercase' type='button' value='테스트ID등록' onclick='submit();'>
+			</div>
+			
+		</form>
+	</div>
+</div>
+
+
+                <!-- Row ends -->
+            </div>
+            <!-- container ends -->
+        </div>
+        <!--**********************************
+                Content body end
+            ***********************************-->
+
+
+        <!--**********************************
+            Footer start
+        ***********************************-->
+        <div class="footer">
+            <div class="copyright">
+                <p>© Designed &amp; Developed by <a href="https://7gate.kr/" target="_blank">podong28.com</a> 2019</p>
+            </div>
+        </div>
+        <!--**********************************
+            Footer end
+        ***********************************-->
+        
+        
+    </div>
+    <!--**********************************
+        Main wrapper end
+    ***********************************-->
+
+    <!--**********************************
+        Scripts
+    ***********************************-->
+    <!-- Required vendors -->
+    <script src="./vendor/global/global.min.js"></script>
+	<script src="./vendor/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
+    <script src="./js/custom.min.js"></script>
+	<script src="./js/deznav-init.js"></script>
+	
+
+</body>
+
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
+<script type="text/javascript">
+function send_code(){
+	var userid = document.getElementById("username").value;
+	var phone3 = document.getElementById("phone1").value;
+	var birth = document.getElementById("date-1").value;
+	var member_name3 = document.getElementById("member_name").value;
+	var message = member_name3+"님!!! ("+birth+" / "+userid+")\n"+"아래 확인버튼을 클릭하시면 회원가입을 위한 검증번호를 발송해드립니다.";
+
+	if (!userid){
+	alert('회원ID를 입력해 주세요 !!!');
+	return;
+	}
+
+	if (!member_name3){
+	alert('이름을 입력해 주세요 !!!');
+	return;
+	}
+
+	if (!birth){
+	alert('생년월일을 입력해 주세요 !!!');
+	return;
+	}
+
+	if (phone3){
+	alert(message);
+	}
+	else
+	{
+	alert('전화번호를 입력해 주세요 !!!');
+	return;
+	}
+
+	$.ajax({
+	url  : 'sms/password_change.php',
+	data : {
+		phone     : phone3,
+		id		  : userid,
+		name	  : member_name3,
+		kind	  : 1,
+	},
+	type : 'POST',
+	success:function(data){
+		$("#phone-availability-status").html(data);
+		$("#loaderIcon").hide();
+	},
+		error:function (){}
+	});
+	}
+
+function check_id(){
+	var userid = document.getElementById("username").value;
+
+	if (!userid){
+	alert('회원ID를 입력해 주세요 !!!');
+	return;
+	}
+
+	if (userid){
+		url = "../check_id.php?userid="+userid;
+		window.open(url,"chkid","width=300,height=100");
+	}
+}
+	
+function check_code(){
+	var userid = document.getElementById("username").value;
+	var phone3 = document.getElementById("phone1").value;
+	var member_name3 = document.getElementById("member_name").value;
+	var email3 = document.getElementById("email").value;
+	var code3 = document.getElementById("code").value;
+	
+		if (!userid){
+	alert('회원ID를 입력해 주세요 !!!');
+	return;
+	}
+
+	if (!member_name3){
+	alert('이름을 입력해 주세요 !!!');
+	return;
+	}
+
+	if (!phone3){
+	alert('전화번호를 입력해 주세요 !!!');
+	return;
+	}
+
+	if (!code3){
+	alert('전화번호 인증번호를 입력해 주세요 !!!');
+	return;
+	}
+	
+	$("#loaderIcon").show();
+	jQuery.ajax({
+	url: "check_code.php",
+	data : {
+		phone           : phone3,
+		id		        : userid,
+		code	        : code3,
+	},
+	type: "POST",
+	success:function(data){
+		$("#code-availability-status").html(data);
+		$("#loaderIcon").hide();
+	},
+		error:function (){}
+	});
+
+}
+	
+</script>
+
+<script type="text/javascript">
+
+  var liveApp = angular.module("liveApp", []); 
+
+  liveApp.controller("repeatCtrl", function ($scope)  
+  {  
+      $scope.student = {  
+          password: "",  
+          repeatPassword: ""  
+      };  
+  });  
+  liveApp.directive("compareTo", function ()  
+  {  
+      return {  
+          require: "ngModel",  
+          scope:  
+          {  
+              repeatPassword: "=compareTo"  
+          },  
+          link: function (scope, element, attributes, paramval)  
+          {  
+              paramval.$validators.compareTo = function (val)  
+              {  
+                  return val == scope.repeatPassword;  
+              };  
+              scope.$watch("repeatPassword", function ()  
+              {  
+                  paramval.$validate();  
+              });  
+          }  
+      };  
+  });  
+
+function check_id2() {
+	
+	var userid = document.getElementById("username").value;
+
+	if (!userid){
+	alert('회원ID를 입력해 주세요 !!!!');
+	return;
+	}
+	
+	$("#loaderIcon").show();
+	jQuery.ajax({
+	url: "../check_availability.php",
+	data:'username='+$("#username").val(),
+	type: "POST",
+	success:function(data){
+		$("#user-availability-status").html(data);
+		$("#loaderIcon").hide();
+	},
+		error:function (){}
+	});
+}
+
+
+</script>
+
+
+
+</html>

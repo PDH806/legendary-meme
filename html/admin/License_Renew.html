@@ -1,0 +1,315 @@
+<?
+	$The_No 	= $_GET["No"];
+	$month 		= $_GET["month"];
+	$code		= $_GET["code"];
+
+	if (!$code or $code == ''){$search_code = 'where PAYMENT_STATUS > 1'; $search_name = '(전체)';}
+	if ($code == '2'){$search_code = 'where PAYMENT_STATUS > 1 and TRAN_STATUS = 2'; $search_name = '(미발송)';}
+	if ($code == '3'){$search_code = 'where PAYMENT_STATUS > 1 and TRAN_STATUS = 3'; $search_name = '(발송완료)';}
+	if ($code == '4'){$search_code = 'where TRAN_STATUS = 0'; $search_name = '(결제실패)';}
+
+	$main_title = '한국 스키장 경영협회';
+	include '../db_config.html';
+
+	// 관리자가 아니면 member_login.html 페이지로 이동
+	if ($rank != 9){
+	echo " <script>
+	alert('잘못된 접근입니다.');
+	top.document.location.href = '../member_login.html?MEMBER_ID=$User_ID_Search&Case=9';
+	</script>";
+	}
+
+			// Head Title 설정
+			$Dashboard_Title = '자격증 재발급 신청목록';
+			if ($code == ''){$Dashboard_Title = $Dashboard_Title.' > 전체';}
+			if ($code == '2'){$Dashboard_Title = $Dashboard_Title.' > 미발송현황(작업필요)';}
+			if ($code == '3'){$Dashboard_Title = $Dashboard_Title.' > 발송완료현황(작업완료)';}
+?>
+
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Admin Dashboard | (사)한국스키장경영협회</title>
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="../images/favicon.ico">
+	<link rel="stylesheet" href="./vendor/chartist/css/chartist.min.css">
+    <link href="./vendor/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet">
+	<!-- Datatable -->
+    <link href="./vendor/datatables/css/jquery.dataTables.min.css" rel="stylesheet">
+    <link href="./css/style.css" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&family=Roboto:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
+
+</head>
+<body>
+
+    <!--*******************
+        Preloader start
+    ********************-->
+    <div id="preloader">
+        <div class="sk-three-bounce">
+            <div class="sk-child sk-bounce1"></div>
+            <div class="sk-child sk-bounce2"></div>
+            <div class="sk-child sk-bounce3"></div>
+        </div>
+    </div>
+    <!--*******************
+        Preloader end
+    ********************-->
+
+
+    <!--**********************************
+        Main wrapper start
+    ***********************************-->
+    <div id="main-wrapper">
+
+        <!--**********************************
+            Nav header start
+        ***********************************-->
+        <div class="nav-header">
+            <a href="../index.html" class="brand-logo">
+                <img src="../images/sb_logo.png" width = 90%>
+            </a>
+
+            <div class="nav-control">
+                <div class="hamburger">
+                    <span class="line"></span><span class="line"></span><span class="line"></span>
+                </div>
+            </div>
+        </div>
+        <!--**********************************
+            Nav header end
+        ***********************************-->
+
+		<?
+		// 챗팅박스 + 헤드네비 불러오기
+		include '_chat_box.html';
+		include '_head_bar.html';
+
+		// 좌측 네비게이션
+	    if ($rank == 9){include '_admin_menu.html';}
+	    if ($rank == 8){include '_admin_menu2.html';}
+	    ?>
+
+
+        <!--**********************************
+            Content body start
+        ***********************************-->
+        <div class="content-body">
+            <!-- container starts -->
+            <div class="container-fluid">
+                <!-- row -->
+
+		<?
+					echo "
+					<br><br><br>
+						<div class = 'text-center'>
+							<span class = 'font32'>자격증 재발급 신청목록 $search_name</span><br>
+						<br><br><br>";
+		?>
+
+				<div class="row">
+					<div class="col-xl-12">
+						<div class="tab-content">
+							<div id="All" class="tab-pane active fade show">
+								<div class="table-responsive">
+                                    <table class="table card-table display dataTablesCard">
+										<thead>
+                                            <tr style = 'font-size:14pt;color:black;'>
+                                                <td>회원성명 / ID</td>
+                                                <td>신청일시</td>
+                                                <td>License</td>
+                                                <td>진행상태</td>
+												<td>결제금액</td>
+                                                <td>배송지</td>
+                                                <td>택배정보</td>
+                                            </tr>
+                                        </thead>
+										<tbody>
+
+									<?
+
+									$License_query	= "SELECT * FROM 7G_License_Renew $search_code order by TRAN_DATE DESC, TRAN_TIME DESC ";
+									$License_result	= mysqli_query($link, $License_query);
+									$row			= mysqli_fetch_array($License_result);
+
+									while($row){
+
+									$Member_query	= "SELECT * FROM 7G_Skiresort_Member where MEMBER_ID = '$row[MEMBER_ID]'";
+									$Member_result	= mysqli_query($link, $Member_query);
+									$Member			= mysqli_fetch_array($Member_result);
+
+ 									if ($row[PAYMENT_STATUS] == 0){$Payment = '결제실패';}
+									if ($row[PAYMENT_STATUS] == 2){$Payment = "<span class='btn btn-rounded btn-vimeo' style = 'font-size:12;weight:900;width:50px;padding-left:0px;padding-right:0px;'>결제완료</span>";}
+
+ 									if ($row[TRAN_STATUS] == 2){$Process = "<span class='btn btn-rounded btn-success' style = 'font-size:12;weight:900;width:50px;padding-left:0px;padding-right:0px;'>신청완료</span>";}
+									if ($row[TRAN_STATUS] == 3){$Process = "<span class='btn btn-rounded btn-primary' style = 'font-size:12;weight:900;width:50px;padding-left:0px;padding-right:0px;'>택배완료</span>";}
+									$row[AMOUNT] = number_format($row[AMOUNT])." 원";
+
+
+									$row[TRAN_TIME] = substr($row[TRAN_TIME],0,2).":".substr($row[TRAN_TIME],2,2).";".substr($row[TRAN_TIME],4,2);
+									if($row[DELIVERY_DATE] == NULL){$row[DELIVERY_DATE] = '미발송';}
+										echo "
+											<tr>
+												<td style = 'font-size:14pt'><span style='cursor:pointer' onclick='chkUser(\"$row[NO]\")'>$row[MEMBER_NAME] / $row[MEMBER_ID]<br>$img<br></span></td>
+												<td style = 'font-size:14pt'>$row[TRAN_DATE]<br>$row[TRAN_TIME]</td>
+												<td style = 'font-size:14pt'><span class='text-nowrap'>$row[LICENSE_NO]</span></td>
+												<td style = 'font-size:14pt'>$Payment $Process</td>
+												<td style = 'font-size:14pt'>$row[AMOUNT]</td>
+												<td style = 'font-size:14pt'>
+													<span class='badge badge-lg badge-primary'>$row[ZIPCODE]</span><br>
+               										&nbsp;$row[ADDR1]<br>&nbsp;$row[ADDR2]&nbsp;<small>$row[ADDR3]</small>
+												</td>
+												<td align = right>";
+
+												if ($row[TRAN_STATUS] == 2)
+												{ echo "<a href = 'License_send.html?No=$row[NO]'><span class='btn btn-rounded btn-vimeo'>택배 발송등록</span></a>";}
+
+												if ($row[TRAN_STATUS] == 3)
+												{ echo "<span class='btn btn-rounded btn-primary'>택배 발송완료</span><br>$row[DELIVERY_AGENCY] / $row[TRACKING_NO]";}
+
+												echo "
+												</td>
+											</tr>";
+
+											$row	= mysqli_fetch_array($License_result);
+
+
+									}
+
+									?>
+
+										</tbody>
+									</table>
+								</div>
+							</div>
+
+
+
+
+										</tbody>
+									</table>
+
+
+
+
+                <!-- Row ends -->
+            </div>
+            <!-- container ends -->
+        </div>
+        <!--**********************************
+                Content body end
+            ***********************************-->
+
+
+        <!--**********************************
+            Footer start
+        ***********************************-->
+        <div class="footer">
+            <div class="copyright">
+                <p>© Designed &amp; Developed by <a href="https://7gate.kr/" target="_blank">podong28.com</a> 2019</p>
+            </div>
+        </div>
+        <!--**********************************
+            Footer end
+        ***********************************-->
+
+
+    </div>
+    <!--**********************************
+        Main wrapper end
+    ***********************************-->
+
+    <!--**********************************
+        Scripts
+    ***********************************-->
+    <!-- Required vendors -->
+    <script src="./vendor/global/global.min.js"></script>
+	<script src="./vendor/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
+    <script src="./js/custom.min.js"></script>
+	<script src="./js/deznav-init.js"></script>
+
+	<!-- Datatable -->
+    <script src="./vendor/datatables/js/jquery.dataTables.min.js"></script>
+	<script>
+		(function($) {
+			var table = $('#example2').DataTable({
+				searching: false,
+				paging:true,
+				select: false,
+				//info: false,
+				lengthChange:false
+
+			});
+			var table = $('#example3').DataTable({
+				searching: false,
+				paging:true,
+				select: false,
+				//info: false,
+				lengthChange:false
+
+			});
+			var table = $('#example4').DataTable({
+				searching: false,
+				paging:true,
+				select: false,
+				//info: false,
+				lengthChange:false
+
+			});
+			var table = $('#example5').DataTable({
+				searching: false,
+				paging:true,
+				select: false,
+				//info: false,
+				lengthChange:false
+
+			});
+			$('#example tbody').on('click', 'tr', function () {
+				var data = table.row( this ).data();
+
+			});
+		})(jQuery);
+
+		jQuery.fn.center = function () {    
+			this.css("position","absolute");    
+			this.css("top", Math.max(150, (($(window).height() - $(this).outerHeight()) / 2) + $(window).scrollTop()) + "px");   
+			this.css("left", Math.max(150, (($(window).width() - $(this).outerWidth()) / 2) + $(window).scrollLeft()) + "px");    
+			return this;
+		}
+
+	</script>
+</body>
+</html>
+<style>
+ #popLayer{
+	width:500px;
+	height:auto;
+	border:12px solid #ccc;
+ }
+</style>
+<div id="popLayer" style="display:none;"></div>
+<script>
+	
+	function chkUser(no){
+		var f = document.frm01;
+		f.NO.value = no;
+		f.mode.value = 'mUserInfo';
+		f.submit();
+		f.mode.value = '';
+		//$("#popLayer").show();
+		//$("#popLayer").center();
+	}
+	function adjustPopup(){
+		$("#popLayer").show();
+		$("#popLayer").center();
+	}
+</script>
+<form name='frm01' target='ifrm' method='post' action='./ajax/process.php'>
+	<input type='hidden' name='mode' />
+	<input type='hidden' name='NO' />
+</form>
+<iframe name='ifrm' style='display:none'></iframe>

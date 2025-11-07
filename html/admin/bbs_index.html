@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html>
+
+<?php
+
+    include '../db_config.html';
+	include "../_common_js.html";
+    $the_category = $_GET["category"];
+    if($the_category){$search = "where category = $the_category";}
+    if(!$the_category){$search = "";$the_category = 0;}	 
+    $today   = date("Y-M-D");
+	$banner = "../img/bbs/bbs_banner_".$the_category.".png";
+	$mobile_banner = "../img/bbs/bbs_mbanner_".$the_category.".png";
+
+	echo "
+		<meta charset='utf-8'>
+		<meta name='viewport' content='width=device-width, initial-scale=1.0, shrink-to-fit=no'>
+		<link rel='shortcut icon' href='../view.html?img=logo' type='image/x-icon'>";
+
+		include 'link-files-bbs.html';
+
+?>
+  		<title><? echo $main_title; ?></title>
+	
+		<style type="text/css">
+			@media screen and (min-width: 1040px) { .tt {display:block} .tt2 {display:none}}
+			@media screen and (max-width: 1039px) { .tt{display:none} .tt2{display:block}}
+		</style>
+
+		</head>
+
+		<body>
+
+  <? include '../_main-nav.html'; 
+  
+    // 페이지네이션
+	$sql    = "SELECT docu_no FROM bbs_skiresort $search" ;
+  	$result	= mysqli_query($link,$sql);
+  	$numrow = mysqli_num_rows($result);
+
+	$page_length = 10;
+
+	$page = ($_GET['page'])?$_GET['page']:1;
+
+	// 하단 페이지네이션 갯수
+	if ($device == 'PC'){$show = 10;}else{$show = 5;}
+
+    $db_start = ($page - 1) * $page_length;
+	$db_end = $db_start + $page_length;
+
+	if (!$page)	{$page = 1;}
+	$max_page1 = floor($numrow / $page_length);
+	$max_page2 = $numrow / $page_length;
+
+	if ($max_page2 > $max_page1) {$max_page = $max_page1 + 1;} else {$max_page = $max_page1;}
+	if ($page>$max_page){$page = $max_page;}
+
+	$previous = $page - 10;
+	$next = $page + 1;
+
+	$sql2    	= "SELECT * FROM bbs_skiresort $search order by docu_date DESC limit $db_start, $db_end" ;
+  	$result2	= mysqli_query($link,$sql2);
+	$bbs		= mysqli_fetch_array($result2);
+
+	if ($next>$max_page){$next = $max_page;}
+	if ($previous<1){$previous = 1;}
+
+	echo "<br><br>
+
+		<div class = 'container-fluid text-center d-none d-sm-block' style = 'height:250px;'>
+			<div class = 'container'>
+			<img src='$banner' class='card-img-top'>
+			</div>
+		</div>
+  
+    
+		<div class = 'container-fluid text-center d-block d-sm-none' style = height:120px;'>
+					<img src='$mobile_banner' class='card-img-top'>
+		</div>
+		
+        <div class='container'>
+			
+        <table border=0 width = 100% style = 'border-bottom: 1px solid #d4d4d4;'>
+		<tr><td></td><td width = 100px></td></tr>";
+
+            $page_start = ($page * $page_length) - $page_length;
+            $page_end 	=  $page_start + $page_length;
+
+			$limit1 = ($page * $page_length) - $page_length;
+			$limit2 = $limit1 + $page_length;
+
+            if ($page_end > $numrow) {$page_end = $numrow;}
+            
+			if ($page_end > 0 and $numrow > 0){
+
+				for($i=$page_start; $i<$page_end; $i++){
+									
+					preg_match("/<img[^>]*src=[\"']?([^>\"']+)[\"']?[^>]*>/i", $bbs[contents], $matches);
+
+					if($matches[1]==''){$colspan = 'colspan = 2 width = 100%';} else {$colspan = '';}
+					if($device == 'PC'){$fontsize = '16pt'; $fontweight = '600';} else {$fontsize = '13pt'; $fontweight = '500';}
+					// if($bbs[view] == '1') {$link_url = "bbs_view.html?no=$bbs[docu_no]&page=$page&category=$the_category"; $view2 = "<span class = 'badge badge-primary'> 공개 </span>";}
+					// else {$link_url = '#'; $view2 = "<span class = 'badge badge-warning'> 비공개 </span>"; }
+					$link_url = "bbs_view.html?no=$bbs[docu_no]&page=$page&category=$the_category";
+					if($Login_User_ID == 'friday1968'){$link_url = "bbs_view.html?no=$bbs[docu_no]&page=$page&category=$the_category";}
+
+					if($rank == 9){$dele_link = "| <a href = 'javascript:dele_bbs($bbs[docu_no],$page)' class='badge badge-danger'>삭제</a>";}
+
+					
+
+
+					echo "
+						<tr style = 'height: 100px;'>
+							<td $colspan style = 'border-top: 1px solid #d4d4d4; padding:5px; height:100px;' valign=top>
+								<span class = 'justify-content-end' style='font-size:.7rem;color:#737373'>
+								$bbs[docu_date]&nbsp;&nbsp;| $bbs[member_id]&nbsp;&nbsp;| $bbs[count] $dele_link
+								&nbsp;$count&nbsp;</span><br> 
+
+								<a href = '$link_url' style = 'color: #4a4a4a; font-size: $fontsize ; font-weight : $fontweight;'>$bbs[title]</a><br>";
+
+								//$len = mb_strlen($contents,"utf-8") + (strlen($contents) - mb_strlen($contents,"utf-8")) / 2;
+								//if ($len > 35){$contents = iconv_substr($contents, 0, 32, "utf-8");}
+							
+							echo "
+							</td>";
+
+					if($matches[1] != ''){
+								echo "
+								<td width = 100px style = 'border-top: 1px solid #d4d4d4; padding:10px;'>
+								<a href = '$link_url'><img src = '$matches[1]' style ='width:100px';></a>
+										
+								</td>
+								";
+							}
+
+					echo "
+						</tr>
+						";
+						
+						$bbs=mysqli_fetch_array($result2);
+						
+				}
+	
+	
+			}
+
+            else { echo "<div class='alert alert-primary'>등록된 글이 없습니다!!!</div>"; }
+
+			echo "
+			</table>
+			<br>";
+
+
+			if ($rank == 9){
+			echo "
+			<div class = 'text-right' style = 'padding-right:20px;'>
+				<a class='btn btn-danger text-right' href = 'bbs_write.html?category=$the_category'>새글작성</a>&nbsp;&nbsp;  			      
+			</div>";
+			}
+
+
+			$foot_start = $page - 2;
+			$foot_end = $page + 2;
+
+			if ($foot_start <= 0) {$foot_start = 1; $foot_end = 5;}                       
+			if ($foot_end >= $max_page) {$foot_end = $max_page;}                       
+			if ($foot_start == 1) {$foot_end = 5;}                       
+			if ($foot_end >= $max_page) {$foot_end = $max_page;}                       
+
+
+			if ($max_page > 1){
+
+			echo "
+			
+				<nav aria-label='...'>
+			
+					<ul class='pagination justify-content-center'>";
+
+					if ($foot_start > 1){
+						echo "    
+						<li class='page-item active'>
+							<a class='page-link text-white' href='?category=$the_category&page=1'><strong>처음</strong></a>
+						</li>
+
+						<li class='page-item'>
+							<a class='page-link text-primary' href='?category=$the_category&page=$previous'>◀︎</a>
+						</li>";
+					}
+					
+					for($i=$foot_start; $i<=$foot_end ; $i++){
+						
+						if($page == $i)
+							{
+								echo "
+								<li class='page-item active' aria-current='page'>
+									<a class='page-link' href='?category=$the_category&page=$i'>$i<span class='sr-only'>(current)</span><a>
+								</li>";
+							}
+					
+							else
+						
+							{
+								echo "
+								<li class='page-item'>
+									<a class='page-link text-primary' href='?category=$the_category&page=$i'><strong>$i</strong></a>
+								</li>";
+							}
+				
+					}
+
+					if ($foot_end < $max_page)
+						{
+						echo "
+						<li class='page-item'>
+							<a class='page-link text-primary' href='?category=$the_category&page=$next'>▶︎</a>
+						</li>
+
+						<li class='page-item active'>
+							<a class='page-link text-white' href='?category=$the_category&page=$max_page'><strong>마지막</strong></a>
+						</li>";
+						}
+					
+					echo "
+					</ul>
+					
+				</nav>";
+				}
+		echo "
+
+		</div>
+	<br><br>
+	        <br><br><br><br>
+";
+
+	include '../footer.html'; 
+
+
+	echo "<script> function dele(num) { if (confirm('선택하신 문서가 삭제됩니다.')) {location.href = 'bbs_delete.html?No='+num;} else { alert('삭제가 취소되었습니다.');} } </script>";
+?> 
+
+</body>
+
+</html>

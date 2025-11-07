@@ -1,0 +1,66 @@
+<?
+	$servername	= "dbserver"; $username = "skiresort"; $password = "ll170505"; $dbname = "skiresort";
+	$connect = mysql_connect($servername, $username, $password); 
+	$link = mysqli_connect($servername, $username, $password, $dbname); 
+	mysql_select_db($dbname,$connect);
+	
+	
+	echo "<table border = 1>";
+	
+	for($i=0; $i<500; $i++){
+	
+	$query= "select * from 7G_Skiresort_Member LEFT OUTER JOIN 7G_T_Reserve_INFO_NEW on 7G_Skiresort_Member.PHONE = 7G_T_Reserve_INFO_NEW.ADD_Tel 
+	where 7G_Skiresort_Member.PATROL_LICENSE = 1 and 7G_Skiresort_Member.PHONE <> '' and 7G_T_Reserve_INFO_NEW.ADD_Tel <> '' and 7G_Skiresort_Member.BIRTH = '1901-01-01' order by 7G_Skiresort_Member.MEMBER_NAME ASC, 7G_T_Reserve_INFO_NEW.REGIST_DATE limit 0,1";
+	$result=mysql_query($query, $connect);
+	$row=mysql_fetch_array($result);
+	$total_record = mysql_num_rows($result);
+
+		$i = $i + 1;
+		$row['ADD_BIRTH'] = str_replace('-','',$row['ADD_BIRTH']);
+		$birth_length = strlen($row['ADD_BIRTH']);
+		
+		
+		if ($birth_length == 6){
+			$replace_year = substr($row['ADD_BIRTH'], 0, 2);
+			$replace_month = substr($row['ADD_BIRTH'], 2, 2);
+			$replace_date = substr($row['ADD_BIRTH'], 4, 2);
+
+			if ($replace_year >= 20){$replace_year = "19".$replace_year;} 
+			
+		};
+		
+		if ($birth_length == 8){
+			$replace_year = substr($row['ADD_BIRTH'], 0, 4);
+			$replace_month = substr($row['ADD_BIRTH'], 4, 2);
+			$replace_date = substr($row['ADD_BIRTH'], 6, 2);			
+		};
+		
+		
+		$replace_birth = "$replace_year|$replace_month|$replace_date";		
+		
+		$replace_birth = str_replace('|','-',$replace_birth);
+		
+		$update_query = "UPDATE 7G_Skiresort_Member SET BIRTH = '$replace_birth' where MEMBER_ID = '$row[MEMBER_ID]'";	
+
+	
+		echo "<tr>
+				<td>$i</td>
+				<td>$row[MEMBER_ID]</td>
+				<td>$row[MEMBER_NAME]</td>
+				<td>$row[PHONE]</td>
+				<td>$row[BIRTH]</td>
+				<td>$row[ADD_BIRTH]</td>
+				<td width = 200px>$replace_birth</td>
+				<td>$row[REGIST_DATE]</td>
+
+			</tr>";	
+ 	
+			$result=mysql_query($update_query, $connect);
+	
+	
+	}
+	
+	echo "</table>";	
+
+	
+?>

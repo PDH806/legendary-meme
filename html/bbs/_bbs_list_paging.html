@@ -1,0 +1,73 @@
+<?
+
+echo "<div class = 'container' style = 'padding-top:60px;padding-bottom:60px;'>";
+$foot_start = $page - 2;
+$foot_end = $page + 2;
+
+if ($foot_start <= 0) {$foot_start = 1; $foot_end = 5;}                       
+if ($foot_end >= $max_page) {$foot_end = $max_page;}                       
+if ($foot_start == 1) {$foot_end = 5;}                       
+if ($foot_end >= $max_page) {$foot_end = $max_page;}                       
+
+
+if ($max_page > 1){
+
+echo "
+
+    <nav aria-label='...'>
+
+        <ul class='pagination justify-content-center'>";
+
+        if ($foot_start > 1){
+            echo "    
+            <li class='page-item active'>
+                <a class='page-link text-white' href='?category=$category&page=1'><strong>처음</strong></a>
+            </li>
+
+            <li class='page-item'>
+                <a class='page-link text-primary' href='?category=$category&page=$previous'>◀︎</a>
+            </li>";
+        }
+        
+        for($i=$foot_start; $i<=$foot_end ; $i++){
+            
+            if($page == $i)
+                {
+                    echo "
+                    <li class='page-item active' aria-current='page'>
+                        <a class='page-link' href='?category=$category&page=$i'>$i<span class='sr-only'>(current)</span><a>
+                    </li>";
+                }
+        
+                else
+            
+                {
+                    echo "
+                    <li class='page-item'>
+                        <a class='page-link text-primary' href='?category=$category&page=$i'><strong>$i</strong></a>
+                    </li>";
+                }
+    
+        }
+
+        if ($foot_end < $max_page)
+            {
+            echo "
+            <li class='page-item'>
+                <a class='page-link text-primary' href='?category=$category&page=$next'>▶︎</a>
+            </li>
+
+            <li class='page-item active'>
+                <a class='page-link text-white' href='?category=$category&page=$max_page'><strong>마지막</strong></a>
+            </li>";
+            }
+        
+        echo "
+        </ul>
+        
+    </nav>
+    
+</div></div></div></div>";
+    }
+
+    ?>

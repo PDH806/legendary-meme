@@ -1,0 +1,131 @@
+<?php
+
+	include '../db_config.html';
+
+	// 관리자가 아니면 member_login.html 페이지로 이동
+	if ($rank < 7){
+	echo " <script>
+	alert('잘못된 접근입니다.');
+	top.document.location.href = '../member_login.html?MEMBER_ID=$User_ID_Search&Case=9';
+	</script>";
+	}
+
+	date_default_timezone_set('Asia/Seoul');
+
+    extract($_REQUEST);
+
+    $today = date("Y-m-d");
+
+    $mymenu = "T1 START List";
+
+?>
+
+<!DOCTYPE html>
+<html lang="ko"
+      dir="ltr">
+
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible"
+              content="IE=edge">
+        <meta name="viewport"
+              content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title><? echo $mymenu ?></title>
+
+        <!-- Prevent the demo from appearing in search engines -->
+        <meta name="robots" content="noindex">
+
+        <!-- Perfect Scrollbar -->
+        <link type="text/css" href="assets/vendor/perfect-scrollbar.css" rel="stylesheet">
+
+        <!-- App CSS -->
+        <link type="text/css" href="assets/css/app.css" rel="stylesheet">
+        <link type="text/css" href="assets/css/app.rtl.css" rel="stylesheet">
+
+        <!-- Material Design Icons -->
+        <link type="text/css" href="assets/css/vendor-material-icons.css" rel="stylesheet">
+        <link type="text/css" href="assets/css/vendor-material-icons.rtl.css" rel="stylesheet">
+
+        <!-- Font Awesome FREE Icons -->
+        <link type="text/css" href="assets/css/vendor-fontawesome-free.css" rel="stylesheet">
+        <link type="text/css" href="assets/css/vendor-fontawesome-free.rtl.css" rel="stylesheet">
+
+        <style>
+            table.line { width : 100%; border-top : 2px solid #444444; }
+            td.line-head { border-bottom : 1px solid #c4c4c4; border-left : 1px solid #c4c4c4; border-right : 1px solid #c4c4c4; padding : 10px; font-size : 10pt; font-weight: 700; text-align : center; }
+            tr.line { border-bottom : 1px solid #c4c4c4; border-left : 1px solid #c4c4c4; border-right : 1px solid #c4c4c4; padding : 10px; font-size : 10pt; text-align : center; }
+            tr.line-last { border-bottom : 2px solid #444444; border-left : 1px solid #c4c4c4; border-right : 1px solid #c4c4c4; padding : 10px; font-size : 10pt; text-align : center; }
+            td.line { border-bottom : 1px solid #c4c4c4; border-left : 1px solid #c4c4c4; border-right : 1px solid #c4c4c4; padding : 10px; font-size : 10pt; text-align : center; }
+            td.line-last { border-bottom : 2px solid #444444; border-left : 1px solid #c4c4c4; border-right : 1px solid #c4c4c4; padding : 10px; font-size : 10pt; text-align : center; }
+            .form-control{border-radius: $radius; background: $white; border: 1px solid $border; font-size:13pt; color: #f54242; height: 60px; @include respond('laptop') { height: 41px; } &:hover,&:focus,&.active{ box-shadow: none; background: $white; color: $dark; } }
+            .card-img-top { width: 100%; height: 300px; object-fit: cover; }
+          </style>  
+
+
+    </head>
+
+    <body class="layout-default">
+
+     <br><br>
+
+     <!-- PC SCREEN -->
+
+     <?					
+     
+			echo "
+			<div class = 'container-fluid' style = 'padding:30px;'>
+			<h2>T1 출발리스트</h2><br><br>
+			<table width = 100% border = 1>";
+     
+                        
+     				$query = "select * from 7G_Master_Apply where Test_No= $No and TRAN_STATUS != 9 order by MEMBER_NAME ASC";
+     				$result	= mysqli_query($link, $query);
+     				$test_member	= mysqli_fetch_array($result);
+     				$RACE_count	= mysqli_num_rows($result);
+
+                    while($test_member){      
+                        echo "
+                            <tr>";
+                            
+                    for ($i = 1; $i <= 6; $i++)
+                    {
+                            	
+                            
+                        // 회원정본
+  						$member_imgs_jpg = "../member_imgs/$test_member[MEMBER_ID]".".jpg";
+						$member_imgs_jpeg = "../member_imgs/$test_member[MEMBER_ID]".".jpeg";
+						$member_imgs_png = "../member_imgs/$test_member[MEMBER_ID]".".png";
+						$member_imgs_gif = "../member_imgs/$test_member[MEMBER_ID]".".gif";
+
+						if (is_file($member_imgs_jpg)){$img_url ="$member_imgs_jpg";}
+						if (is_file($member_imgs_jpeg)){$img_url ="$member_imgs_jpeg";}
+						if (is_file($member_imgs_png)){$img_url ="$member_imgs_png";}
+						if (is_file($member_imgs_gif)){$img_url ="$member_imgs_gif";}
+                            
+                        if ($test_member[MEMBER_ID] != ''){
+                            	echo "
+                            	<td width = 100px align = center height = 100px>
+								<img class = 'card-img-top' src = '$img_url'><br>
+                            	<span style = 'font-size:18pt;font-weight:800;'>$test_member[MEMBER_NAME]</span><br>
+                            	</td>";
+                                $test_member = mysqli_fetch_array($result);
+						}
+
+                            	}
+                        echo "
+                            </tr>";
+                        }
+                    
+                    
+                    echo "</tbody>
+                </table>
+                </div>
+                <br><br>";
+                    
+                                    
+    ?>
+
+
+    </body>
+
+</html>

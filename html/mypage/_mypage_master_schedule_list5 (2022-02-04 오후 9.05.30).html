@@ -1,0 +1,78 @@
+ <?
+     	echo "
+
+			<tr height = 100px style = 'border-bottom:1px solid #b3b3b3;font-size:16px;'>
+
+				<td align = center width = 160px>
+					<img src = 'resort-icon/$row[Skiresort].jpg' width = 100%><br>
+				</td>
+
+				<td style = 'font-size:13pt;' align = center width = 100px>
+				";
+
+					if ($row[Test_id] == 'T3'){echo "<span class='btn btn-rounded btn-primary' style = 'font-size:16;weight:900;width:120px;padding-left:0px;padding-right:0px;'>T3</span>";}
+
+
+				echo "</td>
+				<td style = 'font-size:13pt;' align = left width = 240px>
+				<div class='input-group'>
+				<div class='input-group-prepend'>
+				<button class='btn btn-info border-info' type='button' style = 'font-size:9pt;font-weight:600;width:180px;height:30px;padding-left:10px;padding-top:7px;'>$row[Test_id]-$Skiresort #$row[TEST_NO]</button>
+				</div>";
+
+				if ($row[Status] <= 1){echo "<input class='form-control' style = 'color:white;background-color:#00b2b5; border: solid 1px #00b2b5;height:30px;' value = '접수중'>";}
+				if ($row[Status] == 2){echo "<input class='form-control' style = 'color:white;background-color:#ff3d3d; border: solid 1px #ff3d3d;height:30px;' value = '접수마감'>";}
+				if ($row[Status] == 3){echo "<input class='form-control' style = 'color:white;background-color:#000000; border: solid 1px #000000;height:30px;' value = '시험완료'>";}
+				if ($row[Status] == 9){echo "<input class='form-control' style = 'color:white;background-color:#000000; border: solid 1px #000000;height:30px;' value = '접수중지'>";}
+
+				echo "
+				</div><br>
+
+				・ 시험일자 : $row[Test_Date]<br>
+				・ 마감일자 : $row[Expired_Date]<br>
+				・ 시험정원 : $row[Participate]명";
+				    
+				    if ($row[Participate] >= 50){echo "<span style = 'font-size:13pt;color:red;font-weight:700'> | 백신미접종자 <b>응시불가</b></span>";}
+
+				echo "<br>
+				・ 응시료 : $Testfee 원<br>
+            	</td>
+
+				<td style = 'font-size:20pt;color:red;font-weight:600;' align = center width = 200px>
+               		$total_record9 명<br>";
+               		
+               		      		
+               	echo "
+				</td>
+
+				<td align = center>";
+
+
+						if ($Login_User_ID == '')
+           		 			{echo "<a href=../member_login.html class = 'badge badge-primary' style='width:150px;'>로그인</a>";}
+
+							else
+
+							{
+
+								if ($row[Test_id] == 'T3')
+									{
+
+										if ($total_record9 >=  $row[Participate])
+											{echo "<span class='badge badge-primary' style= 'font-size:22;weight:900;width:220px;padding-left:0px;padding-right:0px;''>응시정원마감</span>";}
+
+										elseif ($total_record3 == 0)
+											{echo "<a href = 'test3_apply.html?type=$row[Test_id]&No=$row[TEST_NO]' class='badge badge-success'  style='font-size:18;weight:900;width:230px;'>기술선수권 및<br/> 티칭3 신청</a>";}
+
+										elseif ($total_record3 >= 1)
+											{echo "<span class='badge badge-dark' style='width:150px;'>신청완료</span>";}
+
+									}
+									
+                          	}
+
+
+		echo "</td>
+			<tr> ";
+
+?>

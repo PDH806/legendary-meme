@@ -1,0 +1,110 @@
+
+<!--footer-->
+	<!-- 롤링 배너 로고 수정 완료 -->
+						<div class="footer">
+							<footer class="sb_footer">
+
+
+								<div class="footer_wrap">
+									<div class="inwrap">
+										<div class="ft_info">
+											<div class="ft_link">
+<?
+
+$query= "SELECT * FROM site_config where site = '$site'" ;
+$result=mysql_query($query,$connect );
+$row=mysql_fetch_array($result);
+
+while ($row)
+
+{
+
+	echo "
+    <div class='footer-dark'>
+            <div class='container'>
+                <div class='row'>
+                    <div class='col-sm-6 col-md-3 item'>
+                        <h3>$row[f_m1_head]</h3>";
+							if($row[f_m1_name1]) {echo "<a href='$row[f_m1_link1]'>$row[f_m1_name1]</a><br>";}
+							if($row[f_m1_name2]) {echo "<a href='$row[f_m1_link2]'>$row[f_m1_name2]</a><br>";}
+							if($row[f_m1_name3]) {echo "<a href='$row[f_m1_link3]'>$row[f_m1_name3]</a><br>";}
+							
+						echo "
+                    </div>
+                    <div class='col-sm-6 col-md-3 item text' >
+                        <h3>협회소개</h3>
+                        <p>
+                            <a href='cp_ceo_01.html'>회장인사말</a><br>
+                            <a href='cp_about_01.html'>협회소개</a><br>
+                            <a href='cp_contact_01.html'>오시는길</a>
+                        </p>
+                    </div>
+                    <div class='col-md-6 item text'>
+                        <h3>$row[company_name]</h3>
+                        <p>주&nbsp;&nbsp;&nbsp;소 : $row[company_address]<br>
+                        이메일 : $row[company_email]<br>
+                        연락처 : $row[company_phone]<br>
+                        팩&nbsp;&nbsp;&nbsp;스 : $row[company_fax]</p>                        
+                    </div>
+                </div>
+                <p class='copyright'>$row[copyright]</p>
+            </div>
+    </div>";
+
+		$row=mysql_fetch_array($result);
+
+}
+
+?>											</div>
+										</div>
+										<!-- //ft_info -->
+										<a href="https://www.facebook.com/한국스키장경영협회-164191583649277/" class="f-logo" title="한국스키장경영협회 페이스북" target="_blank"><img src="http://skiresort.ivyro.net/skiresort/ski/images/f-logo.png" alt="한국스키장경영협회 페이스북"></a>
+									</div>
+									<!-- //inwrap -->
+								</div>
+								<!-- //footer_wrap -->
+							</footer>
+							<!-- //sb_footer -->
+						</div>
+						<!--//footer-->
+
+                    <!-- //main_bottom -->
+                </div>
+                <!-- //content -->
+            </div>
+            <!-- //content -->
+        </div>
+        <!-- //wrap -->
+    </body>
+
+
+    <script src='assets/bootstrap/js/bootstrap.min.js'></script>
+
+
+
+</html>
+
+
+<?php if ($is_admin == 'super') {  ?><!-- <div style='float:left; text-align:center;'>RUN TIME : <?php echo get_microtime()-$begin_time; ?><br></div> --><?php }  ?>
+
+<!-- ie6,7에서 사이드뷰가 게시판 목록에서 아래 사이드뷰에 가려지는 현상 수정 -->
+<!--[if lte IE 7]>
+<script>
+$(function() {
+    var $sv_use = $(".sv_use");
+    var count = $sv_use.length;
+
+    $sv_use.each(function() {
+        $(this).css("z-index", count);
+        $(this).css("position", "relative");
+        count = count - 1;
+    });
+});
+</script>
+<![endif]-->
+
+<?php 
+
+include_once 'http://skiresort.ivyro.net/skiresort/newwin.inc.php';
+echo html_end(); // HTML 마지막 처리 함수 : 반드시 넣어주시기 바랍니다. 
+?>

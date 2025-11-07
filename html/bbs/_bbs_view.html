@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html>
+
+	<meta charset='utf-8'>
+	<meta name='viewport' content='width=device-width, initial-scale=1.0, shrink-to-fit=no'>
+	<link rel='shortcut icon' href='../view.html?img=logo' type='image/x-icon'>
+
+<?php
+
+    include '../_db_config.html';
+	include 'link-files-bbs.html';
+
+?>
+
+  <!-- include jquery -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.js"></script>
+
+  <!-- include libs stylesheets -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.js"></script>
+  <script src='https://use.fontawesome.com/releases/v5.2.0/js/all.js'></script>
+  <script src='https://kit.fontawesome.com/678c3e80a7.js' crossorigin='anonymous'></script>
+
+  <!-- include summernote -->
+  <link rel="stylesheet" href="../summernote/dist/summernote-bs4.css">
+  <script type="text/javascript" src="../summernote/dist/summernote-bs4.js"></script>
+
+  <script type="text/javascript">
+
+    $(function() {
+      $('.summernote').summernote({
+        height: 200,
+        lang: 'ko-KR',
+        callbacks: {
+          onImageUpload: function(files, editor, welEditable) {
+            console.log('image upload:', files);
+            sendFile(files[0], editor, welEditable);
+          },
+        }
+      });
+
+      function sendFile(file, editor, welEditable) {
+        data = new FormData();
+        data.append("file", file);
+        $.ajax({
+          url: "upload.php", // image 저장 소스
+          data: data,
+          cache: false,
+          contentType: false,
+          processData: false,
+          type: 'POST',
+          success: function(data) {
+            var image = $('<img>').attr('src', '' + data);
+            $('.summernote').summernote("insertNode", image[0]);
+          },
+          error: function(jqXHR, textStatus, errorThrown) {
+            console.log(textStatus + " " + errorThrown);
+          }
+        });
+      }
+
+      $('form').on('submit', function(e) {
+        e.preventDefault();
+      });
+    });
+
+  </script>
+
+
+	<style type="text/css">
+		a.ski_tab {color:#404040;text-decoration:none;background-color:transparent;}
+		a.ski_title {color:#404040;text-decoration:none;background-color:transparent;font-size:1.2rem;font-weight:600}
+		span.ski_title {color:#404040;text-decoration:none;background-color:transparent;font-size:1.2rem;font-weight:600}
+		span.ski_sub_title {color:#606060;text-decoration:none;background-color:transparent;font-size:0.8rem}
+		span.contents_title {color:#404040;text-decoration:none;background-color:transparent;font-size:1.7rem;font-weight:600}
+		span.contents_sub_title {color:#404040;text-decoration:none;background-color:transparent;font-size:1.2rem;font-weight:600}
+		body { min-height:540px; }
+		body[orient="portrait"] { min-height:540px; }
+		body[orient="landscape"] { min-height:400px; }
+		img.card-img-top {width: 100%;height: 100px;object-fit: cover;}
+		img {max-width:100%;height:auto}
+		pre {padding:0px; overflow:auto; white-space:pre-wrap;}
+		p {color:#606060;font-size:15px;font-weight:400;}
+	</style>
+
+</head>
+
+
+
+		<title><? echo "$bbs[title] - $main_title"; ?></title>
+	
+		<style type="text/css">
+			@media screen and (min-width: 1040px) { .tt {display:block} .tt2 {display:none}}
+			@media screen and (max-width: 1039px) { .tt{display:none} .tt2{display:block}}
+		</style>
+
+		</head>
+
+		<body>
+
+         <? include '../_main-nav.html'; ?>
+  
+  
+
+		<?
+		 echo "
+		 <div class='container' style = 'padding:2px'>";
+ 
+ 
+ //			if($updated and ($today - $bbs[update_date]) < 2){$updated = $updated."&nbsp;&nbsp;<badge class='badge-warning'>&nbsp;updated&nbsp;</badge>&nbsp;&nbsp;";}
+			 
+			 while ($category_list){
+				 if ($category_list[category] == $bbs[category]){$category_name = $category_list[category_name];}
+					 $category_list = mysqli_fetch_array($result5);
+			 }
+ 
+			 echo "
+			 <br><br><br><br><br><br><br>
+			 <div class='container' style = 'padding:1px;'>
+					 <div class='col-12 col-lg-12 d-none d-lg-block text-center'>
+					  <span style = 'font-family: NanumSquareWeb;font-size:2rem;font-weight:800; line-height: 1.1;'>$bbs[title]</span><br>
+					   <span style = 'font-size:1.5rem;font-weight:700;line-height:.8;color:$text_color;'>$bbs[sub_title]</span>
+				 </div>
+		 
+				 <div class='col-12 col-lg-12 d-lg-none text-center'>
+					   <span style = 'font-family: NanumSquareWeb;font-size:1.6rem;font-weight:800; line-height: 1.1;'>$bbs[title]</span><br>
+					   <span style = 'font-size:1.2rem;font-weight:700;line-height:1;color:$text_color;'>$bbs[sub_title]</span>
+					 </div>
+				</div>";                              
+			 
+			 echo "
+				 <div class='container text-center' style = 'padding:2px;'>
+					 <i class='fas fa-user-edit'></i>&nbsp;$bbs[member_id]
+				 </div>
+				 <br><br>
+							 
+				 <table style = 'height:15px;border-bottom:1px solid #888888;' width = 100%><tr>
+				 <td width = 150px align = center >
+				 </td><td align = right><span style='color:#737373'><i class='fas fa-pencil-alt'></i>&nbsp;&nbsp;$bbs[docu_date]&nbsp;<i class='fas fa-eye'></i>&nbsp;$bbs[count]&nbsp;&nbsp;<i class='fas fa-comment-dots'></i>&nbsp;&nbsp;$comments_count&nbsp;&nbsp;";
+ 
+					 if($bbs[view] == '' or $view == NULL or $view == '0') {$view2 = "<span class = 'badge badge-warning'> 비공개 </span>"; }
+					 if($bbs[view] == '1') {$view2 = "<span class = 'badge badge-primary'> 공개 </span>";}
+ 
+				 echo "$view2 
+				 </span></td></tr></table>
+ 
+						   <br><br>
+						   <pre style = 'padding-left:10px;padding-right:10px;'>$bbs[contents]</pre>
+							   
+						   <div class='d-block d-md-flex border-bottom pb-3 text-uppercase'></div>
+						   <br><div class = 'text-right'>";
+						   
+						   
+						   if(($bbs[member_id] == $Login_User_ID) or $rank == 9)
+							   {echo "
+							   <a class='btn btn-warning text-right' href = 'index.html?category=$bbs[category]'>카테고리목록</a>&nbsp;&nbsp;  			      
+							   <a class='btn btn-warning text-right' href = 'index.html'>전체목록</a>&nbsp;&nbsp;  			      
+							   <a class='btn btn-danger text-right' href = 'bbs_write.html?category=$the_category'>새글작성</a>&nbsp;&nbsp;  			      
+								  <a class='btn btn-success text-uppercase' href = 'bbs_edit.html?no=$bbs[docu_no]'>글 수정</a></div><br><br>";
+							 }
+							 
+						   echo "
+						   
+				 <table style = 'height:15px;border-bottom:1px solid #888888;' width = 100%><tr>
+				 <td width = 150px align = center style = 'background-color:#000000;color:#FFFFFF;'>
+				 댓글입력</td><td></td></tr></table><br>
+								 <form id='contactForm' method='post' action='comments_write.php' novalidate='novalidate'>
+										<input class='form-control' type='text' name='docu_no' value='$bbs[docu_no]' hidden >
+									 <textarea class='summernote' name='contents'></textarea><br>
+									 <input class='btn btn-success text-uppercase' type='button' value='댓글등록' onclick='submit();'>
+									 <br>
+								 </form>
+								 <br><br>";
+						  
+			 // 댓글이 있으면 표시함             
+						   
+			 if($comments) 
+			 
+			 {	
+			 
+					 $sql= "SELECT * FROM bbs_comments where docu_no = '$docu_no' and depth > 1 order by comment_no ASC" ;
+					 $link 		= mysqli_connect("dbserver", "skiresort", "ll170505", "skiresort");
+					 $result6	=	mysqli_query($link,$sql);
+					 $numrow6 	= 	mysqli_num_rows($result6);     
+			 
+					 for($i=0; $i<$numrow6; $i++)
+						 {                
+							 $re_comments[$i]=mysqli_fetch_array($result6);
+							 
+						 }        		
+			 
+				 while ($comments) // 댓글 갯수만큼 루프 실행
+				 {
+ 
+						 for($i=0; $i<$comments_count; $i++) // Depth = 1 인 경우만 출력함.
+						 
+						 {
+			 
+								 if ($comments[depth] == '1') // Depth = 1 인 경우만 출력함.
+								 {
+										 echo "
+												 <table border = 0 width = 100% style='background-color:#ebddd3;padding:20px;'>
+													 <tr>
+														 <td>댓글번호 : $comments[comment_no] / $comments[member_id] / $comments[regdate] / $comments[ipaddress] </td>
+													 </tr>
+													 <tr>
+														 <td><pre>$comments[contents]</pre></td>
+													 </tr>
+													 <tr>
+														 <td>
+											 ";
+						 
+										 $comments_count2 = $comments_count - 1;
+									 
+										 for($j=2; $j<10; $j++)  // Depth > 2 인 경우 출력
+										 {
+							 
+											 for($k=0; $k<$comments_count2; $k++) // Loop K
+											 {
+													 $re_comments_depth 		= $re_comments[$k][depth];
+													 $re_comments_docu_no 	= $re_comments[$k][docu_no];
+													 $re_comments_no 		= $re_comments[$k][comment_no];
+													 $re_comments_original 	= $re_comments[$k][comment_no2];
+													 $re_comments_id 		= $re_comments[$k][member_id];
+													 $re_comments_date 		= $re_comments[$k][regdate];
+													 $re_comments_ip 		= $re_comments[$k][ipaddress];
+													 $re_comments_contents 	= $re_comments[$k][contents];
+ 
+												 if ($re_comments_original == $comments[comment_no] and  $re_comments_depth == $j)
+													 {
+														 echo
+														 "
+																 <table border = 0 width = 100% style='background-color:#b1b8a9;padding:20px;'>
+																 <tr>
+																	 <td>댓글번호 : $re_comments_no / $re_comments_id / $re_comments_date / $re_comments_ip / 관련문서번호 : $re_comments_docu_no / 부모 댓글번호 : $re_comments_original</td>
+																 </tr>
+																 <tr>			
+																	 <td><pre>$re_comments_contents</pre></td>
+																 </tr>
+															 </table>
+															 <br>
+														 ";
+															 
+															 
+															 
+														 } // Depth 가 맞으면 출력
+														 
+												 }  // Loop K loop
+						 
+										 }   // Loop J loop
+						 
+						 echo "
+						 </td>
+						 </tr>
+						 <tr>
+						 <td>";
+						 
+						 $toggle1 = "#comment_toggle_".$comments[comment_no];
+						 $toggle2 = "comment_toggle_".$comments[comment_no];
+						 $depth 	 = $comments[depth] + 1;
+ 
+						 echo "
+						  <a data-toggle='collapse' href=$toggle1 
+						  class='text-dark' style='text-decoration:none;' aria-expanded='false' aria-controls='$toggle2' >
+						 댓글달기</a>
+ 
+						 <div class='collapse col-sx-12' id='$toggle2'><br>
+								 <form id='contactForm' method='post' action='comments_write2.php' novalidate='novalidate'>
+								 <input class='form-control' type='text' name='docu_no' value='$comments[docu_no]' hidden >
+									<input class='form-control' type='text' name='comments_no2' value='$comments[comment_no]' hidden>
+								 <input class='form-control' type='text' name='depth' value='$depth' hidden >
+ 
+								 <textarea class='summernote' name='contents'></textarea>
+									 <input class='btn btn-success text-uppercase' type='button' value='댓글등록' onclick='submit();'>
+								 <br>
+							 </form>
+						 </div>
+						 </td></tr>
+					 </table><br>"; 
+					 
+									 } // if ($comments[depth] == '1') Depth = 1 인 경우만 출력함.
+					 
+							 $comments = mysqli_fetch_array($result2);
+				 
+							 } // For $i 루프
+							 
+						 } // while 루프
+ 
+			 } // 댓글이 있으면 표시함.  
+ 
+ 
+ 
+ ?>
+ </div></div>  
+
+		 
+
+
+
+
+
+
+
+
+  
+        <?  include '../_footer.html'; ?>
+
+</body>
+
+</html>

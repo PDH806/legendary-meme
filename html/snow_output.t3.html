@@ -1,0 +1,164 @@
+<?
+    include "include/head_common.html";
+if(!$_POST['chk'] /*|| !$_POST['chk1']*/){
+     echo "
+		<script>
+         alert('정상적인 방법으로 이용해 주세요');
+		 window.close();
+        </script>
+	 ";
+ 	 exit;
+	} 
+
+//IDKEY 구하기 => 지원한 자격증 IDKEY
+ $sql = "select idkey from t_goods where gd_seq='{$_REQUEST['seq']}' ";
+ $tidkey = sql_fetch($sql);
+ $_REQUEST['key'] = $tidkey['idkey'];
+
+ // gd4501 => 보드지도요원(티칭3)_재발급
+
+ $sql = "select (select gd_name from t_goods where idkey='{$_REQUEST['key']}' and gd_seq='{$_REQUEST['seq']}') subj, 
+			(select gd_sale_enddt from t_goods where idkey='{$_REQUEST['key']}' and gd_seq='GD4501') endDate,
+license_num, rs_buyer_name, rs_buyer_idkey, rs_sd_date from t_reserve where idkey='{$_REQUEST['key']}' and gd_seq='{$_REQUEST['seq']}' and rs_seq='{$_REQUEST['seq1']}' ";
+
+
+ //echo $sql;
+ $r = sql_fetch($sql);
+ //print_r($r);
+ //echo strlen($r['license_num']);
+ $year = substr($r['rs_sd_date'],0,4);
+ $subj = $r['subj'] ? $r['subj'] : $_REQUEST['subj'];
+
+ // 신청기간
+ $now = strtotime(date("Ymd"));
+ $end = strtotime(date(substr($r['endDate'],0,8)));
+ if($now <= $end) $expiry = 1;
+ else $expiry = 0;
+
+ /*
+ echo '$now : ' . $now;
+ echo '<br>$end : '.$end;
+ */
+ 
+ 
+ //$expiry = 1;
+?>
+<body>
+<form name='frm1' action='' method='post'>
+<? foreach($_POST as $k=>$v){ ?>
+<input type='hidden' name='<?=$k?>' value='<?=$v?>'/>
+<? } ?>
+</form>
+
+    <div id="wrap">
+        <div class="accept output">
+            <div class="sbcenter teach_data">
+                <div class="sb_content">
+                    <!--/sb_top_text-->
+                    <div class="tab_wrap">
+                        <div class="accept_wrap menu">
+                            <div class="tab_menu_area inner_menu">
+                                <ul class="tab_menu sbclear">
+                                    <!-- 
+                                    <li class="on"><a href="snow_output.html">확인증 출력</a></li>
+                                    <li><a href="snow_reissue.html">자격증 발급</a></li>
+                                     -->
+                                     <? if($expiry) { ?>
+                                     <li class="on"><a href='javascript:void(0)' onclick='goPage(1)'>확인증 출력</a></li>
+                                     <li><a href='javascript:void(0)' onclick='goPage(2)'>자격증 발급</a></li>
+                                     <? }else{ ?>
+                                     <li class="on"><a href='javascript:void(0);'>확인증 출력</a></li>
+                                     <li><a href='javascript:void(0);alert("신청기간이 아닙니다.")'>자격증 발급</a></li>
+                                     <? } ?>
+                                </ul>
+                            </div>
+                        </div>
+                        <!--/tab_menu_area-->
+                        <div class="accept_cancel">
+                            <div class="content_box">
+                                <div class="txt_box">
+                                    <div class="tit_box"><span class="sb_tit">확인증 출력</span></div>
+                                    <p class="star">확인증 출력을 원하시면 아래 출력 버튼을 클릭해주십시오.</p>
+                                     <div class="file_wrap" id='print'>
+                                    	<div class="file_img" style='padding:10px;'>
+                                    	<img src='/ski/images/sample.png' style='position:absolute;' />
+                                    	    <ul style='padding-top:200px;padding-left:50px'>
+                                    	        <li>
+                                    	            <p>자격증 번호</p>
+                                    	            <span><?=$r['license_num']?$r['license_num']:$r['license_tmp_num']?></span>
+                                    	        </li>
+                                    	        <li>
+                                    	            <p>성　　 　명</p> 
+                                    	            <span><?=$r['rs_buyer_name']?></span>
+                                    	        </li>
+                                    	        <li>
+                                    	            <p>생 년 월 일</p>
+                                    	            <span><?=substr($r['rs_buyer_idkey'],0,2)?>년 <?=substr($r['rs_buyer_idkey'],2,2)?>월 <?=substr($r['rs_buyer_idkey'],4,2)?>일</span>
+                                    	        </li>
+                                    	    </ul>
+                                    	    <div class="file_txt" style='padding-left:20px;text-align:justify'>
+                                    	       상기인은 체육시설의 설치·이용에 관한 법 제24조 및 동 시행규칙 제23조 [별표6] 안전·위생 <br>기준에 의거 <span><?=$year?>년</span>
+                                    	        사단법인 한국 스키장경영협회에서 시행한<span style='font-weight:bold;'><?=$subj?></span> 자격을 <br>취득하였음을 확인함.
+                                    	    </div>
+                                    	    <div class="file_date">
+                                    	        <b><?=date('Y')?>.<?=date('m')?>.<?=date('d')?></b>
+                                    	    </div>
+                                    	</div>
+                                    </div>
+                                    <div class="click_btn">
+                                        <input type="submit" value="출력" onclick='printPage();'>
+                                    </div>
+                                </div>
+                                <!--txt_box-->
+                            </div>
+                            <!--/content_box-->
+                        </div>
+                        <!--/accept_cancel-->
+                    </div>
+                    <!--/tab_wrap-->
+                </div>
+                <!--/sb_content-->
+            </div>
+            <!-- //sbcenter -->
+        </div>
+        <!-- //sbcenter -->
+    </div>
+    <!-- //wrap -->
+</body>
+
+</html>
+<script type="text/javascript">
+//<![CDATA[
+function printPage(){
+ var initBody;
+ window.onbeforeprint = function(){
+  initBody = document.body.innerHTML;
+  document.body.innerHTML =  document.getElementById('print').innerHTML;
+ };
+ window.onafterprint = function(){
+  document.body.innerHTML = document.getElementById('print').innerHTML;
+ };
+ window.print();
+ return false;
+}
+function goPage(no){
+ if(no==1){
+  frm1.action='snow_output.t3.html';
+ }
+ else if(no==2){
+  //frm1.action='teach_reissue.t1.html';
+  frm1.action='snow_reissue.t3.html';
+ }
+ frm1.submit();
+	 
+}
+
+//]]>
+</script>
+<style>
+@media print{
+.file_img{
+  content:url(http://skiresort.or.kr/ski/images/sample.png);
+ }
+}
+</style>

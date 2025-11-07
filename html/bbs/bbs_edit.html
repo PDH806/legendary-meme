@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<?php
+
+  include '../db_config.html';
+  
+  if (!$Login_User_ID){echo " <script language='javascript'>alret('잘못된 접근입니다.';top.document.location.href = '../_404.html'</script>";}
+  
+  include '../check_rank.html';
+  
+  $the_category = $_GET["category"];
+  $category 		= $_GET["category"];
+  $the_page 		= $_GET["page"];
+  $docu_no 			= $_GET['No'];
+  $today   			= date("Y-M-D");
+  
+
+  if(!$the_category){$query = ""; $the_category = 0;}	 
+
+  if (!$link) {die("Connection failed: " . mysqli_connect_error());}
+
+    $sql = "select * from bbs_Skiresort where docu_no = $docu_no;";
+    $result	= mysqli_query($link,$sql);
+    $row = mysqli_fetch_array($result);
+  
+    $title    = stripslashes($row[title]);
+    $contents = stripslashes($row[contents]);
+    
+?>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+  <link rel="shortcut icon" href="Myicon.png" type="image/x-icon">
+
+ <!-- include jquery -->
+ <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.js"></script>
+
+ <!-- include libs stylesheets -->
+ <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.css" />
+ <script src="//cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.js"></script>
+ <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.js"></script>
+ <script src="https://use.fontawesome.com/releases/v5.13.1/js/all.js"></script>
+  <script src='https://kit.fontawesome.com/678c3e80a7.js' crossorigin='anonymous'></script>
+
+  <!-- include summernote -->
+  <link rel="stylesheet" href="../summernote/dist/summernote-bs4.css">
+  <script type="text/javascript" src="../summernote/dist/summernote-bs4.js"></script>
+
+  <link rel="stylesheet" href="../summernote/examples/example.css">
+
+  <script type="text/javascript">
+
+    $(function() {
+      $('.summernote').summernote({
+        height: 600,
+        lang: 'ko-KR',
+        fontNames: ['나눔바른고딕', '나눔명조', 'Arial', 'Arial Black', 'Comic Sans MS', 'Courier New', ],
+      	fontNamesIgnoreCheck: ['나눔바른고딕', '나눔명조'],
+    	lineHeights: ['0.2', '0.3', '0.4', '0.5', '0.6', '0.8', '1.0', '1.2', '1.4', '1.5', '1.8', '2.0', '2.5', '3.0'],
+  		toolbar: [
+    	['style', ['bold', 'italic', 'underline', 'clear']],
+    	['font', ['strikethrough', 'superscript', 'subscript', 'fontname']],
+    	['fontsize', ['fontsize']],
+    	['color', ['color']],
+    	['para', ['ul', 'ol', 'paragraph']],
+    	['height', ['height']],
+    	['Insert',['picture','link','video','table','hr']],
+    	['Misc',['fullscreen','codeview','undo','redo','help']],
+  		],
+        callbacks: {
+          onImageUpload: function(files, editor, welEditable) {
+            console.log('image upload:', files);
+            sendFile(files[0], editor, welEditable);
+          },
+        }
+      });
+
+      function sendFile(file, editor, welEditable) {
+        data = new FormData();
+        data.append("file", file);
+        $.ajax({
+          url: "../upload.php", // image 저장 소스
+          data: data,
+          cache: false,
+          contentType: false,
+          processData: false,
+          type: 'POST',
+          success: function(data) {
+            var image = $('<img>').attr('src', '' + data);
+            $('.summernote').summernote("insertNode", image[0]);
+          },
+          error: function(jqXHR, textStatus, errorThrown) {
+            console.log(textStatus + " " + errorThrown);
+          }
+        });
+      }
+
+      $('form').on('submit', function(e) {
+        e.preventDefault();
+      });
+    });
+
+  </script>
+
+  <title><?php echo "$site_name | 컨텐츠 신규 등록"; ?></title>
+
+</head>
+
+<body>
+
+  <!-- Navigation for site -->
+
+
+  <!-- end of Navigation -->
+
+				<br><br><br><br><br>
+
+  <div class="container">
+    <h1 class = 'text-center'>(사)한국스키장경영협회 공지사항 수정</h1>
+    <br><br>
+
+    <form id='contactForm' method='post' action='bbs_edit.php?No=<?echo $docu_no;?>' novalidate='novalidate'>
+
+			<div class='input-group'>
+  				<div class='input-group-prepend'>
+					<button class='btn btn-primary' type='button' style = 'width:120px;'>제목</button>
+  				</div>
+                    <input class='form-control' type='text' name='title' value="<?echo $title;?>" placeholder='글제목'>
+			</div>
+			<br>			
+
+      <textarea class="summernote" name="contents">
+      <?echo $contents;?>      
+      </textarea>
+
+      <div class='form-group'>
+        <table border=0, width=100%>
+          <tr>
+            <td width=15% align=right>
+            </td>
+            <td align = 'right'>
+              <br>
+			  <a class='btn btn-warning text-right' href = '../sb_notice.html'>전체목록</a>&nbsp;&nbsp;  			      
+              <input class='btn btn-success text-uppercase' type='button' value='글 수정' onclick='submit();'>
+            </td>
+          </tr>
+        </table>
+      </div>
+
+  </div>
+
+
+<!-- footer for AUGMENT-SKI -->
+<? include '../_footer3.html'; ?>
+<!-- end of footer -->
+
+  </body>
+
+</html>

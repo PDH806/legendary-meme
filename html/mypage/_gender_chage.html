@@ -1,0 +1,26 @@
+<?
+	include '../db_config.html';
+	extract($_REQUEST);
+
+	if($s_photo)
+	{
+	$query="UPDATE 7G_Skiresort_Member SET S_PHOTO = $s_photo where NO = '$NO'";
+	$result=mysqli_query($link, $query);
+	echo "<script>location.href='admin_photo_edit.html?category=$category&page=$page&SNo=$SNo';</script>";
+
+	}	
+
+	else
+	
+	{
+	$query="UPDATE 7G_Skiresort_Member SET GENDER = '$gender' where NO = '$NO'";
+	$result=mysqli_query($link, $query);
+	echo "<script>location.href='admin_gender_change.html?category=$category&page=$page&SNo=$SNo';</script>";
+
+	}
+
+
+	?>
+	
+	
+ 

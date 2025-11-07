@@ -1,0 +1,172 @@
+<?
+if(!function_exists('get_microtime')){
+	function get_microtime()
+	{
+		list($usec, $sec) = explode(" ",microtime());
+		return ((float)$usec + (float)$sec);
+	}
+}
+
+	$s00 = get_microtime();
+
+	// HTTP --> HTTPS
+	// $redic_domain = "https://skiresort.or.kr".$_SERVER['REQUEST_URI'];
+	//  	if(!isset($_SERVER["HTTPS"])) {header('Location:'.$redic_domain);}
+
+	if ($_SERVER['HTTP_HOST'] =='skiresort.or.kr')
+	{
+			Header('Location:https://www.skiresort.or.kr');
+			exit;
+	}	
+
+// TimeZone 설정
+	date_default_timezone_set('Asia/Seoul');
+
+// 사이트 침입탐지를 위한 토근 발행
+	$token_1 = '!aklsdjfaslfiqwnaklsdjfioqu34!09r2r!jjfaknksdkur98123r3uf+j123904n_kqnedqnjcsblkjdcwe';
+	$token_2 = '!aklsdjfaslfiqwnaklsdjfioqu34!09r2r!jjfaknksdkur98123r3uf+j123904n_kqnedqnjcsblkjdcwe';
+	$token_3 = '!aklsdjfaslfiqwnaklsdjfioqu34!09r2r!jjfaknksdkur98123r3uf+j123904n_kqnedqnjcsblkjdcwe';
+	$token_4 = '!aklsdjfaslfiqwnaklsdjfioqu34!09r2r!jjfaknksdkur98123r3uf+j123904n_kqnedqnjcsblkjdcwe';
+
+	//fileMaxUpload
+	$upload_max_filesize = 1024000*5;		//5Mb
+
+// 사이트 기본설정
+	$site				= "Skiresort";
+	$site_name			= "Skiresort";
+
+	$Login_User_ID 		= $_COOKIE['Login_ID'];
+	$rank 				= $_COOKIE['rank'];
+
+	if ($Login_User_ID == 'friday1968'){$cookie_time = 18000;} else {$cookie_time = 6000;}
+	
+	setcookie('Login_ID', $Login_User_ID, time() + $cookie_time, '/');
+	setcookie('rank', $rank, time() + $cookie_time, '/');
+	
+	$tab				= $_GET['tab'];
+	$id					= $_GET['id'];
+	$rank_list 			='(일반)';	
+
+// 게시판 사이트 설정
+	$bbs_name 			= "bbs_".$site;
+	$bbs_category   	= "bbs_".$site."_category";
+	$member_table 		= '7G_Skiresort_Member';
+
+// 겔러리 사이트 설정
+	$movie			 	= "bbs_movie";
+	$place		 		= "place";
+	$activity		 	= "activity";
+	$gallery		 	= "gallery";
+	$gallery_title 		= '2021 스위스 사스페 스키전지훈련 갤러리';
+
+// DBMS 로그인 설정
+	//$servername	= "dbserver"; $username = "skiresort"; $password = "ll170505"; $dbname = "skiresort";
+	$servername	= "localhost"; $username = "skiresort"; $password = "wints!"; $dbname = "skiresort";
+	$connect = mysql_connect($servername, $username, $password); $link = mysqli_connect($servername, $username, $password, $dbname); mysql_select_db($dbname,$connect);
+	mysql_query("set names utf8", $connect); mysqli_query($link, "set names utf8");
+
+	$s01 = get_microtime();
+	//echo '<!--<br>TS01 : '.floatval($s01-$s00).'-->';
+
+
+// 사이트-설정-불러오기
+	$site_config_query	= "SELECT * FROM site_config where site = '$site'" ;
+	$site_config_result	= mysql_query($site_config_query,$connect);
+	$row				= mysql_fetch_array($site_config_result);
+
+	$s02 = get_microtime();
+	//echo '<!--<br>TS02 : '.floatval($s02-$s01).'-->';
+
+// 로고 & 디자인 설정
+	$logo= '<img src = ../augment.png width = 18px>';
+	$logo1= '<img src = ../augment.png width = 22px>';
+	$logo2= '<img src = ../augment.png width = 32px>';
+	$brand_color = '#1a0045';
+	$brand_color2 = '#1a0045';
+	$brand_color3 = '#1a0045';
+	$line_black = "<table width = 100%><tr style = 'border-bottom:1px solid #888888;' height = 10px><td></td></tr><tr height = 10px><td></td></tr></table><br>";
+	$line_gray = "<table width = 100%><tr style = 'border-bottom:1px solid #b3b3b3;' height = 10px><td></td></tr><tr height = 0px><td></td></tr></table><br>";
+
+	$show_pc = "d-none d-lg-block";
+	$show_tablet = "d-none d-md-block d-lg-none";
+	$show_mobile = "d-block d-sm-none";
+
+// 접속기기 확인
+	$mobile_agent = "/(iPod|iPhone|Android|BlackBerry|SymbianOS|SCH-M\d+|Opera Mini|Windows CE|Nokia|SonyEricsson|webOS|PalmOS)/";
+	if(preg_match($mobile_agent, $_SERVER['HTTP_USER_AGENT'])){$device = "Mobile";}else{$device = "PC";}
+
+
+// WEB 접속로그
+	$userAgent 			= $_SERVER["HTTP_USER_AGENT"]; 
+	$today 				= date("Y-m-d");
+	$current_datetime 	= date("Y-m-d H:i:s");
+	$current_page 		= $_SERVER['REQUEST_URI'];
+	$guest_ip			= $_SERVER["REMOTE_ADDR"];
+    //$Access_info 		= json_decode(file_get_contents("http://ipinfo.io/"));
+    //$Access_Country 	= $Access_info->country; 
+
+
+// 접속거부 (Access Deny) 설정
+	$access_deny_query	= "SELECT * FROM Access_Deny where site = '$site'" ;
+	$access_deny_result	= mysql_query($access_deny_query,$connect);
+	$access_deny		= mysql_fetch_array($access_deny_result);
+	
+	$s03 = get_microtime();
+	//echo '<!--<br>TS03 : '.floatval($s03-$s02).'-->';
+
+	$Arr_URL = explode(',', $access_deny['url']);
+	$Arr_Country = explode(',', $access_deny['country']);
+	
+	for ($i=0; $i<count($Arr_URL); $i++){if(strpos($current_page, trim($Arr_URL[$i])) !== false){echo " <script language='javascript'>top.document.location.href = 'index.html'</script>";}}
+	for ($i=0; $i<count($Arr_Country); $i++){if($Access_Country == trim($Arr_Country[$i])){echo " <script language='javascript'>top.document.location.href = 'http://google.com'</script>";}}
+	
+// WEB 접속로그 기록
+	// $log_insert = "INSERT INTO SITE_LOG (MEMBER_ID, PAGE, TIME, SITE, OS, IP) VALUES ('$Login_User_ID', '$current_page','$current_datetime','$site_name','$userAgent','$guest_ip')";
+	// $log_result=mysql_query($log_insert,$connect);
+
+	$s04 = get_microtime();
+	//echo '<!--<br>TS04 : '.floatval($s04-$s03).'-->';
+
+
+// INCLUDE PASSWORD LIB 
+include_once $_SERVER['DOCUMENT_ROOT'].'/lib/password.lib.php';
+?>
+<style type="text/css">
+
+html, body {height:100%;}
+
+/* BBS Style */
+ .font16 {font-family: 'Nanum+Myeongjo:700,800',sans-serif;font-size:16px;}
+ .font18 {font-family: 'Nanum+Myeongjo',sans-serif;font-size:18px;font-weight:500;}
+ .font20 {font-family: 'Nanum+Myeongjo',sans-serif;font-size:20px;font-weight:700;}
+ .font24 {font-family: 'Nanum+Myeongjo',sans-serif;font-size:24px;font-weight:800;}
+ .font26 {font-family: 'Nanum+Myeongjo',sans-serif;font-size:26px;font-weight:800;}
+ .font28 {font-family: 'Nanum+Myeongjo',sans-serif;font-size:28px;font-weight:800;}
+ .font30 {font-family: 'Nanum+Myeongjo',sans-serif;font-size:30px;font-weight:800;}
+ .font32 {font-family: 'Nanum+Myeongjo',sans-serif;font-size:32px;font-weight:800;}
+ .font36 {font-family: 'Nanum+Myeongjo',sans-serif;font-size:36px;font-weight:800;}
+ .font_title {font-family: 'Nanum+Myeongjo',sans-serif;font-size:4vmin;font-weight:800;}
+ .font-center {display:table-cell;text-align:center;vertical-align:middle;}
+
+/* DivTable */
+.divTable {display: table; width: 100%;}
+.divTableRow {display: table-row;}
+.divTableHeading {background-color: #EEE; display: table-header-group;}
+.divTableCell, .divTableHead {display: table-cell; padding: 4px 10px; text-align:center; vertical-align:middle;height:50px;}
+.divTableHeading {background-color: #EEE; display: table-header-group; font-weight: bold;}
+.divTableFoot {background-color: #EEE; display: table-footer-group; font-weight: bold;}
+.divTableBody {display: table-row-group;}
+
+.btn-pink	{font-weight:bold; font-size:11pt; color:black; background-color:#ffb8c9; padding:5px; border-radius: 4px; border: 1px solid white; width:200; height:70;}
+.btn-sky	{font-weight:bold; font-size:11pt; color:black; background-color:#8ceeff; padding:5px; border-radius: 4px; border: 1px solid white; width:200; height:70;}
+.btn-green	{font-weight:bold; font-size:11pt; color:white; background-color:#1b8700; padding:5px; border-radius: 4px; border: 1px solid white; width:200; height:70;}
+.btn-gray	{font-weight:bold; font-size:11pt; color:black; background-color:#c7c7c7; padding:5px; border-radius: 4px; border: 1px solid white; width:200; height:70;}
+.btn-red	{font-weight:bold; font-size:11pt; color:white; background-color:#ff000d; padding:5px; border-radius: 4px; border: 1px solid white; width:200; height:70;}
+.btn-black	{font-weight:bold; font-size:11pt; color:white; background-color:#000000; padding:5px; border-radius: 4px; border: 1px solid white; width:200; height:70;}
+.btn-orange	{font-weight:bold; font-size:11pt; color:black; background-color:#ff8c00; padding:5px; border-radius: 4px; border: 1px solid white; width:200; height:70;}
+.btn-white	{font-weight:bold; font-size:11pt; color:#000000; background-color:#ffffff; padding:5px; border-radius: 4px; border: 1px solid white; width:200; height:70;}
+.btn-blue	{font-weight:bold; font-size:11pt; color:white; background-color:#0091ff; padding:5px; border-radius: 4px; border: 1px solid white; width:200; height:70;}
+</style>
+<?php
+	
+?>
