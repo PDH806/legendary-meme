@@ -11,5 +11,5 @@ $menu["menu600"] = array(
     // array('600600', '보험가입용 명단', '' . G5_ADMIN_URL . '', ''),
    // array('600600', '엑셀입금처리(개인)', '' . G5_ADMIN_URL . '/ksia_excel_up1.php?to_table=L1_apply', 'L1_test'),
    // array('600700', '엑셀입금처리(그룹)', '' . G5_ADMIN_URL . '/ksia_excel_up1.php?to_table=L1', 'L1_test')   
-
+//testtest
 );
