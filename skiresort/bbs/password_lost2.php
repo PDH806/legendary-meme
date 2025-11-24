@@ -49,6 +49,15 @@ if (empty($mb['mb_id']) || $mb['mb_leave_date']) {
 }
 
 } else if ($hp) {
+	
+	//251117 대현---------
+	if(empty($get_mb_name)){
+
+		alert('이름을 입력 해 주십시오.');
+
+	}
+	// -----------------
+
 	$sql = " select count(*) as cnt from {$g5['member_table']} where mb_hp = '$hp' ";
 	$row = sql_fetch($sql);
 	if ($row['cnt'] > 1)
@@ -122,6 +131,13 @@ run_event('password_lost2_after', $mb, $mb_nonce, $mb_lost_certify);
 
 } else if ($hp) {
 
+	//251117 대현---------
+	if(empty($get_mb_name)){
+
+		alert('이름을 입력 해 주십시오.');
+
+	}
+	// -----------------
     
 	// SMS 가입시
 	if ($config['cf_sms_use'] && $config['cf_icode_id'] && $config['cf_icode_pw']) {
