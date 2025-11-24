@@ -3,7 +3,7 @@ header('Content-Type: application/json; charset=utf-8');
 include "../../../../../../common.php";
 require('utils.php');                // 유틸리티 포함
 //$logPath = "c://app.log";            //디버그 로그위치 (windows)
-$logPath = "/home/asiaski/public_html/skiresort/data/app.log";         //디버그 로그위치 (리눅스)
+$logPath = G5_PATH . "/data/app.log"; //디버그 로그위치 (리눅스)
 
 /*****************************************************************************************
  * READY API   (결제창 호출 전처리)    
@@ -33,21 +33,27 @@ $mbrNo = "100011"; //<===테스트용 가맹점아이디입니다.
 
 /* 결제수단 */
 $paymethod = $_POST["paymethod"];
-/* 결제금액 (공급가+부가세)
- 	  (#주의#) 페이지에서 전달 받은 값을 그대로 사용할 경우 금액위변조 시도가 가능합니다.
- 	  DB에서 조회한 값을 사용 바랍니다. */
-$amount = "1000";
+
 /* 상품명 max 30byte, 특수문자 사용금지*/
 //$goodsName = urlencode("테스트상품명");	
 $goodsName = $_POST["goodsName"];
+
 /* 상품코드 max 8byte*/
 $goodsCode = $_POST["goodsCode"];
+
+/* 결제금액 (공급가+부가세)
+ 	  (#주의#) 페이지에서 전달 받은 값을 그대로 사용할 경우 금액위변조 시도가 가능합니다.
+ 	  DB에서 조회한 값을 사용 바랍니다. */
+// $amount = "1000";
+$sql = "SELECT Entry_fee FROM SBAK_OFFICE_CONF WHERE Event_code = '{$goodsCode}'";
+$row = sql_fetch($sql);
+$amount = $row['Entry_fee'];
 
 /* 가맹점 주문번호 (가맹점 고유ID 대체가능) 6byte~20byte*/
 /* $mbrRefNo = makeMbrRefNo($mbrNo); */
 
 // 2) 현재년도 (YYYY)
-$event_year = date("Y");
+$the_year = date("Y");
 
 $sql = "SELECT MAX(UID) AS max_uid FROM sbak_mainpay";
 $row = sql_fetch($sql);
@@ -57,7 +63,7 @@ $next_uid = ($row['max_uid'] ?? 0) + 1;
 // 4) UID 부분을 6자리 고정 (예: 1 -> 000001, 123 -> 000123)
 $uid_seq = str_pad($next_uid, 6, "0", STR_PAD_LEFT);
 
-$mbrRefNo = $goodsCode . '-' . $event_year . '-' . $uid_seq;
+$mbrRefNo = $goodsCode . '-' . $the_year . '-' . $uid_seq;
 
 
 
@@ -66,8 +72,6 @@ $mbrRefNo = $goodsCode . '-' . $event_year . '-' . $uid_seq;
 $approvalUrl = G5_THEME_URL . "/html/my_form/mainpay_api/mobile/_3_approval.php"; //변경 필수
 /*결제창 close시 호출되는 상점URL (PG->가맹점)*/
 $closeUrl = G5_THEME_URL . "/html/my_form/mainpay_api/mobile/_3_close.php"; //변경 필수	
-// $approvalUrl = "https://asiaski.org/skiresort/theme/skiresort/html/my_form/mainpay_api/mobile/_3_approval.php";
-// $closeUrl = "https://asiaski.org/skiresort/theme/skiresort/html/my_form/mainpay_api/mobile/_3_close.php";
 $customerName = $_POST["mb_name"]; // 고객명
 $customerEmail = $_POST["the_email"]; // 고객이메일
 $customerID = $_POST["mb_id"]; // 고객ID
@@ -92,12 +96,13 @@ if ($goodsCode == 'A01' || $goodsCode == 'A02' || $goodsCode == 'A03') { // 자�
     $ADDR2 = $_POST['ADDR2']; // o
     $ADDR3 = $_POST['ADDR3']; // o
     $CATE_1 = $_POST['CATE_1']; // o
+    $event_year = '';
 
 } elseif ($goodsCode == 'B01' || $goodsCode == 'B04') { //티칭1 일 경우
 
     $T_code = $_POST['t_code']; // o
     $THE_TYPE = $_POST['the_type']; // o
-    $TEST_YEAR = $_POST['event_year']; // o
+    $event_year = $_POST['event_year']; // o
     $T_Date = $_POST['t_date']; // o
 
 } else { // 행사 신청 일 경우
@@ -111,7 +116,7 @@ if ($goodsCode == 'A01' || $goodsCode == 'A02' || $goodsCode == 'A03') { // 자�
     $ENTRY_INFO_4 = $_POST['entry_info_4']; // o
     $ENTRY_INFO_5 = $_POST['entry_info_5']; // o
     $ENTRY_INFO_6 = $_POST['entry_info_6']; // o
-    $EVENT_YEAR = $_POST['event_year']; // o
+    $event_year = $_POST['event_year']; // o
     $ENTRY_INFO_4_FILE = $_POST['filename1']; // o
     $ENTRY_INFO_6_FILE = $_POST['filename2']; // o
     $unique_order_id = $_POST['unique_order_id']; // o
@@ -272,7 +277,7 @@ switch ($payment_category) {
         ENTRY_INFO_5           = '{$ENTRY_INFO_5}',  
         ENTRY_INFO_6           = '{$ENTRY_INFO_6}', 
         ENTRY_INFO_6_FILE           = '{$ENTRY_INFO_6_FILE}', 
-        EVENT_YEAR           = '{$EVENT_YEAR}',   
+        EVENT_YEAR           = '{$event_year}',   
         AID         = '{$aid}',
         IS_DEL             = '' ";
         break;

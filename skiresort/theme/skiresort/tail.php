@@ -33,18 +33,12 @@ if (G5_IS_MOBILE) {
 	<dl class="snbCS">
 		<dt>CONTACT US</dt>
 		<dd>
-			<strong><i class="fa fa-phone-square"></i> <?php if ($admin['mb_tel']) {
-															echo '<span> Tel. ' . $admin['mb_tel'] . '</span>';
-														} else echo '<span>관리자 전화번호</span>'; ?> </strong>
-			<b><?php if ($admin['mb_email']) {
-					echo  '<span> E-mail. '; ?><a href='mailto:<?php echo $admin['mb_email'] ?>'><?php echo $admin['mb_email'] ?></a></span><?php } else echo '<span>관리자이메일</span>'; ?> </b>
-			<b><?php if ($admin['mb_1'] == '내용없음') echo '';
-				else if ($admin['mb_1']) {
-					echo  '<span> Fax. '; ?><?php echo $admin['mb_1'] ?></span><?php } else echo '<span>관리자정보여분필드1(팩스번호)</span>'; ?> </b>
+			<strong><i class="fa fa-phone-square"></i> <span> Tel. 02-3473-1275,1277</span> </strong>
+			<b> <span> E-mail. ski@resort.or.kr</span></b>
+			<br><span> 업무시간 : 평일 9:00 ~ 18:00</span>
 
-			<br>
-			<?php if ($admin['mb_2']) {
-				echo  '<span>'; ?><?php echo $admin['mb_2'] ?></span><?php } else echo '<span>관리자정보여분필드2</span>'; ?>
+
+
 		</dd>
 	</dl>
 	<div id="snbMvAr">
@@ -81,30 +75,32 @@ if (G5_IS_MOBILE) {
 
 <hr>
 
+
+
+
+
+
 <!-- 하단 시작 { -->
 <footer id="footer">
+
 	<dl>
-		<dt><img src="<?php echo G5_THEME_IMG_URL; ?>/footerLogo.png" alt="<?php echo $config['cf_title'] ?>"></dt>
+		<dt>
+			| <a href="#" data-featherlight="<?php echo G5_THEME_URL ?>/pop.privacy.php .term_area" data-featherlight-type="ajax">개인정보처리방침</a> |
+			<a href="#" data-featherlight="<?php echo G5_THEME_URL ?>/pop.term.php .term_area" data-featherlight-type="ajax">이용약관</a> |
+			<a href="#" data-featherlight="<?php echo G5_THEME_URL ?>/pop.noEmail.php .term_area" data-featherlight-type="ajax">이메일주소 무단수집거부</a> |
+		</dt>
 		<dd>
-			<a href="#" data-featherlight="<?php echo G5_THEME_URL ?>/pop.privacy.php .term_area" data-featherlight-type="ajax">개인정보처리방침</a>
-			<a href="#" data-featherlight="<?php echo G5_THEME_URL ?>/pop.term.php .term_area" data-featherlight-type="ajax">이용약관</a>
-			<a href="#" data-featherlight="<?php echo G5_THEME_URL ?>/pop.noEmail.php .term_area" data-featherlight-type="ajax">이메일주소 무단수집거부</a>
+
+
+			<img src="<?php echo G5_THEME_IMG_URL; ?>/footerLogo.png" alt="<?php echo $config['cf_title'] ?>">
 		</dd>
 	</dl>
+
 	<address>
-		<?php if ($admin['mb_addr1']) {
-			echo '<span>' . $admin['mb_addr1'];
-			echo $admin['mb_addr2'] . '</span>';
-		} else echo '<span>관리자모드에서 관리자정보의 주소를 입력해 주시기 바랍니다.</span>'; ?>
-		<?php if ($admin['mb_tel']) {
-			echo ' <em>|</em><span> Tel. ' . $admin['mb_tel'] . '</span>';
-		} else echo '<span>관리자정보 전화번호 입력</span>'; ?>
-		<?php echo '<em>|</em><span> 대표자명. 임 충 희</span>'; ?>
-		<?php if ($admin['mb_email']) {
-			echo  ' <em>|</em><span> E-mail. '; ?><a href='mailto:<?php echo $admin['mb_email'] ?>'><?php echo $admin['mb_email'] ?></a></span><?php } else echo '<span>관리자정보 이메일 입력</span>'; ?>
-		<?php if ($admin['mb_3'] == '내용없음') echo '';
-		else if ($admin['mb_3']) {
-			echo  '<br><span>'; ?><?php echo $admin['mb_3'] ?></span><?php } else echo '<br><span>관리자정보여분필드3 내용이 없을 경우 내용없음 이라고 입력해 주세요.</span>'; ?>
+		<span>서울 송파구 오금로 58 아이스페이스 1201호</span>
+		<em>|</em><span> Tel. 02-3473-1275, 1277</span>
+		<em>|</em><span> 대표자명. 임 충 희</span>
+		<em>|</em><span> E-mail. ski@skiresort.or.kr</span>
 	</address>
 	<p><span>Copyright</span> &copy; <b>SBAK</b> <span>All rights reserved.</span></p>
 </footer>

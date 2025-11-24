@@ -1,9 +1,9 @@
 ﻿<?php
-include "../../../../../../common.php";
 header('Content-Type: text/html; charset=utf-8');
+include "../../../../../../common.php";
 require('utils.php'); // 유틸리티 포함
-$logPath = "/home/asiaski/public_html/skiresort/data/app.log"; //디버그 로그위치 (리눅스)
 //$logPath = "c://app.log";     //디버그 로그위치 (windows)
+$logPath = G5_PATH . "/data/app.log"; //디버그 로그위치 (리눅스)
 
 /********************************************************************************	
  * 인증이 완료될 경우 PG사에서 호출하는 페이지 입니다. 	     
@@ -43,9 +43,6 @@ $row2 = sql_fetch($sql2);
 $event_total_limit = $row2['Event_total_limit'];
 $event_extra_cnt = $row2['Event_extra_cnt']; //추가모집인원
 
-
-// $approvalUrl = "https://asiaski.org/skiresort/theme/skiresort/html/my_form/mainpay_api/mobile/_3_approval.php";
-// $closeUrl = "https://asiaski.org/skiresort/theme/skiresort/html/my_form/mainpay_api/mobile/_3_close.php";
 $approvalUrl = G5_THEME_URL . "/html/my_form/mainpay_api/mobile/_3_approval.php";
 $closeUrl = G5_THEME_URL . "/html/my_form/mainpay_api/mobile/_3_close.php";
 $customerName = $row2['MEMBER_NAME'];

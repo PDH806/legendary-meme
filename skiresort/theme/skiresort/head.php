@@ -21,10 +21,10 @@ include_once(G5_LIB_PATH . '/latest.lib.php');
     <div id="tnb">
         <ul>
             <!-- 해당 URL링크를 삽입해 주세요 // 해당사항 없을 시 제거해 주시기 바랍니다. -->
-            <li><a href="#"><b><i class="tnbIco fa fa-facebook-square" aria-hidden="true"></i> <span class="sound_only">페이스북</span></b></a></li>
+            <!--li><a href="#"><b><i class="tnbIco fa fa-facebook-square" aria-hidden="true"></i> <span class="sound_only">페이스북</span></b></a></li>
             <li><a href="#"><b><i class="tnbIco fa fa-twitter-square" aria-hidden="true"></i> <span class="sound_only">트위터</span></b></a></li>
             <li><a href="#"><b><i class="tnbIco fa fa-instagram" aria-hidden="true"></i> <span class="sound_only">인스타그램</span></b></a></li>
-            <li><a href="#"><b><i class="fa fa-link" aria-hidden="true"></i> BLOG</b></a></li>
+            <li><a href="#"><b><i class="fa fa-link" aria-hidden="true"></i> BLOG</b></a></li-->
             <?php if ($is_member) {  ?>
                 <li><a href="<?php echo G5_BBS_URL ?>/member_confirm.php?url=<?php echo G5_BBS_URL ?>/register_form.php"><i class="fa fa-cog" aria-hidden="true"></i> 정보수정</a></li>
                 <li><a href="<?php echo G5_BBS_URL ?>/logout.php"><i class="fa fa-power-off" aria-hidden="true"></i> LOGOUT</a></li>
@@ -151,6 +151,7 @@ include_once(G5_LIB_PATH . '/latest.lib.php');
         <div class="bNBar bNBar2D themeBorderColor">
             <ul><!-- 서브2차메뉴 --></ul>
         </div>
+
     </aside>
     <script>
         $(document).ready(function() {
@@ -166,6 +167,8 @@ include_once(G5_LIB_PATH . '/latest.lib.php');
             });
         });
     </script>
+
+
 <?php }  /*인덱스에서 사용하지 않음*/ ?>
 <section id="ctWrap">
 

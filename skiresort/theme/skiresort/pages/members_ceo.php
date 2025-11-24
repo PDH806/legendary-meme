@@ -91,8 +91,8 @@ include_once('../head.php');
                 </tr>
                 <tr class="name">
 
-                    <td>임학운 대표이사</td>
-                    <td>배성수 사장</td>
+                    <td>박인준 사장</td>
+                    <td>성장현 사장</td>
                     <td>전영기 대표이사</td>
 
                     <td>민영민 대표이사</td>

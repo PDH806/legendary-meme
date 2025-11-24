@@ -108,7 +108,8 @@ $orgTranDate = $row['tranDate'];
 /* 원거래 지불수단 (CARD:신용카드|VACCT:가상계좌|ACCT:계좌이체|HPP:휴대폰소액) */
 $paymethod = $row['PAY_METHOD'];
 /* 결제금액 */
-$amount = "1004";
+$amount = $row['amount'];
+// $amount = "1004";
 /* 결제타입 (결제완로시에 받은 값) */
 $payType = $row['payType'];
 /* 망취소 유무(Y:망취소, N:일반취소) (주문번호를 이용한 망취소시에 사용) */

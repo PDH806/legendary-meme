@@ -3,8 +3,7 @@
 include "../../../../../../common.php";
 require('utils.php');                // 유틸리티 포함
 //$logPath = "c://app.log";            //디버그 로그위치 (windows)
-$logPath = "/home/asiaski/public_html/skiresort/data/app.log";         //디버그 로그위치 (리눅스)
-
+$logPath = G5_PATH . "/data/app.log"; //디버그 로그위치 (리눅스)
 /*****************************************************************************************
  * READY API  (결제창 호출 전처리)    
  ******************************************************************************************
@@ -54,26 +53,34 @@ $uid_seq = str_pad($next_uid, 6, "0", STR_PAD_LEFT);
 //------------------------------------------------------------------여기부터
 /* 결제수단 */
 $paymethod = $_POST["paymethod"];
-/* 결제금액 (공급가+부가세)
- 	  (#주의#) 페이지에서 전달 받은 값을 그대로 사용할 경우 금액위변조 시도가 가능합니다.
- 	  DB에서 조회한 값을 사용 바랍니다. */
-$amount = "1004";
+
 /* 상품명 max 30byte, 특수문자 사용금지*/
 //$goodsName = urlencode("테스트상품명");	
 $goodsName = $_POST["goodsName"];
+
 /* 상품코드 max 8byte*/
 $goodsCode = $_POST["goodsCode"];
+
+/* 결제금액 (공급가+부가세)
+ 	  (#주의#) 페이지에서 전달 받은 값을 그대로 사용할 경우 금액위변조 시도가 가능합니다.
+ 	  DB에서 조회한 값을 사용 바랍니다. */
+$sql = "SELECT Entry_fee FROM SBAK_OFFICE_CONF WHERE Event_code = '{$goodsCode}'";
+$row = sql_fetch($sql);
+$amount = $row['Entry_fee'];
+// $amount = "1004";
+
 /*인증완료 시 호출되는 상점 URL (PG->가맹점)*/
-$approvalUrl = "https://asiaski.org/skiresort/theme/skiresort/html/my_form/mainpay_api/pc/_3_approval.php";
+$approvalUrl = G5_THEME_URL . "/html/my_form/mainpay_api/pc/_3_approval.php";
 /*결제창 close시 호출되는 상점URL (PG->가맹점)*/
-$closeUrl = "https://asiaski.org/skiresort/theme/skiresort/html/my_form/mainpay_api/pc/_3_close.php";
+$closeUrl = G5_THEME_URL . "/html/my_form/mainpay_api/pc/_3_close.php";
+
 $customerName = $_POST["mb_name"]; // 고객명
 $customerEmail = $_POST["the_email"]; // 고객이메일
 $customerID = $_POST["mb_id"]; // 고객ID
 $PHONE = $_POST["on_hp"]; // 고객 전화번호
 $APPLY_DATE = date("Y-m-d"); // 신청일
 $APPLY_TIME = date("H:i:s"); // 신청시간
-$THE_MEMO = $_POST['the_memo'] ?? ''; // 메모  
+$THE_MEMO = $_POST['the_memo']; // 메모  
 
 /* timestamp max 20byte*/
 $timestamp = makeTimestamp();
@@ -84,38 +91,38 @@ $signature = makeSignature($mbrNo, $mbrRefNo, $amount, $apiKey, $timestamp);
 
 if ($goodsCode == 'A01' || $goodsCode == 'A02' || $goodsCode == 'A03') { // 자격증 재발급 일 경우
 
-$MB_LICENSE_NO = $_POST['mb_license_no']; // o
-$ZIP = $_POST['ZIP']; // o
-$ADDR1 = $_POST['ADDR1']; // o
-$ADDR2 = $_POST['ADDR2']; // o
-$ADDR3 = $_POST['ADDR3']; // o
-$CATE_1 = $_POST['CATE_1']; // o
+$MB_LICENSE_NO = $_POST['mb_license_no'] ?? ''; // o
+$ZIP = $_POST['ZIP'] ?? ''; // o
+$ADDR1 = $_POST['ADDR1'] ?? ''; // o
+$ADDR2 = $_POST['ADDR2'] ?? ''; // o
+$ADDR3 = $_POST['ADDR3'] ?? ''; // o
+$CATE_1 = $_POST['CATE_1'] ?? ''; // o
 
 $event_year = '';
 
 }elseif ($goodsCode == 'B01' || $goodsCode == 'B04') { //티칭1 일 경우
 
-$T_code = $_POST['t_code']; // o
-$THE_TYPE = $_POST['the_type']; // o
-$event_year = $_POST['event_year']; // o
-$T_Date = $_POST['t_date']; // o
+$T_code = $_POST['t_code'] ?? ''; // o
+$THE_TYPE = $_POST['the_type'] ?? ''; // o
+$event_year = $_POST['event_year'] ?? ''; // o
+$T_Date = $_POST['t_date'] ?? ''; // o
 
 }else{ // 행사 신청 일 경우
 
-    $MB_LICENSE_NO = $_POST['mb_license_no']; // o
-    $THE_GENDER = $_POST['the_gender']; // o
-    $THE_PROFILE = $_POST['the_profile']; // o
-    $ENTRY_INFO_1 = $_POST['entry_info_1']; // o
-    $ENTRY_INFO_2 = $_POST['entry_info_2']; // o
-    $ENTRY_INFO_3 = $_POST['entry_info_3']; // o
-    $ENTRY_INFO_4 = $_POST['entry_info_4']; // o
-    $ENTRY_INFO_5 = $_POST['entry_info_5']; // o
-    $ENTRY_INFO_6 = $_POST['entry_info_6']; // o
-    $event_year = $_POST['event_year']; // o
-    $ENTRY_INFO_4_FILE = $_POST['filename1']; // o
-    $ENTRY_INFO_6_FILE = $_POST['filename2']; // o
-    $ENTRY_INFO_7_FILE = $_POST['filename3']; // o
-    $unique_order_id = $_POST['unique_order_id']; // o
+    $MB_LICENSE_NO = $_POST['mb_license_no'] ?? ''; // o
+    $THE_GENDER = $_POST['the_gender'] ?? ''; // o
+    $THE_PROFILE = $_POST['the_profile'] ?? ''; // o
+    $ENTRY_INFO_1 = $_POST['entry_info_1'] ?? ''; // o
+    $ENTRY_INFO_2 = $_POST['entry_info_2'] ?? ''; // o
+    $ENTRY_INFO_3 = $_POST['entry_info_3'] ?? ''; // o
+    $ENTRY_INFO_4 = $_POST['entry_info_4'] ?? ''; // o
+    $ENTRY_INFO_5 = $_POST['entry_info_5'] ?? ''; // o
+    $ENTRY_INFO_6 = $_POST['entry_info_6'] ?? ''; // o
+    $event_year = $_POST['event_year'] ?? ''; // o
+    $ENTRY_INFO_4_FILE = $_POST['filename1'] ?? ''; // o
+    $ENTRY_INFO_6_FILE = $_POST['filename2'] ?? ''; // o
+    $ENTRY_INFO_7_FILE = $_POST['filename3'] ?? ''; // o
+    $unique_order_id = $_POST['unique_order_id'] ?? ''; // o
 
 
 }
@@ -141,6 +148,7 @@ $parameters = array(
 	'customerEmail' => $customerEmail,
 	'phone' => $PHONE,
 	'timestamp' => $timestamp,
+	'event_year' => $event_year,
 	'signature' => $signature
 );
 

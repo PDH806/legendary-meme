@@ -108,7 +108,7 @@ include_once('../head.php');
                 <tbody>
                     <tr>
                         <td><a href="http://www.yongpyong.co.kr/" target="_blank">용평리조트<br>(주)모나용평</a></td>
-                        <td>임학운</td>
+                        <td>박인준</td>
                         <td>강원 - 평창,&nbsp;대관령</td>
                         <td>28</td>
                         <td>14<br>(곤도라 1기 포함)</td>
@@ -118,7 +118,7 @@ include_once('../head.php');
 
                     <tr>
                         <td><a href="http://www.mdysresort.com/index.asp" target="_blank">무주덕유산리조트<br>(주)무주덕유산리조트 </a></td>
-                        <td>배성수</td>
+                        <td>성장현</td>
                         <td>전북 - 무주,&nbsp;설천</td>
                         <td>34</td>
                         <td>14<br>(곤도라 1기 포함)</td>

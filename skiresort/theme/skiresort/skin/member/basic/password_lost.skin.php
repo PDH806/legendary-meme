@@ -48,7 +48,7 @@ if($config['cf_cert_use'] && ($config['cf_cert_simple'] || $config['cf_cert_ipin
                                 인증번호 입력창에 인증번호를 입력시 해당 핸드폰으로 아이디와 변경된 비밀번호 정보를 다시 보내드립니다.<br><br>
 
                                 <label for="mb_name" class="sound_only">가입회원명</label>
-                                <input type="text" name="mb_name" id="mb_name" class="frm_input full_input nospace" size="30" required placeholder="가입된 회원명을 정확히 입력하세요" maxlength="30">
+                                <input type="text" name="mb_name" id="mb_name" class="frm_input full_input nospace" size="30" placeholder="가입된 회원명을 정확히 입력하세요" maxlength="30">
                                 <p class="mb_hp_no">※ 번호입력시 '-'는 제외해 주십시요</p>
                                 <label for="mb_hp" class="sound_only">핸드폰 번호</label>
                                 <input type="text" name="mb_hp" id="mb_hp" class="frm_input full_input nospace" size="30" placeholder="핸드폰번호(숫자만 입력하세요)" onkeyup="onlynumberic(event)" minlength="10" maxlength="11">
