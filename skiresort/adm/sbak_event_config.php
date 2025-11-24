@@ -10,7 +10,9 @@ include_once('./admin.head.php');
 
 $table = "SBAK_OFFICE_CONF"; // 테이블명 받아오기
 
-$_POST['is_update'] = isset($_POST['is_update']) ? $_POST['is_update'] : '';
+$_POST['is_update'] = $_POST['is_update'] ?? '';
+
+
 if ($_POST['is_update'] == 'yes') {
 
     $UID = $_POST['UID'] ?? '';
@@ -33,20 +35,16 @@ if ($_POST['is_update'] == 'yes') {
     $Pay_end_time = $_POST['Pay_end_time'] ?? '00:00:00';
     $T1_before_days = $_POST['T1_before_days'] ?? 0;
     $Event_birthdate = $_POST['Event_birthdate'] ?? '0000';
-
     $Event_total_limit = $_POST['Event_total_limit'] ?? 0;
-
     $Event_extra_cnt = $_POST['Event_extra_cnt'] ?? 0;
-
-
-
     $Event_memo = $_POST['Event_memo'] ?? '';
-
     $Event_rule = $_POST['Event_rule'] ?? '';
     $Event_notice = $_POST['Event_notice'] ?? '';
     $Event_status = $_POST['Event_status'] ?? '';
-
     $Event_control = $_POST['Event_control'] ?? '';
+
+
+
 
     $sql = " update $table 
     set 
@@ -91,7 +89,32 @@ $sql = " select * {$sql_common} ";
 $result = sql_query($sql);
 
 
+
 ?>
+
+<style>
+    .frm_input_num_yellow_num5 {
+        background-color: #f1c40e;
+        font-size: 14px;
+        color: blue;
+        font-weight: 500;
+        width: 60px;
+        border-radius: 5px;
+        text-align: right;
+        padding: 5px;
+    }
+
+    .frm_input_num_yellow_num2 {
+        background-color: #f1c40e;
+        font-size: 14px;
+        color: blue;
+        font-weight: 500;
+        width: 30px;
+        border-radius: 5px;
+        text-align: right;
+        padding: 5px;
+    }
+</style>
 
 
 
@@ -142,6 +165,14 @@ $result = sql_query($sql);
 
 
 
+
+                //행정사무,티칭1인지 체크하여 이 경우, 인원추가 비활성화
+                $event_code = $row['Event_code'] ?? '';
+                $arr = array('A01', 'A02', 'A03', 'B01', 'B04');
+                $able_extra_cnt = 'Y';
+                if (in_array($event_code, $arr)) {
+                    $able_extra_cnt = 'N';
+                }
 
                 $bg = 'bg' . ($i % 2);
             ?>
@@ -197,16 +228,17 @@ $result = sql_query($sql);
 
                         </td>
                         <td width="50px">
-                            <input type="text" name="T1_before_days" value="<?php if ($row['Event_code'] == 'B01' || $row['Event_code'] == 'B04') {
-                                                                                echo $row['T1_before_days'];
-                                                                            } else {
-                                                                                echo "0";
-                                                                            } ?>"
-                                <?php if ($row['Event_code'] != 'B01' && $row['Event_code'] != 'B04') {
-                                    echo  " disabled";
-                                } ?>
-                                class="tbl_input" maxlength='2' style="text-align:right;" required oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" "/>
-                                <p><i class=" fa fa-info-circle"></i> 숫자로만 </p>
+
+                            <?php if ($row['Event_code'] == 'B01' || $row['Event_code'] == 'B04') { ?>
+                                <input type="text" name="T1_before_days" value="<?php echo $row['T1_before_days']; ?>"
+                                    class='frm_input_num_yellow_num2' max-length='2' required oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" "/>일전
+                           <p><i class=" fa fa-info-circle"></i> 숫자만 </p>
+
+                            <?php } else { ?>
+                                <input type="hidden" name="T1_before_days" value="0">
+
+                            <?php }  ?>
+
                         </td>
                         <td width=" 200px">
                             <input type="text" name="Event_where" value="<?php echo $row['Event_where']; ?>"
@@ -222,24 +254,30 @@ $result = sql_query($sql);
                         <td width="100px">
 
                             <p style='float:left;background-color:#efefef;padding:5px'><i class="fa fa-bars"></i> 가격</p>
-                            <input type="text" name="Entry_fee" value="<?php echo $row['Entry_fee']; ?>"
-                                class="tbl_input" style="text-align:right;" required oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" />
+                            <input type="text" class='frm_input_num_yellow_num5' max-length='5' name="Entry_fee" value="<?php echo $row['Entry_fee']; ?>"
+                                required oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" />
                             <p style='float:left;background-color:#efefef;padding:5px'><i class="fa fa-bars"></i> 수량(인원)</p>
-                            <input type="text" name="Event_total_limit" value="<?php echo $row['Event_total_limit']; ?>"
-                                class="tbl_input" style="text-align:right;" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" />
-                            <p style='float:left;background-color:#efefef;padding:5px'><i class="fa fa-bars"></i> 추가인원</p>
-                            <input type="text" name="Event_extra_cnt" value="<?php echo $row['Event_extra_cnt']; ?>"
-                                class="tbl_input" style="text-align:right;" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" />
-                                <p><i class="fa fa-info-circle"></i> 숫자로만 </p>
+                            <input type="text" class='frm_input_num_yellow_num5' max-length='4' name="Event_total_limit" value="<?php echo $row['Event_total_limit']; ?>"
+                                oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" />
+
+                            <?php if ($able_extra_cnt == 'N') {
+                                echo "<input type='hidden' name='Event_extra_cnt' value='0'> ";
+                            } else { ?>
+                                <p style='float:left;background-color:#efefef;padding:5px'><i class="fa fa-bars"></i> 추가인원</p>
+                                <input type="text" class='frm_input_num_yellow_num5' max-length='3' required name="Event_extra_cnt" value="<?php echo $row['Event_extra_cnt']; ?>"
+                                    oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" />
+                            <?php } ?>
+
+                            <p style="font-size:0.8em;color:#666;"><em><i class="fa fa-info-circle"></i> 숫자만</em> </p>
                         </td>
                         <td width="40px"><input type="text" name="Event_rule" value="<?php echo $row['Event_rule']; ?>"
-                                class="tbl_input" style="text-align:right;" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" />
-                            <p><i class="fa fa-info-circle"></i> 숫자로만 </p> <a href="<?php echo G5_BBS_URL; ?>/board.php?bo_table=sbak_event_rule" class="btn btn_03">이동</a>
+                                class='frm_input_num_yellow_num5' max-length='4' oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" />
+                            <p style="font-size:0.8em;color:#666;"><em><i class="fa fa-info-circle"></i> 숫자만</em> </p> <a href="<?php echo G5_BBS_URL; ?>/board.php?bo_table=sbak_event_rule" class="btn btn_03">이동</a>
                         </td>
                         <td width="40px"><input type="text" name="Event_notice" value="<?php echo $row['Event_notice']; ?>"
-                                class="tbl_input" style="text-align:right;" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" />
-                            <p><i class="fa fa-info-circle"></i> 숫자로만 </p> <a href="<?php echo G5_BBS_URL; ?>/board.php?bo_table=sbak_event_notice" class="btn btn_03">이동</a>
-                        </td>                        
+                                class='frm_input_num_yellow_num5' max-length='4' oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" />
+                            <p style="font-size:0.8em;color:#666;"><em><i class="fa fa-info-circle"></i> 숫자만 </em></p> <a href="<?php echo G5_BBS_URL; ?>/board.php?bo_table=sbak_event_notice" class="btn btn_03">이동</a>
+                        </td>
                         <td><input type="checkbox" name="Event_status" value="Y"
                                 class="tbl_input" <?php if ($row['Event_status'] == 'Y') {
                                                         echo "checked";

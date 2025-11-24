@@ -242,7 +242,7 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
                     <th scope="row"><label for="mb_password">비밀번호<?php echo $sound_only ?></label></th>
                     <td>
                         <div>
-                        <input type="password" name="mb_password" id="mb_password" <?php echo $required_mb_password ?> class="frm_input <?php echo $required_mb_password ?>" size="15" maxlength="20">
+                            <input type="password" name="mb_password" id="mb_password" <?php echo $required_mb_password ?> class="frm_input <?php echo $required_mb_password ?>" size="15" maxlength="20">
                         </div>
                         <div id="mb_password_captcha_wrap" style="display:none">
                             <?php
@@ -281,16 +281,22 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
                 <tr>
                     <th scope="row">본인확인방법</th>
                     <td>
-                        <input type="radio" name="mb_certify_case" value="simple" id="mb_certify_sa" <?php if ($mb['mb_certify'] == 'simple') { echo 'checked="checked"'; } ?>>
+                        <input type="radio" name="mb_certify_case" value="simple" id="mb_certify_sa" <?php if ($mb['mb_certify'] == 'simple') {
+                                                                                                            echo 'checked="checked"';
+                                                                                                        } ?>>
                         <label for="mb_certify_sa">간편인증</label>
-                        <input type="radio" name="mb_certify_case" value="hp" id="mb_certify_hp" <?php if ($mb['mb_certify'] == 'hp') { echo 'checked="checked"'; } ?>>
+                        <input type="radio" name="mb_certify_case" value="hp" id="mb_certify_hp" <?php if ($mb['mb_certify'] == 'hp') {
+                                                                                                        echo 'checked="checked"';
+                                                                                                    } ?>>
                         <label for="mb_certify_hp">휴대폰</label>
-                        <input type="radio" name="mb_certify_case" value="ipin" id="mb_certify_ipin" <?php if ($mb['mb_certify'] == 'ipin') { echo 'checked="checked"'; } ?>>
+                        <input type="radio" name="mb_certify_case" value="ipin" id="mb_certify_ipin" <?php if ($mb['mb_certify'] == 'ipin') {
+                                                                                                            echo 'checked="checked"';
+                                                                                                        } ?>>
                         <label for="mb_certify_ipin">아이핀</label>
                     </td>
                     <th scope="row"><label for="mb_tel">생년월일<strong class="sound_only">필수</strong></label></th>
-                    <td><input type="date" name="mb_2" value="<?php echo $mb['mb_2'] ?>" id="mb_2" required class="required frm_input" 
-                    size="15" maxlength="20"></td>
+                    <td><input type="date" name="mb_2" value="<?php echo $mb['mb_2'] ?>" id="mb_2" required class="required frm_input"
+                            size="15" maxlength="20"></td>
                 </tr>
                 <tr>
                     <th scope="row">본인확인</th>
@@ -311,9 +317,13 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
                 <tr>
                     <th scope="row"><label for="mb_1">성별<strong class="sound_only">필수</strong></label></th>
                     <td>
-                        <input type="radio" name="mb_1" value="남자" id="mb_1" required id="mb_1_M" <?php if($mb['mb_1']=='남자') { echo "checked";} ?>>
+                        <input type="radio" name="mb_1" value="남자" id="mb_1" required id="mb_1_M" <?php if ($mb['mb_1'] == '남자') {
+                                                                                                        echo "checked";
+                                                                                                    } ?>>
                         <label for="mb_1_M">남자</label>
-                        <input type="radio" name="mb_1" value="여자" id="mb_1" id="mb_1_F" <?php if($mb['mb_1']=='여자') { echo "checked";} ?>>
+                        <input type="radio" name="mb_1" value="여자" id="mb_1" id="mb_1_F" <?php if ($mb['mb_1'] == '여자') {
+                                                                                                echo "checked";
+                                                                                            } ?>>
                         <label for="mb_1_F">여자</label>
                     </td>
                     <th scope="row">주소</th>
@@ -462,10 +472,12 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
                     <?php } ?>
                 <?php } ?>
 
-                <?php if ($config['cf_use_recommend']) { // 추천인 사용 ?>
+                <?php if ($config['cf_use_recommend']) { // 추천인 사용 
+                ?>
                     <tr>
                         <th scope="row">추천인</th>
-                        <td colspan="3"><?php echo ((isset($mb['mb_recommend']) && $mb['mb_recommend']) ? get_text($mb['mb_recommend']) : '없음'); // 081022 : CSRF 보안 결함으로 인한 코드 수정 ?></td>
+                        <td colspan="3"><?php echo ((isset($mb['mb_recommend']) && $mb['mb_recommend']) ? get_text($mb['mb_recommend']) : '없음'); // 081022 : CSRF 보안 결함으로 인한 코드 수정 
+                                        ?></td>
                     </tr>
                 <?php } ?>
 
@@ -509,12 +521,14 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
                                                         <span class="txt"><?php echo $provider_name; ?></span>
                                                     </span>
 
-                                                    <span class="provider_name"><?php echo $provider_name;   //서비스이름 ?> ( <?php echo $account['displayname']; ?> )</span>
+                                                    <span class="provider_name"><?php echo $provider_name;   //서비스이름 
+                                                                                ?> ( <?php echo $account['displayname']; ?> )</span>
                                                     <span class="account_hidden" style="display:none"><?php echo $account['mb_id']; ?></span>
                                                 </div>
                                                 <div class="btn_info"><a href="<?php echo G5_SOCIAL_LOGIN_URL . '/unlink.php?mp_no=' . $account['mp_no'] ?>" class="social_unlink" data-provider="<?php echo $account['mp_no']; ?>">연동해제</a> <span class="sound_only"><?php echo substr($account['mp_register_day'], 2, 14); ?></span></div>
                                             </div>
-                                        <?php } //end foreach ?>
+                                        <?php } //end foreach 
+                                        ?>
                                     </li>
                                 </ul>
                                 <script>
@@ -604,32 +618,40 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
             return false;
         }
 
-        if( jQuery("#mb_password").val() ){
-            <?php echo $captcha_js; // 캡챠 사용시 자바스크립트에서 입력된 캡챠를 검사함 ?>
+        if (jQuery("#mb_password").val()) {
+            <?php echo $captcha_js; // 캡챠 사용시 자바스크립트에서 입력된 캡챠를 검사함 
+            ?>
         }
 
         return true;
     }
 
-    jQuery(function($){
+    jQuery(function($) {
         $("#captcha_key").prop('required', false).removeAttr("required").removeClass("required");
 
         $("#mb_password").on("keyup", function(e) {
             var $warp = $("#mb_password_captcha_wrap"),
                 tooptipid = "mp_captcha_tooltip",
-                $span_text = $("<span>", {id:tooptipid, style:"font-size:0.95em;letter-spacing:-0.1em"}).html("비밀번호를 수정할 경우 캡챠를 입력해야 합니다."),
+                $span_text = $("<span>", {
+                    id: tooptipid,
+                    style: "font-size:0.95em;letter-spacing:-0.1em"
+                }).html("비밀번호를 수정할 경우 캡챠를 입력해야 합니다."),
                 $parent = $(this).parent(),
                 is_invisible_recaptcha = $("#captcha").hasClass("invisible_recaptcha");
 
-            if($(this).val()){
+            if ($(this).val()) {
                 $warp.show();
-                if(! is_invisible_recaptcha) {
-                    $warp.css("margin-top","1em");
-                    if(! $("#"+tooptipid).length){ $parent.append($span_text) }
+                if (!is_invisible_recaptcha) {
+                    $warp.css("margin-top", "1em");
+                    if (!$("#" + tooptipid).length) {
+                        $parent.append($span_text)
+                    }
                 }
             } else {
                 $warp.hide();
-                if($("#"+tooptipid).length && ! is_invisible_recaptcha){ $parent.find("#"+tooptipid).remove(); }
+                if ($("#" + tooptipid).length && !is_invisible_recaptcha) {
+                    $parent.find("#" + tooptipid).remove();
+                }
             }
         });
     });
