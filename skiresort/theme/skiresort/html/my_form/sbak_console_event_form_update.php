@@ -107,6 +107,9 @@ $THE_PROFILE = $_POST['the_profile'] ?? '';
 $REFUND_ACCOUNT = $_POST['rf_account'] ?? '';
 $ENTRY_INFO_1 = $_POST['entry_info_1'] ?? '';
 $ENTRY_INFO_2 = $_POST['entry_info_2'] ?? ''; // 기선전 + 티칭3 여부
+if ($ENTRY_INFO_2 == 'Y'){
+    $sortCode = 'B03';
+}
 $ENTRY_INFO_3 = $_POST['entry_info_3'] ?? ''; //필기면제여부
 $ENTRY_INFO_4 = $_POST['entry_info_4'] ?? ''; //필기면제사유
 $ENTRY_INFO_5 = $_POST['entry_info_5'] ?? ''; //실기면제여부
@@ -202,79 +205,79 @@ $IS_DEL = "";
     } ?>
     <script src="https://api-std.mainpay.co.kr/js/<?php echo $SCRIPT_API_URL ?>"></script>
     <script type='text/javascript'>
-        var READY_API_URL = "<?php echo $READY_API_URL; ?>";
+    var READY_API_URL = "<?php echo $READY_API_URL; ?>";
 
 
-        function ajax_chk_register() {
-            var event_code = "<?php echo $event_code; ?>";
-            var event_year = "<?php echo $event_year; ?>";
-            var mypage = "sbak_console_01.php";
+    function ajax_chk_register() {
+        var event_code = "<?php echo $event_code; ?>";
+        var event_year = "<?php echo $event_year; ?>";
+        var mypage = "sbak_console_01.php";
 
 
-            $.ajax({
-                type: "POST",
-                url: "ajax_chk_register.php",
+        $.ajax({
+            type: "POST",
+            url: "ajax_chk_register.php",
 
-                data: {
-                    event_code: event_code,
-                    event_year: event_year
-                },
-                dataType: "text",
-                success: function(result) {
+            data: {
+                event_code: event_code,
+                event_year: event_year
+            },
+            dataType: "text",
+            success: function(result) {
 
 
-                    // E1 접수기간 이전  E2 접수기간 이후 E3 사무국 폐쇄  E4 이미 등록  E5 인원초과
-                    if (result == 'E2') {
-                        if (confirm("접수기간이 종료되었습니다. 마이페이지로 돌아가시겠습니까? ")) {
-                            location.replace(mypage);
-                        }
-                        return false;
+                // E1 접수기간 이전  E2 접수기간 이후 E3 사무국 폐쇄  E4 이미 등록  E5 인원초과
+                if (result == 'E2') {
+                    if (confirm("접수기간이 종료되었습니다. 마이페이지로 돌아가시겠습니까? ")) {
+                        location.replace(mypage);
                     }
-                    if (result == 'E3') {
-                        if (confirm("사무국에서 접수를 종료한 업무입니다. 마이페이지로 돌아가시겠습니까? ")) {
-                            location.replace(mypage);
-                        }
-                        return false;
-                    }
-                    if (result == 'E4') {
-                        if (confirm("이미 등록 완료한 회원입니다. 재등록하려면, 기존 신청건을 삭제하고 다시 시도하세요.. 마이페이지로 돌아가시겠습니까? ")) {
-                            location.replace(mypage);
-                        }
-                        return false;
-                    }
-                    if (result == 'E5') {
-                        if (confirm("등록인원이 마감되었습니다. 요강을 확인하세요. 마이페이지로 돌아가시겠습니까? ")) {
-                            location.replace(mypage);
-                        }
-                        return false;
-                    }
-                    if (result == 'E100') {
-                        if (confirm("비정상적인 접근입니다. 마이페이지로 돌아가시겠습니까? ")) {
-                            location.replace(mypage);
-                        }
-                        return false;
-                    }
-                    if (result == 'E200') {
-                        payment();
-                    }
-                    return;
-
-
-
-                },
-                error: function(e) {
-                    alert("결제시스템에 장애가 발생했습니다.");
                     return false;
                 }
-            });
-        }
+                if (result == 'E3') {
+                    if (confirm("사무국에서 접수를 종료한 업무입니다. 마이페이지로 돌아가시겠습니까? ")) {
+                        location.replace(mypage);
+                    }
+                    return false;
+                }
+                if (result == 'E4') {
+                    if (confirm("이미 등록 완료한 회원입니다. 재등록하려면, 기존 신청건을 삭제하고 다시 시도하세요.. 마이페이지로 돌아가시겠습니까? ")) {
+                        location.replace(mypage);
+                    }
+                    return false;
+                }
+                if (result == 'E5') {
+                    if (confirm("등록인원이 마감되었습니다. 요강을 확인하세요. 마이페이지로 돌아가시겠습니까? ")) {
+                        location.replace(mypage);
+                    }
+                    return false;
+                }
+                if (result == 'E100') {
+                    if (confirm("비정상적인 접근입니다. 마이페이지로 돌아가시겠습니까? ")) {
+                        location.replace(mypage);
+                    }
+                    return false;
+                }
+                if (result == 'E200') {
+                    payment();
+                }
+                return;
 
 
 
-        function payment() {
+            },
+            error: function(e) {
+                alert("결제시스템에 장애가 발생했습니다.");
+                return false;
+            }
+        });
+    }
 
 
-            <?php
+
+    function payment() {
+
+
+        <?php
 
             // 혹시 모를 임의 접속을 대비해서, payment 함수 띄우기 전에 다시한번 중복주문번호 체크
             $sql = "select exists (select UID from {$Table_Mainpay} where Unique_order_id = '{$unique_order_id}' limit 1) as EXIST";
@@ -288,40 +291,40 @@ $IS_DEL = "";
 
 
 
+        if ("<?php echo $SCRIPT_API_URL; ?>" === "mainpay.mobile-1.0.js") {
+            var request = mainpay_ready(READY_API_URL); // Mobile
+        } else {
+            var request = Mainpay.ready(READY_API_URL); // PC
+        }
+
+        request.done(function(response) {
+            if (response.resultCode == '200') {
+                /* 결제창 호출 */
                 if ("<?php echo $SCRIPT_API_URL; ?>" === "mainpay.mobile-1.0.js") {
-                    var request = mainpay_ready(READY_API_URL); // Mobile
+                    location.href = response.data.nextMobileUrl; // Mobile
                 } else {
-                    var request = Mainpay.ready(READY_API_URL); // PC
+                    Mainpay.open(response.data.nextPcUrl); // PC
                 }
 
-                request.done(function(response) {
-                    if (response.resultCode == '200') {
-                        /* 결제창 호출 */
-                        if ("<?php echo $SCRIPT_API_URL; ?>" === "mainpay.mobile-1.0.js") {
-                            location.href = response.data.nextMobileUrl; // Mobile
-                        } else {
-                            Mainpay.open(response.data.nextPcUrl); // PC
-                        }
-
-                        return false;
-                    }
-                    alert("ERROR : " + JSON.stringify(response));
-                });
+                return false;
+            }
+            alert("ERROR : " + JSON.stringify(response));
+        });
 
 
-            <?php } ?>
+        <?php } ?>
 
-        }
-        window.onpopstate = function() {
-            history.go(-1)
-        };
+    }
+    window.onpopstate = function() {
+        history.go(-1)
+    };
 
-        /* 결제 팝업이 닫혔을 경우 호출*/
-        function mainpay_close_event() {
-            alert("결제창이 닫혔습니다. 재시도하려면, 신청서를 다시 작성해주세요.");
-            //location.href로 하지말고, replace로 해야 뒤로가기 페이지에서 삭제
-            location.replace("<?php echo $return_url; ?>");
-        }
+    /* 결제 팝업이 닫혔을 경우 호출*/
+    function mainpay_close_event() {
+        alert("결제창이 닫혔습니다. 재시도하려면, 신청서를 다시 작성해주세요.");
+        //location.href로 하지말고, replace로 해야 뒤로가기 페이지에서 삭제
+        location.replace("<?php echo $return_url; ?>");
+    }
     </script>
 
 
@@ -332,7 +335,8 @@ $IS_DEL = "";
 
 <div class="container-xxl flex-grow-1 container-p-y">
 
-    <h4 class="fw-bold py-3 mb-4"><?php echo $event_title; ?> <span class="text-muted fw-light">/ REGISTRATION</span></h4>
+    <h4 class="fw-bold py-3 mb-4"><?php echo $event_title; ?> <span class="text-muted fw-light">/ REGISTRATION</span>
+    </h4>
     <div class="alert  alert-dark mb-0" role="alert">
         각종 행사에 온라인으로 신청하세요.
     </div> <br>
@@ -364,7 +368,9 @@ $IS_DEL = "";
         <input type="hidden" name="mb_id" value="<?php echo $mb_id; ?>">
         <input type="hidden" name="the_gender" value="<?php echo $THE_GENDER; ?>">
         <input type="hidden" name="the_email" value="<?php echo $THE_EMAIL; ?>">
+        <input type="hidden" name="the_birth" value="<?php echo $mb_birth; ?>">
         <input type="hidden" name="unique_order_id" value="<?php echo $unique_order_id; ?>">
+        <input type="hidden" name="sortCode" value="<?php echo $sortCode; ?>">
 
         <!-- Content -->
         <div class="row">
@@ -372,7 +378,8 @@ $IS_DEL = "";
             <div class="col-xl-12">
                 <!-- HTML5 Inputs -->
                 <div class="card mb-4">
-                    <h5 class="card-header">참가자정보<small class="text-muted"> 신청 후 정보수정은 불가능하며, 삭제 후 재등록만 가능하오니, 정확하게 확인하세요.</small></h5>
+                    <h5 class="card-header">참가자정보<small class="text-muted"> 신청 후 정보수정은 불가능하며, 삭제 후 재등록만 가능하오니, 정확하게
+                            확인하세요.</small></h5>
 
                     <div class="d-inline-block border-bottom border-1 border-dark w-100"> </div>
 
@@ -416,18 +423,18 @@ $IS_DEL = "";
                         if (in_array($event_code, $arr)) { //스키티칭2,3,기선전, 보드티칭 2,3 이면 
                         ?>
 
-                            <div class="mb-3 row">
-                                <label for="html5-email-input" class="col-md-2 col-form-label">
-                                    <h6 class="mb-0">자격번호</h6>
-                                </label>
-                                <div class="col-md-5">
-                                    <dl>
-                                        <dd>
-                                            <?php echo $MB_LICENSE_NO; ?>
-                                        </dd>
-                                    </dl>
-                                </div>
+                        <div class="mb-3 row">
+                            <label for="html5-email-input" class="col-md-2 col-form-label">
+                                <h6 class="mb-0">자격번호</h6>
+                            </label>
+                            <div class="col-md-5">
+                                <dl>
+                                    <dd>
+                                        <?php echo $MB_LICENSE_NO; ?>
+                                    </dd>
+                                </dl>
                             </div>
+                        </div>
 
                         <?php } ?>
 
@@ -477,18 +484,18 @@ $IS_DEL = "";
 
                         <?php if ($event_code == "B03") { //티칭3 
                         ?>
-                            <div class="mb-3 row">
-                                <label for="html5-date-input" class="col-md-2 col-form-label">
-                                    <h6 class="mb-0">참가행사</h6>
-                                </label>
-                                <div class="col-md-10">
-                                    <dl>
-                                        <dd>
-                                            <?php echo $ENTRY_INFO_1; ?>
-                                        </dd>
-                                    </dl>
-                                </div>
+                        <div class="mb-3 row">
+                            <label for="html5-date-input" class="col-md-2 col-form-label">
+                                <h6 class="mb-0">참가행사</h6>
+                            </label>
+                            <div class="col-md-10">
+                                <dl>
+                                    <dd>
+                                        <?php echo $ENTRY_INFO_1; ?>
+                                    </dd>
+                                </dl>
                             </div>
+                        </div>
                         <?php } ?>
 
 
@@ -523,28 +530,29 @@ $IS_DEL = "";
 
 
 
- 
+
 
                         <?php if ($event_code == "C01") { //스키기선전이면 
                         ?>
 
-                            <div class="mb-3 row">
-                                <label for="html5-date-input" class="col-md-2 col-form-label">
-                                    <h6 class="mb-0">장내 방송멘트</h6>
-                                </label>
-                                <div class="col-md-10">
-                                    <dl>
-                                        <dd>
-                                            <?php echo $THE_PROFILE; ?>
-                                        </dd>
-                                    </dl>
-                                </div>
+                        <div class="mb-3 row">
+                            <label for="html5-date-input" class="col-md-2 col-form-label">
+                                <h6 class="mb-0">장내 방송멘트</h6>
+                            </label>
+                            <div class="col-md-10">
+                                <dl>
+                                    <dd>
+                                        <?php echo $THE_PROFILE; ?>
+                                    </dd>
+                                </dl>
                             </div>
+                        </div>
                         <?php } ?>
 
                         <div class="online_bt" style="float: right;">
                             <input type='hidden' name='payment_category' value='event'>
-                            <button type="button" class="btn btn-primary" id="btn_submit" onclick="ajax_chk_register()">결제하기</button>
+                            <button type="button" class="btn btn-primary" id="btn_submit"
+                                onclick="ajax_chk_register()">결제하기</button>
                             &nbsp;&nbsp;
                             <button type="button" class="btn btn-danger" onclick="history.back()">취소</button>
 

@@ -105,12 +105,12 @@ $result = sql_query($sql);
             <span class="btn_ov01"> <span class="ov_txt">티칭1 </span><span class="ov_num">
                     <?php echo number_format($L1_count) ?>명
                 </span></span>
-                <span class="btn_ov01"> <span class="ov_txt">엑셀다운</span><span class="ov_num">
-                <a href="sbak_license_list_xls.php?sports=sb"> <i class="fa fa-file-excel-o"></i> </a>
-               
-                </span></span>        
-                
-            <?php echo $count_statistics ?>         
+            <span class="btn_ov01"> <span class="ov_txt">엑셀다운</span><span class="ov_num">
+                    <a href="sbak_license_list_xls.php?sports=sb"> <i class="fa fa-file-excel-o"></i> </a>
+
+                </span></span>
+
+            <?php echo $count_statistics ?>
         </div>
 
 
@@ -173,52 +173,65 @@ $result = sql_query($sql);
 
 
 
-                    <tr class="<?php echo $bg; ?>">
-                        <td class="td_chk">
-                            <input type="hidden" name="UID[<?php echo $i ?>]" value="<?php echo $row['UID'] ?>">
-                            <label for="chk_<?php echo $i; ?>" class="sound_only"><?php echo get_text($row['K_NAME']); ?>
-                                자격증</label>
-                            <input type="checkbox" name="chk[]" value="<?php echo $i ?>" id="chk_<?php echo $i ?>">
+                <tr class="<?php echo $bg; ?>">
+                    <td class="td_chk">
+                        <input type="hidden" name="UID[<?php echo $i ?>]" value="<?php echo $row['UID'] ?>">
+                        <label for="chk_<?php echo $i; ?>" class="sound_only"><?php echo get_text($row['K_NAME']); ?>
+                            자격증</label>
+                        <input type="checkbox" name="chk[]" value="<?php echo $i ?>" id="chk_<?php echo $i ?>">
 
 
 
-                        </td>
-                        <td>
-                            <?php echo $row['UID']; ?>
-                        </td>
-                        <td width=50px>
-                            <input type="text" name="GUBUN[<?php echo $i ?>]" value="<?php echo $row['GUBUN']; ?>" maxlength=4
-                        <?php if ($row['IS_DEL'] == 'Y') { echo "class='ksia_input_deleted' readonly"; }else{ echo "class='ksia_input'"; } ?> required oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
-                        </td>
-                        <td>
-                            <input type="text" name="MEMBER_ID[<?php echo $i ?>]" value="<?php echo $row['MEMBER_ID']; ?>" 
-                        <?php if ($row['IS_DEL'] == 'Y') { echo "class='ksia_input_deleted' readonly"; }else{ echo "class='tbl_input'"; } ?> size="8">
-                       </td>
-                        <td>
-                            <input type="text" name="K_NAME[<?php echo $i ?>]" value="<?php echo $row['K_NAME']; ?>" 
-                               <?php if ($row['IS_DEL'] == 'Y') { echo "class='ksia_input_deleted' readonly"; }else{ echo "class='tbl_input'"; } ?> size="8" required>
-                            </td>
-                        <td>
-                            <input type="date" name="K_BIRTH[<?php echo $i ?>]" value="<?php echo $row['K_BIRTH']; ?>"
-                        <?php if ($row['IS_DEL'] == 'Y') { echo "class='ksia_input_deleted' readonly"; }else{ echo "class='ksia_input'"; } ?> required>
-                        </td>
-                        <td>
-                            <input type="text" name="K_GRADE[<?php echo $i ?>]" readonly value="<?php echo $row['K_GRADE']; ?>" <?php if ($row['IS_DEL'] == 'Y') { echo "class='ksia_input_deleted' readonly"; }else{ echo "class='ksia_input'"; } ?>
-                                id="member_grade" maxlength="2" required>
-                            </td>
-                        <td>
-                            <input type="text" name="K_LICENSE[<?php echo $i ?>]" readonly value="<?php echo $row['K_LICENSE']; ?>"
-                        <?php if ($row['IS_DEL'] == 'Y') { echo "class='ksia_input_deleted' readonly"; }else{ echo "class='ksia_input'"; } ?> required>
-                        </td>
-                        <td>
-                            <input type=" text" name="K_MEMO[<?php echo $i ?>]" value="<?php echo $row['K_MEMO']; ?>" 
-                        <?php if ($row['IS_DEL'] == 'Y') { echo "class='ksia_input_deleted' readonly"; }else{ echo "class='tbl_input'"; } ?> size="8">
-                       </td>
-                        <td>
-                            <input type=checkbox name="IS_DEL[<?php echo $i ?>]" value="Y" <?php if ($row['IS_DEL'] == 'Y') { echo "checked"; } ?>>
-                        </td>
+                    </td>
+                    <td>
+                        <?php echo $row['UID']; ?>
+                    </td>
+                    <td width=50px>
+                        <input type="text" name="GUBUN[<?php echo $i ?>]" value="<?php echo $row['GUBUN']; ?>"
+                            maxlength=4
+                            <?php if ($row['IS_DEL'] == 'Y') { echo "class='ksia_input_deleted' readonly"; }else{ echo "class='ksia_input'"; } ?>
+                            required
+                            oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
+                    </td>
+                    <td>
+                        <input type="text" name="MEMBER_ID[<?php echo $i ?>]" readonly
+                            value="<?php echo $row['MEMBER_ID']; ?>"
+                            <?php if ($row['IS_DEL'] == 'Y') { echo "class='ksia_input_deleted' readonly"; }else{ echo "class='tbl_input'"; } ?>
+                            size="8">
+                    </td>
+                    <td>
+                        <input type="text" name="K_NAME[<?php echo $i ?>]" value="<?php echo $row['K_NAME']; ?>"
+                            <?php if ($row['IS_DEL'] == 'Y') { echo "class='ksia_input_deleted' readonly"; }else{ echo "class='tbl_input'"; } ?>
+                            size="8" required>
+                    </td>
+                    <td>
+                        <input type="date" name="K_BIRTH[<?php echo $i ?>]" value="<?php echo $row['K_BIRTH']; ?>"
+                            <?php if ($row['IS_DEL'] == 'Y') { echo "class='ksia_input_deleted' readonly"; }else{ echo "class='ksia_input'"; } ?>
+                            required>
+                    </td>
+                    <td>
+                        <input type="text" name="K_GRADE[<?php echo $i ?>]" readonly
+                            value="<?php echo $row['K_GRADE']; ?>"
+                            <?php if ($row['IS_DEL'] == 'Y') { echo "class='ksia_input_deleted' readonly"; }else{ echo "class='ksia_input'"; } ?>
+                            id="member_grade" maxlength="2" required>
+                    </td>
+                    <td>
+                        <input type="text" name="K_LICENSE[<?php echo $i ?>]" readonly
+                            value="<?php echo $row['K_LICENSE']; ?>"
+                            <?php if ($row['IS_DEL'] == 'Y') { echo "class='ksia_input_deleted' readonly"; }else{ echo "class='ksia_input'"; } ?>
+                            required>
+                    </td>
+                    <td>
+                        <input type=" text" name="K_MEMO[<?php echo $i ?>]" value="<?php echo $row['K_MEMO']; ?>"
+                            <?php if ($row['IS_DEL'] == 'Y') { echo "class='ksia_input_deleted' readonly"; }else{ echo "class='tbl_input'"; } ?>
+                            size="8">
+                    </td>
+                    <td>
+                        <input type=checkbox name="IS_DEL[<?php echo $i ?>]" value="Y"
+                            <?php if ($row['IS_DEL'] == 'Y') { echo "checked"; } ?>>
+                    </td>
 
-                    </tr>
+                </tr>
                 <?php } ?>
                 <?php if ($i == 0)
                     echo '<tr><td colspan="' . $colspan . '" class="empty_table">자료가 없습니다.</td></tr>'; ?>
@@ -238,7 +251,7 @@ $result = sql_query($sql);
 </form>
 
 <a href="./sbak_license_add.php?sports=sb" class="btn btn_03">자격증 정보 추가하기</a> <br>
-성명, 생년월일, 등급, 자격번호 필드 필수입력 
+성명, 생년월일, 등급, 자격번호 필드 필수입력
 <br>
 
 <?php
@@ -250,41 +263,55 @@ if ($pagelist) {
 ?>
 
 <script>
-    $(function () {
-        $("#sch_sort").change(function () { // select #sch_sort의 옵션이 바뀔때
-            if ($(this).val() == "vi_date") { // 해당 value 값이 vi_date이면
-                $("#sch_word").datepicker({ changeMonth: true, changeYear: true, dateFormat: "yy-mm-dd", showButtonPanel: true, yearRange: "c-99:c+99", maxDate: "+0d" }); // datepicker 실행
-            } else { // 아니라면
-                $("#sch_word").datepicker("destroy"); // datepicker 미실행
-            }
-        });
-
-        if ($("#sch_sort option:selected").val() == "vi_date") { // select #sch_sort 의 옵션중 selected 된것의 값이 vi_date라면
-            $("#sch_word").datepicker({ changeMonth: true, changeYear: true, dateFormat: "yy-mm-dd", showButtonPanel: true, yearRange: "c-99:c+99", maxDate: "+0d" }); // datepicker 실행
+$(function() {
+    $("#sch_sort").change(function() { // select #sch_sort의 옵션이 바뀔때
+        if ($(this).val() == "vi_date") { // 해당 value 값이 vi_date이면
+            $("#sch_word").datepicker({
+                changeMonth: true,
+                changeYear: true,
+                dateFormat: "yy-mm-dd",
+                showButtonPanel: true,
+                yearRange: "c-99:c+99",
+                maxDate: "+0d"
+            }); // datepicker 실행
+        } else { // 아니라면
+            $("#sch_word").datepicker("destroy"); // datepicker 미실행
         }
     });
 
-    function fvisit_submit(f) {
-        return true;
+    if ($("#sch_sort option:selected").val() == "vi_date") { // select #sch_sort 의 옵션중 selected 된것의 값이 vi_date라면
+        $("#sch_word").datepicker({
+            changeMonth: true,
+            changeYear: true,
+            dateFormat: "yy-mm-dd",
+            showButtonPanel: true,
+            yearRange: "c-99:c+99",
+            maxDate: "+0d"
+        }); // datepicker 실행
     }
+});
+
+function fvisit_submit(f) {
+    return true;
+}
 </script>
 
 
 <script>
-    function ksia_license_list_submit(f) {
-        if (!is_checked("chk[]")) {
-            alert(document.pressed + " 하실 항목을 하나 이상 선택하세요.");
+function ksia_license_list_submit(f) {
+    if (!is_checked("chk[]")) {
+        alert(document.pressed + " 하실 항목을 하나 이상 선택하세요.");
+        return false;
+    }
+
+    if (document.pressed == "선택삭제") {
+        if (!confirm("선택한 자료를 정말 삭제하시겠습니까?")) {
             return false;
         }
-
-        if (document.pressed == "선택삭제") {
-            if (!confirm("선택한 자료를 정말 삭제하시겠습니까?")) {
-                return false;
-            }
-        }
-
-        return true;
     }
+
+    return true;
+}
 </script>
 
 

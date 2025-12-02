@@ -16,11 +16,7 @@ $g5['title'] = '자격증 재발급 접수 관리';
 
 include_once('./admin.head.php');
 
-//mainpay ----------------------------------------------
-header('Content-Type: text/html; charset=utf-8');
-$READY_API_URL = G5_THEME_URL . "/html/my_form/mainpay_api/pc/_9_cancel.php";
 
-//-----------------------------------------------------
 
 
 $colspan = 9;
@@ -103,24 +99,6 @@ $result = sql_query($sql);
 ?>
 
 
-<head>
-
-    <script type='text/javascript'>
-        function payment_cancel(form) {
-            form.action = "<?php echo $READY_API_URL; ?>";
-            form.method = "POST";
-            const result = confirm("취소처리시 자동 결제취소됩니다. 취소된 건은 복구할 수 없습니다. 정말 취소하시겠습니까? ");
-            if (result) {
-                form.submit();
-            } else {
-                return false;
-            }
-        }
-    </script>
-</head>
-
-
-
 <div class="local_sch local_sch01">
     <form name="fvisit" method="get" onsubmit="return fvisit_submit(this);">
 
@@ -177,7 +155,8 @@ $result = sql_query($sql);
     <input type="hidden" name="page" value="<?php echo $page ?>">
     <input type="hidden" name="token" value="">
 
-    <div class="L1"><textarea name="sms_msg" placeholder="문자입력" style="display: block ; background-color: yellow; width: 200px; height: 150px; "></textarea> </div>
+    <div class="L1"><textarea name="sms_msg" placeholder="문자입력"
+            style="display: block ; background-color: yellow; width: 200px; height: 150px; "></textarea> </div>
 
 
     <div class="tbl_wrap tbl_head01">
@@ -251,107 +230,109 @@ $result = sql_query($sql);
 
                     $bg = 'bg' . ($i % 2);
                 ?>
-                    <tr class="<?php echo $bg; ?>">
-                        <td class="td_chk">
-                            <input type="hidden" name="UID[<?php echo $i ?>]" value="<?php echo $row['UID'] ?>">
-                            <label for="chk_<?php echo $i; ?>" class="sound_only"><?php echo get_text($row['MEMBER_ID']); ?>
-                                회원</label>
-                            <input type="checkbox" name="chk[]" value="<?php echo $i ?>" id="chk_<?php echo $i ?>">
-                        </td>
+                <tr class="<?php echo $bg; ?>">
+                    <td class="td_chk">
+                        <input type="hidden" name="UID[<?php echo $i ?>]" value="<?php echo $row['UID'] ?>">
+                        <label for="chk_<?php echo $i; ?>" class="sound_only"><?php echo get_text($row['MEMBER_ID']); ?>
+                            회원</label>
+                        <input type="checkbox" name="chk[]" value="<?php echo $i ?>" id="chk_<?php echo $i ?>">
+                    </td>
 
-                        <td>
-                            <?php echo $row['UID']; ?>
-                        </td>
+                    <td>
+                        <?php echo $row['UID']; ?>
+                    </td>
 
-                        <td>
+                    <td>
 
-                            <?php if (file_exists($mb_img_path)) { ?>
-                                <a href="<?php echo $member_link ?>">
-                                    <img src="<?php echo $mb_img_url ?>" width=100 alt="회원이미지">
-                                </a>
-                            <?php } else { ?>
-                                <a href="<?php echo $member_link ?>">
-                                    <img src="<?php echo G5_THEME_IMG_URL ?>/sbak_logo.jpg" width=100 alt="회원이미지">
-                                </a>
-                            <?php } ?>
+                        <?php if (file_exists($mb_img_path)) { ?>
+                        <a href="<?php echo $member_link ?>">
+                            <img src="<?php echo $mb_img_url ?>" width=100 alt="회원이미지">
+                        </a>
+                        <?php } else { ?>
+                        <a href="<?php echo $member_link ?>">
+                            <img src="<?php echo G5_THEME_IMG_URL ?>/sbak_logo.jpg" width=100 alt="회원이미지">
+                        </a>
+                        <?php } ?>
 
-                        </td>
+                    </td>
 
-                        <td>
-                            [<?php echo $row['PRODUCT_CODE']; ?>] <br>
-                            <?php echo $service_name; ?> <br><span class="btnOrange"> <?php echo $row['CATE_1']; ?> </span>
-                        </td>
+                    <td>
+                        [<?php echo $row['PRODUCT_CODE']; ?>] <br>
+                        <?php echo $service_name; ?> <br><span class="btnOrange"> <?php echo $row['CATE_1']; ?> </span>
+                    </td>
 
 
-                        <td>
-                            <?php echo $row['MEMBER_NAME']; ?>
-                            (<?php echo $row['MEMBER_ID']; ?>)
-                            <input type="text" name="MEMBER_PHONE[<?php echo $i ?>]"
-                                value="<?php echo $row['MEMBER_PHONE']; ?>" <?php if ($row['PAYMENT_STATUS'] == 'C') {
+                    <td>
+                        <?php echo $row['MEMBER_NAME']; ?>
+                        (<?php echo $row['MEMBER_ID']; ?>)
+                        <input type="text" name="MEMBER_PHONE[<?php echo $i ?>]"
+                            value="<?php echo $row['MEMBER_PHONE']; ?>" <?php if ($row['PAYMENT_STATUS'] == 'C') {
                                                                                 echo "class='ksia_input_deleted' readonly";
                                                                             } else {
                                                                                 echo "class='ksia_input' readonly";
-                                                                            } ?>
-                                placeholder="전화번호">
-                            <input type="text" name="MEMBER_EMAIL[<?php echo $i ?>]"
-                                value="<?php echo $row['MEMBER_EMAIL']; ?>" <?php if ($row['PAYMENT_STATUS'] == 'C') {
+                                                                            } ?> placeholder="전화번호">
+                        <input type="text" name="MEMBER_EMAIL[<?php echo $i ?>]"
+                            value="<?php echo $row['MEMBER_EMAIL']; ?>" <?php if ($row['PAYMENT_STATUS'] == 'C') {
                                                                                 echo "class='ksia_input_deleted' readonly";
                                                                             } else {
                                                                                 echo "class='ksia_input' readonly";
-                                                                            } ?>
-                                placeholder="이메일">
-                            <input type="text" name="LICENSE_NO[<?php echo $i ?>]" readonly value="<?php echo $row['LICENSE_NO']; ?>"
-                                <?php if ($row['PAYMENT_STATUS'] == 'C') {
+                                                                            } ?> placeholder="이메일">
+                        <input type="text" name="LICENSE_NO[<?php echo $i ?>]" readonly
+                            value="<?php echo $row['LICENSE_NO']; ?>" <?php if ($row['PAYMENT_STATUS'] == 'C') {
                                     echo "class='ksia_input_deleted' readonly";
                                 } else {
                                     echo "class='ksia_input'";
                                 } ?> placeholder="자격번호">
-                            <input type="text" name="MB_BIRTH[<?php echo $i ?>]" readonly value="<?php echo $mb_birth; ?>"
-                                <?php if ($row['PAYMENT_STATUS'] == 'C') {
+                        <input type="text" name="MB_BIRTH[<?php echo $i ?>]" readonly value="<?php echo $mb_birth; ?>" <?php if ($row['PAYMENT_STATUS'] == 'C') {
                                     echo "class='ksia_input_deleted' readonly";
                                 } else {
                                     echo "class='ksia_input'";
                                 } ?> placeholder="생년월일">
-                        </td>
+                    </td>
 
-                        <td>
-                            <?php echo $service_regis_date; ?>
-                        </td>
+                    <td>
+                        <?php echo $service_regis_date; ?>
+                    </td>
 
 
-                        <td>
-                            <input type="text" name="ZIP[<?php echo $i ?>]" value="<?php echo $row['ZIP']; ?>" <?php if ($row['PAYMENT_STATUS'] == 'C') {
+                    <td>
+                        <input type="text" name="ZIP[<?php echo $i ?>]" value="<?php echo $row['ZIP']; ?>" <?php if ($row['PAYMENT_STATUS'] == 'C') {
                                                                                                                     echo "class='ksia_input_deleted' readonly";
                                                                                                                 } else {
                                                                                                                     echo "class='ksia_input'";
                                                                                                                 } ?>>
-                            <input type="text" name="ADDR1[<?php echo $i ?>]" value="<?php echo $row['ADDR1']; ?>" <?php if ($row['PAYMENT_STATUS'] == 'C') {
+                        <input type="text" name="ADDR1[<?php echo $i ?>]" value="<?php echo $row['ADDR1']; ?>"
+                            <?php if ($row['PAYMENT_STATUS'] == 'C') {
                                                                                                                         echo "class='ksia_input_deleted' readonly";
                                                                                                                     } else {
                                                                                                                         echo "class='ksia_input'";
                                                                                                                     } ?>>
-                            <input type="text" name="ADDR2[<?php echo $i ?>]" value="<?php echo $row['ADDR2']; ?>" <?php if ($row['PAYMENT_STATUS'] == 'C') {
+                        <input type="text" name="ADDR2[<?php echo $i ?>]" value="<?php echo $row['ADDR2']; ?>"
+                            <?php if ($row['PAYMENT_STATUS'] == 'C') {
                                                                                                                         echo "class='ksia_input_deleted' readonly";
                                                                                                                     } else {
                                                                                                                         echo "class='ksia_input'";
                                                                                                                     } ?>>
-                            <input type="text" name="ADDR3[<?php echo $i ?>]" value="<?php echo $row['ADDR3']; ?>" <?php if ($row['PAYMENT_STATUS'] == 'C') {
+                        <input type="text" name="ADDR3[<?php echo $i ?>]" value="<?php echo $row['ADDR3']; ?>"
+                            <?php if ($row['PAYMENT_STATUS'] == 'C') {
                                                                                                                         echo "class='ksia_input_deleted' readonly";
                                                                                                                     } else {
                                                                                                                         echo "class='ksia_input'";
                                                                                                                     } ?>>
-                        </td>
-                        <td>
-                            <?php echo $row['PAY_METHOD']; ?>
-                        </td>
-                        <td>
-                            <input type="text" name="AMOUNT[<?php echo $i ?>]" readonly value="<?php echo $row['AMOUNT']; ?>" <?php if ($row['PAYMENT_STATUS'] == 'C') {
+                    </td>
+                    <td>
+                        <?php echo $row['PAY_METHOD']; ?>
+                    </td>
+                    <td>
+                        <input type="text" name="AMOUNT[<?php echo $i ?>]" readonly
+                            value="<?php echo $row['AMOUNT']; ?>"
+                            <?php if ($row['PAYMENT_STATUS'] == 'C') {
                                                                                                                                     echo "class='ksia_input_deleted' readonly";
                                                                                                                                 } else {
                                                                                                                                     echo "class='ksia_input'";
                                                                                                                                 } ?>>
 
-                            <?php
+                        <?php
 
                             if ($row['PAYMENT_STATUS'] == 'Y') {
                                 $member_payment_status = "<span class='box_sbak_label'>결제완료</span>";
@@ -365,23 +346,23 @@ $result = sql_query($sql);
 
 
 
-                        </td>
+                    </td>
 
-                        <td>
-                            <input type="text" name="DELIVERY_AGENCY[<?php echo $i ?>]" value="<?php echo $row['DELIVERY_AGENCY']; ?>"
-                                <?php if ($row['PAYMENT_STATUS'] == 'C') {
+                    <td>
+                        <input type="text" name="DELIVERY_AGENCY[<?php echo $i ?>]"
+                            value="<?php echo $row['DELIVERY_AGENCY']; ?>" <?php if ($row['PAYMENT_STATUS'] == 'C') {
                                     echo "class='ksia_input_deleted' readonly";
                                 } else {
                                     echo "class='ksia_input'";
                                 } ?> placeholder="택배사">
-                            <input type="text" name="TRACKING_NO[<?php echo $i ?>]" value="<?php echo $row['TRACKING_NO']; ?>"
-                                <?php if ($row['PAYMENT_STATUS'] == 'C') {
+                        <input type="text" name="TRACKING_NO[<?php echo $i ?>]"
+                            value="<?php echo $row['TRACKING_NO']; ?>" <?php if ($row['PAYMENT_STATUS'] == 'C') {
                                     echo "class='ksia_input_deleted' readonly";
                                 } else {
                                     echo "class='ksia_input'";
                                 } ?> placeholder="송장번호">
-                            <input type="date" name="DELIVERY_DATE[<?php echo $i ?>]" value="<?php echo $row['DELIVERY_DATE']; ?>"
-                                <?php if ($row['PAYMENT_STATUS'] == 'C') {
+                        <input type="date" name="DELIVERY_DATE[<?php echo $i ?>]"
+                            value="<?php echo $row['DELIVERY_DATE']; ?>" <?php if ($row['PAYMENT_STATUS'] == 'C') {
                                     echo "class='ksia_input_deleted' readonly";
                                 } else {
                                     echo "class='ksia_input'";
@@ -389,40 +370,33 @@ $result = sql_query($sql);
 
 
 
-                            <input type='radio' name='TRAN_STATUS[<?php echo $i ?>]' value='Y' <?php if ($row['TRAN_STATUS'] == 'Y')
-                                                                                                    echo "checked"; ?> <?php if ($row['PAYMENT_STATUS'] == 'C') {
+                        <input type='radio' name='TRAN_STATUS[<?php echo $i ?>]' value='Y' <?php if ($row['TRAN_STATUS'] == 'Y')
+                                                                                                    echo "checked"; ?>
+                            <?php if ($row['PAYMENT_STATUS'] == 'C') {
                                                                                                                             echo " disabled";
                                                                                                                         } ?>>배송완료
 
-                        </td>
+                    </td>
 
 
-                        <td>
-                            <textarea name="MEMO1[<?php echo $i ?>]" placeholder="메모사항"
-                                <?php if ($row['PAYMENT_STATUS'] == 'C') {
+                    <td>
+                        <textarea name="MEMO1[<?php echo $i ?>]" placeholder="메모사항" <?php if ($row['PAYMENT_STATUS'] == 'C') {
                                     echo "class='ksia_input_deleted' readonly";
                                 } else {
                                     echo "class='ksia_input'";
                                 } ?>
-                                style="resize: none ; display: block ; width: 100%; height: 20px; border: solid 2px #1E90FF;border-radius: 5px;"><?php echo $row['MEMO1'];; ?>
+                            style="resize: none ; display: block ; width: 100%; height: 20px; border: solid 2px #1E90FF;border-radius: 5px;"><?php echo $row['MEMO1'];; ?>
                         </textarea>
 
-                        </td>
+                    </td>
 
-                        <td>
+                    <td>
 
-                            <?php
+                        <?php
 
                             //mainpay ----------------------------------------------
                             if ($row['PAYMENT_STATUS'] == "Y") {
-                                echo "<form method='post'>";
-                                echo "<input type='hidden' name='is_del' value='yes'>";
-                                echo "<input type='hidden' name='AID' value='" . $row['AID'] . "'>";
-                                echo "<input type='hidden' name='product_code' value='" . $row['PRODUCT_CODE'] . "'>";
-                                echo "<input type='hidden' name='payment_category' value='service'>";
-                                echo "<input type='hidden' name='the_status' value='88'>";
-                                echo "<button type='button' class='btn btn_01' onclick=\"payment_cancel(this.form)\">취소</button>";
-                                echo "</form>";
+                                 echo "<a href='sbak_cancle.php?UID=" . $row['UID'] . "&category=service'><i class='btn btn_01'>취소</i></a>"; //결제 취소 페이지
                             } else {
                                 //----------------------------------------------------
 
@@ -438,9 +412,9 @@ $result = sql_query($sql);
                                 }
                             }
                             ?>
-                        </td>
+                    </td>
 
-                    </tr>
+                </tr>
                 <?php } ?>
                 <?php if ($i == 0)
                     echo '<tr><td colspan="' . $colspan . '" class="empty_table">자료가 없습니다.</td></tr>'; ?>
@@ -467,23 +441,9 @@ if ($pagelist) {
 ?>
 
 <script>
-    $(function() {
-        $("#sch_sort").change(function() { // select #sch_sort의 옵션이 바뀔때
-            if ($(this).val() == "vi_date") { // 해당 value 값이 vi_date이면
-                $("#sch_word").datepicker({
-                    changeMonth: true,
-                    changeYear: true,
-                    dateFormat: "yy-mm-dd",
-                    showButtonPanel: true,
-                    yearRange: "c-99:c+99",
-                    maxDate: "+0d"
-                }); // datepicker 실행
-            } else { // 아니라면
-                $("#sch_word").datepicker("destroy"); // datepicker 미실행
-            }
-        });
-
-        if ($("#sch_sort option:selected").val() == "vi_date") { // select #sch_sort 의 옵션중 selected 된것의 값이 vi_date라면
+$(function() {
+    $("#sch_sort").change(function() { // select #sch_sort의 옵션이 바뀔때
+        if ($(this).val() == "vi_date") { // 해당 value 값이 vi_date이면
             $("#sch_word").datepicker({
                 changeMonth: true,
                 changeYear: true,
@@ -492,29 +452,43 @@ if ($pagelist) {
                 yearRange: "c-99:c+99",
                 maxDate: "+0d"
             }); // datepicker 실행
+        } else { // 아니라면
+            $("#sch_word").datepicker("destroy"); // datepicker 미실행
         }
     });
 
-    function fvisit_submit(f) {
-        return true;
+    if ($("#sch_sort option:selected").val() == "vi_date") { // select #sch_sort 의 옵션중 selected 된것의 값이 vi_date라면
+        $("#sch_word").datepicker({
+            changeMonth: true,
+            changeYear: true,
+            dateFormat: "yy-mm-dd",
+            showButtonPanel: true,
+            yearRange: "c-99:c+99",
+            maxDate: "+0d"
+        }); // datepicker 실행
     }
+});
+
+function fvisit_submit(f) {
+    return true;
+}
 </script>
 
 <script>
-    function ksia_license_list_submit(f) {
-        if (!is_checked("chk[]")) {
-            alert(document.pressed + " 하실 항목을 하나 이상 선택하세요.");
+function ksia_license_list_submit(f) {
+    if (!is_checked("chk[]")) {
+        alert(document.pressed + " 하실 항목을 하나 이상 선택하세요.");
+        return false;
+    }
+
+    if (document.pressed == "선택삭제") {
+        if (!confirm("선택한 자료를 정말 삭제하시겠습니까?")) {
             return false;
         }
-
-        if (document.pressed == "선택삭제") {
-            if (!confirm("선택한 자료를 정말 삭제하시겠습니까?")) {
-                return false;
-            }
-        }
-
-        return true;
     }
+
+    return true;
+}
 </script>
 
 <?php

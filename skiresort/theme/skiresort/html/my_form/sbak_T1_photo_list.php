@@ -3,8 +3,8 @@
 include "../../../../common.php";
 add_stylesheet('<link rel="stylesheet" href="' . G5_URL . '/adm/css/sbak_css.css">', 0);
 
-$sports = $_GET['sports'];
-$t_code = $_GET['t_code'];
+$sports = $_GET['sports'] ?? '';
+$t_code = $_GET['t_code'] ?? '';
 
  if ($sports == 'ski') {
 
@@ -21,9 +21,9 @@ $event_code = 'B04';
 $sql_1 = " select Event_title_1, Event_year from SBAK_OFFICE_CONF where Event_code like '{$event_code}' ";
 
 $row_1 = sql_fetch($sql_1);
-$event_title_1 = $row_1['Event_title_1'];
+$event_title_1 = $row_1['Event_title_1'] ?? '';
 
-$event_year = $row_1['Event_year'];
+$event_year = $row_1['Event_year'] ?? '';
 
 
 $g5['title'] = $event_title_1;
@@ -65,33 +65,35 @@ $result = sql_query($sql);
 
 <table width=100%>
 
-<tr>
-    <td width=50% align=left>
-        (총 엔트리 : <?php echo number_format($total_count)?>) 
+    <tr>
+        <td width=50% align=left>
+            (총 엔트리 : <?php echo number_format($total_count)?>)
 
-    </td>
-    <td width=50% align=right>
+        </td>
+        <td width=50% align=right>
 
-</tr>
+    </tr>
 
 </table>
 
 
 
 <div class="tbl_wrap tbl_head01">
-        <table><tr><td>
+    <table>
+        <tr>
+            <td>
 
-<table width=650 cellspacing=0 cellpadding=0 bgcolor='#ffffff'>
+                <table width=650 cellspacing=0 cellpadding=0 bgcolor='#ffffff'>
 
-<tr>
+                    <tr>
 
-<?php
+                        <?php
 for ($i=0; $row=sql_fetch_array($result); $i++) {
     // 접근가능한 그룹수
 
     $group = "";
-    $wr_id = $row['MEMBER_ID'];
-    $the_bib = $row['BIB_NO'];  
+    $wr_id = $row['MEMBER_ID'] ?? '';
+    $the_bib = $row['BIB_NO'] ?? '';  
         //$the_start = $row['the_start'];  
     $wr_name = $row['MEMBER_NAME']; 
         $icon_file2 = "../data/member_image/".$row['MEMBER_ID'].".jpg";
@@ -124,11 +126,13 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
 
 
 
-</td></tr></table>
+            </td>
+        </tr>
+    </table>
 
 
 
-<?php
+    <?php
 $domain = isset($domain) ? $domain : '';
 $pagelist = get_paging($config['cf_write_pages'], $page, $total_page, $_SERVER['SCRIPT_NAME'] . '?' . $qstr . '&amp;t_code=' . $t_code . '&amp;domain=' . $domain . '&amp;page=');
 if ($pagelist) {
@@ -137,4 +141,3 @@ if ($pagelist) {
 
 
 ?>
-

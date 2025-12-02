@@ -93,27 +93,27 @@ $result = sql_query($sql);
 ?>
 
 <style>
-    .frm_input_num_yellow_num5 {
-        background-color: #f1c40e;
-        font-size: 14px;
-        color: blue;
-        font-weight: 500;
-        width: 60px;
-        border-radius: 5px;
-        text-align: right;
-        padding: 5px;
-    }
+.frm_input_num_yellow_num5 {
+    background-color: #f1c40e;
+    font-size: 14px;
+    color: blue;
+    font-weight: 500;
+    width: 60px;
+    border-radius: 5px;
+    text-align: right;
+    padding: 5px;
+}
 
-    .frm_input_num_yellow_num2 {
-        background-color: #f1c40e;
-        font-size: 14px;
-        color: blue;
-        font-weight: 500;
-        width: 30px;
-        border-radius: 5px;
-        text-align: right;
-        padding: 5px;
-    }
+.frm_input_num_yellow_num2 {
+    background-color: #f1c40e;
+    font-size: 14px;
+    color: blue;
+    font-weight: 500;
+    width: 30px;
+    border-radius: 5px;
+    text-align: right;
+    padding: 5px;
+}
 </style>
 
 
@@ -177,129 +177,157 @@ $result = sql_query($sql);
                 $bg = 'bg' . ($i % 2);
             ?>
 
-                <form name=frm method=post action="<?php echo $_SERVER['PHP_SELF']; ?>">
+            <form name=frm method=post action="<?php echo $_SERVER['PHP_SELF']; ?>">
 
-                    <input type="hidden" name="is_update" value="yes">
-                    <input type="hidden" name="UID" value="<?php echo $row['UID']; ?>">
+                <input type="hidden" name="is_update" value="yes">
+                <input type="hidden" name="UID" value="<?php echo $row['UID']; ?>">
 
-                    <tr class="<?php echo $bg; ?>">
-                        <td>
-                            <?php echo $i + 1; ?>
-                        </td>
-                        <td>
-                            <?php echo $row['Event_code']; ?>
-                        </td>
-                        <td><input type="text" name="Event_title_1" value="<?php echo $row['Event_title_1']; ?>"
-                                class="tbl_input" size="15" required>
-                            <input type="text" name="Event_title" value="<?php echo $row['Event_title']; ?>"
-                                class="tbl_input" placeholder="정식행사타이틀 입력" required>
-                        </td>
+                <tr class="<?php echo $bg; ?>">
+                    <td>
+                        <?php echo $i + 1; ?>
+                    </td>
+                    <td>
+                        <?php echo $row['Event_code']; ?>
+                    </td>
+                    <td><input type="text" name="Event_title_1" value="<?php echo $row['Event_title_1']; ?>"
+                            class="tbl_input" size="15" required>
+                        <input type="text" name="Event_title" value="<?php echo $row['Event_title']; ?>"
+                            class="tbl_input" placeholder="정식행사타이틀 입력" required>
+                    </td>
 
-                        <td width="150px">
-                            <p style='float:left;background-color:#efefef;padding:5px'><i class="fa fa-bars"></i> 접수시작</p>
-                            <input type="date" name="Event_begin_date" value="<?php echo $row['Event_begin_date']; ?>"
-                                class="tbl_input" required>
-                            <input type="time" name="Event_begin_time" value="<?php echo $row['Event_begin_time']; ?>"
-                                class="tbl_input" required>
+                    <td width="150px">
+                        <?php if ($row['Event_code'] !== 'B03') { ?>
+                        <p style='float:left;background-color:#efefef;padding:5px'><i class="fa fa-bars"></i> 접수시작</p>
+                        <input type="date" name="Event_begin_date" value="<?php echo $row['Event_begin_date']; ?>"
+                            class="tbl_input" required>
+                        <input type="time" name="Event_begin_time" value="<?php echo $row['Event_begin_time']; ?>"
+                            class="tbl_input" required>
 
-                            <p style='float:left;background-color:#efefef;padding:5px;'><i class="fa fa-bars"></i> 접수마감</p>
-                            <input type="date" name="Event_end_date" value="<?php echo $row['Event_end_date']; ?>"
-                                class="tbl_input" required>
-                            <input type="time" name="Event_end_time" value="<?php echo $row['Event_end_time']; ?>"
-                                class="tbl_input" required>
-                            <p style='float:left;background-color:#efefef;padding:5px;'><i class="fa fa-bars"></i> 나이제한</p>
-                            <input type="date" name="Event_birthdate" value="<?php echo $row['Event_birthdate']; ?>"
-                                class="tbl_input">
-                        </td>
+                        <p style='float:left;background-color:#efefef;padding:5px;'><i class="fa fa-bars"></i> 접수마감</p>
+                        <input type="date" name="Event_end_date" value="<?php echo $row['Event_end_date']; ?>"
+                            class="tbl_input" required>
+                        <input type="time" name="Event_end_time" value="<?php echo $row['Event_end_time']; ?>"
+                            class="tbl_input" required>
+                        <p style='float:left;background-color:#efefef;padding:5px;'><i class="fa fa-bars"></i> 나이제한</p>
+                        <input type="date" name="Event_birthdate" value="<?php echo $row['Event_birthdate']; ?>"
+                            class="tbl_input">
+                        <?php } ?>
+                    </td>
 
-                        <td width="150px">
-                            <p style='float:left;background-color:#efefef;padding:5px'><i class="fa fa-bars"></i> 결제시작</p>
-                            <input type="date" name="Pay_begin_date" value="<?php echo $row['Pay_begin_date']; ?>"
-                                class="tbl_input" required>
-                            <input type="time" name="Pay_begin_time" value="<?php echo $row['Pay_begin_time']; ?>"
-                                class="tbl_input" required>
+                    <td width="150px">
+                        <?php if ($row['Event_code'] !== 'B03') { ?>
+                        <p style='float:left;background-color:#efefef;padding:5px'><i class="fa fa-bars"></i> 결제시작</p>
+                        <input type="date" name="Pay_begin_date" value="<?php echo $row['Pay_begin_date']; ?>"
+                            class="tbl_input" required>
+                        <input type="time" name="Pay_begin_time" value="<?php echo $row['Pay_begin_time']; ?>"
+                            class="tbl_input" required>
 
-                            <p style='float:left;background-color:#efefef;padding:5px'><i class="fa fa-bars"></i> 결제(취소)마감</p>
+                        <p style='float:left;background-color:#efefef;padding:5px'><i class="fa fa-bars"></i> 결제(취소)마감
+                        </p>
 
-                            <input type="date" name="Pay_end_date" value="<?php echo $row['Pay_end_date']; ?>"
-                                class="tbl_input" required>
-                            <input type="time" name="Pay_end_time" value="<?php echo $row['Pay_end_time']; ?>"
-                                class="tbl_input" required>
+                        <input type="date" name="Pay_end_date" value="<?php echo $row['Pay_end_date']; ?>"
+                            class="tbl_input" required>
+                        <input type="time" name="Pay_end_time" value="<?php echo $row['Pay_end_time']; ?>"
+                            class="tbl_input" required>
+                        <?php } ?>
 
-                        </td>
-                        <td width="50px">
+                    </td>
+                    <td width="50px">
 
-                            <?php if ($row['Event_code'] == 'B01' || $row['Event_code'] == 'B04') { ?>
-                                <input type="text" name="T1_before_days" value="<?php echo $row['T1_before_days']; ?>"
-                                    class='frm_input_num_yellow_num2' max-length='2' required oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" "/>일전
+                        <?php if ($row['Event_code'] == 'B01' || $row['Event_code'] == 'B04') { ?>
+                        <input type="text" name="T1_before_days" value="<?php echo $row['T1_before_days']; ?>"
+                            class='frm_input_num_yellow_num2' max-length='2' required
+                            oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" "/>일전
                            <p><i class=" fa fa-info-circle"></i> 숫자만 </p>
 
-                            <?php } else { ?>
-                                <input type="hidden" name="T1_before_days" value="0">
+                        <?php } else { ?>
+                        <input type="hidden" name="T1_before_days" value="0">
 
-                            <?php }  ?>
+                        <?php }  ?>
 
-                        </td>
-                        <td width=" 200px">
-                            <input type="text" name="Event_where" value="<?php echo $row['Event_where']; ?>"
-                                placeholder="행사장소" style="text-align:center;" class="tbl_input">
-                            <input type="text" name="Event_whom" value="<?php echo $row['Event_whom']; ?>"
-                                placeholder="참가대상" style="text-align:center;" class="tbl_input">
-                            <input type="year" name="Event_year" value="<?php echo $row['Event_year']; ?>" style="text-align:center;"
-                                placeholder="행사년도" maxlength='4' class="tbl_input" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" />
-                            <input type="text" name="Event_date" value="<?php echo $row['Event_date']; ?>"
-                                placeholder="행사날짜(기간)" class="tbl_input">
+                    </td>
+                    <td width=" 200px">
+                        <?php if ($row['Event_code'] !== 'B03') { ?>
+                        <input type="text" name="Event_where" value="<?php echo $row['Event_where']; ?>"
+                            placeholder="행사장소" style="text-align:center;" class="tbl_input">
+                        <input type="text" name="Event_whom" value="<?php echo $row['Event_whom']; ?>"
+                            placeholder="참가대상" style="text-align:center;" class="tbl_input">
+                        <input type="year" name="Event_year" value="<?php echo $row['Event_year']; ?>"
+                            style="text-align:center;" placeholder="행사년도" maxlength='4' class="tbl_input"
+                            oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" />
+                        <input type="text" name="Event_date" value="<?php echo $row['Event_date']; ?>"
+                            placeholder="행사날짜(기간)" class="tbl_input">
+                        <?php }?>
+                    </td>
+                    <td width="100px">
 
-                        </td>
-                        <td width="100px">
+                        <p style='float:left;background-color:#efefef;padding:5px'><i class="fa fa-bars"></i> 가격</p>
+                        <input type="text" class='frm_input_num_yellow_num5' max-length='5' name="Entry_fee"
+                            value="<?php echo $row['Entry_fee']; ?>" required
+                            oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" />
+                        <?php if ($row['Event_code'] !== 'B03') { ?>
+                        <p style='float:left;background-color:#efefef;padding:5px'><i class="fa fa-bars"></i> 수량(인원)</p>
+                        <input type="text" class='frm_input_num_yellow_num5' max-length='4' name="Event_total_limit"
+                            value="<?php echo $row['Event_total_limit']; ?>"
+                            oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" />
 
-                            <p style='float:left;background-color:#efefef;padding:5px'><i class="fa fa-bars"></i> 가격</p>
-                            <input type="text" class='frm_input_num_yellow_num5' max-length='5' name="Entry_fee" value="<?php echo $row['Entry_fee']; ?>"
-                                required oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" />
-                            <p style='float:left;background-color:#efefef;padding:5px'><i class="fa fa-bars"></i> 수량(인원)</p>
-                            <input type="text" class='frm_input_num_yellow_num5' max-length='4' name="Event_total_limit" value="<?php echo $row['Event_total_limit']; ?>"
-                                oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" />
-
-                            <?php if ($able_extra_cnt == 'N') {
+                        <?php if ($able_extra_cnt == 'N') {
                                 echo "<input type='hidden' name='Event_extra_cnt' value='0'> ";
                             } else { ?>
-                                <p style='float:left;background-color:#efefef;padding:5px'><i class="fa fa-bars"></i> 추가인원</p>
-                                <input type="text" class='frm_input_num_yellow_num5' max-length='3' required name="Event_extra_cnt" value="<?php echo $row['Event_extra_cnt']; ?>"
-                                    oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" />
-                            <?php } ?>
+                        <p style='float:left;background-color:#efefef;padding:5px'><i class="fa fa-bars"></i> 추가인원</p>
+                        <input type="text" class='frm_input_num_yellow_num5' max-length='3' required
+                            name="Event_extra_cnt" value="<?php echo $row['Event_extra_cnt']; ?>"
+                            oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" />
+                        <?php } } ?>
 
-                            <p style="font-size:0.8em;color:#666;"><em><i class="fa fa-info-circle"></i> 숫자만</em> </p>
-                        </td>
-                        <td width="40px"><input type="text" name="Event_rule" value="<?php echo $row['Event_rule']; ?>"
-                                class='frm_input_num_yellow_num5' max-length='4' oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" />
-                            <p style="font-size:0.8em;color:#666;"><em><i class="fa fa-info-circle"></i> 숫자만</em> </p> <a href="<?php echo G5_BBS_URL; ?>/board.php?bo_table=sbak_event_rule" class="btn btn_03">이동</a>
-                        </td>
-                        <td width="40px"><input type="text" name="Event_notice" value="<?php echo $row['Event_notice']; ?>"
-                                class='frm_input_num_yellow_num5' max-length='4' oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" />
-                            <p style="font-size:0.8em;color:#666;"><em><i class="fa fa-info-circle"></i> 숫자만 </em></p> <a href="<?php echo G5_BBS_URL; ?>/board.php?bo_table=sbak_event_notice" class="btn btn_03">이동</a>
-                        </td>
-                        <td><input type="checkbox" name="Event_status" value="Y"
-                                class="tbl_input" <?php if ($row['Event_status'] == 'Y') {
+                        <p style="font-size:0.8em;color:#666;"><em><i class="fa fa-info-circle"></i> 숫자만</em> </p>
+                    </td>
+                    <td width="40px">
+                        <?php if ($row['Event_code'] !== 'B03') { ?>
+                        <input type="text" name="Event_rule" value="<?php echo $row['Event_rule']; ?>"
+                            class='frm_input_num_yellow_num5' max-length='4'
+                            oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" />
+                        <p style="font-size:0.8em;color:#666;"><em><i class="fa fa-info-circle"></i> 숫자만</em> </p> <a
+                            href="<?php echo G5_BBS_URL; ?>/board.php?bo_table=sbak_event_rule"
+                            class="btn btn_03">이동</a>
+                        <?php }?>
+                    </td>
+                    <td width="40px">
+                        <?php if ($row['Event_code'] !== 'B03') { ?>
+                        <input type="text" name="Event_notice" value="<?php echo $row['Event_notice']; ?>"
+                            class='frm_input_num_yellow_num5' max-length='4'
+                            oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" />
+                        <p style="font-size:0.8em;color:#666;"><em><i class="fa fa-info-circle"></i> 숫자만 </em></p> <a
+                            href="<?php echo G5_BBS_URL; ?>/board.php?bo_table=sbak_event_notice"
+                            class="btn btn_03">이동</a>
+                        <?php }?>
+                    </td>
+                    <td>
+                        <?php if ($row['Event_code'] !== 'B03') { ?>
+                        <input type="checkbox" name="Event_status" value="Y" class="tbl_input" <?php if ($row['Event_status'] == 'Y') {
                                                         echo "checked";
                                                     }; ?>>
-                        </td>
-                        <td><input type="checkbox" name="Event_control" value="Y"
-                                class="tbl_input" <?php if ($row['Event_control'] == 'Y') {
+                        <?php }?>
+                    </td>
+                    <td>
+                        <?php if ($row['Event_code'] !== 'B03') { ?>
+                        <input type="checkbox" name="Event_control" value="Y" class="tbl_input" <?php if ($row['Event_control'] == 'Y') {
                                                         echo "checked";
                                                     }; ?>>
-                        </td>
-                        <td>
-                            <textarea name="Event_memo" id="" cols="10" rows="1"
-                                placeholder="기본안내사항"><?php echo $row['Event_memo']; ?></textarea>
+                        <?php }?>
+                    </td>
+                    <td>
+                        <textarea name="Event_memo" id="" cols="10" rows="1"
+                            placeholder="메모"><?php echo $row['Event_memo']; ?></textarea>
 
-                        </td>
-                        <td>
-                            <input type="submit" value="수정">
-                        </td>
-                    </tr>
+                    </td>
+                    <td>
+                        <input type="submit" value="수정">
+                    </td>
+                </tr>
 
 
-                </form>
+            </form>
 
 
             <?php } ?>

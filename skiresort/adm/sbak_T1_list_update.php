@@ -32,8 +32,8 @@ if ($_POST['act_button'] == "선택수정") {
         $p_T_tel = is_array($_POST['T_tel'] ?? '') ? strip_tags(clean_xss_attributes($_POST['T_tel'][$k] ?? '')) : '';
         $p_T_date = is_array($_POST['T_date'] ?? '') ? strip_tags(clean_xss_attributes($_POST['T_date'][$k] ?? '')) : '';
         $p_T_time = is_array($_POST['T_time'] ?? '') ? strip_tags(clean_xss_attributes($_POST['T_time'][$k] ?? '')) : '';
+        $p_Application_Day = is_array($_POST['Application_Day'] ?? '') ? strip_tags(clean_xss_attributes($_POST['Application_Day'][$k] ?? '')) : '';
         $p_Expired_Day = is_array($_POST['Expired_Day'] ?? '') ? strip_tags(clean_xss_attributes($_POST['Expired_Day'][$k] ?? '')) : '';
-        $p_T_skiresort = is_array($_POST['T_skiresort'] ?? '') ? strip_tags(clean_xss_attributes($_POST['T_skiresort'][$k] ?? '')) : '';
         $p_T_meeting = is_array($_POST['T_meeting'] ?? '') ? strip_tags(clean_xss_attributes($_POST['T_meeting'][$k] ?? '')) : '';
         $p_limit_member = is_array($_POST['limit_member'] ?? '') ? strip_tags(clean_xss_attributes($_POST['limit_member'][$k] ?? '')) : '';
         $p_PAYMENT_AMOUNT = is_array($_POST['PAYMENT_AMOUNT'] ?? '') ? strip_tags(clean_xss_attributes($_POST['PAYMENT_AMOUNT'][$k] ?? '')) : '';
@@ -55,8 +55,8 @@ if ($_POST['act_button'] == "선택수정") {
                         set T_tel = '" . sql_real_escape_string($p_T_tel) . "',
                         T_date = '" . sql_real_escape_string($p_T_date) . "',
                         T_time = '" . sql_real_escape_string($p_T_time) . "',
+                        Application_Day = '" . sql_real_escape_string($p_Application_Day) . "',
                         Expired_Day = '" . sql_real_escape_string($p_Expired_Day) . "',
-                        T_skiresort = '" . sql_real_escape_string($p_T_skiresort) . "',
                         T_meeting = '" . sql_real_escape_string($p_T_meeting) . "',
                         limit_member = '" . sql_real_escape_string($p_limit_member) . "',
                         PAYMENT_AMOUNT = '" . sql_real_escape_string($p_PAYMENT_AMOUNT) . "',                 
@@ -65,7 +65,6 @@ if ($_POST['act_button'] == "선택수정") {
                         T_MEMO = '" . sql_real_escape_string($p_T_memo) . "' 
                         where UID = '" . sql_real_escape_string($p_UID) . "' ";
         sql_query($sql);
-
 
 
 
@@ -86,6 +85,5 @@ if ($_POST['act_button'] == "선택수정") {
 run_event('admin_ksia_license_list_ski_update', $act_button, ($post_chk ?? ''), $qstr);
 
 if ($_POST['act_button'] == "선택수정") {
-   // goto_url('./ksia_L1_test_list.php?' . $qstr);
     goto_url($_SERVER['HTTP_REFERER']."?". $qstr);
 }

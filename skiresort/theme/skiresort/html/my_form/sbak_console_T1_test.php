@@ -45,39 +45,39 @@ $READY_API_URL = G5_THEME_URL . "/html/my_form/mainpay_api/pc/_9_cancel.php";
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css" />
 
 <style>
-    .table thead th {
-        color: #fff !important;
-        /* 글자 흰색 */
+.table thead th {
+    color: #fff !important;
+    /* 글자 흰색 */
+}
+
+
+@media (max-width: 768px) {
+
+    .custom-table {
+        table-layout: fixed;
+        width: 100%;
     }
 
-
-    @media (max-width: 768px) {
-
-        .custom-table {
-            table-layout: fixed;
-            width: 100%;
-        }
-
-        .custom-table td {
-            word-break: keep-all;
-            white-space: normal;
-        }
+    .custom-table td {
+        word-break: keep-all;
+        white-space: normal;
     }
+}
 </style>
 
 <head>
 
     <script type='text/javascript'>
-        function payment_cancel(form) {
-            form.action = "<?php echo $READY_API_URL; ?>";
-            form.method = "POST";
-            const result = confirm("취소처리시 자동 결제취소됩니다. 취소된 건은 복구할 수 없습니다. 정말 취소하시겠습니까? ");
-            if (result) {
-                form.submit();
-            } else {
-                return false;
-            }
+    function payment_cancel(form) {
+        form.action = "<?php echo $READY_API_URL; ?>";
+        form.method = "POST";
+        const result = confirm("취소처리시 자동 결제취소됩니다. 취소된 건은 복구할 수 없습니다. 정말 취소하시겠습니까? ");
+        if (result) {
+            form.submit();
+        } else {
+            return false;
         }
+    }
     </script>
 </head>
 
@@ -124,11 +124,11 @@ $READY_API_URL = G5_THEME_URL . "/html/my_form/mainpay_api/pc/_9_cancel.php";
                     <?php
                     for ($i = 0; $row = sql_fetch_array($result); $i++) {
                         $uid = $row['UID'];
-                        $test_no = $row['T_code'];
-                        $regis_date = $row['REGIST_DATE'];
+                        $test_no = $row['T_code'] ?? '';
+                        $regis_date = $row['REGIST_DATE'] ?? '';
 
 
-                        $payment_status = $row['PAYMENT_STATUS'];
+                        $payment_status = $row['PAYMENT_STATUS'] ?? '';
                         if ($payment_status == 'Y') {
                             $payment_status = "<span class='badge rounded-pill bg-label-primary border border-primary text-primary'>결제완료</span>";
                         } elseif ($payment_status == 'C') {
@@ -182,88 +182,89 @@ $READY_API_URL = G5_THEME_URL . "/html/my_form/mainpay_api/pc/_9_cancel.php";
                     ?>
 
 
-                        <!-- Modal -->
-                        <div class="modal fade" id="<?php echo $detail_info_Modal; ?>" tabindex="-1"
-                            aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <!-- Modal -->
+                    <div class="modal fade" id="<?php echo $detail_info_Modal; ?>" tabindex="-1"
+                        aria-labelledby="exampleModalLabel" aria-hidden="true">
 
-                            <div class="modal-dialog <?php if (preg_match("/" . G5_MOBILE_AGENT . "/i", $_SERVER['HTTP_USER_AGENT'])) {
+                        <div class="modal-dialog <?php if (preg_match("/" . G5_MOBILE_AGENT . "/i", $_SERVER['HTTP_USER_AGENT'])) {
                                                             echo 'modal-fullscreen';
                                                         } else {
                                                             echo 'modal-dialog-scrollable';
                                                         } ?>" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h1 class="modal-title fs-5" id="exampleModalLabel">
-                                            '
-                                            <?php echo $mb_name; ?>' 회원님의 <font color=blue> <?php echo $sports_title; ?> 티칭1 </font> 신청 상세내역
-                                        </h1>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                            aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="exampleModalLabel">
+                                        '
+                                        <?php echo $mb_name; ?>' 회원님의 <font color=blue> <?php echo $sports_title; ?> 티칭1
+                                        </font> 신청 상세내역
+                                    </h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
 
-                                        <div class="container-fluid">
+                                    <div class="container-fluid">
 
-                                            <div class="row border-bottom">
-                                                <div class="col-4 my-2"><span class='h6'>[응시코드]</span></div>
-                                                <div class="col-8 my-2">
-                                                    <?php echo $row['T_code']; ?>
-                                                </div>
+                                        <div class="row border-bottom">
+                                            <div class="col-4 my-2"><span class='h6'>[응시코드]</span></div>
+                                            <div class="col-8 my-2">
+                                                <?php echo $row['T_code'] ?? ''; ?>
                                             </div>
+                                        </div>
 
-                                            <div class="row border-bottom">
-                                                <div class="col-4 my-2"><span class='h6'>[응시정보]</span></div>
-                                                <div class="col-8 my-2">
-                                                    <?php echo $row_code['T_date']; ?> |
-                                                    <?php echo $t_where; ?> |
-                                                    <?php echo $row_code['T_meeting']; ?> |
-                                                    <?php echo $row_code['T_time']; ?>
+                                        <div class="row border-bottom">
+                                            <div class="col-4 my-2"><span class='h6'>[응시정보]</span></div>
+                                            <div class="col-8 my-2">
+                                                <?php echo $row_code['T_date'] ?? ''; ?> |
+                                                <?php echo $t_where; ?> |
+                                                <?php echo $row_code['T_meeting'] ?? ''; ?> |
+                                                <?php echo $row_code['T_time'] ?? ''; ?>
 
-                                                </div>
                                             </div>
+                                        </div>
 
-                                            <div class="row border-bottom">
-                                                <div class="col-4 my-2"><span class='h6'>[개최자]</span></div>
-                                                <div class="col-8 my-2">
+                                        <div class="row border-bottom">
+                                            <div class="col-4 my-2"><span class='h6'>[개최자]</span></div>
+                                            <div class="col-8 my-2">
 
-                                                    <?php
-                                                    echo $row_code['T_name'];
+                                                <?php
+                                                    echo $row_code['T_name'] ?? '';
 
-                                                    echo " | " . $row_code['T_tel'];
+                                                    echo " | " . $row_code['T_tel'] ?? '';
 
                                                     ?>
 
-                                                </div>
                                             </div>
+                                        </div>
 
 
 
-                                            <div class="row border-bottom">
-                                                <div class="col-4 my-2"><span class='h6'>[등록일]</span></div>
-                                                <div class="col-8 my-2">
-                                                    <?php echo $row['REGIST_DATE']; ?> |
-                                                    <?php echo $row['REGIST_TIME']; ?>
-                                                </div>
+                                        <div class="row border-bottom">
+                                            <div class="col-4 my-2"><span class='h6'>[등록일]</span></div>
+                                            <div class="col-8 my-2">
+                                                <?php echo $row['REGIST_DATE'] ?? ''; ?> |
+                                                <?php echo $row['REGIST_TIME'] ?? ''; ?>
                                             </div>
+                                        </div>
 
-                                            <div class="row border-bottom">
-                                                <div class="col-4 my-2"><span class='h6'>[연 락 처]</span></div>
-                                                <div class="col-8 my-2">
-                                                    <?php echo $row['PHONE']; ?>
+                                        <div class="row border-bottom">
+                                            <div class="col-4 my-2"><span class='h6'>[연 락 처]</span></div>
+                                            <div class="col-8 my-2">
+                                                <?php echo $row['PHONE'] ?? ''; ?>
 
-                                                </div>
                                             </div>
+                                        </div>
 
 
-                                            <div class="row border-bottom">
-                                                <div class="col-4 my-2"><span class='h6'>[결제정보]</span></div>
-                                                <div class="col-8 my-2">
-                                                    <?php
+                                        <div class="row border-bottom">
+                                            <div class="col-4 my-2"><span class='h6'>[결제정보]</span></div>
+                                            <div class="col-8 my-2">
+                                                <?php
                                                     echo $payment_status;
 
                                                     $sql5 = "select PAY_METHOD, INSERT_DATE, CANCELED_DATE from {$Table_Mainpay} where AID = '{$row['AID']}'";
                                                     $result_c = sql_fetch($sql5);
-                                                    $pay_method = $result_c['PAY_METHOD'];
+                                                    $pay_method = $result_c['PAY_METHOD'] ?? '';
                                                     if ($pay_method == 'CARD') {
                                                         $pay_method = "신용카드";
                                                     } else {
@@ -276,15 +277,15 @@ $READY_API_URL = G5_THEME_URL . "/html/my_form/mainpay_api/pc/_9_cancel.php";
                                                     }
                                                     ?>
 
-                                                </div>
                                             </div>
+                                        </div>
 
 
 
-                                            <div class="row border-bottom">
-                                                <div class="col-4 my-2"><span class='h6'>[심사결과]</span></div>
-                                                <div class="col-8 my-2">
-                                                    <?php
+                                        <div class="row border-bottom">
+                                            <div class="col-4 my-2"><span class='h6'>[심사결과]</span></div>
+                                            <div class="col-8 my-2">
+                                                <?php
 
                                                     if ($sports == 'ski') {
                                                         $sport1_name = '플루그보겐';
@@ -343,15 +344,16 @@ $READY_API_URL = G5_THEME_URL . "/html/my_form/mainpay_api/pc/_9_cancel.php";
                                                     ?>
 
 
-                                                </div>
                                             </div>
+                                        </div>
 
 
 
-                                            <div class="row border-bottom">
-                                                <div class="col-4 my-2"><span class='h6'>[메 &nbsp;&nbsp;&nbsp; &nbsp; 모]</span></div>
-                                                <div class="col-8 my-2">
-                                                    <?php
+                                        <div class="row border-bottom">
+                                            <div class="col-4 my-2"><span class='h6'>[메 &nbsp;&nbsp;&nbsp; &nbsp;
+                                                    모]</span></div>
+                                            <div class="col-8 my-2">
+                                                <?php
                                                     if ($row['MEMO'] == "") {
                                                         echo "없음";
                                                     } else {
@@ -359,35 +361,36 @@ $READY_API_URL = G5_THEME_URL . "/html/my_form/mainpay_api/pc/_9_cancel.php";
                                                     }
 
                                                     ?>
-                                                </div>
-
                                             </div>
 
+                                        </div>
 
 
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-                                        </div>
+
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal">닫기</button>
                                     </div>
                                 </div>
-
-
                             </div>
-                            <!--모달 끝-->
+
+
+                        </div>
+                        <!--모달 끝-->
 
 
 
 
-                            <script>
-                                // PHP 변수로부터 모달 ID 가져오기
-                                var modalId = "<?php echo $detail_info_Modal; ?>";
-                            </script>
+                        <script>
+                        // PHP 변수로부터 모달 ID 가져오기
+                        var modalId = "<?php echo $detail_info_Modal; ?>";
+                        </script>
 
 
-                            <tr>
-                                <td>
-                                    <?php
+                        <tr>
+                            <td>
+                                <?php
 
                                     if ($row['T_status'] == "66" || $row['PAYMENT_STATUS'] == "C") {
                                         if ($row['PAYMENT_STATUS'] == "C") {
@@ -419,11 +422,11 @@ $READY_API_URL = G5_THEME_URL . "/html/my_form/mainpay_api/pc/_9_cancel.php";
 
 
                                     ?>
-                                </td>
+                            </td>
 
-                                <td>
+                            <td>
 
-                                    <?php
+                                <?php
                                     echo "* 신청일 :" . $regis_date . "<br>";
                                     echo "* 연락처 :" . $row['PHONE'] . "<br>";
 
@@ -449,10 +452,10 @@ $READY_API_URL = G5_THEME_URL . "/html/my_form/mainpay_api/pc/_9_cancel.php";
                                     }
                                     ?>
 
-                                </td>
-                                <td>
+                            </td>
+                            <td>
 
-                                    <?php
+                                <?php
 
                                     //정해진 날짜 이전만 취소 가능하게 설정
 
@@ -491,9 +494,9 @@ $READY_API_URL = G5_THEME_URL . "/html/my_form/mainpay_api/pc/_9_cancel.php";
                                     }
                                     ?>
 
-                                </td>
+                            </td>
 
-                            </tr>
+                        </tr>
 
                         <?php } ?>
 

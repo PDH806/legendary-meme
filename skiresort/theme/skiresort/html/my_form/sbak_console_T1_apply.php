@@ -25,6 +25,9 @@ if ($the_sports == 'ski') {
 } elseif ($the_sports == 'sb') {
 	$event_code = 'B04';
 	$cap_sports =  'SB';
+} else {
+	$event_code = '';
+	$cap_sports = '';
 }
 
 
@@ -47,13 +50,14 @@ get_office_conf($event_code);
 
 <div class="container-xxl flex-grow-1 container-p-y">
 
-	<h4 class="fw-bold py-3 mb-4"><?php echo $event_title; ?> <span class="text-muted fw-light">/ <?php echo $resort_name; ?></span></h4>
-	<div class="alert  alert-dark mb-0" role="alert">
-		각 스키장 관리자만 신청 가능합니다.
+    <h4 class="fw-bold py-3 mb-4"><?php echo $event_title; ?> <span class="text-muted fw-light">/
+            <?php echo $resort_name; ?></span></h4>
+    <div class="alert  alert-dark mb-0" role="alert">
+        각 스키장 관리자만 신청 가능합니다.
 
-	</div> <br>
+    </div> <br>
 
-	<?php
+    <?php
 	include "./sbak_console_T1_apply_form_layout.php";
 	?>
 

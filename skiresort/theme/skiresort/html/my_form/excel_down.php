@@ -1,6 +1,7 @@
 <?php
 
 include "../../../../common.php";
+include "console_common.php";  //자주쓰는 변수 함수
 
 
 
@@ -32,7 +33,7 @@ if (isset($_GET['sports'])) {
 
 
 
-$sql_common = " from SBAK_T1_TEST_Apply ";
+$sql_common = " from {$Table_T1_Apply} ";
 
 
 $sql_search = " where T_code = '{$t_code}' and PAYMENT_STATUS = 'Y' ";
@@ -52,34 +53,37 @@ echo "\xEF\xBB\xBF"; // UTF-8 BOM
 ?>
 
 <style>
-    table {
-        font-size: 11pt;   /* 전체 테이블 기본 글꼴 크기 */
-    }
-    table td {
-        font-size: 11pt;   /* 각 셀도 11pt */
-    }
+table {
+    font-size: 11pt;
+    /* 전체 테이블 기본 글꼴 크기 */
+}
+
+table td {
+    font-size: 11pt;
+    /* 각 셀도 11pt */
+}
 </style>
 
 
-        <table border='1px'>
+<table border='1px'>
 
-                <tr>
-                    <td rowspan="3" align="center" style="background-color:yellow; font-weight:bold;"> ID </td>
-                    <td rowspan="3" align="center" style="background-color:yellow; font-weight:bold;"> 성명 </td>
-                    <td rowspan="3" align="center" style="background-color:yellow; font-weight:bold;"> 생년월일 </td>
-                    <td rowspan="3" align="center" style="background-color:yellow; font-weight:bold;"> 전화번호 </td>
-                    <td rowspan="3" align="center" style="background-color:yellow; font-weight:bold;"> 성별 </td>
+    <tr>
+        <td rowspan="3" align="center" style="background-color:yellow; font-weight:bold;"> ID </td>
+        <td rowspan="3" align="center" style="background-color:yellow; font-weight:bold;"> 성명 </td>
+        <td rowspan="3" align="center" style="background-color:yellow; font-weight:bold;"> 생년월일 </td>
+        <td rowspan="3" align="center" style="background-color:yellow; font-weight:bold;"> 전화번호 </td>
+        <td rowspan="3" align="center" style="background-color:yellow; font-weight:bold;"> 성별 </td>
 
-                </tr>
-                <tr>
+    </tr>
+    <tr>
 
-                </tr>
+    </tr>
 
-                <tr>
+    <tr>
 
-                </tr>
+    </tr>
 
-                <?php
+    <?php
 
                 for ($i = 0; $row = sql_fetch_array($result); $i++) {
 
@@ -91,26 +95,20 @@ echo "\xEF\xBB\xBF"; // UTF-8 BOM
                     ?>
 
 
-                    <tr>
-                        <td><?php echo $row['MEMBER_ID']; ?> </td>
-                        <td><?php echo $row['MEMBER_NAME']; ?> </td>
-                        <td><?php echo $row2['mb_2']; ?></td>
-                        <td><?php echo $row['PHONE']; ?></td>
-                        <td><?php echo $row2['mb_1']; ?></td>
-
-                        
-                    </tr>
+    <tr>
+        <td><?php echo $row['MEMBER_ID']; ?> </td>
+        <td><?php echo $row['MEMBER_NAME']; ?> </td>
+        <td><?php echo $row2['mb_2']; ?></td>
+        <td><?php echo $row['PHONE']; ?></td>
+        <td><?php echo $row2['mb_1']; ?></td>
 
 
-
-
-                <?php } ?>
-
-         
-        </table>
+    </tr>
 
 
 
 
+    <?php } ?>
 
 
+</table>

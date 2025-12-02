@@ -5,21 +5,21 @@ if (!defined('_GNUBOARD_'))
 ?>
 
 <style>
-    .basic_info dl {
-        display: flex;
-        flex-wrap: wrap;
-    }
+.basic_info dl {
+    display: flex;
+    flex-wrap: wrap;
+}
 
-    .basic_info dt {
-        width: 120px;
-        /* 고정 너비 지정 */
-        font-weight: bold;
-    }
+.basic_info dt {
+    width: 120px;
+    /* 고정 너비 지정 */
+    font-weight: bold;
+}
 
-    .basic_info dd {
-        flex: 1;
-        margin: 0;
-    }
+.basic_info dd {
+    flex: 1;
+    margin: 0;
+}
 </style>
 
 <div class="row">
@@ -103,7 +103,7 @@ if (!defined('_GNUBOARD_'))
 
 
 
-<?php // 조건에 따라 출력폼 표출여부 결정 시작
+    <?php // 조건에 따라 출력폼 표출여부 결정 시작
 
 
 
@@ -166,7 +166,8 @@ switch ($the_proceed) {
     <div class="card mb-4">
 
 
-        <h5 class="card-header">티칭1 개최 목록&nbsp;&nbsp;<small class="text-muted "> 스키장별로 개설된 응시일정을 확인하고, 선택하세요. (숫자버튼 클릭)</small>
+        <h5 class="card-header">티칭1 개최 목록&nbsp;&nbsp;<small class="text-muted "> 스키장별로 개설된 응시일정을 확인하고, 선택하세요. (숫자버튼
+                클릭)</small>
         </h5>
         <div class="card-body">
             <div class="row gy-3">
@@ -181,23 +182,24 @@ switch ($the_proceed) {
 
                     for ($i = 0; $row = sql_fetch_array($result); $i++) { ?>
 
-                        <div class="basic_info">
-                            <dl>
-                                <dt>
-                                    <span>
-                                        <?php
-                                        $resort_no = $row['T_skiresort'];
+                <div class="basic_info">
+                    <dl>
+                        <dt>
+                            <span>
+                                <?php
+                                        $resort_no = $row['T_skiresort'] ?? '';
                                         $query = "select RESORT_NAME from {$Table_Skiresort} where NO = {$resort_no}"; //스키장 자료 갖고오기
                                         $result_3 = sql_fetch($query);
-                                        echo $result_3['RESORT_NAME'];
+                                        echo $result_3['RESORT_NAME'] ?? '';
                                         ?></span>
-                                </dt>
-                                <dd>
-                                    <button type="button" class="btn btn-outline-primary" onclick="location.href='sbak_console_T1_test_apply_1.php?skiresort=<?php echo $row['T_skiresort']; ?>&sports=<?php echo $sports; ?>'"><?php echo $row['CNT']; ?></button>
-                                </dd>
-                            </dl>
-                        </div>
-                    <?php } ?>
+                        </dt>
+                        <dd>
+                            <button type="button" class="btn btn-outline-primary"
+                                onclick="location.href='sbak_console_T1_test_apply_1.php?skiresort=<?php echo $row['T_skiresort']; ?>&sports=<?php echo $sports; ?>'"><?php echo $row['CNT']; ?></button>
+                        </dd>
+                    </dl>
+                </div>
+                <?php } ?>
 
 
             </div>
@@ -206,7 +208,7 @@ switch ($the_proceed) {
 
         <br><br>
 
-    <?php } ?>
+        <?php } ?>
 
     </div>
 

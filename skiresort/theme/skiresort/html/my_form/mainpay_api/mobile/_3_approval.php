@@ -37,6 +37,7 @@ $amount = $row2['amount'];
 $goodsName = $row2['PRODUCT_NAME'];
 $goodsCode = $row2['PRODUCT_CODE'];
 $event_year = $row2['PRODUCT_YEAR'];
+$PHONE = $row2['PHONE'];
 
 $sql2 = "SELECT Event_total_limit,Event_extra_cnt FROM SBAK_OFFICE_CONF WHERE Event_code = '{$goodsCode}'";
 $row2 = sql_fetch($sql2);
@@ -126,12 +127,11 @@ if ($resultCode != "200") {
 WHERE AID = '{$aid}'";
 
 	$result = sql_query($sql);
-	// sql 검증문
-	if (!$result) {
+
 		echo "<script>
-            alert('처리 중 오류가 발생했습니다.');
+            alert('결제실패 했습니다.');
           </script>";
-	}
+
 
 	return;
 } else {
@@ -311,7 +311,7 @@ WHERE AID = '{$aid}'";
 	$sHp = "02-3473-1275"; // 발송번호
 	$rHp = $PHONE; // 수신번호
 
-	//lmsSend($sHp, $rHp, $msg); //문자발송
+	lmsSend($sHp, $rHp, $msg); //문자발송
 
 	//문자발송 종료
 
@@ -341,23 +341,23 @@ WHERE AID = '{$aid}'";
 <html>
 
 <head>
-	<title>상점 도착페이지</title>
-	<meta name="viewport" content="width=device-width, user-scalable=no">
-	<script src="https://api-std.mainpay.co.kr/js/mainpay.pc-1.0.js"></script>
+    <title>상점 도착페이지</title>
+    <meta name="viewport" content="width=device-width, user-scalable=no">
+    <script src="https://api-std.mainpay.co.kr/js/mainpay.pc-1.0.js"></script>
 </head>
 
 <body>
-	<script>
-		/* 결제 완료 페이지 호출 */
-		// var resultCode = "<?= $resultCode ?>";
-		// var resultMessage = "<?= $resultMessage ?>";
-		// alert("resultCode:" + resultCode + ": " + resultMessage);
+    <script>
+    /* 결제 완료 페이지 호출 */
+    // var resultCode = "<?= $resultCode ?>";
+    // var resultMessage = "<?= $resultMessage ?>";
+    // alert("resultCode:" + resultCode + ": " + resultMessage);
 
-		/* 결제처리 성공 유무에 따른 화면 전환 */
-		// self.close();		
-		location.href = "<?= $target_url ?>"
-		// location.href = "_4_complete.php";	
-	</script>
+    /* 결제처리 성공 유무에 따른 화면 전환 */
+    // self.close();		
+    location.href = "<?= $target_url ?>"
+    // location.href = "_4_complete.php";	
+    </script>
 </body>
 
 </html>

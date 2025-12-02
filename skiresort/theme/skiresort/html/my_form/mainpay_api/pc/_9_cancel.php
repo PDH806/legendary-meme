@@ -1,13 +1,12 @@
 ﻿<?php
 
 include "../../../../../../common.php";
-//header('Content-Type: application/json; charset=utf-8');
 
+//header('Content-Type: application/json; charset=utf-8');
 header('Content-Type: text/html; charset=utf-8');
 require('utils.php');                // 유틸리티 포함
 
-$logPath = "/home/asiaski/public_html/skiresort/data/app.log"; //디버그 로그위치 (리눅스)
-
+$logPath = G5_PATH . "/data/app.log"; //디버그 로그위치 (리눅스)
 
 /*****************************************************************************************
  * CANCEL API URL  (결제 취소 URL)    
@@ -19,6 +18,7 @@ $logPath = "/home/asiaski/public_html/skiresort/data/app.log"; //디버그 로�
  */
 
 $CANCEL_API_URL = "https://test-relay.mainpay.co.kr/v1/api/payments/payment/cancel";
+// $CANCEL_API_URL = "https://relay.mainpay.co.kr/v1/api/payments/payment/cancel";
 
 /*
       API KEY (비밀키)  
@@ -172,14 +172,15 @@ if ($resultCode != "200") {
 
 
 
-    echo $errorMessage; // 실운영시 제거
+    // echo $errorMessage; // 실운영시 제거
 
 
     //실패시 쿼리
 
     echo "<script>
-            alert('처리 중 오류가 발생했습니다.');
-          </script>";
+        alert('처리 중 오류가 발생했습니다.');
+        location.href = '{$return_url}';
+      </script>";
 } else {
 
     $data = $obj->{'data'};
@@ -223,14 +224,15 @@ if($target_table == 'SBAK_T1_TEST_Apply'){
 
 <body>
     <script>
-        /* 결제 완료 페이지 호출 */
-        var resultCode = "<?php echo $resultCode ?>";
-        var resultMessage = "<?php echo $resultMessage ?>";
-        var mb_name = "<?php echo $mb_name; ?>";
-        sql = "<?php echo $sql; ?>";
+    /* 결제 완료 페이지 호출 */
+    var resultCode = "<?php echo $resultCode ?>";
+    var resultMessage = "<?php echo $resultMessage ?>";
+    var mb_name = "<?php echo $mb_name; ?>";
+    sql = "<?php echo $sql; ?>";
 
-        alert(mb_name + "회원님 정상취소됨 : resultCode = " + resultCode + ", resultMessage = " + resultMessage);
-        location.href = "<?php echo $return_url; ?>";
+    /*alert(mb_name + "회원님 정상취소됨 : resultCode = " + resultCode + ", resultMessage = " + resultMessage);*/
+    alert(mb_name + "회원님 정상 취소되었습니다.");
+    location.href = "<?php echo $return_url; ?>";
     </script>
 </body>
 

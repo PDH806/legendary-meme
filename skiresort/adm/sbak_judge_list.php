@@ -75,6 +75,15 @@ $sql_order = isset($sql_order)?$sql_order:'';
 $sql = " select * {$sql_common} {$sql_search} {$sql_order} order by UID desc limit {$from_record}, {$rows} ";
 $result = sql_query($sql);
 
+$this_year = date("Y");
+$this_month = date("m");
+$arr = array('11', '12'); //이번 시즌에 포함할 월
+
+if (in_array($this_month, $arr)) {
+    $test_season = $this_year + 1;
+} else {
+    $test_season = $this_year;
+}
 
 ?>
 
@@ -87,13 +96,13 @@ $result = sql_query($sql);
             <span class="btn_ov01"><span class="ov_txt">총 등록건수 </span><span class="ov_num">
                     <?php echo number_format($total_count) ?>명
                 </span></span>
-              
+
 
         </div>
 
 
         <label for="sch_sort" class="sound_only">검색분류</label>
-       
+
         <select name="sfl" id="sch_sort" class="search_sort">
             <option value="MEMBER_ID" <?php echo get_selected($sfl, 'MEMBER_ID'); ?>>아이디</option>
             <option value="RESORT" <?php echo get_selected($sfl, 'RESORT'); ?>>활동스키장</option>
@@ -136,7 +145,7 @@ $result = sql_query($sql);
                     <th scope="col" width="20%">메모</th>
                     <th scope="col" width="3%">삭제</th>
 
- 
+
 
 
                 </tr>
@@ -161,83 +170,88 @@ $result = sql_query($sql);
 
                     $bg = 'bg' . ($i % 2);
                     ?>
-                    <tr class="<?php echo $bg; ?>">
+                <tr class="<?php echo $bg; ?>">
 
-                        <td class="td_chk">
-                            <input type="hidden" name="UID[<?php echo $i ?>]" value="<?php echo $row['UID'] ?>">
-                            <label for="chk_<?php echo $i; ?>" class="sound_only"><?php echo get_text($row['MEMBER_ID']); ?>
-                                지도자</label>
-                            <input type="checkbox" name="chk[]" value="<?php echo $i ?>" id="chk_<?php echo $i ?>">
+                    <td class="td_chk">
+                        <input type="hidden" name="UID[<?php echo $i ?>]" value="<?php echo $row['UID'] ?>">
+                        <label for="chk_<?php echo $i; ?>" class="sound_only"><?php echo get_text($row['MEMBER_ID']); ?>
+                            지도자</label>
+                        <input type="checkbox" name="chk[]" value="<?php echo $i ?>" id="chk_<?php echo $i ?>">
 
-                        </td>
-                        <td>
-                        
-                            <?php if (file_exists($mb_img_path)) { ?>
-							<img src="<?php echo $mb_img_url ?>" width=100 alt="회원이미지">
-					     	<?php } else { ?>
-							<img src="<?php echo G5_THEME_IMG_URL ?>/sbak_logo.jpg" width=100 alt="회원이미지">
-                          	<?php } ?>
+                    </td>
+                    <td>
 
-                        </td>
+                        <?php if (file_exists($mb_img_path)) { ?>
+                        <img src="<?php echo $mb_img_url ?>" width=100 alt="회원이미지">
+                        <?php } else { ?>
+                        <img src="<?php echo G5_THEME_IMG_URL ?>/sbak_logo.jpg" width=100 alt="회원이미지">
+                        <?php } ?>
 
-                        <td class="td_left">
-                            <?php
+                    </td>
+
+                    <td class="td_left">
+                        <?php
                             $sql = "SELECT * FROM g5_member WHERE mb_id = '" . $row['MEMBER_ID'] . "'";
 
                             $row2 = sql_fetch($sql);
                             ?>
 
 
-                              <h1 class="pageSubTitle"> <i class="fa fa-user" aria-hidden="true"></i> <?php echo $row2['mb_name']; ?> ( <?php echo $row2['mb_id']; ?> ) </h1>
-                                        
-                            <input type="text" name="PHONE[<?php echo $i ?>]" value="<?php echo $row2['mb_hp']; ?>" readonly placeholder="연락처" 
-                            <?php if ($row['IS_DEL'] == 'Y') { echo "class='ksia_input_deleted' readonly"; }else{ echo "class='tbl_input'"; } ?>>  
+                        <h1 class="pageSubTitle"> <i class="fa fa-user" aria-hidden="true"></i>
+                            <?php echo $row2['mb_name']; ?> ( <?php echo $row2['mb_id']; ?> ) </h1>
 
-                            <input type="text" name="EMAIL[<?php echo $i ?>]" value="<?php echo $row2['mb_email']; ?>" readonly placeholder="이메일" 
+                        <input type="text" name="PHONE[<?php echo $i ?>]" value="<?php echo $row2['mb_hp']; ?>" readonly
+                            placeholder="연락처"
                             <?php if ($row['IS_DEL'] == 'Y') { echo "class='ksia_input_deleted' readonly"; }else{ echo "class='tbl_input'"; } ?>>
-                          
-                           
-                        </td>
 
-                        <td>
-                            <?php echo $row['RESORT'];?>
-                        </td>
+                        <input type="text" name="EMAIL[<?php echo $i ?>]" value="<?php echo $row2['mb_email']; ?>"
+                            readonly placeholder="이메일"
+                            <?php if ($row['IS_DEL'] == 'Y') { echo "class='ksia_input_deleted' readonly"; }else{ echo "class='tbl_input'"; } ?>>
 
-                        <td>
-                            <?php echo $row['T_skiresort'];?>
-                        </td>
 
-                        <td>
-                            <?php
-                            $test_year = date("Y"); 
+                    </td>
+
+                    <td>
+                        <?php echo $row['RESORT'];?>
+                    </td>
+
+                    <td>
+                        <?php echo $row['T_skiresort'];?>
+                    </td>
+
+                    <td>
+                        <?php
                             $sql2 = "SELECT T_code 
                             FROM SBAK_T1_TEST 
-                            WHERE T_mb_id = '{$row['MEMBER_ID']}' AND TEST_YEAR = '{$test_year}'";
+                            WHERE T_mb_id = '{$row['MEMBER_ID']}' AND TEST_YEAR = '{$test_season}'";
                             $result2 = sql_query($sql2);
 
                             while ($row2 = sql_fetch_array($result2)) {
 
-                                $sort_url = G5_ADMIN_URL . "/sbak_T1_test_list.php?sst={$test_year}&sfl=T_code&stx={$row2['T_code']}";
+                                $sort_url = G5_ADMIN_URL . "/sbak_T1_test_list.php?sst={$test_season}&sfl=T_code&stx={$row2['T_code']}";
 
                                 echo "<a href= '{$sort_url}' class='btn btn-primary'>{$row2['T_code']}</a><br>";
                             }
 
 
                             ?>
-                            
-                        </td>
 
-                        <td>
-                            <textarea name="MEMO[<?php echo $i ?>]" placeholder="메모사항"  <?php if ($row['IS_DEL'] == 'Y') { echo "class='ksia_input_deleted' readonly"; }else{ echo "class='ksia_input'"; } ?> style="resize: none ; display: block ; width: 100%; height: 20px; border: solid 2px #1E90FF;border-radius: 5px;"><?php echo $row['MEMO']; ?></textarea>
-                        </td>
-                        <td>
-                           <input type="checkbox" name="IS_DEL[<?php echo $i; ?>]" value="Y" id="IS_DEL<?php echo $i; ?>" <?php if ($row['IS_DEL'] == 'Y') { echo 'checked';} ?>>    
-                        </td>
+                    </td>
+
+                    <td>
+                        <textarea name="MEMO[<?php echo $i ?>]" placeholder="메모사항"
+                            <?php if ($row['IS_DEL'] == 'Y') { echo "class='ksia_input_deleted' readonly"; }else{ echo "class='ksia_input'"; } ?>
+                            style="resize: none ; display: block ; width: 100%; height: 20px; border: solid 2px #1E90FF;border-radius: 5px;"><?php echo $row['MEMO']; ?></textarea>
+                    </td>
+                    <td>
+                        <input type="checkbox" name="IS_DEL[<?php echo $i; ?>]" value="Y" id="IS_DEL<?php echo $i; ?>"
+                            <?php if ($row['IS_DEL'] == 'Y') { echo 'checked';} ?>>
+                    </td>
 
 
 
 
-                    </tr>
+                </tr>
                 <?php } ?>
                 <?php if ($i == 0)
                     echo '<tr><td colspan="' . $colspan . '" class="empty_table">자료가 없습니다.</td></tr>'; ?>
@@ -261,40 +275,54 @@ if ($pagelist) {
 ?>
 
 <script>
-    $(function () {
-        $("#sch_sort").change(function () { // select #sch_sort의 옵션이 바뀔때
-            if ($(this).val() == "vi_date") { // 해당 value 값이 vi_date이면
-                $("#sch_word").datepicker({ changeMonth: true, changeYear: true, dateFormat: "yy-mm-dd", showButtonPanel: true, yearRange: "c-99:c+99", maxDate: "+0d" }); // datepicker 실행
-            } else { // 아니라면
-                $("#sch_word").datepicker("destroy"); // datepicker 미실행
-            }
-        });
-
-        if ($("#sch_sort option:selected").val() == "vi_date") { // select #sch_sort 의 옵션중 selected 된것의 값이 vi_date라면
-            $("#sch_word").datepicker({ changeMonth: true, changeYear: true, dateFormat: "yy-mm-dd", showButtonPanel: true, yearRange: "c-99:c+99", maxDate: "+0d" }); // datepicker 실행
+$(function() {
+    $("#sch_sort").change(function() { // select #sch_sort의 옵션이 바뀔때
+        if ($(this).val() == "vi_date") { // 해당 value 값이 vi_date이면
+            $("#sch_word").datepicker({
+                changeMonth: true,
+                changeYear: true,
+                dateFormat: "yy-mm-dd",
+                showButtonPanel: true,
+                yearRange: "c-99:c+99",
+                maxDate: "+0d"
+            }); // datepicker 실행
+        } else { // 아니라면
+            $("#sch_word").datepicker("destroy"); // datepicker 미실행
         }
     });
 
-    function fvisit_submit(f) {
-        return true;
+    if ($("#sch_sort option:selected").val() == "vi_date") { // select #sch_sort 의 옵션중 selected 된것의 값이 vi_date라면
+        $("#sch_word").datepicker({
+            changeMonth: true,
+            changeYear: true,
+            dateFormat: "yy-mm-dd",
+            showButtonPanel: true,
+            yearRange: "c-99:c+99",
+            maxDate: "+0d"
+        }); // datepicker 실행
     }
+});
+
+function fvisit_submit(f) {
+    return true;
+}
 </script>
 
 <script>
-    function ksia_license_list_submit(f) {
-        if (!is_checked("chk[]")) {
-            alert(document.pressed + " 하실 항목을 하나 이상 선택하세요.");
+function ksia_license_list_submit(f) {
+    if (!is_checked("chk[]")) {
+        alert(document.pressed + " 하실 항목을 하나 이상 선택하세요.");
+        return false;
+    }
+
+    if (document.pressed == "선택삭제") {
+        if (!confirm("선택한 자료를 정말 삭제하시겠습니까?")) {
             return false;
         }
-
-        if (document.pressed == "선택삭제") {
-            if (!confirm("선택한 자료를 정말 삭제하시겠습니까?")) {
-                return false;
-            }
-        }
-
-        return true;
     }
+
+    return true;
+}
 </script>
 
 <?php

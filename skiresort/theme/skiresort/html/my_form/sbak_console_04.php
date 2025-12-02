@@ -9,24 +9,24 @@ $READY_API_URL = G5_THEME_URL . "/html/my_form/mainpay_api/pc/_9_cancel.php";
 <head>
 
     <script type='text/javascript'>
-        function payment_cancel(form) {
-            form.action = "<?php echo $READY_API_URL; ?>";
-            form.method = "POST";
-            const result = confirm("취소처리시 자동 결제취소됩니다. 취소된 건은 복구할 수 없습니다. 정말 취소하시겠습니까? ");
-            if (result) {
-                form.submit();
-            } else {
-                return false;
-            }
-
+    function payment_cancel(form) {
+        form.action = "<?php echo $READY_API_URL; ?>";
+        form.method = "POST";
+        const result = confirm("취소처리시 자동 결제취소됩니다. 취소된 건은 복구할 수 없습니다. 정말 취소하시겠습니까? ");
+        if (result) {
+            form.submit();
+        } else {
+            return false;
         }
+
+    }
     </script>
 
     <style>
-        .table thead th {
-            color: #fff !important;
-            /* 글자 흰색 */
-        }
+    .table thead th {
+        color: #fff !important;
+        /* 글자 흰색 */
+    }
     </style>
 </head>
 
@@ -35,8 +35,10 @@ $READY_API_URL = G5_THEME_URL . "/html/my_form/mainpay_api/pc/_9_cancel.php";
     <h4 class="fw-bold py-3 mb-4"><?php echo $this_title; ?><span class="text-muted fw-light"> / MY EVENTS</span></h4>
 
     <div class="alert  alert-dark mb-0" role="alert">
-        <?php echo $mb_name; ?> 회원님께서 신청한 모든 행사목록입니다. 정상적으로 행사등록이 완료되면 <span class="badge rounded-pill bg-primary">참가확정</span> 표식이 생성됩니다.
-        <span class="badge rounded-pill bg-label-danger border border-danger text-danger">대기순번 </span>의 경우는, 결제되었으나, 확정명단에 들지 못한 대기자의 대기순번입니다.
+        <?php echo $mb_name; ?> 회원님께서 신청한 모든 행사목록입니다. 정상적으로 행사등록이 완료되면 <span
+            class="badge rounded-pill bg-primary">참가확정</span> 표식이 생성됩니다.
+        <span class="badge rounded-pill bg-label-danger border border-danger text-danger">대기순번 </span>의 경우는, 결제되었으나,
+        확정명단에 들지 못한 대기자의 대기순번입니다.
         이 경우, 참석확정 인원 중 취소 등으로, 결원이 발생시에만 참가확정될 수 있으며, 대기순번은 사유발생시마다 변동됩니다.
         그외의 경우, 취소된 신청건이거나, 신청인원 초과 후 결제로 인한 등록실패건입니다.
     </div> <br>
@@ -135,117 +137,120 @@ $READY_API_URL = G5_THEME_URL . "/html/my_form/mainpay_api/pc/_9_cancel.php";
                 ?>
 
 
-                    <form name='frm_2' method='post' action='./sbak_console_event_form_update.php'>
-                        <input type='hidden' name='profile_update' value='yes'>
-                        <input type='hidden' name='uid' value='<?php echo $uid; ?>'>
+                <form name='frm_2' method='post' action='./sbak_console_event_form_update.php'>
+                    <input type='hidden' name='profile_update' value='yes'>
+                    <input type='hidden' name='uid' value='<?php echo $uid; ?>'>
 
 
-                        <!-- Modal -->
-                        <div class="modal fade" id="<?php echo $detail_info_Modal; ?>" tabindex="-1" aria-labelledby="exampleModalLabel"
-                            aria-hidden="true">
-                            <!--div class="modal-dialog modal-dialog-centered modal-lg"-->
-                            <div class="modal-dialog <?php if (preg_match("/" . G5_MOBILE_AGENT . "/i", $_SERVER['HTTP_USER_AGENT'])) {
+                    <!-- Modal -->
+                    <div class="modal fade" id="<?php echo $detail_info_Modal; ?>" tabindex="-1"
+                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <!--div class="modal-dialog modal-dialog-centered modal-lg"-->
+                        <div class="modal-dialog <?php if (preg_match("/" . G5_MOBILE_AGENT . "/i", $_SERVER['HTTP_USER_AGENT'])) {
                                                             echo 'modal-fullscreen';
                                                         } else {
                                                             echo 'modal-dialog-scrollable';
                                                         } ?>" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h1 class="modal-title fs-5" id="exampleModalLabel">
-                                            '
-                                            <?php echo $mb_name; ?>' 회원님의 참가신청 상세내역
-                                        </h1>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="exampleModalLabel">
+                                        '
+                                        <?php echo $mb_name; ?>' 회원님의 참가신청 상세내역
+                                    </h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
 
-                                        <div class="container-fluid">
+                                    <div class="container-fluid">
 
 
-                                            <div class="row border-bottom">
-                                                <div class="col-4 my-2"><span class='h6'>[생년월일]</span></div>
-                                                <div class="col-8 my-2">
-                                                    <?php echo $mb_birth; ?>
+                                        <div class="row border-bottom">
+                                            <div class="col-4 my-2"><span class='h6'>[생년월일]</span></div>
+                                            <div class="col-8 my-2">
+                                                <?php echo $mb_birth; ?>
 
-                                                </div>
                                             </div>
+                                        </div>
 
 
-                                            <div class="row border-bottom">
-                                                <div class="col-4 my-2"><span class='h6'>[행사명]</span></div>
-                                                <div class="col-8 my-2">
-                                                    <li class="list-group-item list-group-item-dark">
-                                                        <?php echo $event_title; ?>
-                                                    </li>
-                                                </div>
+                                        <div class="row border-bottom">
+                                            <div class="col-4 my-2"><span class='h6'>[행사명]</span></div>
+                                            <div class="col-8 my-2">
+                                                <li class="list-group-item list-group-item-dark">
+                                                    <?php echo $event_title; ?>
+                                                </li>
                                             </div>
+                                        </div>
 
-                                            <?php if ($event_code == "B02" or $event_code == "B05") { // KSIA만 해당
+                                        <?php if ($event_code == "B02" or $event_code == "B05") { // KSIA만 해당
                                             ?>
 
-                                                <!--div class="row border-bottom">
+                                        <!--div class="row border-bottom">
                                                     <div class="col-4 my-2"><span class='h6'>[응시일]</span></div>
                                                     <div class="col-8 my-2">
                                                         <?php echo "<h6><span class=\"badge rounded-pill bg-success\">" . $row['ENTRY_INFO_1'] . "</span></h6>"; ?> (요강에서 날짜를 정확히 확인하세요.)
                                                     </div>
                                                 </div-->
 
-                                            <?php } ?>
-                                            <div class="row border-bottom">
-                                                <div class="col-4 my-2"><span class='h6'>[부 &nbsp;&nbsp;&nbsp; &nbsp; 문]</span></div>
-                                                <div class="col-8 my-2">
-                                                    <span class='text-danger'>
-                                                        <?php
+                                        <?php } ?>
+                                        <div class="row border-bottom">
+                                            <div class="col-4 my-2"><span class='h6'>[부 &nbsp;&nbsp;&nbsp; &nbsp;
+                                                    문]</span></div>
+                                            <div class="col-8 my-2">
+                                                <span class='text-danger'>
+                                                    <?php
                                                         echo  $row['THE_GENDER'];
                                                         ?>
-                                                    </span>
-                                                </div>
+                                                </span>
                                             </div>
+                                        </div>
 
-                                            <?php if (!empty($row['ENTRY_BIB']) && $row['ENTRY_BIB'] > 0) { //250109 BIB코드추가 
+                                        <?php if (!empty($row['ENTRY_BIB']) && $row['ENTRY_BIB'] > 0) { //250109 BIB코드추가 
                                             ?>
-                                                <div class="row border-bottom">
-                                                    <div class="col-4 my-2"><span class='h6'>[BIB]</span></div>
-                                                    <div class="col-8 my-2">
-                                                        <?php echo "<button type='button' class=\"btn btn-outline-primary\">" . $row['ENTRY_BIB'] . "</button>"; ?>
-                                                    </div>
-                                                </div>
-                                            <?php } ?>
-
-                                            <div class="row border-bottom">
-                                                <div class="col-4 my-2"><span class='h6'>[신청등록일]</span></div>
-                                                <div class="col-8 my-2">
-                                                    <?php echo $row['APPLY_DATE'] . "  <small class='text-muted'>" . $row['APPLY_TIME'] . "</small>"; ?>
-
-                                                </div>
+                                        <div class="row border-bottom">
+                                            <div class="col-4 my-2"><span class='h6'>[BIB]</span></div>
+                                            <div class="col-8 my-2">
+                                                <?php echo "<button type='button' class=\"btn btn-outline-primary\">" . $row['ENTRY_BIB'] . "</button>"; ?>
                                             </div>
+                                        </div>
+                                        <?php } ?>
 
-                                            <div class="row border-bottom">
-                                                <div class="col-4 my-2"><span class='h6'>[연 락 처]</span></div>
-                                                <div class="col-8 my-2">
-                                                    <?php echo $row['THE_TEL']; ?>
+                                        <div class="row border-bottom">
+                                            <div class="col-4 my-2"><span class='h6'>[신청등록일]</span></div>
+                                            <div class="col-8 my-2">
+                                                <?php echo $row['APPLY_DATE'] . "  <small class='text-muted'>" . $row['APPLY_TIME'] . "</small>"; ?>
 
-                                                </div>
                                             </div>
+                                        </div>
+
+                                        <div class="row border-bottom">
+                                            <div class="col-4 my-2"><span class='h6'>[연 락 처]</span></div>
+                                            <div class="col-8 my-2">
+                                                <?php echo $row['THE_TEL']; ?>
+
+                                            </div>
+                                        </div>
 
 
 
-                                            <?php
+                                        <?php
                                             $arr_event = array('B03', 'C01');
 
                                             if (in_array($event_code, $arr_event)) { //대회면
 
                                             ?>
 
-                                                <div class="row border-bottom">
-                                                    <div class="col-4 my-2"><span class="h6">[프 로 필]</span></div>
-                                                    <div class="col-8 my-2">
-                                                        <textarea rows="5" id="THE_PROFILE" name="THE_PROFILE" class="form-control"
-                                                            <?php echo (($row['PAYMENT_STATUS'] != "Y" || $row['THE_STATUS'] != "77")) ? " disabled" : ""; ?>><?php echo $row['THE_PROFILE']; ?></textarea>
-                                                    </div>
-                                                </div>
+                                        <div class="row border-bottom">
+                                            <div class="col-4 my-2"><span class="h6">[프 로 필]</span></div>
+                                            <div class="col-8 my-2">
+                                                <textarea rows="5" id="THE_PROFILE" name="THE_PROFILE"
+                                                    class="form-control"
+                                                    <?php echo (($row['PAYMENT_STATUS'] != "Y" || $row['THE_STATUS'] != "77")) ? " disabled" : ""; ?>><?php echo $row['THE_PROFILE']; ?></textarea>
+                                            </div>
+                                        </div>
 
-                                            <?php }
+                                        <?php }
 
                                             $arr_test = array('B02', 'B07', 'B05');
 
@@ -253,17 +258,17 @@ $READY_API_URL = G5_THEME_URL . "/html/my_form/mainpay_api/pc/_9_cancel.php";
 
                                             ?>
 
-                                                <div class="row border-bottom">
-                                                    <div class="col-4 my-2">
-                                                        <b>
+                                        <div class="row border-bottom">
+                                            <div class="col-4 my-2">
+                                                <b>
 
-                                                            <span class='h6'>[필기면제]</span>
+                                                    <span class='h6'>[필기면제]</span>
 
-                                                        </b>
-                                                    </div>
-                                                    <div class="col-8 my-2">
+                                                </b>
+                                            </div>
+                                            <div class="col-8 my-2">
 
-                                                        <?php
+                                                <?php
                                                         if ($row['ENTRY_INFO_3'] == "예") {
                                                             echo $row['ENTRY_INFO_3'] . " | " . $row['ENTRY_INFO_4'];
                                                         } else {
@@ -271,33 +276,33 @@ $READY_API_URL = G5_THEME_URL . "/html/my_form/mainpay_api/pc/_9_cancel.php";
                                                         }
                                                         ?>
 
-                                                    </div>
-                                                </div>
+                                            </div>
+                                        </div>
 
 
-                                                <div class="row border-bottom">
-                                                    <div class="col-4 my-2"><span class="h6">[실기면제]</span></div>
-                                                    <div class="col-8 my-2">
-                                                        <?php
+                                        <div class="row border-bottom">
+                                            <div class="col-4 my-2"><span class="h6">[실기면제]</span></div>
+                                            <div class="col-8 my-2">
+                                                <?php
                                                         if ($row['ENTRY_INFO_5'] == "예") {
                                                             echo $row['ENTRY_INFO_5'] . " | " . $row['ENTRY_INFO_6'];
                                                         } else {
                                                             echo "해당사항 없음";
                                                         }
                                                         ?>
-                                                    </div>
-                                                </div>
+                                            </div>
+                                        </div>
 
-                                            <?php } ?>
-
-
-
-                                            <div class="row border-bottom">
-                                                <div class="col-4 my-2"><span class="h6">[처리상태]</span></div>
-                                                <div class="col-8 my-2">
+                                        <?php } ?>
 
 
-                                                    <?php
+
+                                        <div class="row border-bottom">
+                                            <div class="col-4 my-2"><span class="h6">[처리상태]</span></div>
+                                            <div class="col-8 my-2">
+
+
+                                                <?php
 
                                                     $query = "select INSERT_DATE,CANCELED_DATE from {$Table_Mainpay} where AID = '{$row['AID']}'";
                                                     $row_date = sql_fetch($query);
@@ -361,54 +366,55 @@ $READY_API_URL = G5_THEME_URL . "/html/my_form/mainpay_api/pc/_9_cancel.php";
                                                     ?>
 
 
-                                                </div>
                                             </div>
+                                        </div>
 
 
 
-                                            <div class="row border-bottom">
-                                                <div class="col-4 my-2"><span class='h6'>[메 &nbsp;&nbsp;&nbsp; &nbsp; 모]</span></div>
-                                                <div class="col-8 my-2">
-                                                    <?php
+                                        <div class="row border-bottom">
+                                            <div class="col-4 my-2"><span class='h6'>[메 &nbsp;&nbsp;&nbsp; &nbsp;
+                                                    모]</span></div>
+                                            <div class="col-8 my-2">
+                                                <?php
                                                     if (empty($row['THE_MEMO'])) {
                                                         echo "없음";
                                                     } else {
                                                         echo $row['THE_MEMO'];
                                                     }
                                                     ?>
-                                                </div>
                                             </div>
-
                                         </div>
 
-
                                     </div>
-                                    <div class="modal-footer">
-                                        <?php
+
+
+                                </div>
+                                <div class="modal-footer">
+                                    <?php
                                         if ($row['PAYMENT_STATUS'] == "Y" && $row['THE_STATUS'] == "77") { //결제완료자에 한해 수정버튼 출력
                                             if (in_array($event_code, $arr_event)) { //대회면
                                                 echo "<button type='button' class='btn btn-primary' onclick='form.submit()'>프로필 변경완료</button>";
                                             }
                                         }
                                         ?>
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-                                    </div>
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
                                 </div>
                             </div>
                         </div>
+                    </div>
 
 
-                        <!-- 모달끝 -->
+                    <!-- 모달끝 -->
 
-                    </form>
+                </form>
 
 
-                    <tr <?php if ($row['THE_STATUS'] == "66") {
+                <tr <?php if ($row['THE_STATUS'] == "66") {
                             echo "style='background-color:#efefef'";
                         } ?>>
 
-                        <td>
-                            <?php
+                    <td>
+                        <?php
 
                             if ($row['THE_STATUS'] == "66" || $row['PAYMENT_STATUS'] == "C") {
                                 if ($row['PAYMENT_STATUS'] == "C") {
@@ -423,11 +429,11 @@ $READY_API_URL = G5_THEME_URL . "/html/my_form/mainpay_api/pc/_9_cancel.php";
                             ?>
 
 
-                            <button type='button' class='btn btn-secondary btn-sm' data-bs-toggle='modal'
-                                data-bs-target='<?php echo $data_target; ?>'> 상세조회</button>
-                        </td>
-                        <td>
-                            <?php
+                        <button type='button' class='btn btn-secondary btn-sm' data-bs-toggle='modal'
+                            data-bs-target='<?php echo $data_target; ?>'> 상세조회</button>
+                    </td>
+                    <td>
+                        <?php
                             echo "<small>" . $regis_date . "</small>";
                             if ($row['THE_STATUS'] == "77") {
                                 if ($stanby_no > 0) { //대기자면
@@ -451,15 +457,16 @@ $READY_API_URL = G5_THEME_URL . "/html/my_form/mainpay_api/pc/_9_cancel.php";
                             ?>
 
 
-                        </td>
+                    </td>
 
-                        <td>
+                    <td>
 
-                            <?php
+                        <?php
 
                             $pay_limit = $Pay_end_date . " " . $Pay_end_time;
 
-                            if ($row['PAYMENT_STATUS'] == "Y") { // 결제완료건에 한해
+
+                            if ($row['PAYMENT_STATUS'] == "Y" && $row['EVENT_YEAR'] == $this_season) { // 결제완료건에 한해 //251201 + 올해 건 만 취소 가능하게 (대현)
                                 if (date("Y-m-d H:i:s") <= $pay_limit) { //취소마감기간 이전이면
                                     echo "<form id='MAINPAY_FORM' method='post'>";
                                     echo "<input type='hidden' name='is_del' value='yes'>";
@@ -488,8 +495,8 @@ $READY_API_URL = G5_THEME_URL . "/html/my_form/mainpay_api/pc/_9_cancel.php";
                             }
                             ?>
 
-                        </td>
-                    </tr>
+                    </td>
+                </tr>
                 <?php
                 }
 
@@ -520,12 +527,13 @@ $READY_API_URL = G5_THEME_URL . "/html/my_form/mainpay_api/pc/_9_cancel.php";
                         /* paging : 이전 페이지 */
                         if ($page <= 1) {
                         ?>
-                            <li class='page-item'><a class='page-link' href="<?php echo $basename; ?>?page=1" aria-label='Previous'>
-                                    <span aria-hidden='true'>&laquo;</span></a></li>
+                        <li class='page-item'><a class='page-link' href="<?php echo $basename; ?>?page=1"
+                                aria-label='Previous'>
+                                <span aria-hidden='true'>&laquo;</span></a></li>
                         <?php } else { ?>
-                            <li class='page-item'><a class='page-link' href="<?php echo $basename; ?>?page=<?php echo ($page - 1); ?>"
-                                    aria-label='Previous'>
-                                    <span aria-hidden='true'>&laquo;</span></a></li>
+                        <li class='page-item'><a class='page-link'
+                                href="<?php echo $basename; ?>?page=<?php echo ($page - 1); ?>" aria-label='Previous'>
+                                <span aria-hidden='true'>&laquo;</span></a></li>
                         <?php }; ?>
 
                         <?php
@@ -533,34 +541,35 @@ $READY_API_URL = G5_THEME_URL . "/html/my_form/mainpay_api/pc/_9_cancel.php";
                         for ($print_page = $s_pageNum; $print_page <= $e_pageNum; $print_page++) {
                             if ($page == $print_page) {
                         ?>
-                                <li class='page-item active' aria-current="page"><a class='page-link' href="#">
-                                        <?php echo $print_page; ?>
-                                    </a>
-                                </li>
-                            <?php } else { ?>
+                        <li class='page-item active' aria-current="page"><a class='page-link' href="#">
+                                <?php echo $print_page; ?>
+                            </a>
+                        </li>
+                        <?php } else { ?>
 
-                                <li class='page-item'><a class='page-link' href="<?php echo $basename; ?>?page=<?php echo $print_page; ?>">
-                                        <?php echo $print_page; ?>
-                                    </a></li>
+                        <li class='page-item'><a class='page-link'
+                                href="<?php echo $basename; ?>?page=<?php echo $print_page; ?>">
+                                <?php echo $print_page; ?>
+                            </a></li>
 
-                            <?php }
+                        <?php }
                         }
                         /* paging : 다음 페이지 */
                         if ($page >= $total_page) {
                             ?>
-                            <li class='page-item'><a class='page-link' href="<?php echo $basename; ?>?page=<?php echo $total_page; ?>"
-                                    aria-label='Next'>
-                                    <span aria-hidden='true'>&raquo;</span></a></li>
+                        <li class='page-item'><a class='page-link'
+                                href="<?php echo $basename; ?>?page=<?php echo $total_page; ?>" aria-label='Next'>
+                                <span aria-hidden='true'>&raquo;</span></a></li>
                         <?php } else { ?>
-                            <li class='page-item'><a class='page-link' href="<?php echo $basename; ?>?page=<?php echo ($page + 1); ?>"
-                                    aria-label='Next'>
-                                    <span aria-hidden='true'>&raquo;</span></a></li>
+                        <li class='page-item'><a class='page-link'
+                                href="<?php echo $basename; ?>?page=<?php echo ($page + 1); ?>" aria-label='Next'>
+                                <span aria-hidden='true'>&raquo;</span></a></li>
                         <?php }
                         ?>
 
 
-                        <li class='page-item'><a class='page-link' href="<?php echo $basename; ?>?page=<?php echo $total_page; ?>"
-                                aria-label='마지막'>
+                        <li class='page-item'><a class='page-link'
+                                href="<?php echo $basename; ?>?page=<?php echo $total_page; ?>" aria-label='마지막'>
                                 <span aria-hidden='true'>마지막</span></a></li>
                     </ul>
 

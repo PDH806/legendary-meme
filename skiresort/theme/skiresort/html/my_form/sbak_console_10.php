@@ -17,7 +17,6 @@ if (!$event_code) {
 }
 
 
-
 $sql_event = "select exists (select * from {$Table_Office_Conf} where Event_code = '{$event_code}' limit 1) as CHK_EXIST";
 $row_cnt = sql_fetch($sql_event);
 
@@ -94,7 +93,6 @@ if ($event_code == 'C01') { // 기술선수권 일경우 스키티칭2 있는지
   if ($row_cnt['CHK_EXIST'] < 1) {
     alert("스키 티칭2 자격증이 없습니다!", $refer);
   }
-
 }
 
   }
@@ -137,6 +135,14 @@ get_office_conf($event_code);
 
     }
 
+    $sql = "select count(*) as CNT from {$Table_Master_Apply} where EVENT_CODE = '{$event_code}' and (EVENT_YEAR = '{$event_year}' and PAYMENT_STATUS = 'Y')";
+    $limit_result = sql_fetch($sql);
+
+
+    if ($limit_result['CNT'] >= $event_total_limit) {
+        alert("현재 참가제한인원이 초과되어, 등록할 수 없습니다. 이후, 추가등록여부에 관해서는 별도의 공지사항에 따라주시기 바랍니다.", $refer);
+    }
+
 $entry_info_2 = ""; // 기선전 , 기선전 + 티칭3 구분
 
 if ($sub_sort == 'T3') { // 기술선수권 + 티칭3 일 경우 B03 에서 가져오기
@@ -161,12 +167,13 @@ if ($event_rule == '' or $event_rule < 1) {
 
 <div class="container-xxl flex-grow-1 container-p-y">
 
-  <h4 class="fw-bold py-3 mb-4"><?php echo $event_title; ?> <span class="text-muted fw-light">/ REGISTRATION</span></h4>
-  <div class="alert  alert-dark mb-0" role="alert">
-    각종 행사에 온라인으로 신청하세요.
-  </div> <br>
+    <h4 class="fw-bold py-3 mb-4"><?php echo $event_title; ?> <span class="text-muted fw-light">/ REGISTRATION</span>
+    </h4>
+    <div class="alert  alert-dark mb-0" role="alert">
+        각종 행사에 온라인으로 신청하세요.
+    </div> <br>
 
-  <?php
+    <?php
   include "./sbak_console_form_layout.php";
   ?>
 

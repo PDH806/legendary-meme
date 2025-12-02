@@ -6,32 +6,19 @@ add_stylesheet('<link rel="stylesheet" href="' . G5_URL . '/adm/css/sbak_css.css
 $event_code = $_GET['event_code'];
 
 
-
+if ($event_code == "B03"){
+$sql_1 = " select Event_title_1, Event_year from SBAK_OFFICE_CONF where Event_code like 'C01' ";
+}else{
 $sql_1 = " select Event_title_1, Event_year from SBAK_OFFICE_CONF where Event_code like '{$event_code}' ";
+}
 
 $row_1 = sql_fetch($sql_1);
-$event_title_1 = $row_1['Event_title_1'];
-
 $event_year = $row_1['Event_year'];
-
-
-
-$g5['title'] = $event_title_1;
-
-//auth_check_menu($auth, $sub_menu, 'r');
-
-//include_once('./admin.head.php');
-
-
-
-
 
 
 $sql_search = '';
 $sql_common = " from SBAK_Master_Apply ";
 
-
-//$sql_search = " where (1) ";
 
 if($event_code == "B03"){ // 기선전 + 티칭3은 C01(기선전) 에서 통합관리중
 
@@ -79,27 +66,29 @@ $result = sql_query($sql);
 
 <table width=100%>
 
-<tr>
-    <td width=50% align=left>
-        (총 엔트리 : <?php echo number_format($total_count)?>) 
+    <tr>
+        <td width=50% align=left>
+            (총 엔트리 : <?php echo number_format($total_count)?>)
 
-    </td>
-    <td width=50% align=right>
+        </td>
+        <td width=50% align=right>
 
-</tr>
+    </tr>
 
 </table>
 
 
 
 <div class="tbl_wrap tbl_head01">
-        <table><tr><td>
+    <table>
+        <tr>
+            <td>
 
-<table width=650 cellspacing=0 cellpadding=0 bgcolor='#ffffff'>
+                <table width=650 cellspacing=0 cellpadding=0 bgcolor='#ffffff'>
 
-<tr>
+                    <tr>
 
-<?php
+                        <?php
 for ($i=0; $row=sql_fetch_array($result); $i++) {
     // 접근가능한 그룹수
 
@@ -138,11 +127,13 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
 
 
 
-</td></tr></table>
+            </td>
+        </tr>
+    </table>
 
 
 
-<?php
+    <?php
 $domain = isset($domain) ? $domain : '';
 $pagelist = get_paging($config['cf_write_pages'], $page, $total_page, $_SERVER['SCRIPT_NAME'] . '?' . $qstr . '&amp;event_code=' . $event_code . '&amp;domain=' . $domain . '&amp;page=');
 if ($pagelist) {
@@ -151,4 +142,3 @@ if ($pagelist) {
 
 
 ?>
-

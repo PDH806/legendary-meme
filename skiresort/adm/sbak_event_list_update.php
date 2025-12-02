@@ -199,14 +199,14 @@ if ($_POST['act_button'] == "선택수정") {
     $set_time = date("Y-m-d H:i:s");
     $msg = $sms_msg;
 
-    $sHp = "02-488-6711"; // 발송번호
+    $sHp = "02-3473-1275"; // 발송번호
     for ($i = 0; $i < count($_POST['chk']); $i++) {
         // 실제 번호를 넘김
         $k = isset($_POST['chk'][$i]) ? (int) $_POST['chk'][$i] : 0;
         $p_UID = isset($_POST['UID'][$k]) ? (int) $_POST['UID'][$k] : 0;
         $p_THE_TEL = is_array($_POST['THE_TEL']) ? strip_tags(clean_xss_attributes($_POST['THE_TEL'][$k])) : '';
 
-        $sql_1 = "update SBAK_MASTER_Apply set SMS_TIME = '{$set_time}', SMS_MSG = '{$sms_msg}'  where UID = '{$p_UID}'";
+        $sql_1 = "update SBAK_Master_Apply set SMS_TIME = '{$set_time}', SMS_MSG = '{$sms_msg}'  where UID = '{$p_UID}'";
         $rHp = $p_THE_TEL;
 
 

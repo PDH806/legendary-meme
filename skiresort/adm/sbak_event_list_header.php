@@ -9,12 +9,19 @@ $_GET['get_payment'] = $_GET['get_payment'] ?? '';
 
 
 
-
+if ($event_code == 'B03'){
+$sql_event = "select * from SBAK_OFFICE_CONF where Event_code = 'C01'";
+}else{
 $sql_event = "select * from SBAK_OFFICE_CONF where Event_code = '{$event_code}'";
+}
 $row_conf = sql_fetch($sql_event);
 
 $event_title = $row_conf['Event_title'];
 $event_title_1 = $row_conf['Event_title_1'];
+if ($event_code == 'B03'){
+    $event_title_1 .= ' + 티칭3';
+}
+$event_year = $row_conf['Event_year'];
 
 $event_begin_date = $row_conf['Event_begin_date'];
 $event_begin_time = $row_conf['Event_begin_time'];
@@ -22,11 +29,21 @@ $event_end_date = $row_conf['Event_end_date'];
 $event_end_time = $row_conf['Event_end_time'];
 $event_total_limit = $row_conf['Event_total_limit']; //실운영인원
 $event_extra_cnt = $row_conf['Event_extra_cnt']; //추가모집인원
-$event_year = $row_conf['Event_year'];
+
 
 $event_extra_limit = $event_total_limit +  $event_extra_cnt; //총 등록가능인원
 
 $default_year = $event_year;
+
+$this_year = date("Y");
+$this_month = date("m");
+$arr = array('11', '12'); //이번 시즌에 포함할 월
+
+if (in_array($this_month, $arr)) {
+    $test_season = $this_year + 1;
+} else {
+    $test_season = $this_year;
+}
 
 switch ($event_code) {
 
@@ -66,14 +83,6 @@ $g5['title'] = $event_title_1;
 auth_check_menu($auth, $sub_menu, 'r');
 
 include_once('./admin.head.php');
-
-
-
-//mainpay ----------------------------------------------
-header('Content-Type: text/html; charset=utf-8');
-$READY_API_URL = G5_THEME_URL . "/html/my_form/mainpay_api/pc/_9_cancel.php";
-
-//-----------------------------------------------------
 
 
 $colspan = 13;
@@ -150,7 +159,6 @@ if ($stx) {
 
 
 
-
 $sql = " select count(*) as cnt
             {$sql_common}
             {$sql_search} ";
@@ -171,19 +179,3 @@ $sql = " select *
 $result = sql_query($sql);
 
 ?>
-
-<head>
-
-    <script type='text/javascript'>
-        function payment_cancel(form) {
-            form.action = "<?php echo $READY_API_URL; ?>";
-            form.method = "POST";
-            const result = confirm("취소처리시 자동 결제취소됩니다. 취소된 건은 복구할 수 없습니다. 정말 취소하시겠습니까? ");
-            if (result) {
-                form.submit();
-            } else {
-                return false;
-            }
-        }
-    </script>
-</head>

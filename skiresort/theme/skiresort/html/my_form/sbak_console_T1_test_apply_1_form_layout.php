@@ -4,21 +4,21 @@ if (!defined('_GNUBOARD_'))
 ?>
 
 <style>
-    .basic_info dl {
-        display: flex;
-        flex-wrap: wrap;
-    }
+.basic_info dl {
+    display: flex;
+    flex-wrap: wrap;
+}
 
-    .basic_info dt {
-        width: 120px;
-        /* 고정 너비 지정 */
+.basic_info dt {
+    width: 120px;
+    /* 고정 너비 지정 */
 
-    }
+}
 
-    .basic_info dd {
-        flex: 1;
-        margin: 0;
-    }
+.basic_info dd {
+    flex: 1;
+    margin: 0;
+}
 </style>
 
 
@@ -154,7 +154,7 @@ if (!defined('_GNUBOARD_'))
     <?php
     $query = "select NO, RESORT_NAME from {$Table_Skiresort} where NO = {$skiresort}"; //스키장 자료 갖고오기
     $result = sql_fetch($query);
-    $resort_name = $result['RESORT_NAME'];
+    $resort_name = $result['RESORT_NAME'] ?? '';
 
 
 
@@ -170,8 +170,10 @@ if (!defined('_GNUBOARD_'))
     <div class="col-xl-12">
         <div class="card mb-4">
             <h5 class="card-header">
-                <?php echo "<span style='font-size:1.4em;color:#000;font-weight:600;'>" . $resort_name . "</span> | " . $sports; ?> 티칭1 시험 목록&nbsp;&nbsp;
-                <small class="text-muted" style='font-weight:300;'> 스키장별로 개설된 응시일정을 확인하고, 선택하세요. (비공개 행사의 경우, 회원에 따라, 아래 목록에 나타나지 않을수 있습니다.)
+                <?php echo "<span style='font-size:1.4em;color:#000;font-weight:600;'>" . $resort_name . "</span> | " . $sports; ?>
+                티칭1 시험 목록&nbsp;&nbsp;
+                <small class="text-muted" style='font-weight:300;'> 스키장별로 개설된 응시일정을 확인하고, 선택하세요. (비공개 행사의 경우, 회원에 따라, 아래
+                    목록에 나타나지 않을수 있습니다.)
                 </small>
             </h5>
 
@@ -199,17 +201,17 @@ if (!defined('_GNUBOARD_'))
 
                     ?>
 
-                            <div class="basic_info" style="width: 100%;">
-                                <dl>
-                                    <dt>
-                                        <span style='padding-right:20px;'>
-                                            <?php echo "[일정] <br> " . $row['T_date']; ?>
-                                        </span>
-                                    </dt>
-                                    <dd>
+                    <div class="basic_info" style="width: 100%;">
+                        <dl>
+                            <dt>
+                                <span style='padding-right:20px;'>
+                                    <?php echo "[일정] <br> " . $row['T_date']; ?>
+                                </span>
+                            </dt>
+                            <dd>
 
-                                        <?php
-                                        $T_code = $row['T_code'];
+                                <?php
+                                        $T_code = $row['T_code'] ?? '';
                                         $query = "select count(*) as CNT from {$Table_T1_Apply} where T_code = '{$T_code}' 
                             and PAYMENT_STATUS = 'Y'"; //응시자수 계산
 
@@ -221,13 +223,19 @@ if (!defined('_GNUBOARD_'))
                                             echo "<span class='badge rounded-pill bg-success'>비공개검정</span>  ";
                                         }
 
-                                        echo "<span class='badge rounded-pill bg-info'>" . $row['T_code'] . "</span> | ";
-                                        echo "<small>접수기간 :</small> " . $row['Application_Day'] . " ~ " . $row['Expired_Day'] . " | ";
-                                        echo "<small>장소 : </small>" . $row['T_meeting'] . " | ";
-                                        echo "<small>시간 : </small>" . $row['T_time'] . " | ";
-                                        echo "<small>문의 : </small>" . $row['T_tel'] . " | ";
+                                        // echo "<span class='badge rounded-pill bg-info'>" . $row['T_code'] . "</span> | ";
+                                        // echo "<small>접수기간 :</small> " . $row['Application_Day'] . " ~ " . $row['Expired_Day'] . " | ";
+                                        // echo "<small>장소 : </small>" . $row['T_meeting'] . " | ";
+                                        // echo "<small>시간 : </small>" . $row['T_time'] . " | ";
+                                        // echo "<small>문의 : </small>" . $row['T_tel'] . " | ";
 
-                                        $T_Date = $row['T_date'];
+                                        echo "<span class='badge rounded-pill bg-info'>" . ($row['T_code'] ?? '') . "</span> | ";
+                                        echo "<small>접수기간 :</small> " . ($row['Application_Day'] ?? '') . " ~ " . ($row['Expired_Day'] ?? '') . " | ";
+                                        echo "<small>장소 : </small>" . ($row['T_meeting'] ?? '') . " | ";
+                                        echo "<small>시간 : </small>" . ($row['T_time'] ?? '') . " | ";
+                                        echo "<small>문의 : </small>" . ($row['T_tel'] ?? '') . " | ";
+
+                                        $T_Date = $row['T_date'] ?? '';
                                         $to_date = date("Y-m-d");
 
 
@@ -253,15 +261,15 @@ if (!defined('_GNUBOARD_'))
 
                                         ?>
 
-                                        <?php
+                                <?php
                                         if ($enable_apply == 'YES') {
                                             echo "<button type=\"button\" class=\"btn btn-primary\" onclick=\"location.href='sbak_console_T1_test_apply_2.php?t_code=" . $row['T_code'] . "&sports=" . $the_sports . "&event_code=" . $event_code . "'\"> 응시신청 </button>";
                                         }
                                         ?>
-                                    </dd>
-                                </dl>
-                            </div>
-                        <?php  } //공개여부처리끝
+                            </dd>
+                        </dl>
+                    </div>
+                    <?php  } //공개여부처리끝
                         ?>
                     <?php } ?>
                 </div>

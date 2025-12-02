@@ -19,7 +19,7 @@ $is_regis = $_POST['w'] ?? '';
 $is_del = $_POST['is_del'] ?? '';
 $is_update = $_POST['is_update'] ?? '';
 $event_code = $_POST['event_code'] ?? '';
-
+$event_entry_fee = $_POST['event_entry_fee'] ?? ''; // 응시료
 
 $the_insert_table = $Table_T1;
 $goto_url = "sbak_console_T1_test_open_list.php?sports=" . $the_sports;
@@ -224,6 +224,7 @@ if ($is_del == "yes") {
                 T_time            = '{$T_time}',
                 T_tel           = '{$T_tel}', 
                 T_meeting  = '{$T_meeting}', 
+                PAYMENT_AMOUNT	= '{$event_entry_fee}' ,
                 T_status = '77',
                 T_status_date = '{$T_status_date}',
                 Is_private = '{$is_private}',

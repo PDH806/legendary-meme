@@ -1,6 +1,7 @@
 ﻿<?php
 
 include "../../../../../../common.php";
+
 header('Content-Type: text/html; charset=utf-8');
 require('utils.php'); // 유틸리티 포함
 // $logPath = "c://app.log";     //디버그 로그위치 (windows)
@@ -27,8 +28,8 @@ $sql2 = "SELECT * FROM sbak_mainpay WHERE AID = '{$aid}'";
 $row2 = sql_fetch($sql2);
 
 
-$API_BASE = "https://test-api-std.mainpay.co.kr";
-$apiKey = "U1FVQVJFLTEwMDAxMTIwMTgwNDA2MDkyNTMyMTA1MjM0"; 
+$API_BASE = "https://test-api-std.mainpay.co.kr"; //테스트용
+$apiKey = "U1FVQVJFLTEwMDAxMTIwMTgwNDA2MDkyNTMyMTA1MjM0"; //테스트용
 
 $version = "V001";
 $mbrNo = "100011";
@@ -39,7 +40,7 @@ $amount = $row2['amount'];
 $goodsName = $row2['PRODUCT_NAME'];
 $goodsCode = $row2['PRODUCT_CODE'];
 $event_year = $row2['PRODUCT_YEAR'];
-
+$PHONE = $row2['PHONE'];
 $sql2 = "SELECT Event_total_limit,Event_extra_cnt FROM SBAK_OFFICE_CONF WHERE Event_code = '{$goodsCode}'";
 $row2 = sql_fetch($sql2);
 $event_total_limit = $row2['Event_total_limit'];
@@ -147,12 +148,11 @@ if ($resultCode != "200") {
 WHERE AID = '{$aid}'";
 
 	$result = sql_query($sql);
-	// sql 검증문
-	if (!$result) {
+
 		echo "<script>
-            alert('처리 중 오류가 발생했습니다.');
+            alert('결제실패 했습니다.');
           </script>";
-	}
+
 
 
 	return;
@@ -300,7 +300,7 @@ WHERE AID = '{$aid}'";
 				"",
 				"1"
 			);
-			//                            iconv("utf-8", "euc-kr", stripslashes($msg)), 
+			                            // iconv("utf-8", "euc-kr", stripslashes($msg)), 
 			// 메세지에서 특수문자를 제거하여 발송하려면 stripslashes를 추가하세요
 			$SMS->Send();
 			$rtn = true;
@@ -316,7 +316,7 @@ WHERE AID = '{$aid}'";
 	$sHp = "02-3473-1275"; // 발송번호
 	$rHp = $PHONE; // 수신번호
 
-	//lmsSend($sHp, $rHp, $msg); //문자발송
+	lmsSend($sHp, $rHp, $msg); //문자발송
 
 	//문자발송 종료
 
@@ -338,9 +338,8 @@ WHERE AID = '{$aid}'";
 
 	sql_query($sql3);
 
-	// alert($msg, '');
+echo "<script>alert(" . json_encode($msg) . ");</script>";
 
-	echo "<script> alert('결제가 완료되었습니다.'); </script>";
 
 }
 
@@ -349,21 +348,21 @@ WHERE AID = '{$aid}'";
 <html>
 
 <head>
-	<title>스키장협회 서비스신청</title>
+    <title>스키장협회 서비스신청</title>
 </head>
 
 <body>
-	<script>
-		/* 결제 완료 페이지 호출 */
-		//var resultCode = "<?= $resultCode ?>";
-		//var resultMessage = "<?= $resultMessage ?>";
-		//alert("resultCode = " + resultCode + ", resultMessage = " + resultMessage);
+    <script>
+    /* 결제 완료 페이지 호출 */
+    //var resultCode = "<?= $resultCode ?>";
+    //var resultMessage = "<?= $resultMessage ?>";
+    //alert("resultCode = " + resultCode + ", resultMessage = " + resultMessage);
 
 
-		/* 현재 팝업 닫기*/
-		// Mainpay.close(true);
-		self.close();
-	</script>
+    /* 현재 팝업 닫기*/
+    // Mainpay.close(true);
+    self.close();
+    </script>
 
 </body>
 

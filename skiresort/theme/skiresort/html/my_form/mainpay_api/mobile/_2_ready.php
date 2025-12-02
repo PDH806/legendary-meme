@@ -121,6 +121,8 @@ if ($goodsCode == 'A01' || $goodsCode == 'A02' || $goodsCode == 'A03') { // ÏûêÍ
     $ENTRY_INFO_6_FILE = $_POST['filename2']; // o
     $unique_order_id = $_POST['unique_order_id']; // o
 
+    $the_birth = $_POST['the_birth']; // o
+
 }
 
 
@@ -261,7 +263,7 @@ switch ($payment_category) {
         MB_LICENSE_NO      = 'test',
         APPLY_DATE        = '{$APPLY_DATE}',
         APPLY_TIME     = '{$APPLY_TIME}',     
-        THE_BIRTH      = '1999-01-01',                
+        THE_BIRTH      = '{$the_birth}',                
         THE_GENDER            = '{$THE_GENDER}',
         THE_TEL           = '{$PHONE}', 
         PAY_METHOD           = '{$paymethod}',   
@@ -279,7 +281,7 @@ switch ($payment_category) {
         ENTRY_INFO_6_FILE           = '{$ENTRY_INFO_6_FILE}', 
         EVENT_YEAR           = '{$event_year}',   
         AID         = '{$aid}',
-        IS_DEL             = '' ";
+        IS_DEL             = 'N' ";
         break;
 
     case 't1':

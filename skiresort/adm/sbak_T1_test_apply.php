@@ -8,12 +8,6 @@ auth_check_menu($auth, $sub_menu, 'r');
 $g5['title'] = '티칭1 시험 응시자 관리';
 include_once('./admin.head.php');
 
-//mainpay ----------------------------------------------
-header('Content-Type: text/html; charset=utf-8');
-$READY_API_URL = G5_THEME_URL . "/html/my_form/mainpay_api/pc/_9_cancel.php"; 
-
-//-----------------------------------------------------
-
 
 $css_file = str_replace(G5_ADMIN_PATH, G5_ADMIN_URL, './css/sbak_css.css');
 add_stylesheet('<link rel="stylesheet" href="' . $css_file . '">', 1);
@@ -92,7 +86,7 @@ $result = sql_query($sql);
 
 ?>
 
-<head>
+<!-- <head>
 
   <script type='text/javascript'>
     function payment_cancel(form) {
@@ -106,63 +100,65 @@ $result = sql_query($sql);
       }
     }
   </script>
-</head>
+</head> -->
 
 
 <div class="local_sch local_sch01">
-   
 
 
-        <div class="local_ov01 local_ov">
-            <?php echo $listall ?>
-            <span class="btn_ov01">
-                    <span class="ov_txt">총 등록건수 </span>
-                    <span class="ov_num">
-                    <?php echo number_format($total_count) ?>건
-                   </span>
+
+    <div class="local_ov01 local_ov">
+        <?php echo $listall ?>
+        <span class="btn_ov01">
+            <span class="ov_txt">총 등록건수 </span>
+            <span class="ov_num">
+                <?php echo number_format($total_count) ?>건
             </span>
-                 
-
-
-        </div>
+        </span>
 
 
 
+    </div>
 
 
-        <div>
-            <table width="100%">
-                <tr>
-                    <td>
-                      <form name="fvisit" method="get" onsubmit="return fvisit_submit(this);">
-                            <label for="sch_sort" class="sound_only">검색분류</label>
-                                <select name="sfl" id="sch_sort" class="search_sort">
-                                    <option value="MEMBER_NAME" <?php echo get_selected($sfl, 'MEMBER_NAME'); ?>>등록자</option>
-                                    <option value="MEMBER_ID" <?php echo get_selected($sfl, 'MEMBER_ID'); ?>>ID</option>
-                                    <option value="A.T_code" <?php echo get_selected($sfl, 'A.T_code'); ?>>코드</option>
-                                    <option value="PAYMENT_STATUS" <?php echo get_selected($sfl, 'PAYMENT_STATUS'); ?>>결제여부
-                                    </option>
-                                </select>
-                                <label for="sch_word" class="sound_only">검색어</label>
-                                <input type="text" name="stx" size="20" value="<?php echo stripslashes($stx); ?>" id="sch_word"
-                                    class="frm_input">
-                                <input type="submit" value="검색" class="btn_submit">
-                        </form>
-                    </td>
-                    <td align="right">
-                      <form name="frm_toexcel" method="post" action="./sbak_T1_test_apply_xls.php">
-                        응시일 :  <input type="date" name="from_date" size="20" value="<?php echo stripslashes($stx); ?>"  class="frm_input">  ~      
-                         <input type="date" name="to_date" size="20" value="<?php echo stripslashes($stx); ?>"  class="frm_input">    
-                         <input type="submit" value="EXCEL">
-                      </form>               
-                    </td>
+
+
+
+    <div>
+        <table width="100%">
+            <tr>
+                <td>
+                    <form name="fvisit" method="get" onsubmit="return fvisit_submit(this);">
+                        <label for="sch_sort" class="sound_only">검색분류</label>
+                        <select name="sfl" id="sch_sort" class="search_sort">
+                            <option value="MEMBER_NAME" <?php echo get_selected($sfl, 'MEMBER_NAME'); ?>>등록자</option>
+                            <option value="MEMBER_ID" <?php echo get_selected($sfl, 'MEMBER_ID'); ?>>ID</option>
+                            <option value="A.T_code" <?php echo get_selected($sfl, 'A.T_code'); ?>>코드</option>
+                            <option value="PAYMENT_STATUS" <?php echo get_selected($sfl, 'PAYMENT_STATUS'); ?>>결제여부
+                            </option>
+                        </select>
+                        <label for="sch_word" class="sound_only">검색어</label>
+                        <input type="text" name="stx" size="20" value="<?php echo stripslashes($stx); ?>" id="sch_word"
+                            class="frm_input">
+                        <input type="submit" value="검색" class="btn_submit">
+                    </form>
+                </td>
+                <td align="right">
+                    <form name="frm_toexcel" method="post" action="./sbak_T1_test_apply_xls.php">
+                        응시일 : <input type="date" name="from_date" size="20" value="<?php echo stripslashes($stx); ?>"
+                            class="frm_input"> ~
+                        <input type="date" name="to_date" size="20" value="<?php echo stripslashes($stx); ?>"
+                            class="frm_input">
+                        <input type="submit" value="EXCEL">
+                    </form>
+                </td>
 
             </tr>
         </table>
-        </div>  
+    </div>
 
 
-    
+
 </div>
 
 <div class="local_desc01 local_desc">
@@ -184,31 +180,31 @@ $result = sql_query($sql);
 
 
 
-<div class="tbl_wrap tbl_head01">
-    <table>
-        <thead>
-            <tr>
-                 <th scope="col">
+    <div class="tbl_wrap tbl_head01">
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">
                         <label for="chkall" class="sound_only">그룹 전체</label>
                         <input type="checkbox" name="chkall" value="1" id="chkall" onclick="check_all(this.form)">
                     </th>
-                <th scope="col" width="5%">응시번호</th>
-                <th scope="col">응시자</th>
-                <th scope="col">종목</th>
-                <th scope="col">응시정보</th>
+                    <th scope="col" width="5%">응시번호</th>
+                    <th scope="col">응시자</th>
+                    <th scope="col">종목</th>
+                    <th scope="col">응시정보</th>
 
-                <th scope="col">결제내역</th>
-                <th scope="col">결제금액</th>
+                    <th scope="col">결제내역</th>
+                    <th scope="col">결제금액</th>
 
-                <th scope="col">진행상황</th>
-                <th scope="col">메모</th>
-                <th scope="col" width="5%">삭제</th>
+                    <th scope="col">진행상황</th>
+                    <th scope="col">메모</th>
+                    <th scope="col" width="5%">삭제</th>
 
 
-            </tr>
-        </thead>
-        <tbody>
-            <?php
+                </tr>
+            </thead>
+            <tbody>
+                <?php
 
 
             for ($i = 0; $row = sql_fetch_array($result); $i++) {
@@ -256,23 +252,23 @@ $result = sql_query($sql);
                 $bg = 'bg' . ($i % 2);
                 ?>
                 <tr class="<?php echo $bg; ?>">
-                     <td class="td_chk">
-                            <input type="hidden" name="UID[<?php echo $i ?>]" value="<?php echo $row['UID'] ?>">
-                            <label for="chk_<?php echo $i; ?>" class="sound_only"><?php echo get_text($row['MEMBER_ID']); ?>
-                                지도자</label>
-                            <input type="checkbox" name="chk[]" value="<?php echo $i ?>" id="chk_<?php echo $i ?>">
+                    <td class="td_chk">
+                        <input type="hidden" name="UID[<?php echo $i ?>]" value="<?php echo $row['UID'] ?>">
+                        <label for="chk_<?php echo $i; ?>" class="sound_only"><?php echo get_text($row['MEMBER_ID']); ?>
+                            지도자</label>
+                        <input type="checkbox" name="chk[]" value="<?php echo $i ?>" id="chk_<?php echo $i ?>">
 
 
 
-                        </td>
+                    </td>
                     <td>
                         <?php echo $row['UID']; ?>
                     </td>
                     <td class="td_left">
 
 
-                        <input type="text" name="MEMBER_NAME[<?php echo $i ?>]" value="<?php echo $row['MEMBER_NAME']; ?>" 
-                        <?php 
+                        <input type="text" name="MEMBER_NAME[<?php echo $i ?>]"
+                            value="<?php echo $row['MEMBER_NAME']; ?>" <?php 
                         if ($row['PAYMENT_STATUS'] == "C") 
                         {
                             echo "class='ksia_input_deleted' readonly";
@@ -280,24 +276,22 @@ $result = sql_query($sql);
                             echo "class='ksia_input' readonly";
                         }
                         ?>><br>
-                         <input type="text" name="MEMBER_ID[<?php echo $i ?>]" value="<?php echo $row['MEMBER_ID']; ?>" 
-                        <?php 
+                        <input type="text" name="MEMBER_ID[<?php echo $i ?>]" value="<?php echo $row['MEMBER_ID']; ?>" <?php 
                         if ($row['PAYMENT_STATUS'] == "C") 
                         {
                             echo "class='ksia_input_deleted' readonly";
                         } else {
                             echo "class='ksia_input' readonly";
                         }
-                        ?>><br>  
-                         <input type="text" name="PHONE[<?php echo $i ?>]" value="<?php echo $row['PHONE']; ?>" 
-                        <?php 
+                        ?>><br>
+                        <input type="text" name="PHONE[<?php echo $i ?>]" value="<?php echo $row['PHONE']; ?>" <?php 
                         if ($row['PAYMENT_STATUS'] == "C") 
                         {
                             echo "class='ksia_input_deleted' readonly";
                         } else {
                             echo "class='ksia_input' readonly";
                         }
-                        ?>><br>                                            
+                        ?>><br>
 
 
                         <i class="fa fa-dot-circle-o" aria-hidden="true"></i>
@@ -318,9 +312,9 @@ $result = sql_query($sql);
 
 
                     <td class="td_left">
-                        
-                        <input type="text" name="T_code[<?php echo $i ?>]" readonly value="<?php echo $row['T_code']; ?>" 
-                        <?php 
+
+                        <input type="text" name="T_code[<?php echo $i ?>]" readonly
+                            value="<?php echo $row['T_code']; ?>" <?php 
                         if ($row['PAYMENT_STATUS'] == "C") 
                         {
                             echo "class='ksia_input_deleted' readonly";
@@ -395,18 +389,12 @@ $result = sql_query($sql);
 
 
                     <td>
-                  <?php
+                        <?php
 
             //mainpay ----------------------------------------------
                             if ($row['PAYMENT_STATUS'] == "Y") {
-                echo "<form method='post'>";
-                echo "<input type='hidden' name='is_del' value='yes'>";
-                echo "<input type='hidden' name='AID' value='" . $row['AID'] . "'>";
-                echo "<input type='hidden' name='product_code' value='" . $t_code . "'>";
-                echo "<input type='hidden' name='payment_category' value='t1'>";
-                echo "<input type='hidden' name='the_status' value='88'>";
-                echo "<button type='button' class='btn btn_01' onclick=\"payment_cancel(this.form)\">취소</button>";
-                echo "</form>";
+
+                 echo "<a href='sbak_cancle.php?UID=" . $row['UID'] . "&category=t1'><i class='btn btn_01'>취소</i></a>"; //결제 취소 페이지
             } else {
                         //----------------------------------------------------
 
@@ -428,23 +416,23 @@ $result = sql_query($sql);
 
 
                 </tr>
-            <?php } ?>
-            <?php if ($i == 0)
+                <?php } ?>
+                <?php if ($i == 0)
                 echo '<tr><td colspan="' . $colspan . '" class="empty_table">자료가 없습니다.</td></tr>'; ?>
-        </tbody>
-    </table>
-</div>
+            </tbody>
+        </table>
+    </div>
 
 
-<div class="btn_fixed_top">
+    <div class="btn_fixed_top">
         <input type="submit" name="act_button" value="선택수정" onclick="document.pressed=this.value" class="btn btn_02">
- 
+
 
 
     </div>
 
 
-</form>    
+</form>
 
 
 <?php
@@ -456,41 +444,55 @@ if ($pagelist) {
 ?>
 
 <script>
-    $(function () {
-        $("#sch_sort").change(function () { // select #sch_sort의 옵션이 바뀔때
-            if ($(this).val() == "vi_date") { // 해당 value 값이 vi_date이면
-                $("#sch_word").datepicker({ changeMonth: true, changeYear: true, dateFormat: "yy-mm-dd", showButtonPanel: true, yearRange: "c-99:c+99", maxDate: "+0d" }); // datepicker 실행
-            } else { // 아니라면
-                $("#sch_word").datepicker("destroy"); // datepicker 미실행
-            }
-        });
-
-        if ($("#sch_sort option:selected").val() == "vi_date") { // select #sch_sort 의 옵션중 selected 된것의 값이 vi_date라면
-            $("#sch_word").datepicker({ changeMonth: true, changeYear: true, dateFormat: "yy-mm-dd", showButtonPanel: true, yearRange: "c-99:c+99", maxDate: "+0d" }); // datepicker 실행
+$(function() {
+    $("#sch_sort").change(function() { // select #sch_sort의 옵션이 바뀔때
+        if ($(this).val() == "vi_date") { // 해당 value 값이 vi_date이면
+            $("#sch_word").datepicker({
+                changeMonth: true,
+                changeYear: true,
+                dateFormat: "yy-mm-dd",
+                showButtonPanel: true,
+                yearRange: "c-99:c+99",
+                maxDate: "+0d"
+            }); // datepicker 실행
+        } else { // 아니라면
+            $("#sch_word").datepicker("destroy"); // datepicker 미실행
         }
     });
 
-    function fvisit_submit(f) {
-        return true;
+    if ($("#sch_sort option:selected").val() == "vi_date") { // select #sch_sort 의 옵션중 selected 된것의 값이 vi_date라면
+        $("#sch_word").datepicker({
+            changeMonth: true,
+            changeYear: true,
+            dateFormat: "yy-mm-dd",
+            showButtonPanel: true,
+            yearRange: "c-99:c+99",
+            maxDate: "+0d"
+        }); // datepicker 실행
     }
+});
+
+function fvisit_submit(f) {
+    return true;
+}
 </script>
 
 
 <script>
-    function ksia_license_list_submit(f) {
-        if (!is_checked("chk[]")) {
-            alert(document.pressed + " 하실 항목을 하나 이상 선택하세요.");
+function ksia_license_list_submit(f) {
+    if (!is_checked("chk[]")) {
+        alert(document.pressed + " 하실 항목을 하나 이상 선택하세요.");
+        return false;
+    }
+
+    if (document.pressed == "선택삭제") {
+        if (!confirm("선택한 자료를 정말 삭제하시겠습니까?")) {
             return false;
         }
-
-        if (document.pressed == "선택삭제") {
-            if (!confirm("선택한 자료를 정말 삭제하시겠습니까?")) {
-                return false;
-            }
-        }
-
-        return true;
     }
+
+    return true;
+}
 </script>
 
 <?php

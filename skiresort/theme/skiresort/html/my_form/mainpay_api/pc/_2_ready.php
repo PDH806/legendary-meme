@@ -1,6 +1,7 @@
 ﻿<?php
 
 include "../../../../../../common.php";
+
 require('utils.php');                // 유틸리티 포함
 //$logPath = "c://app.log";            //디버그 로그위치 (windows)
 $logPath = G5_PATH . "/data/app.log"; //디버그 로그위치 (리눅스)
@@ -62,9 +63,18 @@ $goodsName = $_POST["goodsName"];
 $goodsCode = $_POST["goodsCode"];
 
 /* 결제금액 (공급가+부가세)
- 	  (#주의#) 페이지에서 전달 받은 값을 그대로 사용할 경우 금액위변조 시도가 가능합니다.
- 	  DB에서 조회한 값을 사용 바랍니다. */
+(#주의#) 페이지에서 전달 받은 값을 그대로 사용할 경우 금액위변조 시도가 가능합니다.
+DB에서 조회한 값을 사용 바랍니다. */
+$sortCode = '';
+if ($goodsCode == 'C01'){
+$sortCode = $_POST["sortCode"];
+}
+
+if ($sortCode == 'B03'){
+$sql = "SELECT Entry_fee FROM SBAK_OFFICE_CONF WHERE Event_code = 'B03'";
+}else{
 $sql = "SELECT Entry_fee FROM SBAK_OFFICE_CONF WHERE Event_code = '{$goodsCode}'";
+}
 $row = sql_fetch($sql);
 $amount = $row['Entry_fee'];
 // $amount = "1004";
@@ -80,7 +90,8 @@ $customerID = $_POST["mb_id"]; // 고객ID
 $PHONE = $_POST["on_hp"]; // 고객 전화번호
 $APPLY_DATE = date("Y-m-d"); // 신청일
 $APPLY_TIME = date("H:i:s"); // 신청시간
-$THE_MEMO = $_POST['the_memo']; // 메모  
+$THE_MEMO = $_POST['the_memo'] ?? ''; // 메모  
+
 
 /* timestamp max 20byte*/
 $timestamp = makeTimestamp();
@@ -123,6 +134,7 @@ $T_Date = $_POST['t_date'] ?? ''; // o
     $ENTRY_INFO_6_FILE = $_POST['filename2'] ?? ''; // o
     $ENTRY_INFO_7_FILE = $_POST['filename3'] ?? ''; // o
     $unique_order_id = $_POST['unique_order_id'] ?? ''; // o
+    $the_birth = $_POST['the_birth']; //생년월일
 
 
 }
@@ -261,7 +273,7 @@ switch ($payment_category) {
         MB_LICENSE_NO      = 'test',
         APPLY_DATE        = '{$APPLY_DATE}',
         APPLY_TIME     = '{$APPLY_TIME}',     
-        THE_BIRTH      = '1999-01-01',                
+        THE_BIRTH      = '{$the_birth}',                
         THE_GENDER            = '{$THE_GENDER}',
         THE_TEL           = '{$PHONE}', 
         PAY_METHOD           = '{$paymethod}',   
@@ -280,7 +292,7 @@ switch ($payment_category) {
         ENTRY_INFO_7_FILE           = '{$ENTRY_INFO_7_FILE}', 
         EVENT_YEAR           = '{$event_year}',    
         AID         = '{$aid}',
-        IS_DEL             = '' ";
+        IS_DEL             = 'N' ";
         break;
 
     case 't1':
@@ -308,16 +320,8 @@ switch ($payment_category) {
         break;
 }		
 
+sql_query($sql3);
 
-
-		$result3 = sql_query($sql3);
-
-		// sql 검증문
-		if (!$result3){
-         echo "<script>
-            alert('처리 중 오류가 발생했습니다.');
-          </script>";			
-		}
 
 // JSON TYPE RESPONSE
 header('Content-Type: application/json');

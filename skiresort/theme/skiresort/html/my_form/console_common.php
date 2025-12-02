@@ -51,8 +51,8 @@ function get_office_conf($event_code)
     $sql_event = "select * from {$Table_Office_Conf} where Event_code = '{$event_code}'";
     $row_conf = sql_fetch($sql_event);
 
-    $event_title = $row_conf['Event_title'];
-    $event_title_1 = $row_conf['Event_title_1'];
+    $event_title = $row_conf['Event_title'] ?? '';
+    $event_title_1 = $row_conf['Event_title_1'] ?? '';
 
     $event_begin_date = $row_conf['Event_begin_date'];
     $event_begin_time = $row_conf['Event_begin_time'];
@@ -70,22 +70,22 @@ function get_office_conf($event_code)
     }
         */
     $event_date = $row_conf['Event_date']; // 행사일
-    $event_where = $row_conf['Event_where']; // 장소
-    $event_whom = $row_conf['Event_whom']; //참가대상
-    $event_entry_fee = $row_conf['Entry_fee']; // 참가비
-    $event_memo = $row_conf['Event_memo'];
-    $event_rule = $row_conf['Event_rule'];
-    $event_notice = $row_conf['Event_notice'];
+    $event_where = $row_conf['Event_where'] ?? ''; // 장소
+    $event_whom = $row_conf['Event_whom'] ?? ''; //참가대상
+    $event_entry_fee = $row_conf['Entry_fee'] ?? 0; // 참가비
+    $event_memo = $row_conf['Event_memo'] ?? '';
+    $event_rule = $row_conf['Event_rule'] ?? '';
+    $event_notice = $row_conf['Event_notice'] ?? '';
 
-    $event_status = $row_conf['Event_status'];
-    $event_control = $row_conf['Event_control'];
+    $event_status = $row_conf['Event_status'] ?? '';
+    $event_control = $row_conf['Event_control'] ?? '';
 
 
-    $event_year = $row_conf['Event_year'];
+    $event_year = $row_conf['Event_year'] ?? 0;
     $event_birthdate = $row_conf['Event_birthdate'];
     $Pay_end_date = $row_conf['Pay_end_date'];
     $Pay_end_time = $row_conf['Pay_end_time'];
-    $t1_before_days = $row_conf['T1_before_days'];
+    $t1_before_days = $row_conf['T1_before_days'] ?? 0;
 
     global $time_begin, $time_end, $time_now;
 
@@ -118,7 +118,7 @@ $is_resort_manager = $result['EXIST'];
 if ($is_resort_manager > 0) {
     $sql = "select RESORT,T_skiresort,SPORTS from {$Table_Judge_List} where MEMBER_ID = '{$mb_id}' and IS_DEL != 'Y'";
     $result = sql_fetch($sql);
-    $resort_name = $result['RESORT'];
-    $resort_no = $result['T_skiresort'];
-    $resort_judge_gubun = $result['SPORTS'];
+    $resort_name = $result['RESORT'] ?? '';
+    $resort_no = $result['T_skiresort'] ?? '';
+    $resort_judge_gubun = $result['SPORTS'] ?? '';
 }
