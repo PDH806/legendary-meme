@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="ko" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>아시안컵 경우의 수 · 2027 AFC 아시안컵 16강 진출 확률</title>
+<meta name="description" content="2027 AFC 아시안컵 대한민국 16강 진출 확률과 경우의 수. 남은 경기 점수를 직접 넣으면 AFC 공식 순위 규정으로 1만 번 시뮬레이션해서 바로 다시 계산해요.">
+<meta property="og:title" content="아시안컵 경우의 수 · 한국 16강 진출 확률">
+<meta property="og:description" content="남은 경기 점수를 넣으면 진출 확률과 16강 상대가 바로 바뀌어요.">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#0b2a20">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<link rel="stylesheet" href="css/cup.css?v=22">
+<script>
+// 기본은 어두운 화면이에요. 밝은 화면을 골라 둔 사람만 그리기 전에 바꿔요 (깜빡임 방지)
+try { if (localStorage.getItem('cup-theme') === 'light') document.documentElement.setAttribute('data-theme', 'light'); } catch (e) {}
+</script>
+</head>
+<body>
+<header class="top">
+    <div class="wrap">
+        <a class="logo" href="./"><span aria-hidden="true">⚽</span> 경우의 수</a>
+        <nav class="menu" aria-label="대회">
+            <a href="./" aria-current="page">아시안컵 2027</a>
+            <a href="kleague.html">K리그1 2026</a>
+        </nav>
+        <div class="top-right">
+            <span class="dday" id="dday"></span>
+            <button type="button" class="theme-btn" id="theme_btn" aria-label="밝은 화면으로 바꾸기">☀️</button>
+        </div>
+    </div>
+</header>
+
+<main class="wrap">
+    <section class="hero" aria-labelledby="hero_title">
+        <p class="eyebrow">2027 AFC 아시안컵 · 사우디아라비아 · 1.7 ~ 2.5</p>
+        <h1 id="hero_title"><span id="focus_name">대한민국</span> 16강 진출 확률</h1>
+        <p class="big" id="big_r16" aria-live="polite">-</p>
+        <ul class="stages" id="stages"></ul>
+        <div class="hero-foot">
+            <label class="focus">기준 팀
+                <select id="focus"></select>
+            </label>
+            <p class="scenario" id="scenario"></p>
+            <button type="button" class="btn light" id="card_open">결과 카드 만들기</button>
+        </div>
+    </section>
+
+    <dialog class="card-dialog" id="card_dialog" aria-labelledby="card_title">
+        <h2 id="card_title">결과 카드</h2>
+        <img id="card_img" alt="">
+        <div class="actions">
+            <button type="button" class="btn ghost" id="card_close">닫기</button>
+            <button type="button" class="btn ghost" id="card_share" hidden>공유하기</button>
+            <a class="btn" id="card_save" download>이미지 저장</a>
+        </div>
+    </dialog>
+
+    <section class="card" aria-labelledby="opp_title">
+        <h2 id="opp_title">몇 위면 16강 상대는 누구?</h2>
+        <div class="opp" id="opp"></div>
+    </section>
+
+    <section class="card" aria-labelledby="group_title">
+        <h2 id="group_title">조별 순위와 남은 경기</h2>
+        <nav class="tabs" id="tabs" aria-label="조 고르기"></nav>
+        <div id="group"></div>
+        <p class="hint">점수를 넣으면 그 결과로 고정하고 다시 계산해요. 비워 둔 경기는 전력 점수로 시뮬레이션해요. 다른 조 결과도 3위 비교에 영향을 줘요. 오른쪽 숫자는 전력 점수로 본 홈 승 · 무 · 원정 승 확률(%)이에요.</p>
+        <div class="actions">
+            <button type="button" class="btn ghost" id="reset">입력 지우기</button>
+            <button type="button" class="btn" id="share">이 경우의 수 링크 복사</button>
+        </div>
+        <p class="toast" id="toast" role="status" hidden></p>
+    </section>
+
+    <section class="card" aria-labelledby="ko_title">
+        <h2 id="ko_title">토너먼트 시뮬레이션</h2>
+        <p class="hint lead">남은 조별리그와 16강부터 결승까지 대회를 한 번 치러 봐요. 직접 넣은 점수는 그대로 반영돼요. 대진표에서 팀을 눌러 승자를 직접 정할 수도 있어요.</p>
+        <div class="actions left">
+            <button type="button" class="btn" id="ko_run">🎲 대회 한 번 돌려보기</button>
+            <button type="button" class="btn ghost" id="ko_clear" hidden>내 선택 지우기</button>
+            <button type="button" class="btn ghost" id="ko_card" hidden>대진표 카드 만들기</button>
+        </div>
+        <div id="ko"></div>
+    </section>
+
+    <section class="card" aria-labelledby="all_title">
+        <h2 id="all_title">전체 팀 확률</h2>
+        <div class="scroll" id="all"></div>
+    </section>
+
+    <section class="card model" aria-labelledby="model_title">
+        <h2 id="model_title">어떻게 계산하나요?</h2>
+        <ol>
+            <li><b>전력 점수:</b> 국가대표 경기 결과로 팀마다 Elo 전력 점수를 계산해요. 큰 대회일수록, 점수 차가 클수록 많이 오르내려요. 점수 차이가 클수록 강한 팀의 예상 득점이 높아지고, 개최국 사우디아라비아는 홈 이점을 받아요. 득점 계산 방식은 2016년 이후 아시아 팀 경기 약 2천 건의 결과에 맞췄어요.</li>
+            <li><b>경기 시뮬레이션:</b> 예상 득점으로 경기마다 점수를 무작위로 뽑아요(푸아송 분포). 토너먼트에서 비기면 연장전과 승부차기까지 치러요.</li>
+            <li><b>1만 번 반복:</b> 대회 전체를 1만 번 치러 보고, 각 순위와 단계에 오른 횟수를 세요.</li>
+            <li><b>AFC 공식 규정:</b> 조 순위는 승점 → 동률 팀 맞대결(승점·득실차·다득점, 남은 동률 팀끼리 다시 적용) → 전체 득실차·다득점 → 승부차기·페어플레이·추첨 순서예요. 3위 6팀 중 4팀이 16강에 가고, 어느 조 3위가 올라오느냐에 따라 16강 대진이 정해져요.</li>
+        </ol>
+        <p class="warn">전력 점수는 1872년부터 2026년 10월 6일까지 국가대표 경기 약 5만 건으로 직접 계산했어요. 대회 직전 경기와 부상 같은 사정은 반영하지 못해요. 확률은 참고용이고 실제 경기 결과를 보장하지 않아요.</p>
+        <p class="src">경기 기록: <a href="https://github.com/martj42/international_results" target="_blank" rel="noopener">martj42/international_results</a> (CC0) · 규정 출처: <a href="https://assets.the-afc.com/downloads/tournament-regulations/AFC-Asian-Cup-Saudi-Arabia-2027%E2%84%A2-Competition-Regulations---oct-16-upd.pdf" target="_blank" rel="noopener">AFC Asian Cup Saudi Arabia 2027 Competition Regulations</a> 7.3, 9.5, 9.8조</p>
+    </section>
+</main>
+
+<footer class="foot">
+    <div class="wrap">
+        <p>경우의 수는 팬이 만든 비공식 서비스로, AFC와 관련이 없어요.</p>
+    </div>
+</footer>
+
+<script src="data/asiancup2027.js?v=5"></script>
+<script src="js/engine.js?v=3"></script>
+<script src="js/app.js?v=15"></script>
+<script src="js/card.js?v=3"></script>
+<script src="js/bracket.js?v=8"></script>
+<script src="js/theme.js?v=2"></script>
+</body>
+</html>
