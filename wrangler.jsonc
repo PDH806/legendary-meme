@@ -1,0 +1,11 @@
+// Cloudflare Workers 정적 사이트 설정 (서버 코드 없이 public/ 폴더만 올려요)
+// name은 Cloudflare에 만들어진 Worker 이름과 같아야 해요. 다르면 새 Worker가 따로 생겨요
+{
+  "name": "legendary-meme",
+  "compatibility_date": "2025-10-01",
+  "assets": {
+    "directory": "./public",
+    "not_found_handling": "404-page",      // 없는 주소면 public/404.html을 404 상태로 보여줘요
+    "html_handling": "auto-trailing-slash" // kleague.html → /kleague 처럼 주소를 정리해요 (지금과 같은 동작)
+  }
+}

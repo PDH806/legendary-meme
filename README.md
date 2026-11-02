@@ -2,7 +2,7 @@
 
 축구 대회 경우의 수 시뮬레이터. 서버 없는 정적 사이트예요.
 
-- `public/` : Cloudflare Pages에 올라가는 사이트 (빌드 없음, 출력 폴더 = `public`)
+- `public/` : Cloudflare Workers(정적 자산)로 올라가는 사이트. 설정은 `wrangler.jsonc` (404 페이지 포함)
   - `index.html` 2027 AFC 아시안컵 / `kleague.html` 2026 K리그1 파이널 라운드
   - `data/` 대회 데이터, `js/engine.js` 대회(조별+토너먼트) 엔진, `js/league.js` 리그 엔진
 - `tools/update_kleague.php` : 위키백과에서 K리그 결과를 받아 `public/data/kleague2026.js`에 반영
