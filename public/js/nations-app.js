@@ -90,8 +90,8 @@
         var c = state.focus, s = stat.teams[c];
         $('focus_name').innerHTML = label(c);
         $('big').textContent = pct(s.qf);
-        $('stages').innerHTML = '<li><span>조 1위</span><b>' + pct(s.pos[0]) + '</b></li>' +
-            FATES.map(function (f) { return '<li><span>' + f.name + '</span><b>' + pct(s[f.id]) + '</b></li>'; }).join('');
+        var chips = [['조 1위', s.pos[0]], ['4강', s.sf], ['우승', s.champ]].concat(FATES.slice(1).map(function (f) { return [f.name, s[f.id]]; }));
+        $('stages').innerHTML = chips.map(function (x) { return '<li><span>' + x[0] + '</span><b>' + pct(x[1]) + '</b></li>'; }).join('');
         var cnt = Object.keys(state.fixed).length, left = nl.matches.filter(function (m) { return !data.results[m.id]; }).length;
         $('scenario').textContent = (cnt ? '직접 넣은 점수 ' + cnt + '경기 반영 · ' : '남은 ' + left + '경기 전부 시뮬레이션 · ') + '예상 최종 승점 ' + s.ptsAvg.toFixed(1);
     }
@@ -106,15 +106,16 @@
                 return '<tr' + (c === state.focus ? ' class="me"' : '') + '><td class="rk">' + (i + 1) + '</td>' +
                     '<th scope="row"><button type="button" class="pick-team" data-team="' + c + '">' + label(c) + '</button></th>' +
                     '<td>' + t.p + '</td><td class="strong-n">' + t.pts + '</td><td>' + (t.gd > 0 ? '+' : '') + t.gd + '</td><td>' + t.gf + '</td>' +
-                    '<td>' + s.ptsAvg.toFixed(1) + '</td>' + cells +
+                    cells +
                     '<td class="p strong">' + pct2(s.qf) + '<span class="bar" style="--w:' + (s.qf ? Math.max(2, 100 * s.qf / stat.n).toFixed(1) : 0) + '%"></span></td>' +
+                    [s.sf, s.final, s.champ].map(function (v) { return '<td class="p' + (v ? '' : ' nil') + '">' + pct2(v) + '</td>'; }).join('') +
                     '<td class="p' + (s.po ? '' : ' nil') + '">' + pct2(s.po) + '</td>' +
                     '<td class="p' + (s.rel ? '' : ' nil') + '">' + pct2(s.rel) + '</td></tr>';
             }).join('');
             return '<h3 class="split-title">' + g + '조</h3>' +
-                '<div class="scroll"><table class="tbl lg-tbl"><thead><tr><th scope="col">순위</th><th scope="col">팀</th><th scope="col">경기</th><th scope="col">승점</th><th scope="col">득실</th><th scope="col">득점</th><th scope="col" title="1만 번 시뮬레이션의 평균 최종 승점">예상 승점</th>' +
+                '<div class="scroll"><table class="tbl lg-tbl nl-tbl"><thead><tr><th scope="col">순위</th><th scope="col">팀</th><th scope="col">경기</th><th scope="col">승점</th><th scope="col">득실</th><th scope="col">득점</th>' +
                 '<th scope="col" class="pc z-acl">1위</th><th scope="col" class="pc z-acl">2위</th><th scope="col" class="pc">3위</th><th scope="col" class="pc z-rpo">4위</th>' +
-                '<th scope="col">8강</th><th scope="col">승강 PO</th><th scope="col">강등</th></tr></thead><tbody>' + rows + '</tbody></table></div>';
+                '<th scope="col">8강</th><th scope="col">4강</th><th scope="col">결승</th><th scope="col">우승</th><th scope="col">승강 PO</th><th scope="col">강등</th></tr></thead><tbody>' + rows + '</tbody></table></div>';
         }).join('') + '<p class="legend"><span class="z-acl">1·2위: 8강 진출</span><span class="z-rpo">4위: 승강 PO 또는 강등</span></p>';
     }
 

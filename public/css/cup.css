@@ -350,3 +350,6 @@ a.btn { text-decoration: none; display: inline-block; }
 .fate.f-po { color: #d99a1e; background: rgba(217, 154, 30, .14); }
 .fate.f-rel { color: #e5484d; background: rgba(229, 72, 77, .14); }
 .lg-tbl .pick-team .flag { margin-right: 6px; }
+.nl-tbl th, .nl-tbl td { padding: 9px 5px; }
+.nl-tbl td.p { font-size: 12.5px; }
+.nl-tbl .rk { width: 30px; }

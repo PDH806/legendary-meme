@@ -7,6 +7,7 @@
 //            → 원정 다득점 → 다승 → 원정 다승 → (징계 점수) → access list 순위
 //   3위·4위 비교: 승점 → 득실차 → 다득점 → 원정 다득점 → 다승 → 원정 다승 → (징계 점수) → access list 순위
 //   징계 점수(경고·퇴장)는 미리 알 수 없어서 건너뛰어요
+// 토너먼트: 8강 추첨(조 1위 vs 다른 조 2위)을 무작위로 하고, 8강 홈·원정 → 4강 추첨 → 중립 단판 4강·결승까지 시뮬레이션해요
 (function (root) {
     'use strict';
 
@@ -41,13 +42,14 @@
         });
 
         // 홈팀은 Elo에 홈 이점을 더해요. 예상 득점 = mu × e^(±c × 점수 차)
-        function lambdas(h, a) {
-            var dr = teams[h].elo + model.home - teams[a].elo;
+        // neutral이면(파이널스 같은 중립 경기) 홈 이점 없이
+        function lambdas(h, a, neutral) {
+            var dr = teams[h].elo + (neutral ? 0 : model.home) - teams[a].elo;
             return [model.mu * Math.exp(model.c * dr), model.mu * Math.exp(-model.c * dr)];
         }
 
-        function scoreTable(h, a) {
-            var l = lambdas(h, a), cells = [], sum = 0;
+        function scoreTable(h, a, neutral) {
+            var l = lambdas(h, a, neutral), cells = [], sum = 0;
             for (var i = 0; i <= MAX_GOALS; i++) {
                 for (var j = 0; j <= MAX_GOALS; j++) {
                     var p = poissonPmf(l[0], i) * poissonPmf(l[1], j);
@@ -67,6 +69,13 @@
 
         var tables = {};
         matches.forEach(function (m) { tables[m.id] = scoreTable(m.h, m.a); });
+
+        // 토너먼트용 점수표 (대진마다 처음 쓸 때 만들어 둬요)
+        var koTables = {};
+        function koTable(h, a, neutral) {
+            var k = h + a + (neutral ? 'n' : '');
+            return koTables[k] || (koTables[k] = scoreTable(h, a, neutral));
+        }
 
         function sample(tab, rand) {
             var r = rand(), cells = tab.cells, lo = 0, hi = cells.length - 1;
@@ -174,11 +183,67 @@
             return { tab: tab, order: order, pos: pos, fate: fate, thirds: t3, fourths: t4 };
         }
 
+        function poissonSample(lambda, rand) {
+            var l = Math.exp(-lambda), k = 0, p = 1;
+            do { k++; p *= rand(); } while (p > l);
+            return k - 1;
+        }
+
+        // 비겼을 때: 연장전(예상 득점의 1/3, 30분) → 그래도 같으면 승부차기 50:50
+        function extraTime(h, a, neutral, rand) {
+            var l = lambdas(h, a, neutral);
+            var eh = poissonSample(l[0] / 3, rand), ea = poissonSample(l[1] / 3, rand);
+            if (eh !== ea) return eh > ea ? h : a;
+            return rand() < 0.5 ? h : a;
+        }
+
+        // 8강: 1차전은 조 2위 팀 홈, 2차전은 조 1위 팀 홈. 합산 점수 → 연장(2차전 홈) → 승부차기 (원정 다득점 없음)
+        function twoLegs(winner, runner, rand) {
+            var l1 = sample(koTable(runner, winner), rand), l2 = sample(koTable(winner, runner), rand);
+            var w = l1[1] + l2[0], r = l1[0] + l2[1];
+            if (w !== r) return w > r ? winner : runner;
+            return extraTime(winner, runner, false, rand);
+        }
+
+        // 파이널스(4강·결승)는 중립 경기 단판
+        function single(h, a, rand) {
+            var s = sample(koTable(h, a, true), rand);
+            if (s[0] !== s[1]) return s[0] > s[1] ? h : a;
+            return extraTime(h, a, true, rand);
+        }
+
+        // 8강 추첨: 조 1위와 다른 조 2위를 무작위로 짝지어요
+        function drawQuarters(winners, runners, rand) {
+            for (;;) {
+                var perm = runners.slice();
+                for (var i = perm.length - 1; i > 0; i--) {
+                    var j = Math.floor(rand() * (i + 1)), t = perm[i];
+                    perm[i] = perm[j]; perm[j] = t;
+                }
+                var ok = perm.every(function (r, k) { return groupOf[r] !== groupOf[winners[k]]; });
+                if (ok) return winners.map(function (w, k) { return [w, perm[k]]; });
+            }
+        }
+
+        // 추첨부터 결승까지 한 번. 결과: 4강 팀, 결승 팀, 우승 팀
+        function knockout(res, rand) {
+            var winners = groupIds.map(function (g) { return res.order[g][0]; });
+            var runners = groupIds.map(function (g) { return res.order[g][1]; });
+            var semis = drawQuarters(winners, runners, rand).map(function (tie) { return twoLegs(tie[0], tie[1], rand); });
+            // 4강 추첨도 무작위
+            for (var i = semis.length - 1; i > 0; i--) {
+                var j = Math.floor(rand() * (i + 1)), t = semis[i];
+                semis[i] = semis[j]; semis[j] = t;
+            }
+            var finalists = [single(semis[0], semis[1], rand), single(semis[2], semis[3], rand)];
+            return { sf: semis, final: finalists, champ: single(finalists[0], finalists[1], rand) };
+        }
+
         function run(n, fixed, seed) {
             fixed = fixed || {};
             var rand = makeRand(seed || 2026);
             var stat = {};
-            codes.forEach(function (c) { stat[c] = { pos: [0, 0, 0, 0], qf: 0, stay: 0, po: 0, rel: 0, pts: 0 }; });
+            codes.forEach(function (c) { stat[c] = { pos: [0, 0, 0, 0], qf: 0, stay: 0, po: 0, rel: 0, pts: 0, sf: 0, final: 0, champ: 0 }; });
             for (var it = 0; it < n; it++) {
                 var res = outcome(allGames(fixed, rand));
                 codes.forEach(function (c) {
@@ -187,6 +252,10 @@
                     s[res.fate[c]]++;
                     s.pts += res.tab[c].pts;
                 });
+                var ko = knockout(res, rand);
+                ko.sf.forEach(function (c) { stat[c].sf++; });
+                ko.final.forEach(function (c) { stat[c].final++; });
+                stat[ko.champ].champ++;
             }
             codes.forEach(function (c) { stat[c].ptsAvg = stat[c].pts / n; });
             return { n: n, teams: stat };
