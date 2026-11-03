@@ -366,5 +366,5 @@ a.btn { text-decoration: none; display: inline-block; }
 .cb-list li.me .t, .cb-list li.me .v { color: var(--accent); }
 .bracket.three { grid-template-columns: repeat(3, minmax(220px, 1fr)); min-width: 680px; }
 .ko-wrap { display: flex; flex-direction: column; gap: 4px; }
-.ko-legs { margin: 0 4px; font-size: 11px; color: var(--sub); font-variant-numeric: tabular-nums; }
+.ko-legs { margin: 2px 4px 0; font-size: 13px; font-weight: 600; color: var(--ink); opacity: .8; font-variant-numeric: tabular-nums; }
 .ko-wide { margin-bottom: 18px; }
