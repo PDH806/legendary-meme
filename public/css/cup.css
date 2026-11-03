@@ -330,3 +330,13 @@ a.btn { text-decoration: none; display: inline-block; }
 @media (max-width: 640px) {
     .stages.six { grid-template-columns: repeat(3, 1fr); }
 }
+
+/* 소개·개인정보처리방침 같은 글 페이지 */
+.prose { line-height: 1.75; }
+.prose h1 { margin: 0 0 6px; font-size: 24px; letter-spacing: -0.02em; }
+.prose h2 { margin: 26px 0 8px; font-size: 17px; }
+.prose p, .prose li { color: var(--ink); font-size: 15px; }
+.prose ul, .prose ol { padding-left: 20px; }
+.prose .meta { margin-top: 0; color: var(--sub); font-size: 13px; }
+.foot nav { margin-top: 8px; }
+.foot nav a { color: var(--sub); margin: 0 8px; }
