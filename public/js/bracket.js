@@ -96,8 +96,6 @@
         var b = build(app);
         var champ = b.champion;
         var html = '<p class="ko-champ">🏆 우승 <strong>' + app.label(champ) + '</strong></p>';
-        html += '<h3 class="ko-sep"><span>조별리그</span></h3>';
-        html += groupSummary(app, b.res);
         html += '<h3 class="ko-sep"><span>토너먼트</span></h3>';
         html += '<div class="scroll"><div class="bracket">' + b.rounds.map(function (games, r) {
             return '<div class="ko-col"><h3><span>' + ROUND_NAMES[r] + '</span></h3><div class="ko-list">' + games.map(function (g) {
@@ -105,6 +103,8 @@
             }).join('') + '</div></div>';
         }).join('') + '</div></div>';
         html += '<p class="hint">팀을 누르면 그 팀이 이긴 걸로 정하고 다음 라운드를 다시 치러요. 한 번 더 누르면 선택이 풀려요. 퍼센트는 그 경기에서 이길 확률이에요(연장·승부차기 포함).</p>';
+        html += '<h3 class="ko-sep"><span>조별리그</span></h3>';
+        html += groupSummary(app, b.res);
         $('ko').innerHTML = html;
     }
 

@@ -208,15 +208,15 @@
             }).join('') + '</tr>';
         }).join('');
         var html = '<p class="ko-champ">🏆 우승 <strong>' + label(b.champion) + '</strong></p>' +
-            '<h3 class="ko-sep"><span>리그 단계</span></h3>' +
-            '<div class="ko-box ko-wide"><h3>리그 단계 최종 순위</h3><div class="scroll"><table class="ko-rt"><thead><tr><th scope="col">조</th><th scope="col">1위</th><th scope="col">2위</th><th scope="col">3위</th><th scope="col">4위</th></tr></thead><tbody>' + rows + '</tbody></table></div></div>' +
             '<h3 class="ko-sep"><span>토너먼트</span></h3>' +
             '<div class="scroll"><div class="bracket three">' + b.rounds.map(function (games, r) {
                 return '<div class="ko-col"><h3><span>' + ROUNDS[r] + '</span></h3><div class="ko-list">' + games.map(function (g) {
                     return '<div class="ko-wrap"><div class="ko-m">' + teamBtn(g, 0) + teamBtn(g, 1) + note(g) + '</div>' + legs(g) + '</div>';
                 }).join('') + '</div></div>';
             }).join('') + '</div></div>' +
-            '<p class="hint">8강은 두 경기 합산 점수예요(위가 조 1위 팀). 팀을 누르면 그 팀이 이긴 걸로 정하고 다음 라운드를 다시 치러요. 한 번 더 누르면 선택이 풀려요. 퍼센트는 그 대진에서 올라갈 확률이에요(연장·승부차기 포함).</p>';
+            '<p class="hint">8강은 두 경기 합산 점수예요(위가 조 1위 팀). 팀을 누르면 그 팀이 이긴 걸로 정하고 다음 라운드를 다시 치러요. 한 번 더 누르면 선택이 풀려요. 퍼센트는 그 대진에서 올라갈 확률이에요(연장·승부차기 포함).</p>' +
+            '<h3 class="ko-sep"><span>리그 단계</span></h3>' +
+            '<div class="ko-box ko-wide"><h3>리그 단계 최종 순위</h3><div class="scroll"><table class="ko-rt"><thead><tr><th scope="col">조</th><th scope="col">1위</th><th scope="col">2위</th><th scope="col">3위</th><th scope="col">4위</th></tr></thead><tbody>' + rows + '</tbody></table></div></div>';
         $('ko').innerHTML = html;
     }
 
