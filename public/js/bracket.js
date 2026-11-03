@@ -96,7 +96,9 @@
         var b = build(app);
         var champ = b.champion;
         var html = '<p class="ko-champ">🏆 우승 <strong>' + app.label(champ) + '</strong></p>';
+        html += '<h3 class="ko-sep"><span>조별리그</span></h3>';
         html += groupSummary(app, b.res);
+        html += '<h3 class="ko-sep"><span>토너먼트</span></h3>';
         html += '<div class="scroll"><div class="bracket">' + b.rounds.map(function (games, r) {
             return '<div class="ko-col"><h3><span>' + ROUND_NAMES[r] + '</span></h3><div class="ko-list">' + games.map(function (g) {
                 return '<div class="ko-m">' + teamBtn(app, g, 0) + teamBtn(app, g, 1) + note(g) + '</div>';

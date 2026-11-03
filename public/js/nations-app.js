@@ -208,7 +208,9 @@
             }).join('') + '</tr>';
         }).join('');
         var html = '<p class="ko-champ">🏆 우승 <strong>' + label(b.champion) + '</strong></p>' +
+            '<h3 class="ko-sep"><span>리그 단계</span></h3>' +
             '<div class="ko-box ko-wide"><h3>리그 단계 최종 순위</h3><div class="scroll"><table class="ko-rt"><thead><tr><th scope="col">조</th><th scope="col">1위</th><th scope="col">2위</th><th scope="col">3위</th><th scope="col">4위</th></tr></thead><tbody>' + rows + '</tbody></table></div></div>' +
+            '<h3 class="ko-sep"><span>토너먼트</span></h3>' +
             '<div class="scroll"><div class="bracket three">' + b.rounds.map(function (games, r) {
                 return '<div class="ko-col"><h3><span>' + ROUNDS[r] + '</span></h3><div class="ko-list">' + games.map(function (g) {
                     return '<div class="ko-wrap"><div class="ko-m">' + teamBtn(g, 0) + teamBtn(g, 1) + note(g) + '</div>' + legs(g) + '</div>';
