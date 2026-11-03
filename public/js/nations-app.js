@@ -33,25 +33,18 @@
         return after ? name(code) + img : img + name(code);
     }
 
-    function decided() {
-        return nl.matches.every(function (m) { return state.fixed[m.id] || data.results[m.id]; });
-    }
-
-    // 소수점 둘째 자리까지. 남은 경기가 있는데 1만 번 모두 그랬으면 확정이 아니라서 >99.99%
+    // 소수점 둘째 자리까지 (1만 번 중 나온 비율 그대로, > < 표시 없이)
     function pct2(count) {
-        if (count === stat.n && !decided()) return '>99.99%';
         return (100 * count / stat.n).toFixed(2) + '%';
     }
 
-    // 큰 숫자용 (맨 위)
+    // 큰 숫자용 (맨 위): 0%·100%는 그대로, 1% 미만·99% 이상은 둘째 자리, 그 사이는 짧게
     function pct(count) {
-        var sure = decided();
-        if (!count) return sure ? '0%' : '<0.1%';
-        if (count === stat.n) return sure ? '100%' : '>99.9%';
+        if (!count) return '0%';
+        if (count === stat.n) return '100%';
         var p = 100 * count / stat.n;
-        if (p < 0.1) return '<0.1%';
-        if (p > 99.9) return '>99.9%';
-        return (p >= 10 && p < 99.5 ? p.toFixed(0) : p.toFixed(1)) + '%';
+        if (p < 1 || p >= 99) return p.toFixed(2) + '%';
+        return (p >= 10 ? p.toFixed(0) : p.toFixed(1)) + '%';
     }
 
     function readHash() {
