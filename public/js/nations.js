@@ -261,6 +261,98 @@
             return { n: n, teams: stat };
         }
 
+        // ---------- 대진표 화면용: 한 번만 치르는 대회 ----------
+
+        // 리그 단계를 한 번 치르고 8강 대진을 추첨해요. 대진 순서는 4강 추첨까지 반영해서 (0,1)·(2,3) 승자가 4강에서 만나요
+        function draw(fixed, seed) {
+            var rand = makeRand(seed);
+            var res = outcome(allGames(fixed || {}, rand));
+            var winners = groupIds.map(function (g) { return res.order[g][0]; });
+            var runners = groupIds.map(function (g) { return res.order[g][1]; });
+            var ties = drawQuarters(winners, runners, rand);
+            for (var i = ties.length - 1; i > 0; i--) {
+                var j = Math.floor(rand() * (i + 1)), t = ties[i];
+                ties[i] = ties[j]; ties[j] = t;
+            }
+            res.ties = ties;
+            return res;
+        }
+
+        // 8강 한 대진: legs = [[1차전 조 2위 홈 득점, 조 1위 득점], [2차전 조 1위 홈 득점, 조 2위 득점]]
+        function playTie(winner, runner, seed) {
+            var rand = makeRand(seed);
+            var l1 = sample(koTable(runner, winner), rand), l2 = sample(koTable(winner, runner), rand);
+            var w = l1[1] + l2[0], r = l1[0] + l2[1];
+            var g = { h: winner, a: runner, legs: [l1, l2], hg: w, ag: r };
+            if (w !== r) { g.winner = w > r ? winner : runner; return g; }
+            var l = lambdas(winner, runner, false);
+            var eh = poissonSample(l[0] / 3, rand), ea = poissonSample(l[1] / 3, rand);
+            g.et = true; g.hg += eh; g.ag += ea;
+            if (eh !== ea) { g.winner = eh > ea ? winner : runner; return g; }
+            g.pens = true; g.winner = rand() < 0.5 ? winner : runner;
+            return g;
+        }
+
+        // 4강·결승 (중립 단판)
+        function playSingle(h, a, seed) {
+            var rand = makeRand(seed);
+            var s = sample(koTable(h, a, true), rand);
+            var g = { h: h, a: a, hg: s[0], ag: s[1] };
+            if (s[0] !== s[1]) { g.winner = s[0] > s[1] ? h : a; return g; }
+            var l = lambdas(h, a, true);
+            var eh = poissonSample(l[0] / 3, rand), ea = poissonSample(l[1] / 3, rand);
+            g.et = true; g.hg += eh; g.ag += ea;
+            if (eh !== ea) { g.winner = eh > ea ? h : a; return g; }
+            g.pens = true; g.winner = rand() < 0.5 ? h : a;
+            return g;
+        }
+
+        // 연장전(예상 득점 1/3)에서 h가 이길 확률 + 승부차기 반반
+        function etWin(h, a, neutral) {
+            var l = lambdas(h, a, neutral), w = 0, d = 0;
+            for (var i = 0; i <= MAX_GOALS; i++) {
+                for (var j = 0; j <= MAX_GOALS; j++) {
+                    var p = poissonPmf(l[0] / 3, i) * poissonPmf(l[1] / 3, j);
+                    if (i > j) w += p; else if (i === j) d += p;
+                }
+            }
+            return w + d / 2;
+        }
+
+        // 한 경기 점수표 → (기준 팀 득점 - 상대 득점) 분포. side 0이면 홈팀 기준
+        function diffDist(tab, side) {
+            var d = {};
+            tab.cells.forEach(function (c) {
+                var k = side ? c[1] - c[0] : c[0] - c[1];
+                d[k] = (d[k] || 0) + c[2];
+            });
+            return d;
+        }
+
+        var probCache = {};
+        // 8강 두 경기 합산으로 조 1위 팀이 올라갈 확률
+        function tieProb(winner, runner) {
+            var k = 't' + winner + runner;
+            if (k in probCache) return probCache[k];
+            var d1 = diffDist(koTable(runner, winner), 1), d2 = diffDist(koTable(winner, runner), 0);
+            var up = 0, eq = 0;
+            Object.keys(d1).forEach(function (x) {
+                Object.keys(d2).forEach(function (y) {
+                    var s = +x + +y, p = d1[x] * d2[y];
+                    if (s > 0) up += p; else if (s === 0) eq += p;
+                });
+            });
+            return (probCache[k] = up + eq * etWin(winner, runner, false));
+        }
+
+        // 중립 단판에서 h가 이길 확률
+        function singleProb(h, a) {
+            var k = 's' + h + a;
+            if (k in probCache) return probCache[k];
+            var wdl = koTable(h, a, true).wdl;
+            return (probCache[k] = wdl[0] + wdl[1] * etWin(h, a, true));
+        }
+
         function standings(fixed) {
             return outcome(allGames(fixed || {}, null));
         }
@@ -274,6 +366,11 @@
             matches: matches,
             matchProbs: function (id) { return tables[id].wdl; },
             run: run,
+            draw: draw,
+            playTie: playTie,
+            playSingle: playSingle,
+            tieProb: tieProb,
+            singleProb: singleProb,
             standings: standings,
             _rankGroup: rankGroup // 테스트용
         };

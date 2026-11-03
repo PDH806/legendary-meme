@@ -353,3 +353,18 @@ a.btn { text-decoration: none; display: inline-block; }
 .nl-tbl th, .nl-tbl td { padding: 9px 5px; }
 .nl-tbl td.p { font-size: 12.5px; }
 .nl-tbl .rk { width: 30px; }
+
+/* 토너먼트: 우승 확률 막대 */
+.cb-list { list-style: none; margin: 0 0 8px; padding: 0; display: grid; grid-template-columns: 1fr 1fr; column-gap: 28px; }
+@media (max-width: 640px) { .cb-list { grid-template-columns: 1fr; } }
+.cb-list li { display: grid; grid-template-columns: 22px 1fr auto; align-items: center; column-gap: 8px; padding: 8px 0 9px; border-top: 1px solid var(--line); }
+.cb-list .rk { font-size: 12px; color: var(--sub); font-variant-numeric: tabular-nums; }
+.cb-list .t { font-size: 14px; font-weight: 700; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.cb-list .v { font-size: 14px; font-weight: 800; font-variant-numeric: tabular-nums; }
+.cb-list .track { grid-column: 2 / -1; height: 6px; margin-top: 7px; border-radius: 999px; background: var(--line); overflow: hidden; }
+.cb-list .fill { display: block; height: 100%; border-radius: inherit; background: linear-gradient(90deg, var(--accent), #6ee7a0); }
+.cb-list li.me .t, .cb-list li.me .v { color: var(--accent); }
+.bracket.three { grid-template-columns: repeat(3, minmax(220px, 1fr)); min-width: 680px; }
+.ko-wrap { display: flex; flex-direction: column; gap: 4px; }
+.ko-legs { margin: 0 4px; font-size: 11px; color: var(--sub); font-variant-numeric: tabular-nums; }
+.ko-wide { margin-bottom: 18px; }

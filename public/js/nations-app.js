@@ -7,7 +7,7 @@
     var data = window.UNL_DATA;
     var nl = NationsEngine.create(data);
     var teams = nl.teams;
-    var state = { fixed: {}, focus: 'GER', group: '2' };
+    var state = { fixed: {}, focus: 'GER', group: '2', run: 0, picks: {} };
     var stat = null, table = null, timer = 0;
 
     var FATES = [
@@ -58,12 +58,19 @@
             }
             if (kv[0] === 't' && teams[v]) { state.focus = v; state.group = nl.groupOf[v]; }
             if (kv[0] === 'g' && data.groups[v]) state.group = v;
+            if (kv[0] === 'r' && /^\d{1,10}$/.test(v)) state.run = +v;
+            if (kv[0] === 'k') v.split('.').forEach(function (x) {
+                var m = /^(\d)-(\d)-([A-Z]{3})$/.exec(x);
+                if (m && teams[m[3]]) state.picks[m[1] + '-' + m[2]] = m[3];
+            });
         });
     }
 
     function writeHash() {
         var s = Object.keys(state.fixed).map(function (id) { return id + '-' + state.fixed[id].join('-'); }).join('.');
-        history.replaceState(null, '', '#' + (s ? 's=' + s + '&' : '') + 't=' + state.focus + '&g=' + state.group);
+        var k = Object.keys(state.picks).map(function (key) { return key + '-' + state.picks[key]; }).join('.');
+        history.replaceState(null, '', '#' + (s ? 's=' + s + '&' : '') + 't=' + state.focus + '&g=' + state.group +
+            (state.run ? '&r=' + state.run : '') + (k ? '&k=' + k : ''));
     }
 
     function recalc() {
@@ -79,6 +86,8 @@
 
     function render() {
         renderHero();
+        renderChampBars();
+        renderBracket();
         renderTables();
         renderCross();
         renderTabs();
@@ -89,8 +98,8 @@
     function renderHero() {
         var c = state.focus, s = stat.teams[c];
         $('focus_name').innerHTML = label(c);
-        $('big').textContent = pct(s.qf);
-        var chips = [['조 1위', s.pos[0]], ['4강', s.sf], ['우승', s.champ]].concat(FATES.slice(1).map(function (f) { return [f.name, s[f.id]]; }));
+        $('big').textContent = pct(s.champ);
+        var chips = [['8강 진출', s.qf], ['4강', s.sf], ['결승', s.final]].concat(FATES.slice(1).map(function (f) { return [f.name, s[f.id]]; }));
         $('stages').innerHTML = chips.map(function (x) { return '<li><span>' + x[0] + '</span><b>' + pct(x[1]) + '</b></li>'; }).join('');
         var cnt = Object.keys(state.fixed).length, left = nl.matches.filter(function (m) { return !data.results[m.id]; }).length;
         $('scenario').textContent = (cnt ? '직접 넣은 점수 ' + cnt + '경기 반영 · ' : '남은 ' + left + '경기 전부 시뮬레이션 · ') + '예상 최종 승점 ' + s.ptsAvg.toFixed(1);
@@ -117,6 +126,96 @@
                 '<th scope="col" class="pc z-acl">1위</th><th scope="col" class="pc z-acl">2위</th><th scope="col" class="pc">3위</th><th scope="col" class="pc z-rpo">4위</th>' +
                 '<th scope="col">8강</th><th scope="col">4강</th><th scope="col">결승</th><th scope="col">우승</th><th scope="col">승강 PO</th><th scope="col">강등</th></tr></thead><tbody>' + rows + '</tbody></table></div>';
         }).join('') + '<p class="legend"><span class="z-acl">1·2위: 8강 진출</span><span class="z-rpo">4위: 승강 PO 또는 강등</span></p>';
+    }
+
+    // ---------- 토너먼트 ----------
+
+    // 우승 확률 상위 8팀 막대 (기준 팀이 8위 밖이면 맨 아래에 더해요)
+    function renderChampBars() {
+        var list = nl.codes.slice().sort(function (a, b) { return stat.teams[b].champ - stat.teams[a].champ; });
+        var top = list.slice(0, 8);
+        if (top.indexOf(state.focus) < 0) top.push(state.focus);
+        var max = stat.teams[list[0]].champ || 1;
+        $('champ_bars').innerHTML = top.map(function (c) {
+            var v = stat.teams[c].champ;
+            return '<li' + (c === state.focus ? ' class="me"' : '') + '><span class="rk">' + (list.indexOf(c) + 1) + '</span><span class="t">' + label(c) + '</span><span class="v">' + pct2(v) + '</span>' +
+                '<span class="track"><span class="fill" style="width:' + (v ? Math.max(1.5, 100 * v / max) : 0).toFixed(1) + '%"></span></span></li>';
+        }).join('');
+    }
+
+    var ROUNDS = ['8강', '4강', '결승'];
+
+    // 문자열 → 32비트 시드 (FNV-1a). 같은 링크면 같은 대진표가 나와요
+    function hash(str) {
+        var h = 2166136261;
+        for (var i = 0; i < str.length; i++) { h ^= str.charCodeAt(i); h = Math.imul(h, 16777619); }
+        return h >>> 0;
+    }
+
+    // 사용자가 고른 승자를 먼저 반영하고, 나머지는 시드로 치러요
+    function buildBracket() {
+        var res = nl.draw(state.fixed, state.run);
+        var rounds = [], pairs = res.ties;
+        for (var r = 0; r < ROUNDS.length; r++) {
+            var games = pairs.map(function (p, i) {
+                var key = r + '-' + i, pick = state.picks[key];
+                if (pick && pick !== p[0] && pick !== p[1]) { delete state.picks[key]; pick = null; } // 위 라운드가 바뀌어 없는 팀이면 지워요
+                var seed = hash(state.run + '|' + key + '|' + p[0] + '|' + p[1]);
+                var g = pick ? { h: p[0], a: p[1], winner: pick, picked: true }
+                    : r === 0 ? nl.playTie(p[0], p[1], seed) : nl.playSingle(p[0], p[1], seed);
+                g.key = key;
+                g.prob = r === 0 ? nl.tieProb(p[0], p[1]) : nl.singleProb(p[0], p[1]);
+                return g;
+            });
+            rounds.push(games);
+            pairs = [];
+            for (var k = 0; k + 1 < games.length; k += 2) pairs.push([games[k].winner, games[k + 1].winner]);
+        }
+        return { res: res, rounds: rounds, champion: rounds[rounds.length - 1][0].winner };
+    }
+
+    function teamBtn(g, side) {
+        var code = side ? g.a : g.h, win = g.winner === code;
+        var prob = side ? 1 - g.prob : g.prob;
+        var score = g.picked ? '' : '<b class="sc">' + (side ? g.ag : g.hg) + '</b>';
+        var cls = 'ko-t' + (win ? ' win' : ' lose') + (code === state.focus ? ' me' : '');
+        return '<button type="button" class="' + cls + '" data-k="' + g.key + '" data-c="' + code + '" aria-pressed="' + (!!g.picked && win) + '"' +
+            ' title="' + name(code) + ' 승리로 정하기"><span class="nm">' + label(code) + '</span><span class="pr">' + Math.round(prob * 100) + '%</span>' + score + '</button>';
+    }
+
+    function note(g) {
+        if (g.picked) return '<span class="ko-note pick">내 선택</span>';
+        if (g.pens) return '<span class="ko-note">승부차기</span>';
+        if (g.et) return '<span class="ko-note">연장</span>';
+        return '';
+    }
+
+    // 8강 두 경기 점수 (1차전은 조 2위 팀 홈)
+    function legs(g) {
+        if (!g.legs) return '';
+        return '<p class="ko-legs">1차 ' + name(g.a) + ' 홈 ' + g.legs[0][0] + ':' + g.legs[0][1] + ' · 2차 ' + name(g.h) + ' 홈 ' + g.legs[1][0] + ':' + g.legs[1][1] + '</p>';
+    }
+
+    function renderBracket() {
+        $('ko_run').textContent = state.run ? '🎲 다시 돌리기' : '🎲 대회 한 번 돌려보기';
+        $('ko_clear').hidden = !Object.keys(state.picks).length;
+        if (!state.run) { $('ko').innerHTML = ''; return; }
+        var b = buildBracket();
+        var rows = nl.groupIds.map(function (g) {
+            return '<tr' + (g === nl.groupOf[state.focus] ? ' class="cur"' : '') + '><th scope="row">' + g + '조</th>' + b.res.order[g].map(function (c, i) {
+                var f = b.res.fate[c], badge = f === 'qf' ? '' : '<em class="' + (f === 'stay' ? 'adv' : 'drop') + '">' + (f === 'stay' ? '잔류' : f === 'po' ? 'PO' : '강등') + '</em>';
+                return '<td class="' + (c === state.focus ? 'me' : '') + (i > 1 ? ' out' : '') + '">' + label(c) + badge + '</td>';
+            }).join('') + '</tr>';
+        }).join('');
+        var html = '<p class="ko-champ">🏆 우승 <strong>' + label(b.champion) + '</strong></p>' +
+            '<div class="ko-box ko-wide"><h3>리그 단계 최종 순위</h3><div class="scroll"><table class="ko-rt"><thead><tr><th scope="col">조</th><th scope="col">1위</th><th scope="col">2위</th><th scope="col">3위</th><th scope="col">4위</th></tr></thead><tbody>' + rows + '</tbody></table></div></div>' +
+            '<div class="scroll"><div class="bracket three">' + b.rounds.map(function (games, r) {
+                return '<div class="ko-col"><h3><span>' + ROUNDS[r] + '</span></h3><div class="ko-list">' + games.map(function (g) {
+                    return '<div class="ko-wrap"><div class="ko-m">' + teamBtn(g, 0) + teamBtn(g, 1) + note(g) + '</div>' + legs(g) + '</div>';
+                }).join('') + '</div></div>';
+            }).join('') + '</div></div>' +
+            '<p class="hint">8강은 두 경기 합산 점수예요(위가 조 1위 팀). 팀을 누르면 그 팀이 이긴 걸로 정하고 다음 라운드를 다시 치러요. 한 번 더 누르면 선택이 풀려요. 퍼센트는 그 대진에서 올라갈 확률이에요(연장·승부차기 포함).</p>';
+        $('ko').innerHTML = html;
     }
 
     // 지금 순위 기준 3위끼리, 4위끼리 비교
@@ -218,6 +317,19 @@
         });
     });
     $('reset').addEventListener('click', function () { state.fixed = {}; recalc(); });
+    $('ko_run').addEventListener('click', function () {
+        state.run = 1 + Math.floor(Math.random() * 2147483646);
+        state.picks = {};
+        renderBracket(); writeHash();
+    });
+    $('ko_clear').addEventListener('click', function () { state.picks = {}; renderBracket(); writeHash(); });
+    $('ko').addEventListener('click', function (e) { // 팀을 누르면 그 팀 승리로, 다시 누르면 풀기
+        var b = e.target.closest('button[data-k]');
+        if (!b) return;
+        var key = b.dataset.k, code = b.dataset.c;
+        if (state.picks[key] === code) delete state.picks[key]; else state.picks[key] = code;
+        renderBracket(); writeHash();
+    });
     $('share').addEventListener('click', function () {
         writeHash();
         if (navigator.clipboard && window.isSecureContext) navigator.clipboard.writeText(location.href).then(function () { toast('링크를 복사했어요'); }, function () { toast(location.href); });

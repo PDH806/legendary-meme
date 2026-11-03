@@ -107,6 +107,7 @@
 
     function render() {
         renderHero();
+        renderChampBars();
         renderOpp();
         renderTabs();
         renderGroup();
@@ -118,8 +119,8 @@
     function renderHero() {
         var s = stat.teams[state.focus];
         $('focus_name').textContent = teams[state.focus].name;
-        $('big_r16').textContent = pct(s.r16);
-        var stages = [['조 1위', s.pos[0]], ['8강', s.qf], ['4강', s.sf], ['결승', s.final], ['우승', s.champ]];
+        $('big_r16').textContent = pct(s.champ);
+        var stages = [['조 1위', s.pos[0]], ['16강', s.r16], ['8강', s.qf], ['4강', s.sf], ['결승', s.final]];
         $('stages').innerHTML = stages.map(function (x) {
             return '<li><span>' + x[0] + '</span><b>' + pct(x[1]) + '</b></li>';
         }).join('');
@@ -127,6 +128,19 @@
         $('scenario').textContent = cnt
             ? '직접 넣은 점수 ' + cnt + '경기를 반영했어요 · 1만 회 시뮬레이션'
             : '남은 경기 전부 시뮬레이션 · 1만 회';
+    }
+
+    // 우승 확률 상위 8팀 막대 (기준 팀이 8위 밖이면 맨 아래에 더해요)
+    function renderChampBars() {
+        var list = Object.keys(teams).sort(function (a, b) { return stat.teams[b].champ - stat.teams[a].champ; });
+        var top = list.slice(0, 8);
+        if (top.indexOf(state.focus) < 0) top.push(state.focus);
+        var max = stat.teams[list[0]].champ || 1;
+        $('champ_bars').innerHTML = top.map(function (c) {
+            var v = stat.teams[c].champ;
+            return '<li' + (c === state.focus ? ' class="me"' : '') + '><span class="rk">' + (list.indexOf(c) + 1) + '</span><span class="t">' + label(c) + '</span><span class="v">' + pct2(v) + '</span>' +
+                '<span class="track"><span class="fill" style="width:' + (v ? Math.max(1.5, 100 * v / max) : 0).toFixed(1) + '%"></span></span></li>';
+        }).join('');
     }
 
     function renderOpp() {
