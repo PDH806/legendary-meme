@@ -340,3 +340,13 @@ a.btn { text-decoration: none; display: inline-block; }
 .prose .meta { margin-top: 0; color: var(--sub); font-size: 13px; }
 .foot nav { margin-top: 8px; }
 .foot nav a { color: var(--sub); margin: 0 8px; }
+
+/* 네이션스리그: 3위·4위 비교 */
+.cross { display: grid; grid-template-columns: 1fr 1fr; gap: 0 20px; }
+@media (max-width: 760px) { .cross { grid-template-columns: 1fr; } }
+.cross .grp { font-size: 11px; font-weight: 600; color: var(--sub); }
+.fate { display: inline-block; padding: 2px 8px; border-radius: 999px; font-size: 12px; font-weight: 800; white-space: nowrap; }
+.fate.f-stay { color: var(--accent); background: var(--accent-soft); }
+.fate.f-po { color: #d99a1e; background: rgba(217, 154, 30, .14); }
+.fate.f-rel { color: #e5484d; background: rgba(229, 72, 77, .14); }
+.lg-tbl .pick-team .flag { margin-right: 6px; }
