@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="ko" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>2030 월드컵 아시아 예선 경우의 수 · 조추첨 일정과 예선 방식 정리</title>
+<meta name="description" content="2030 FIFA 월드컵 아시아 예선 정리. 12월 15일 조추첨(보도), 2차 예선 36개국 9개 조 홈·원정, 예상 포트와 한국의 위치, 아직 정해지지 않은 본선 티켓 수까지. 조추첨 직후 진출 확률 시뮬레이터를 열어요.">
+<meta property="og:title" content="2030 월드컵 아시아 예선 · 조추첨과 예선 방식 정리">
+<meta property="og:description" content="조추첨 직후 한국의 최종예선 진출 확률을 1만 번 시뮬레이션으로 계산해 드려요.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://pickadia.com/worldcup">
+<meta property="og:site_name" content="pickadia · 경우의 수">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:image" content="https://pickadia.com/img/og-worldcup.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="2030 월드컵 아시아 예선 경우의 수">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://pickadia.com/worldcup">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Article","headline":"2030 월드컵 아시아 예선 조추첨 일정과 예선 방식 정리","inLanguage":"ko","datePublished":"2026-11-04","dateModified":"2026-11-04","url":"https://pickadia.com/worldcup","author":{"@type":"Organization","name":"pickadia"},"publisher":{"@type":"Organization","name":"pickadia"}}
+</script>
+<meta name="theme-color" content="#0b2a20">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<link rel="stylesheet" href="css/cup.css?v=31">
+<script>
+// 기본은 어두운 화면이에요. 밝은 화면을 골라 둔 사람만 그리기 전에 바꿔요 (깜빡임 방지)
+try { if (localStorage.getItem('cup-theme') === 'light') document.documentElement.setAttribute('data-theme', 'light'); } catch (e) {}
+</script>
+</head>
+<body>
+<header class="top">
+    <div class="wrap">
+        <a class="logo" href="./"><span aria-hidden="true">⚽</span> 경우의 수</a>
+        <nav class="menu" aria-label="대회">
+            <a href="./">아시안컵 2027</a>
+            <a href="nations.html">네이션스리그</a>
+            <a href="worldcup.html" aria-current="page">월드컵 예선</a>
+            <a href="kleague.html">K리그1 2026</a>
+        </nav>
+        <div class="top-right">
+            <span class="dday" id="dday"></span>
+            <button type="button" class="theme-btn" id="theme_btn" aria-label="밝은 화면으로 바꾸기">☀️</button>
+        </div>
+    </div>
+</header>
+
+<main class="wrap">
+    <section class="hero" aria-labelledby="hero_title">
+        <p class="eyebrow">2030 FIFA 월드컵 · 스페인·포르투갈·모로코 · 아시아 지역 예선</p>
+        <h1 id="hero_title">2030 월드컵 아시아 예선 조추첨까지</h1>
+        <p class="big" id="draw_dday">D-?</p>
+        <ul class="stages">
+            <li><span>조추첨 (보도)</span><b>12.15</b></li>
+            <li><span>2차 예선</span><b>36개국</b></li>
+            <li><span>조 편성</span><b>4팀 × 9조</b></li>
+            <li><span>2차 예선 기간</span><b>27.9~28.3</b></li>
+            <li><span>한국 (예상)</span><b>1포트</b></li>
+        </ul>
+        <p class="hero-note">조추첨이 끝나면 이 페이지에서 조별 진출 확률을 1만 번 시뮬레이션으로 계산하고, 남은 경기 점수를 직접 넣어 볼 수 있게 열어요.</p>
+    </section>
+
+    <article class="card prose" aria-labelledby="known_title">
+        <h2 id="known_title">지금까지 알려진 것</h2>
+        <p class="meta">2026년 11월 4일 기준 · 아래 내용은 언론 보도를 정리한 것이고, AFC 공식 발표 원문은 아직 확인하지 못했어요.</p>
+        <div class="scroll">
+            <table class="tbl info-tbl">
+                <tbody>
+                    <tr><th scope="row">조추첨</th><td>2026년 12월 15일. 태국 매체 시암스포츠가 AFC 발표를 인용해 보도했어요.</td></tr>
+                    <tr><th scope="row">2차 예선</th><td>36개국이 4팀씩 9개 조로 나뉘어 홈·원정 경기를 치러요(팀당 6경기).</td></tr>
+                    <tr><th scope="row">기간</th><td>2027년 9월 ~ 2028년 3월</td></tr>
+                    <tr><th scope="row">다음 단계</th><td>각 조 1·2위(18팀)가 3차 예선에 가고, 2031 AFC 아시안컵 본선 출전권도 함께 얻어요.</td></tr>
+                    <tr><th scope="row">1차 예선</th><td>아직 열리지 않았어요. 통과한 팀은 2차 예선 4포트에 들어가요.</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h3>예상 포트 (FIFA 랭킹 기준 전망)</h3>
+        <p>아세안 풋볼이 2026년 12월 FIFA 랭킹을 예상해 공개한 배정이에요. 실제 포트는 조추첨 직전 랭킹으로 정해져요.</p>
+        <div class="scroll">
+            <table class="tbl info-tbl">
+                <tbody>
+                    <tr><th scope="row">1포트</th><td>대한민국, 일본, 이란, 호주, 사우디아라비아 …</td></tr>
+                    <tr><th scope="row">2포트</th><td>중국, 태국, 베트남 …</td></tr>
+                    <tr><th scope="row">3포트</th><td>북한, 인도네시아, 말레이시아 …</td></tr>
+                    <tr><th scope="row">4포트</th><td>1차 예선 통과 팀</td></tr>
+                </tbody>
+            </table>
+        </div>
+        <p>한국은 1포트라서 일본·이란·호주와 같은 조에 들어가지 않아요. 같은 조에 들어갈 수 있는 팀은 2~4포트 팀들이라, 보도처럼 중국·북한과 한 조가 될 가능성도 있어요.</p>
+    </article>
+
+    <article class="card prose" aria-labelledby="unknown_title">
+        <h2 id="unknown_title">아직 정해지지 않은 것</h2>
+        <ul>
+            <li><b>본선 참가국 수와 아시아 티켓:</b> 2026 대회는 48개국, 아시아 직행 8장 + 대륙 간 플레이오프 1장이었어요. 2030 대회를 64개국으로 늘리는 안이 논의 중이고, 늘어나면 아시아 티켓도 늘 수 있다는 전망이 있어요. FIFA는 아직 확정하지 않았어요.</li>
+            <li><b>3차 예선 이후 방식:</b> 2026 예선처럼 3차 예선(3개 조) → 4차 예선 → 5차 예선(플레이오프)으로 갈 거라는 추정이 많지만, 공식 발표는 없어요.</li>
+            <li><b>아시아 네이션스리그 연계:</b> AFC가 네이션스리그를 만들어 아시안컵·월드컵 예선과 연결하겠다고 발표했어요. 언제부터 어떻게 연결할지는 아직 정해지지 않았어요.</li>
+        </ul>
+    </article>
+
+    <article class="card prose" aria-labelledby="prev_title">
+        <h2 id="prev_title">참고: 지난 2026 월드컵 아시아 예선 방식</h2>
+        <p>2030 예선도 비슷한 흐름으로 갈 가능성이 높아서, 지난 예선 방식을 정리해 뒀어요.</p>
+        <ol>
+            <li><b>1차 예선:</b> 랭킹이 낮은 20개국이 홈·원정 맞대결, 이긴 10팀이 2차 예선으로</li>
+            <li><b>2차 예선:</b> 36개국, 4팀씩 9개 조 홈·원정. 각 조 1·2위(18팀)가 3차 예선으로</li>
+            <li><b>3차 예선:</b> 18팀, 6팀씩 3개 조 홈·원정. <b>각 조 1·2위 6팀이 본선 직행</b>, 3·4위는 4차 예선으로</li>
+            <li><b>4차 예선:</b> 6팀, 3팀씩 2개 조. 각 조 1위 2팀이 본선 직행, 2위는 5차 예선으로</li>
+            <li><b>5차 예선:</b> 두 조 2위끼리 홈·원정. 이긴 팀이 대륙 간 플레이오프로</li>
+        </ol>
+        <p>한국은 2차 예선에서 중국·태국·싱가포르와 같은 조, 3차 예선에서 이라크·요르단·오만·팔레스타인·쿠웨이트와 같은 조였고, 두 단계 모두 조 1위로 본선에 갔어요.</p>
+    </article>
+
+    <article class="card prose" aria-labelledby="kor_title">
+        <h2 id="kor_title">한국의 월드컵 본선 기록</h2>
+        <p>한국은 1954년 스위스 대회에 처음 나갔고, 1986년 멕시코 대회부터 2026년 북중미 대회까지 <b>11회 연속</b> 본선에 올랐어요(통산 12회). 2030 대회에 가면 12회 연속이에요.</p>
+        <p>그동안 예선 막판마다 "경우의 수"가 화제가 됐어요. 다른 조 결과와 득실차까지 따져야 했던 순간들이 많았죠. 이 페이지는 조추첨 뒤 그런 계산을 직접 해 볼 수 있게 만들 거예요.</p>
+    </article>
+
+    <section class="card model" aria-labelledby="plan_title">
+        <h2 id="plan_title">조추첨 뒤 열리는 기능</h2>
+        <ol>
+            <li><b>조별 진출 확률:</b> 국가대표 경기 약 5만 건으로 계산한 Elo 전력 점수로 남은 경기를 1만 번 시뮬레이션해요. 아시안컵·네이션스리그 페이지와 같은 방식이에요.</li>
+            <li><b>직접 찍어 보기:</b> 남은 경기에 점수를 넣으면 진출 확률이 바로 바뀌고, 링크로 공유할 수 있어요.</li>
+            <li><b>AFC 순위 규정:</b> 승점이 같을 때 맞대결·득실차 같은 순위 결정 방식을 규정 원문대로 넣어요.</li>
+            <li><b>경기 결과 자동 반영:</b> 경기가 끝나면 매시간 결과를 받아 확률을 다시 계산해요.</li>
+        </ol>
+        <p class="src">출처: <a href="https://www.xportsnews.com/article/2206319" target="_blank" rel="noopener">엑스포츠뉴스 (2026.10.11, 시암스포츠·아세안 풋볼 인용)</a> · <a href="https://www.espn.com/soccer/story/_/id/50098546/afc-introduce-nations-league-shake-world-cup-asian-cup-qualification" target="_blank" rel="noopener">ESPN: AFC 네이션스리그 도입</a> · <a href="https://en.wikipedia.org/wiki/2026_FIFA_World_Cup_qualification_(AFC)" target="_blank" rel="noopener">위키백과 2026 FIFA World Cup qualification (AFC)</a></p>
+    </section>
+</main>
+
+<footer class="foot">
+    <div class="wrap">
+        <p>경우의 수는 팬이 만든 비공식 서비스로, FIFA·AFC와 관련이 없어요.</p>
+        <nav aria-label="사이트 정보"><a href="about.html">소개</a><a href="privacy.html">개인정보처리방침</a></nav>
+    </div>
+</footer>
+
+<script>
+// 조추첨(보도 기준 2026.12.15)까지 남은 날 (한국 날짜 기준)
+(function () {
+    var draw = Date.UTC(2026, 11, 15) / 864e5;
+    var now = new Date(Date.now() + 9 * 3600e3);
+    var today = Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate()) / 864e5;
+    var d = Math.round(draw - today);
+    var el = document.getElementById('draw_dday'), top = document.getElementById('dday');
+    var txt = d > 0 ? 'D-' + d : d === 0 ? 'D-DAY' : '조추첨 완료';
+    el.textContent = txt;
+    top.textContent = d >= 0 ? '조추첨 ' + txt : '';
+})();
+</script>
+<script src="js/theme.js?v=2"></script>
+</body>
+</html>

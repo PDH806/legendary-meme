@@ -372,3 +372,10 @@ a.btn { text-decoration: none; display: inline-block; }
 .ko-sep { display: flex; align-items: center; gap: 12px; margin: 26px 0 16px; font-size: 13px; font-weight: 800; color: var(--accent); }
 .ko-sep::before, .ko-sep::after { content: ""; flex: 1; height: 1px; background: var(--line); }
 .ko-groups, .ko-wide { margin-bottom: 0; }
+
+/* 글 페이지 안 정보 표 */
+.prose h3 { margin: 22px 0 6px; font-size: 15px; }
+.info-tbl { white-space: normal; }
+.info-tbl th { width: 96px; text-align: left; vertical-align: top; color: var(--sub); font-size: 13px; white-space: nowrap; }
+.info-tbl td { text-align: left; line-height: 1.6; }
+.prose > h2:first-child { margin-top: 0; }
