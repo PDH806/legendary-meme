@@ -379,3 +379,7 @@ a.btn { text-decoration: none; display: inline-block; }
 .info-tbl th { width: 96px; text-align: left; vertical-align: top; color: var(--sub); font-size: 13px; white-space: nowrap; }
 .info-tbl td { text-align: left; line-height: 1.6; }
 .prose > h2:first-child { margin-top: 0; }
+.hero .hero-h { margin: 6px 0 0; font-size: 22px; letter-spacing: -0.03em; }
+.bracket.five { grid-template-columns: repeat(5, minmax(150px, 1fr)); gap: 8px; min-width: 800px; }
+.bracket.five .ko-t { padding: 8px 9px; font-size: 14px; gap: 4px; }
+.bracket.five .ko-t .pr { font-size: 12px; }
