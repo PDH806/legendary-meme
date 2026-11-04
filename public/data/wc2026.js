@@ -6,6 +6,7 @@
 window.WC_DATA = {
     model: { mu: 1.00, c: 0.0021, home: 100 },
     hosts: ['MEX', 'CAN', 'USA'],
+    actualLabel: '실제 2026 대회',
     teams: {
         MEX: { name: '멕시코', flag: 'mx', elo: 1979, actual: 'R16' },
         RSA: { name: '남아공', flag: 'za', elo: 1663, actual: 'R32' },

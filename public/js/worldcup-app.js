@@ -7,9 +7,10 @@
     var data = window.WC_DATA;
     var wc = WorldCupEngine.create(data);
     var teams = wc.teams;
-    var state = { focus: 'KOR', run: 0, picks: {} };
+    var state = { focus: data.focus && data.teams[data.focus] ? data.focus : 'KOR', run: 0, picks: {} };
     var stat = null;
-    var ROUNDS = ['32강', '16강', '8강', '4강', '결승'];
+    var ROUNDS = data.rounds || ['32강', '16강', '8강', '4강', '결승'];
+    var KEYS = ['r32', 'r16', 'qf', 'sf', 'final'].slice(5 - ROUNDS.length); // 라운드별 통계 이름
     var ACTUAL = { G: '조별리그 탈락', R32: '32강', R16: '16강', QF: '8강', SF: '4강', F: '준우승', W: '우승' };
 
     var $ = function (id) { return document.getElementById(id); };
@@ -72,9 +73,9 @@
         var c = state.focus, s = stat.teams[c];
         $('focus_name').innerHTML = label(c);
         $('big').textContent = pct(s.champ);
-        var chips = [['32강', s.r32], ['16강', s.r16], ['8강', s.qf], ['4강', s.sf], ['결승', s.final]];
+        var chips = ROUNDS.map(function (r, i) { return [r, s[KEYS[i]]]; });
         $('stages').innerHTML = chips.map(function (x) { return '<li><span>' + x[0] + '</span><b>' + pct(x[1]) + '</b></li>'; }).join('');
-        $('scenario').textContent = '실제 2026 대회: ' + actualText(c);
+        $('scenario').textContent = (data.actualLabel || '실제 대회') + ': ' + actualText(c);
     }
 
     function renderChampBars() {
@@ -147,21 +148,21 @@
         }).join('');
         $('ko').innerHTML = '<p class="ko-champ">🏆 우승 <strong>' + label(b.champion) + '</strong></p>' +
             '<h3 class="ko-sep"><span>토너먼트</span></h3>' +
-            '<div class="scroll"><div class="bracket five">' + b.rounds.map(function (games, r) {
+            '<div class="scroll"><div class="bracket' + (ROUNDS.length === 5 ? ' five' : '') + '">' + b.rounds.map(function (games, r) {
                 return '<div class="ko-col"><h3><span>' + ROUNDS[r] + '</span></h3><div class="ko-list">' + games.map(function (g) {
                     return '<div class="ko-m">' + teamBtn(g, 0) + teamBtn(g, 1) + note(g) + '</div>';
                 }).join('') + '</div></div>';
             }).join('') + '</div></div>' +
             '<p class="hint">팀을 누르면 그 팀이 이긴 걸로 정하고 다음 라운드를 다시 치러요. 한 번 더 누르면 선택이 풀려요. 퍼센트는 그 경기에서 이길 확률이에요(연장·승부차기 포함).</p>' +
             '<h3 class="ko-sep"><span>조별리그</span></h3>' +
-            '<div class="ko-box ko-wide"><h3>조별 순위 (3위는 상위 8팀만 32강)</h3><div class="scroll"><table class="ko-rt"><thead><tr><th scope="col">조</th><th scope="col">1위</th><th scope="col">2위</th><th scope="col">3위</th><th scope="col">4위</th></tr></thead><tbody>' + rows + '</tbody></table></div></div>';
+            '<div class="ko-box ko-wide"><h3>조별 순위 (3위는 상위 ' + (data.bestThirds || 8) + '팀만 ' + ROUNDS[0] + ')</h3><div class="scroll"><table class="ko-rt"><thead><tr><th scope="col">조</th><th scope="col">1위</th><th scope="col">2위</th><th scope="col">3위</th><th scope="col">4위</th></tr></thead><tbody>' + rows + '</tbody></table></div></div>';
     }
 
     // ---------- 전체 팀 확률과 실제 결과 ----------
     function renderAll() {
         var list = wc.codes.slice().sort(function (a, b) {
             var x = stat.teams[a], y = stat.teams[b];
-            return y.champ - x.champ || y.final - x.final || y.sf - x.sf || y.qf - x.qf || y.r16 - x.r16 || y.r32 - x.r32;
+            return y.champ - x.champ || y.final - x.final || y.sf - x.sf || y.qf - x.qf || y.r16 - x.r16 || y.r32 - x.r32 || y.pos[0] - x.pos[0];
         });
         $('all').innerHTML = '<table class="tbl lg-tbl nl-tbl"><thead><tr><th scope="col">순위</th><th scope="col">팀</th><th scope="col">조</th>' +
             ROUNDS.map(function (r) { return '<th scope="col">' + r + '</th>'; }).join('') + '<th scope="col">우승</th><th scope="col">실제 결과</th></tr></thead><tbody>' +
@@ -169,7 +170,7 @@
                 var s = stat.teams[c], a = teams[c].actual;
                 return '<tr' + (c === state.focus ? ' class="me"' : '') + '><td class="rk">' + (i + 1) + '</td>' +
                     '<th scope="row"><button type="button" class="pick-team" data-team="' + c + '">' + label(c) + '</button></th><td>' + wc.groupOf[c] + '</td>' +
-                    [s.r32, s.r16, s.qf, s.sf, s.final].map(function (v) { return '<td class="p' + (v ? '' : ' nil') + '">' + pct2(v) + '</td>'; }).join('') +
+                    KEYS.map(function (k) { return s[k]; }).map(function (v) { return '<td class="p' + (v ? '' : ' nil') + '">' + pct2(v) + '</td>'; }).join('') +
                     '<td class="p strong">' + pct2(s.champ) + '</td>' +
                     '<td><span class="fate ' + (a === 'W' ? 'f-stay' : a === 'G' ? 'f-rel' : 'f-po') + '">' + ACTUAL[a] + '</span></td></tr>';
             }).join('') + '</tbody></table>';

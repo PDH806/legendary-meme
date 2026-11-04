@@ -23,7 +23,7 @@
 <meta name="theme-color" content="#0b2a20">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
-<link rel="stylesheet" href="css/cup.css?v=33">
+<link rel="stylesheet" href="css/cup.css?v=34">
 <script>
 // 기본은 어두운 화면이에요. 밝은 화면을 골라 둔 사람만 그리기 전에 바꿔요 (깜빡임 방지)
 try { if (localStorage.getItem('cup-theme') === 'light') document.documentElement.setAttribute('data-theme', 'light'); } catch (e) {}
@@ -37,7 +37,7 @@ try { if (localStorage.getItem('cup-theme') === 'light') document.documentElemen
             <a href="./">아시안컵 2027</a>
             <a href="nations.html">네이션스리그</a>
             <a href="worldcup.html" aria-current="page">월드컵</a>
-            <a href="kleague.html">K리그1 2026</a>
+            <a href="euro.html">유로</a>
         </nav>
         <div class="top-right">
             <span class="dday" id="dday"></span>
@@ -193,9 +193,9 @@ try { if (localStorage.getItem('cup-theme') === 'light') document.documentElemen
     top.textContent = d >= 0 ? '조추첨 ' + txt : '';
 })();
 </script>
-<script src="data/wc2026.js?v=1"></script>
-<script src="js/worldcup.js?v=1"></script>
-<script src="js/worldcup-app.js?v=1"></script>
+<script src="data/wc2026.js?v=2"></script>
+<script src="js/worldcup.js?v=2"></script>
+<script src="js/worldcup-app.js?v=2"></script>
 <script src="js/theme.js?v=2"></script>
 </body>
 </html>

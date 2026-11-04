@@ -1,7 +1,6 @@
-# K리그1 파이널 라운드와 네이션스리그 리그 A 결과를 1시간마다 위키백과에서 받아 반영해요
+# 네이션스리그 리그 A 결과를 1시간마다 위키백과에서 받아 반영해요
 # 바뀐 게 있으면 저장소에 저장하고, Cloudflare가 그걸 보고 사이트를 다시 올려요
 # 스크립트가 실패(위키 훼손, 결과 불일치 등)하면 이 작업이 실패로 표시되고 GitHub가 메일로 알려줘요
-# 한 대회 스크립트가 실패해도 다른 대회 결과는 저장해요
 name: 경기 결과 반영
 
 on:
@@ -23,13 +22,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: K리그 결과 받기
-        id: kleague
-        continue-on-error: true
-        run: |
-          php -v | head -1
-          php tools/update_kleague.php
-
       - name: 네이션스리그 결과 받기
         id: unl
         continue-on-error: true
@@ -42,13 +34,13 @@ jobs:
           else
             git config user.name "cup-results-bot"
             git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-            git add public/data/kleague2026.js public/kleague.html public/data/unl2026a.js public/nations.html
+            git add public/data/unl2026a.js public/nations.html
             git commit -m "경기 결과 자동 반영"
             git push
           fi
 
       - name: 실패한 스크립트 알리기
-        if: steps.kleague.outcome == 'failure' || steps.unl.outcome == 'failure'
+        if: steps.unl.outcome == 'failure'
         run: |
-          echo "K리그: ${{ steps.kleague.outcome }} / 네이션스리그: ${{ steps.unl.outcome }}"
+          echo "네이션스리그: ${{ steps.unl.outcome }}"
           exit 1

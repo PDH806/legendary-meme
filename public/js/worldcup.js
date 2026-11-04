@@ -43,12 +43,14 @@
         groupNames.forEach(function (g) { data.groups[g].forEach(function (c) { groupOf[c] = g; }); });
         var hosts = {};
         data.hosts.forEach(function (c) { hosts[c] = true; });
+        var BRACKET = data.bracket || data.r32; // 첫 토너먼트 라운드 대진 (위에서부터)
+        var FIRST = BRACKET.length === 16 ? 0 : 1; // 32강부터면 0, 16강부터면 1
         var thirdMap = {};
         data.thirds.split(' ').forEach(function (x) { var p = x.split(':'); thirdMap[p[0]] = p[1]; });
 
         // 조별리그: 개최국은 자기 나라에서 경기해서 홈 이점을 받아요. 토너먼트는 중립으로 봐요
         function lambdas(h, a, groupStage) {
-            var bonus = groupStage ? (hosts[h] ? model.home : 0) - (hosts[a] ? model.home : 0) : 0;
+            var bonus = groupStage || data.hostKO ? (hosts[h] ? model.home : 0) - (hosts[a] ? model.home : 0) : 0;
             var dr = teams[h].elo + bonus - teams[a].elo;
             return [model.mu * Math.exp(model.c * dr), model.mu * Math.exp(-model.c * dr)];
         }
@@ -153,7 +155,7 @@
                 if (s === 'T') return ranks[opp[data.thirdSlots.indexOf(home[1])]][2];
                 return ranks[s[1]][+s[0] - 1];
             }
-            return data.r32.map(function (p) { return [slot(p[0]), slot(p[1], p[0])]; });
+            return BRACKET.map(function (p) { return [slot(p[0]), slot(p[1], p[0])]; });
         }
 
         // 조별리그 한 번 → 조 순위, 3위 순위, 32강 대진
@@ -171,7 +173,7 @@
             });
             var cmp = cmpBy(['pts', 'gd', 'gf'], tab);
             thirds.sort(function (x, y) { return cmp(x, y) || byElo(x, y); });
-            var best = thirds.slice(0, 8);
+            var best = thirds.slice(0, data.bestThirds || 8);
             var r32 = bracketOf(ranks, best.map(function (c) { return groupOf[c]; }));
             return { games: games, ranks: ranks, tab: tab, thirds: thirds, best: best, r32: r32 };
         }
@@ -198,7 +200,7 @@
                 var gs = groupStage(rand);
                 groupNames.forEach(function (g) { gs.ranks[g].forEach(function (c, i) { stat[c].pos[i]++; }); });
                 var round = gs.r32.map(function (p) { return p.slice(); });
-                var stage = 0;
+                var stage = FIRST;
                 while (true) {
                     round.forEach(function (p) { stat[p[0]][STAGES[stage]]++; stat[p[1]][STAGES[stage]]++; });
                     var winners = round.map(function (p) { return knockoutGame(p[0], p[1], rand).winner; });
@@ -240,6 +242,7 @@
             single: function (seed) { return groupStage(makeRand(seed)); },
             playKnockout: function (h, a, seed) { return knockoutGame(h, a, makeRand(seed)); },
             advanceProb: advanceProb,
+            firstStage: FIRST,
             bracketOf: bracketOf
         };
     }
