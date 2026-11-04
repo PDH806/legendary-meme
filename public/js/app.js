@@ -34,23 +34,18 @@
         return cup.matches.every(function (m) { return state.fixed[m.id] || data.results[m.id]; });
     }
 
-    // 확률 글자: 0%와 100%는 남은 경기가 없어 확정됐을 때만 써요
-    // (1만 번 모두 진출해도 남은 경기가 있으면 확정이 아니라서 >99.9%로 보여줘요)
+    // 확률 글자: 기호 없이 숫자만. 1% 미만·99% 이상은 소수점 둘째 자리까지
     function pct(count, total) {
         total = total || stat.n;
-        var sure = groupDecided();
-        if (!count) return sure ? '0%' : '<0.1%';
-        if (count === total) return sure ? '100%' : '>99.9%';
+        if (!count) return '0%';
+        if (count === total) return '100%';
         var p = 100 * count / total;
-        if (p < 0.1) return '<0.1%';
-        if (p > 99.9) return '>99.9%';
-        return (p >= 10 && p < 99.5 ? p.toFixed(0) : p.toFixed(1)) + '%'; // 99.5~99.9가 100%로 반올림되지 않게
+        if (p < 1 || p >= 99) return p.toFixed(2) + '%';
+        return (p >= 10 ? p.toFixed(0) : p.toFixed(1)) + '%';
     }
 
     // 전체 팀 확률 표용: 소수점 둘째 자리까지 (1만 회라 0.01%가 한 번)
-    // 남은 경기가 있는데 1만 번 모두 진출했으면 확정이 아니라서 >99.99%로 보여줘요
     function pct2(count) {
-        if (count === stat.n && !groupDecided()) return '>99.99%';
         return (100 * count / stat.n).toFixed(2) + '%';
     }
 
