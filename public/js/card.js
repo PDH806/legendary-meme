@@ -158,7 +158,7 @@
         ctx.fillStyle = '#ffffff';
         ctx.font = font(800, 34);
         var host = /^https?:$/.test(location.protocol) && !/^(localhost|127\.0\.0\.1)$/.test(location.hostname) ? location.hostname : '경우의 수';
-        ctx.fillText('⚽ ' + host, w - x, h - 70);
+        ctx.fillText(host, w - x, h - 70);
         ctx.textAlign = 'left';
     }
 

@@ -50,7 +50,10 @@ a { color: var(--accent); }
 
 .top { background: var(--brand); color: #fff; }
 .top .wrap { display: flex; align-items: center; justify-content: space-between; height: 56px; }
-.logo { color: #fff; font-weight: 800; font-size: 18px; text-decoration: none; letter-spacing: -0.02em; }
+.logo { display: inline-flex; align-items: center; gap: 8px; color: #fff; font-weight: 800; font-size: 18px; text-decoration: none; letter-spacing: -0.03em; }
+.logo-mark { width: 30px; height: 30px; flex: none; padding: 5px; border-radius: 9px; background: rgba(255, 255, 255, .1); box-sizing: border-box; }
+.logo-mark path { fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+.logo-mark circle { fill: #34d16b; }
 .dday { font-size: 13px; font-weight: 700; background: rgba(255, 255, 255, .14); padding: 4px 10px; border-radius: 999px; }
 
 .hero {
