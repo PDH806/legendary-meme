@@ -44,9 +44,11 @@
         var hosts = {};
         data.hosts.forEach(function (c) { hosts[c] = true; });
         var BRACKET = data.bracket || data.r32; // 첫 토너먼트 라운드 대진 (위에서부터)
-        var FIRST = BRACKET.length === 16 ? 0 : 1; // 32강부터면 0, 16강부터면 1
+        var FIRST = { 16: 0, 8: 1, 4: 2 }[BRACKET.length]; // 32강부터면 0, 16강부터면 1, 8강부터면 2
+        var BEST_THIRDS = 'bestThirds' in data ? data.bestThirds : 8; // 토너먼트에 오르는 3위 수
+        var ET_FINAL_ONLY = !!data.etFinalOnly; // 결승 전에는 연장 없이 바로 승부차기 (코파 아메리카)
         var thirdMap = {};
-        data.thirds.split(' ').forEach(function (x) { var p = x.split(':'); thirdMap[p[0]] = p[1]; });
+        (data.thirds || '').split(' ').filter(Boolean).forEach(function (x) { var p = x.split(':'); thirdMap[p[0]] = p[1]; });
 
         // 조별리그: 개최국은 자기 나라에서 경기해서 홈 이점을 받아요. 토너먼트는 중립으로 봐요
         function lambdas(h, a, groupStage) {
@@ -142,7 +144,18 @@
         }
 
         function rankGroup(g, games) {
-            var all = tally(games, data.groups[g]), byPts = cmpBy(['pts'], all);
+            var all = tally(games, data.groups[g]);
+            if (data.tiebreak === 'overall') {
+                // 코파 아메리카: 승점 → 전체 득실차 → 다득점 → 동률 팀끼리 승점·득실차·다득점 → (카드) → 전력 점수
+                var o = cmpBy(['pts', 'gd', 'gf'], all);
+                var ord = blocks(data.groups[g].slice().sort(o), o).reduce(function (acc, b) {
+                    if (b.length === 1) return acc.concat(b);
+                    var h = tally(games, b), hc = cmpBy(['pts', 'gd', 'gf'], h);
+                    return acc.concat(b.slice().sort(function (x, y) { return hc(x, y) || byElo(x, y); }));
+                }, []);
+                return { order: ord, tab: all };
+            }
+            var byPts = cmpBy(['pts'], all);
             var order = blocks(data.groups[g].slice().sort(byPts), byPts)
                 .reduce(function (acc, b) { return acc.concat(breakTie(b, games, all)); }, []);
             return { order: order, tab: all };
@@ -173,16 +186,19 @@
             });
             var cmp = cmpBy(['pts', 'gd', 'gf'], tab);
             thirds.sort(function (x, y) { return cmp(x, y) || byElo(x, y); });
-            var best = thirds.slice(0, data.bestThirds || 8);
+            var best = thirds.slice(0, BEST_THIRDS);
             var r32 = bracketOf(ranks, best.map(function (c) { return groupOf[c]; }));
             return { games: games, ranks: ranks, tab: tab, thirds: thirds, best: best, r32: r32 };
         }
 
+        function hasET(isFinal) { return !ET_FINAL_ONLY || !!isFinal; }
+
         // 토너먼트 한 경기: 90분 → 연장전(예상 득점 1/3) → 승부차기 50:50
-        function knockoutGame(h, a, rand) {
+        function knockoutGame(h, a, rand, isFinal) {
             var s = sample(table(h, a, false), rand);
             var g = { h: h, a: a, hg: s[0], ag: s[1] };
             if (s[0] !== s[1]) { g.winner = s[0] > s[1] ? h : a; return g; }
+            if (!hasET(isFinal)) { g.pens = true; g.winner = rand() < 0.5 ? h : a; return g; }
             var l = lambdas(h, a, false);
             var eh = poissonSample(l[0] / 3, rand), ea = poissonSample(l[1] / 3, rand);
             g.et = true; g.hg += eh; g.ag += ea;
@@ -203,7 +219,8 @@
                 var stage = FIRST;
                 while (true) {
                     round.forEach(function (p) { stat[p[0]][STAGES[stage]]++; stat[p[1]][STAGES[stage]]++; });
-                    var winners = round.map(function (p) { return knockoutGame(p[0], p[1], rand).winner; });
+                    var isFinal = round.length === 1;
+                    var winners = round.map(function (p) { return knockoutGame(p[0], p[1], rand, isFinal).winner; });
                     stage++;
                     if (winners.length === 1) { stat[winners[0]].champ++; break; }
                     round = [];
@@ -225,11 +242,11 @@
         }
 
         var probs = {};
-        function advanceProb(h, a) {
-            var k = h + a;
+        function advanceProb(h, a, isFinal) {
+            var et = hasET(isFinal), k = h + a + (et ? '' : 'p');
             if (k in probs) return probs[k];
             var t = table(h, a, false);
-            return (probs[k] = t.w + t.d * etWin(h, a));
+            return (probs[k] = t.w + t.d * (et ? etWin(h, a) : 0.5));
         }
 
         return {
@@ -240,9 +257,10 @@
             groupOf: groupOf,
             run: run,
             single: function (seed) { return groupStage(makeRand(seed)); },
-            playKnockout: function (h, a, seed) { return knockoutGame(h, a, makeRand(seed)); },
+            playKnockout: function (h, a, seed, isFinal) { return knockoutGame(h, a, makeRand(seed), isFinal); },
             advanceProb: advanceProb,
             firstStage: FIRST,
+            rankGroup: rankGroup,
             bracketOf: bracketOf
         };
     }

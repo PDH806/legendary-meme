@@ -102,13 +102,14 @@
         var res = wc.single(state.run);
         var rounds = [], pairs = res.r32;
         for (var r = 0; r < ROUNDS.length; r++) {
+            var isFinal = r === ROUNDS.length - 1;
             var games = pairs.map(function (p, i) {
                 var key = r + '-' + i, pick = state.picks[key];
                 if (pick && pick !== p[0] && pick !== p[1]) { delete state.picks[key]; pick = null; }
                 var g = pick ? { h: p[0], a: p[1], winner: pick, picked: true }
-                    : wc.playKnockout(p[0], p[1], hash(state.run + '|' + key + '|' + p[0] + '|' + p[1]));
+                    : wc.playKnockout(p[0], p[1], hash(state.run + '|' + key + '|' + p[0] + '|' + p[1]), isFinal);
                 g.key = key;
-                g.prob = wc.advanceProb(p[0], p[1]);
+                g.prob = wc.advanceProb(p[0], p[1], isFinal);
                 return g;
             });
             rounds.push(games);
@@ -142,20 +143,20 @@
         res.r32.forEach(function (p) { inR32[p[0]] = inR32[p[1]] = true; });
         var rows = wc.groupNames.map(function (g) {
             return '<tr' + (g === wc.groupOf[state.focus] ? ' class="cur"' : '') + '><th scope="row">' + g + '조</th>' + res.ranks[g].map(function (c, i) {
-                var badge = i === 2 ? (inR32[c] ? '<em class="adv">진출</em>' : '<em class="drop">탈락</em>') : '';
+                var badge = i === 2 && data.bestThirds !== 0 ? (inR32[c] ? '<em class="adv">진출</em>' : '<em class="drop">탈락</em>') : '';
                 return '<td class="' + (c === state.focus ? 'me' : '') + (inR32[c] ? '' : ' out') + '">' + label(c) + badge + '</td>';
             }).join('') + '</tr>';
         }).join('');
         $('ko').innerHTML = '<p class="ko-champ">🏆 우승 <strong>' + label(b.champion) + '</strong></p>' +
             '<h3 class="ko-sep"><span>토너먼트</span></h3>' +
-            '<div class="scroll"><div class="bracket' + (ROUNDS.length === 5 ? ' five' : '') + '">' + b.rounds.map(function (games, r) {
+            '<div class="scroll"><div class="bracket' + (ROUNDS.length === 5 ? ' five' : ROUNDS.length === 3 ? ' three' : '') + '">' + b.rounds.map(function (games, r) {
                 return '<div class="ko-col"><h3><span>' + ROUNDS[r] + '</span></h3><div class="ko-list">' + games.map(function (g) {
                     return '<div class="ko-m">' + teamBtn(g, 0) + teamBtn(g, 1) + note(g) + '</div>';
                 }).join('') + '</div></div>';
             }).join('') + '</div></div>' +
-            '<p class="hint">팀을 누르면 그 팀이 이긴 걸로 정하고 다음 라운드를 다시 치러요. 한 번 더 누르면 선택이 풀려요. 퍼센트는 그 경기에서 이길 확률이에요(연장·승부차기 포함).</p>' +
+            '<p class="hint">팀을 누르면 그 팀이 이긴 걸로 정하고 다음 라운드를 다시 치러요. 한 번 더 누르면 선택이 풀려요. 퍼센트는 그 경기에서 이길 확률이에요(' + (data.etFinalOnly ? '결승 전에는 비기면 바로 승부차기, 결승만 연장' : '연장·승부차기 포함') + ').</p>' +
             '<h3 class="ko-sep"><span>조별리그</span></h3>' +
-            '<div class="ko-box ko-wide"><h3>조별 순위 (3위는 상위 ' + (data.bestThirds || 8) + '팀만 ' + ROUNDS[0] + ')</h3><div class="scroll"><table class="ko-rt"><thead><tr><th scope="col">조</th><th scope="col">1위</th><th scope="col">2위</th><th scope="col">3위</th><th scope="col">4위</th></tr></thead><tbody>' + rows + '</tbody></table></div></div>';
+            '<div class="ko-box ko-wide"><h3>조별 순위 (' + (data.bestThirds === 0 ? '1·2위가 ' + ROUNDS[0] : '3위는 상위 ' + (data.bestThirds || 8) + '팀만 ' + ROUNDS[0]) + ')</h3><div class="scroll"><table class="ko-rt"><thead><tr><th scope="col">조</th><th scope="col">1위</th><th scope="col">2위</th><th scope="col">3위</th><th scope="col">4위</th></tr></thead><tbody>' + rows + '</tbody></table></div></div>';
     }
 
     // ---------- 전체 팀 확률과 실제 결과 ----------

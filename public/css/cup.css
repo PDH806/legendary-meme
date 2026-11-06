@@ -307,7 +307,8 @@ a.btn { text-decoration: none; display: inline-block; }
 .menu a[aria-current="page"] { color: #fff; background: rgba(255, 255, 255, .16); }
 @media (max-width: 640px) {
     .top .wrap { flex-wrap: wrap; height: auto; padding-top: 10px; padding-bottom: 8px; row-gap: 6px; }
-    .menu { order: 3; width: 100%; margin: 0 -4px; }
+    .menu { order: 3; width: 100%; margin: 0 -4px; gap: 2px; }
+    .menu a { padding: 6px 9px; font-size: 13.5px; }
     .top-right { margin-left: auto; }
 }
 
@@ -386,5 +387,6 @@ a.btn { text-decoration: none; display: inline-block; }
 .bracket.five { grid-template-columns: repeat(5, minmax(150px, 1fr)); gap: 8px; min-width: 800px; }
 .bracket.five .ko-t { padding: 8px 9px; font-size: 14px; gap: 4px; }
 .bracket.five .ko-t .pr { font-size: 12px; }
+.stages.three { grid-template-columns: repeat(3, 1fr); }
 .stages.four { grid-template-columns: repeat(4, 1fr); }
 @media (max-width: 640px) { .stages.four { grid-template-columns: repeat(2, 1fr); } }
