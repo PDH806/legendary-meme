@@ -26,7 +26,7 @@
 <link rel="icon" href="/img/icon-192.png?v=2" sizes="192x192" type="image/png">
 <link rel="apple-touch-icon" href="/img/icon-180.png?v=2">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
-<link rel="stylesheet" href="css/cup.css?v=37">
+<link rel="stylesheet" href="css/cup.css?v=38">
 <script>
 // 기본은 어두운 화면이에요. 밝은 화면을 골라 둔 사람만 그리기 전에 바꿔요 (깜빡임 방지)
 try { if (localStorage.getItem('cup-theme') === 'light') document.documentElement.setAttribute('data-theme', 'light'); } catch (e) {}
@@ -61,17 +61,20 @@ try { if (localStorage.getItem('cup-theme') === 'light') document.documentElemen
             </label>
             <p class="scenario" id="scenario"></p>
         </div>
+        <button type="button" class="btn hero-run" id="hero_run">🎲 대회 한 번 돌려보기</button>
     </section>
 
     <section class="card" aria-labelledby="ko_title">
         <h2 id="ko_title">토너먼트</h2>
         <h3 class="split-title">우승 확률 <small>개막 전 전력으로 1만 번</small></h3>
         <ol class="cb-list" id="champ_bars"></ol>
-        <h3 class="split-title">대회 한 번 돌려보기</h3>
+        <div class="run-box" id="run_box">
+        <h3 class="split-title">🎲 대회 한 번 돌려보기</h3>
         <p class="hint lead">조별리그 36경기부터 16강, 결승까지 대회를 한 번 치러 봐요. 대진표에서 팀을 눌러 승자를 직접 정할 수도 있어요.</p>
         <div class="actions left">
-            <button type="button" class="btn" id="ko_run">🎲 대회 한 번 돌려보기</button>
+            <button type="button" class="btn run-main" id="ko_run">🎲 대회 한 번 돌려보기</button>
             <button type="button" class="btn ghost" id="ko_clear" hidden>내 선택 지우기</button>
+        </div>
         </div>
         <div id="ko"></div>
     </section>
@@ -113,6 +116,7 @@ try { if (localStorage.getItem('cup-theme') === 'light') document.documentElemen
 <script src="data/euro2024.js?v=1"></script>
 <script src="js/worldcup.js?v=3"></script>
 <script src="js/worldcup-app.js?v=3"></script>
+<script src="js/run-cta.js?v=1"></script>
 <script src="js/theme.js?v=2"></script>
 </body>
 </html>

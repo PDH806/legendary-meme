@@ -390,3 +390,24 @@ a.btn { text-decoration: none; display: inline-block; }
 .stages.three { grid-template-columns: repeat(3, 1fr); }
 .stages.four { grid-template-columns: repeat(4, 1fr); }
 @media (max-width: 640px) { .stages.four { grid-template-columns: repeat(2, 1fr); } }
+
+/* 대회 한 번 돌려보기: 메인 기능이라 눈에 띄게 */
+.hero-run {
+    display: block; width: 100%; margin-top: 18px; padding: 14px 20px;
+    font-size: 17px; font-weight: 800; letter-spacing: -0.02em;
+    background: #34d16b; border-color: #34d16b; color: #06261a; border-radius: 14px;
+    box-shadow: 0 8px 22px rgba(52, 209, 107, .28); transition: transform .12s, box-shadow .12s;
+}
+.hero-run:hover { transform: translateY(-1px); box-shadow: 0 10px 26px rgba(52, 209, 107, .38); }
+.hero-run:active { transform: translateY(0); }
+.run-box {
+    margin: 22px 0 6px; padding: 16px 18px 18px; border-radius: 16px;
+    border: 1px solid color-mix(in srgb, var(--accent) 45%, transparent);
+    background: linear-gradient(135deg, var(--accent-soft), transparent 85%);
+    scroll-margin-top: 12px;
+}
+.run-box .split-title { margin-top: 0; font-size: 18px; }
+.run-box .hint.lead { margin-bottom: 12px; }
+.btn.run-main { background: var(--accent); border-color: var(--accent); color: #06261a; font-size: 16px; font-weight: 800; padding: 12px 22px; border-radius: 12px; }
+.btn.run-main:hover { filter: brightness(1.06); }
+@media (min-width: 641px) { .hero-run { width: auto; display: inline-block; } }
