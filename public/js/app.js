@@ -205,7 +205,7 @@
     function gameRow(m) {
         var real = data.results[m.id], fix = state.fixed[m.id];
         var p = cup.matchProbs(m.h, m.a);
-        var when = m.kst ? m.kst.replace(/^\d{4}-(\d\d)-(\d\d)/, function (_, mo, d) { return (+mo) + '.' + (+d); }) : '';
+        var when = m.kst && !data.scheduleTBD ? m.kst.replace(/^\d{4}-(\d\d)-(\d\d)/, function (_, mo, d) { return (+mo) + '.' + (+d); }) : '';
         var score;
         if (real) {
             score = '<span class="final">' + real[0] + ' : ' + real[1] + '</span>';

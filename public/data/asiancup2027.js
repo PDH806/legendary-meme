@@ -1,4 +1,5 @@
-// 2027 AFC 아시안컵 (사우디아라비아, 2027.1.7 ~ 2.5)
+// 2027 AFC 아시안컵 (사우디아라비아) — 원래 2027.1.7 ~ 2.5, AFC가 2026.11.3 연기 발표: 2027.12.23 ~ 2028.1.21 (FIFA 승인 대기)
+// 경기별 새 일정은 아직 안 나와서 아래 경기 시간(옛 일정)은 화면에 보여주지 않아요 (scheduleTBD)
 // 조편성: 2026.5.9 추첨 결과
 // 규정: AFC Asian Cup Saudi Arabia 2027 Competition Regulations (10.16 수정본) 7.3, 9.5, 9.8조
 //
@@ -12,7 +13,8 @@ window.CUP_DATA = {
     host: 'KSA', // 개최국은 모든 경기에서 홈 이점을 받아요
     homeBonus: 100,
     model: { mu: 1.10, c: 0.0022 },
-    kickoff: '2027-01-07T00:00:00+09:00',
+    kickoff: '2027-12-23T00:00:00+09:00',
+    scheduleTBD: true,
     focus: 'KOR',
     teams: {
         KSA: { name: '사우디아라비아', short: '사우디', group: 'A', slot: 1, elo: 1738, flag: 'sa' },
