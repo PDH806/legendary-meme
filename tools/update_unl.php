@@ -15,7 +15,7 @@ date_default_timezone_set('Asia/Seoul');
 $ROOT = dirname(__DIR__) . '/public';
 $MIRROR = 'C:/xampp/htdocs/cup';
 $DATA = $ROOT . '/data/unl2026a.js';
-$PAGE = $ROOT . '/nations.html';
+$PAGE = $ROOT . '/index.html';
 $LOG = __DIR__ . '/logs/unl.log';
 $WIKI_URL = 'https://en.wikipedia.org/w/index.php?title=2026%E2%80%9327_UEFA_Nations_League_A&action=raw';
 $LEFT = 16;
@@ -111,6 +111,6 @@ file_put_contents($PAGE, $html);
 
 if (is_dir($MIRROR)) {
     @copy($DATA, $MIRROR . '/data/unl2026a.js');
-    @copy($PAGE, $MIRROR . '/nations.html');
+    @copy($PAGE, $MIRROR . '/index.html');
 }
 logline("반영 완료 (결과 " . count($results) . "/$LEFT, 데이터 버전 $ver)");
