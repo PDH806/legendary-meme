@@ -414,3 +414,11 @@ a.btn { text-decoration: none; display: inline-block; }
 .btn.run-main { background: var(--accent); border-color: var(--accent); color: #06261a; font-size: 16px; font-weight: 800; padding: 12px 22px; border-radius: 12px; }
 .btn.run-main:hover { filter: brightness(1.06); }
 @media (min-width: 641px) { .hero-run { width: auto; display: inline-block; } }
+
+/* 대진표 연결선 (js/bracket-lines.js가 그려요) */
+.bracket { position: relative; column-gap: 14px; }
+.bracket.three { column-gap: 28px; }
+.bracket.five { column-gap: 16px; }
+.ko-lines { position: absolute; left: 0; top: 0; overflow: visible; pointer-events: none; }
+.ko-lines path { fill: none; stroke: color-mix(in srgb, var(--sub) 45%, transparent); stroke-width: 1.5; stroke-linejoin: round; }
+.ko-lines path.on { stroke: var(--accent); stroke-width: 2; }
