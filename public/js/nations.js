@@ -212,8 +212,12 @@
             return extraTime(h, a, true, rand);
         }
 
-        // 8강 추첨: 조 1위와 다른 조 2위를 무작위로 짝지어요
+        // 실제 8강 대진 (추첨 뒤): [[조 1위, 조 2위], ...], (0,1)·(2,3) 승자가 4강에서 만나요
+        var QUARTERS = data.quarters || null;
+
+        // 8강 추첨: 조 1위와 다른 조 2위를 무작위로 짝지어요 (실제 대진이 있으면 그대로)
         function drawQuarters(winners, runners, rand) {
+            if (QUARTERS) return QUARTERS.map(function (t) { return t.slice(); });
             for (;;) {
                 var perm = runners.slice();
                 for (var i = perm.length - 1; i > 0; i--) {
@@ -230,8 +234,8 @@
             var winners = groupIds.map(function (g) { return res.order[g][0]; });
             var runners = groupIds.map(function (g) { return res.order[g][1]; });
             var semis = drawQuarters(winners, runners, rand).map(function (tie) { return twoLegs(tie[0], tie[1], rand); });
-            // 4강 추첨도 무작위
-            for (var i = semis.length - 1; i > 0; i--) {
+            // 4강 추첨도 무작위 (실제 대진이 있으면 정해진 4강 길 그대로)
+            for (var i = QUARTERS ? 0 : semis.length - 1; i > 0; i--) {
                 var j = Math.floor(rand() * (i + 1)), t = semis[i];
                 semis[i] = semis[j]; semis[j] = t;
             }
@@ -270,7 +274,7 @@
             var winners = groupIds.map(function (g) { return res.order[g][0]; });
             var runners = groupIds.map(function (g) { return res.order[g][1]; });
             var ties = drawQuarters(winners, runners, rand);
-            for (var i = ties.length - 1; i > 0; i--) {
+            for (var i = QUARTERS ? 0 : ties.length - 1; i > 0; i--) {
                 var j = Math.floor(rand() * (i + 1)), t = ties[i];
                 ties[i] = ties[j]; ties[j] = t;
             }
